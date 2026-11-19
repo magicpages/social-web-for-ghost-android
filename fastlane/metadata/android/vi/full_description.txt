@@ -1,0 +1,23 @@
+Social Web đưa web xã hội của trang Ghost của bạn lên Android.
+
+Ghost 6 kết nối trang của bạn với web xã hội mở (ActivityPub): mọi người trên Mastodon, WordPress, các trang Ghost khác và phần còn lại của fediverse có thể theo dõi bạn, và bạn cũng có thể theo dõi họ. Social Web là cách nhanh chóng, gốc để theo kịp và tham gia.
+
+• Ghi chú: bài đăng ngắn từ mọi người bạn theo dõi. Thích, đăng lại, trích dẫn và trả lời.
+• Trình đọc: bài viết dài từ các ấn phẩm bạn theo dõi, trong giao diện đọc gọn gàng với âm thanh và video.
+• Đăng ghi chú kèm ảnh và văn bản thay thế từ hồ sơ riêng của trang bạn.
+• Thông báo: lượt thích, đăng lại, trả lời, lượt nhắc và người theo dõi mới, được nhóm gọn gàng. Chọn loại nào được báo khi ứng dụng chạy nền.
+• Dịch ghi chú và bài viết sang ngôn ngữ của bạn ngay trên thiết bị.
+• Tìm và theo dõi mọi người cũng như ấn phẩm trên bất kỳ máy chủ fediverse nào.
+• Tất cả trang Ghost của bạn trong một ứng dụng. Chuyển đổi chỉ với một chạm.
+• Chia sẻ liên kết, văn bản đã chọn hoặc ảnh từ bất kỳ ứng dụng nào để bắt đầu ghi chú (một ảnh, kèm văn bản thay thế).
+• Ảnh GIF và các ảnh động khác phát ngay trên dòng thời gian.
+• Thẻ xem trước liên kết trong ghi chú và khi bạn soạn.
+• Trên máy tính bảng, thiết bị gập và khi xoay ngang, chuỗi hoặc hồ sơ mở bên cạnh dòng thời gian.
+• Thành viên: đăng nhập với tư cách thành viên của một trang để đọc các bài dành riêng cho thành viên.
+• Giới thiệu các trang khác đến độc giả của bạn, ngay từ hồ sơ của họ.
+• Chặn tài khoản hoặc cả máy chủ, và báo cáo bài đăng cùng người dùng.
+• Màu sắc theo màu nhấn của trang, hình nền của bạn hoặc màu bạn tự chọn.
+
+Yêu cầu: một trang Ghost 6 đã bật web xã hội và tài khoản Chủ sở hữu hoặc Quản trị viên trên trang đó. Bạn đăng nhập vào trang của chính mình; không cần tạo tài khoản mới.
+
+Social Web là ứng dụng độc lập, không do Ghost Foundation tạo ra và không liên kết với tổ chức này. Ghost là nhãn hiệu của Ghost Foundation.

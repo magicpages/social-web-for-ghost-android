@@ -1,0 +1,23 @@
+Social Web, Ghost sitenizin sosyal webini Android’e getirir.
+
+Ghost 6, sitenizi açık sosyal webe (ActivityPub) bağlar: Mastodon, WordPress, diğer Ghost siteleri ve fediverse’ün geri kalanındaki kişiler sizi takip edebilir, siz de onları. Social Web, gelişmeleri takip etmenin ve sohbete katılmanın hızlı ve yerel bir yolu.
+
+• Notlar: takip ettiğiniz herkesten kısa gönderiler. Beğenin, yeniden paylaşın, alıntılayın, yanıtlayın.
+• Okuyucu: takip ettiğiniz yayınlardan uzun yazılar, ses ve videolu sade bir okuma görünümünde.
+• Sitenizin kendi profilinden fotoğraflı ve alternatif metinli notlar paylaşın.
+• Bildirimler: beğeniler, yeniden paylaşımlar, yanıtlar, anmalar ve yeni takipçiler, derli toplu gruplanmış. Hangilerinin arka planda bildirileceğini seçin.
+• Notları ve yazıları cihazınızda kendi dilinize çevirin.
+• Herhangi bir fediverse sunucusundaki kişileri ve yayınları bulun, takip edin.
+• Tüm Ghost siteleriniz tek uygulamada. Aralarında tek dokunuşla geçin.
+• Not başlatmak için herhangi bir uygulamadan bağlantı, seçili metin ya da fotoğraf paylaşın (tek görsel, alternatif metinle).
+• Animasyonlu GIF’ler ve diğer hareketli görseller doğrudan akışta oynatılır.
+• Notlarda ve yazarken bağlantı önizleme kartları.
+• Tabletlerde, katlanabilir cihazlarda ve yatay modda bir konu ya da profil akışın yanında açılır.
+• Üyeler: bir sitenin üyesi olarak giriş yapıp yalnızca üyelere açık yazılarını okuyun.
+• Başka siteleri okuyucularınıza doğrudan profillerinden önerin.
+• Hesapları ya da tüm sunucuları engelleyin; gönderileri ve kişileri şikâyet edin.
+• Sitenizin vurgu renginden, duvar kağıdınızdan ya da seçtiğiniz bir renkten gelen renkler.
+
+Gereksinimler: sosyal webi açık bir Ghost 6 sitesi ve bu sitede Sahip ya da Yönetici hesabı. Kendi sitenize giriş yaparsınız; yeni bir hesap açmanız gerekmez.
+
+Social Web bağımsız bir uygulamadır; Ghost Foundation tarafından yapılmamıştır ve onunla bağlantılı değildir. Ghost, Ghost Foundation’ın ticari markasıdır.

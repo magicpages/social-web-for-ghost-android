@@ -1,0 +1,23 @@
+Social Web przenosi społeczną sieć Twojej strony Ghost na Androida.
+
+Ghost 6 łączy Twoją stronę z otwartą siecią społecznościową (ActivityPub): osoby z Mastodona, WordPressa, innych stron Ghost i reszty fediwersum mogą Cię obserwować, a Ty możesz obserwować je. Social Web to szybki, natywny sposób, by być na bieżąco i włączać się do rozmów.
+
+• Notatki: krótkie wpisy od wszystkich, których obserwujesz. Polub, udostępnij dalej, zacytuj i odpowiedz.
+• Czytnik: długie artykuły z obserwowanych publikacji w przejrzystym widoku czytania, z dźwiękiem i wideo.
+• Publikuj notatki ze zdjęciami i tekstem alternatywnym z własnego profilu strony.
+• Powiadomienia: polubienia, udostępnienia, odpowiedzi, wzmianki i nowi obserwujący, przejrzyście pogrupowane. Wybierz, o których informować w tle.
+• Tłumacz notatki i artykuły na swój język, na urządzeniu.
+• Znajdź i obserwuj osoby oraz publikacje na dowolnym serwerze fediwersum.
+• Wszystkie Twoje strony Ghost w jednej aplikacji. Przełączaj się między nimi jednym dotknięciem.
+• Udostępnij link, zaznaczony tekst lub zdjęcie z dowolnej aplikacji, aby zacząć notatkę (jeden obraz, z tekstem alternatywnym).
+• Animowane GIF-y i inne animowane obrazy odtwarzają się prosto na osi czasu.
+• Karty podglądu linków w notatkach i podczas pisania.
+• Na tabletach, urządzeniach składanych i w poziomie wątek lub profil otwiera się obok osi czasu.
+• Członkowie: zaloguj się jako członek strony, aby czytać jej wpisy tylko dla członków.
+• Polecaj inne strony swoim czytelnikom, prosto z ich profilu.
+• Blokuj konta lub całe serwery oraz zgłaszaj wpisy i osoby.
+• Kolory z koloru wyróżniającego Twojej strony, tapety lub wybranego przez Ciebie koloru.
+
+Wymagania: strona Ghost 6 z włączoną siecią społeczną i konto właściciela lub administratora na niej. Logujesz się do własnej strony; nie trzeba zakładać nowego konta.
+
+Social Web to niezależna aplikacja, niestworzona przez Ghost Foundation i niezwiązana z nią. Ghost jest znakiem towarowym Ghost Foundation.

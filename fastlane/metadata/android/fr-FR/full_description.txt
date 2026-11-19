@@ -1,0 +1,23 @@
+Social Web apporte le web social de votre site Ghost sur Android.
+
+Ghost 6 relie votre site au web social ouvert (ActivityPub) : les personnes sur Mastodon, WordPress, d’autres sites Ghost et le reste du fediverse peuvent vous suivre, et vous pouvez les suivre. Social Web est un moyen rapide et natif de rester informé et de participer.
+
+• Notes : de courtes publications de toutes les personnes que vous suivez. Aimez, repartagez, citez et répondez.
+• Lecteur : les articles longs des publications que vous suivez, dans une vue de lecture épurée avec audio et vidéo.
+• Publiez des notes avec photos et texte alternatif, depuis le profil de votre site.
+• Notifications : J’aime, repartages, réponses, mentions et nouveaux abonnés, bien regroupés. Choisissez ceux qui sont annoncés en arrière-plan.
+• Traduisez notes et articles dans votre langue, directement sur votre appareil.
+• Trouvez et suivez des personnes et des publications sur n’importe quel serveur du fediverse.
+• Tous vos sites Ghost dans une seule appli. Passez de l’un à l’autre d’une touche.
+• Partagez un lien, un texte sélectionné ou une photo depuis n’importe quelle appli pour commencer une note (une image, avec texte alternatif).
+• Les GIF animés et autres images animées se lisent directement dans le fil.
+• Cartes d’aperçu des liens dans les notes et pendant la rédaction.
+• Sur tablette, appareil pliable et en paysage, un fil ou un profil s’ouvre à côté du fil d’actualité.
+• Membres : connectez-vous en tant que membre d’un site pour lire ses articles réservés aux membres.
+• Recommandez d’autres sites à vos lecteurs, directement depuis leur profil.
+• Bloquez des comptes ou des serveurs entiers, et signalez des publications et des personnes.
+• Des couleurs issues de la couleur d’accent de votre site, de votre fond d’écran ou d’une couleur de votre choix.
+
+Prérequis : un site Ghost 6 avec le web social activé, et un compte Propriétaire ou Administrateur sur ce site. Vous vous connectez à votre propre site ; aucun nouveau compte à créer.
+
+Social Web est une application indépendante, non réalisée par la Ghost Foundation et sans affiliation avec elle. Ghost est une marque de la Ghost Foundation.

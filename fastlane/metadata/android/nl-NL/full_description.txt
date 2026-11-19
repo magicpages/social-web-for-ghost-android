@@ -1,0 +1,23 @@
+Social Web brengt het sociale web van je Ghost-site naar Android.
+
+Ghost 6 verbindt je site met het open sociale web (ActivityPub): mensen op Mastodon, WordPress, andere Ghost-sites en de rest van het fediverse kunnen je volgen, en jij kunt hen volgen. Social Web is een snelle, native manier om bij te blijven en mee te doen.
+
+• Notes: korte berichten van iedereen die je volgt. Like, repost, citeer en reageer.
+• Reader: lange artikelen van de publicaties die je volgt, in een rustige leesweergave met audio en video.
+• Plaats notes met foto’s en alternatieve tekst, vanaf het eigen profiel van je site.
+• Meldingen: likes, reposts, reacties, vermeldingen en nieuwe volgers, netjes gegroepeerd. Kies welke op de achtergrond worden gemeld.
+• Vertaal notes en artikelen naar je eigen taal, op je apparaat.
+• Vind en volg mensen en publicaties op elke fediverse-server.
+• Al je Ghost-sites in één app. Wissel met één tik.
+• Deel een link, geselecteerde tekst of een foto vanuit elke app om een note te beginnen (één afbeelding, met alternatieve tekst).
+• Geanimeerde gifs en andere geanimeerde afbeeldingen spelen direct af in de tijdlijn.
+• Linkvoorbeeldkaarten in notes en tijdens het schrijven.
+• Op tablets, vouwbare toestellen en in landschap opent een gesprek of profiel naast de tijdlijn.
+• Leden: log in als lid van een site om de berichten alleen voor leden te lezen.
+• Raad andere sites aan je lezers aan, direct vanaf hun profiel.
+• Blokkeer accounts of hele servers en meld berichten en mensen.
+• Kleuren uit de accentkleur van je site, je achtergrond of een kleur die je zelf kiest.
+
+Vereisten: een Ghost 6-site met het sociale web ingeschakeld en een Eigenaar- of Beheerderaccount daarop. Je meldt je aan bij je eigen site; je hoeft geen nieuw account te maken.
+
+Social Web is een onafhankelijke app, niet gemaakt door of verbonden aan de Ghost Foundation. Ghost is een handelsmerk van de Ghost Foundation.

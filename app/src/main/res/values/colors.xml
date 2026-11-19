@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The window's colour before the first Compose frame, and the Android 12+ splash's: what the app's background will be, so there is no jump. Material's baseline schemes' background, as the theme uses them before Android 12. -->
+    <color name="window_background">#FFFEF7FF</color>
+</resources>

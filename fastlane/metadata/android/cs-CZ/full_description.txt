@@ -1,0 +1,23 @@
+Social Web přináší sociální web vašeho webu Ghost na Android.
+
+Ghost 6 propojuje váš web s otevřeným sociálním webem (ActivityPub): lidé na Mastodonu, WordPressu, dalších webech Ghost i zbytku fediversa vás mohou sledovat a vy je také. Social Web je rychlý nativní způsob, jak držet krok a zapojit se.
+
+• Poznámky: krátké příspěvky od všech, které sledujete. Dávejte To se mi líbí, sdílejte dál, citujte a odpovídejte.
+• Čtečka: dlouhé články z publikací, které sledujete, v přehledném zobrazení pro čtení se zvukem a videem.
+• Přidávejte poznámky s fotkami a alternativním textem z vlastního profilu svého webu.
+• Oznámení: lajky, sdílení, odpovědi, zmínky a noví sledující, přehledně seskupené. Vyberte, o kterých vás má aplikace informovat na pozadí.
+• Překládejte poznámky a články do svého jazyka přímo v zařízení.
+• Najděte a sledujte lidi a publikace na libovolném serveru fediversa.
+• Všechny vaše weby Ghost v jedné aplikaci. Přepínejte mezi nimi jedním klepnutím.
+• Sdílejte odkaz, vybraný text nebo fotku z libovolné aplikace a začněte poznámku (jeden obrázek, s alternativním textem).
+• Animované GIFy a další animované obrázky se přehrávají přímo na časové ose.
+• Karty s náhledem odkazů v poznámkách i při psaní.
+• Na tabletech, skládacích zařízeních a na šířku se vlákno nebo profil otevře vedle časové osy.
+• Členové: přihlaste se jako člen webu a čtěte jeho příspěvky jen pro členy.
+• Doporučujte další weby svým čtenářům přímo z jejich profilu.
+• Blokujte účty nebo celé servery a nahlašujte příspěvky i lidi.
+• Barvy podle zvýrazňovací barvy vašeho webu, tapety nebo barvy, kterou si vyberete.
+
+Požadavky: web Ghost 6 se zapnutým sociálním webem a na něm účet vlastníka nebo správce. Přihlašujete se na svůj vlastní web; nový účet vytvářet nemusíte.
+
+Social Web je nezávislá aplikace, kterou nevytvořila nadace Ghost Foundation ani s ní není spojena. Ghost je ochranná známka nadace Ghost Foundation.

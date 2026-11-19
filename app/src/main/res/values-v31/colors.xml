@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The wallpaper's neutral tone the app's dynamic colour scheme takes its background from (Android 12 and 13 give it as palette tones). -->
+    <color name="window_background">@android:color/system_neutral2_10</color>
+</resources>

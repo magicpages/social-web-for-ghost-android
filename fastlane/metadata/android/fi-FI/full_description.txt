@@ -1,0 +1,23 @@
+Social Web tuo Ghost-sivustosi sosiaalisen verkon Androidille.
+
+Ghost 6 yhdistää sivustosi avoimeen sosiaaliseen verkkoon (ActivityPub): ihmiset Mastodonissa, WordPressissä, muilla Ghost-sivustoilla ja muualla fediversumissa voivat seurata sinua, ja sinä voit seurata heitä. Social Web on nopea, natiivi tapa pysyä mukana ja osallistua.
+
+• Muistiinpanot: lyhyitä julkaisuja kaikilta seuraamiltasi. Tykkää, jaa edelleen, lainaa ja vastaa.
+• Lukija: seuraamiesi julkaisijoiden pitkät artikkelit selkeässä lukunäkymässä, äänellä ja videolla.
+• Julkaise muistiinpanoja kuvilla ja vaihtoehtoisella tekstillä sivustosi omasta profiilista.
+• Ilmoitukset: tykkäykset, edelleenjaot, vastaukset, maininnat ja uudet seuraajat siististi ryhmiteltyinä. Valitse, mistä ilmoitetaan taustalla.
+• Käännä muistiinpanot ja artikkelit omalle kielellesi laitteellasi.
+• Löydä ja seuraa ihmisiä ja julkaisuja miltä tahansa fediversumin palvelimelta.
+• Kaikki Ghost-sivustosi yhdessä sovelluksessa. Vaihda niiden välillä yhdellä napautuksella.
+• Jaa linkki, valittu teksti tai valokuva mistä tahansa sovelluksesta aloittaaksesi muistiinpanon (yksi kuva, vaihtoehtoisella tekstillä).
+• Animoidut GIFit ja muut animoidut kuvat toistuvat suoraan aikajanalla.
+• Linkkien esikatselukortit muistiinpanoissa ja kirjoittaessasi.
+• Tableteilla, taittuvilla laitteilla ja vaakatilassa ketju tai profiili aukeaa aikajanan viereen.
+• Jäsenet: kirjaudu sivuston jäsenenä lukeaksesi sen vain jäsenille tarkoitetut julkaisut.
+• Suosittele muita sivustoja lukijoillesi suoraan niiden profiilista.
+• Estä tilejä tai kokonaisia palvelimia sekä ilmoita julkaisuja ja ihmisiä.
+• Värit sivustosi korostevärin, taustakuvasi tai valitsemasi värin mukaan.
+
+Vaatimukset: Ghost 6 -sivusto, jolla sosiaalinen verkko on käytössä, sekä omistajan tai ylläpitäjän tili siellä. Kirjaudut omalle sivustollesi; uutta tiliä ei tarvitse luoda.
+
+Social Web on itsenäinen sovellus, jota Ghost Foundation ei ole tehnyt eikä se ole sen kanssa sidoksissa. Ghost on Ghost Foundationin tavaramerkki.

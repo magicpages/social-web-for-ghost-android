@@ -1,0 +1,23 @@
+Social Web bringt das Social Web deiner Ghost-Seite auf Android.
+
+Ghost 6 verbindet deine Seite mit dem offenen Social Web (ActivityPub): Menschen auf Mastodon, WordPress, anderen Ghost-Seiten und im restlichen Fediverse können dir folgen, und du kannst ihnen folgen. Social Web ist ein schneller, nativer Weg, auf dem Laufenden zu bleiben und mitzumachen.
+
+• Notizen: kurze Beiträge von allen, denen du folgst. Gefällt mir, teilen, zitieren und antworten.
+• Reader: lange Artikel der Publikationen, denen du folgst, in einer übersichtlichen Leseansicht mit Audio und Video.
+• Notizen mit Fotos und Alternativtext posten, vom eigenen Profil deiner Seite.
+• Mitteilungen: Likes, Reposts, Antworten, Erwähnungen und neue Follower, übersichtlich gruppiert. Wähle, welche im Hintergrund angezeigt werden.
+• Notizen und Artikel direkt auf dem Gerät in deine Sprache übersetzen.
+• Personen und Publikationen auf jedem Fediverse-Server finden und ihnen folgen.
+• Alle deine Ghost-Seiten in einer App. Mit einem Tippen wechseln.
+• Einen Link, markierten Text oder ein Foto aus jeder App teilen, um eine neue Notiz zu beginnen (ein Bild, mit Alternativtext).
+• Animierte GIFs und andere animierte Bilder laufen direkt in der Timeline.
+• Link-Vorschaukarten in Notizen und beim Schreiben.
+• Auf Tablets, Foldables und im Querformat öffnet sich ein Thread oder Profil neben der Timeline.
+• Mitglieder: Melde dich als Mitglied einer Seite an, um ihre Beiträge für Mitglieder zu lesen.
+• Empfiehl anderen Lesern weitere Seiten, direkt aus deren Profil.
+• Konten oder ganze Server blockieren sowie Beiträge und Personen melden.
+• Farben aus der Akzentfarbe deiner Seite, deinem Hintergrundbild oder einer selbst gewählten Farbe.
+
+Voraussetzungen: eine Ghost-6-Seite mit aktiviertem Social Web und ein Konto als Eigentümer oder Administrator darauf. Du meldest dich bei deiner eigenen Seite an; ein neues Konto ist nicht nötig.
+
+Social Web ist eine unabhängige App und stammt nicht von der Ghost Foundation und steht in keiner Verbindung zu ihr. Ghost ist eine Marke der Ghost Foundation.

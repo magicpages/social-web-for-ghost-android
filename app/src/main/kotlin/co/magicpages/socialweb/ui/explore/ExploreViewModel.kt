@@ -1,0 +1,296 @@
+package co.magicpages.socialweb.ui.explore
+
+import androidx.compose.runtime.Immutable
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.LoadState
+import androidx.paging.LoadStates
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import androidx.paging.cachedIn
+import androidx.paging.filter
+import co.magicpages.socialweb.R
+import co.magicpages.socialweb.data.account.AccountStore
+import co.magicpages.socialweb.data.account.StoredAccount
+import co.magicpages.socialweb.data.activitypub.ActivityPubClient
+import co.magicpages.socialweb.data.activitypub.Author
+import co.magicpages.socialweb.data.activitypub.Moderation
+import co.magicpages.socialweb.data.activitypub.SocialWebException
+import co.magicpages.socialweb.data.activitypub.SuggestedAccount
+import co.magicpages.socialweb.data.activitypub.SuggestedAccountsPage
+import co.magicpages.socialweb.data.activitypub.Topic
+import co.magicpages.socialweb.data.ghost.GhostException
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.runningFold
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+/** What the search shows for what has been typed. */
+@Immutable
+sealed interface SearchUiState {
+    /** Nothing typed yet that the service can search for. */
+    data object Idle : SearchUiState
+
+    data object Loading : SearchUiState
+
+    data class Found(val accounts: List<Author>) : SearchUiState
+
+    data class Failed(val error: Throwable) : SearchUiState
+}
+
+/**
+ * The Explore tab: searching for accounts, and the accounts the service suggests, either for the
+ * site ("For you") or under one of its topics. Follow changes made here are kept in [following] so
+ * every list that shows the account agrees, whichever page of it was loaded first.
+ */
+@OptIn(ExperimentalCoroutinesApi::class)
+@HiltViewModel
+class ExploreViewModel @Inject constructor(
+    private val accounts: AccountStore,
+    private val activityPub: ActivityPubClient,
+    moderation: Moderation,
+) : ViewModel() {
+    // The same account with a replaced credential keeps its lists; a switch starts them anew.
+    private val active: Flow<StoredAccount> = accounts.account
+        .filterNotNull()
+        .distinctUntilChangedBy { it.site to it.credential }
+
+    private val query = MutableStateFlow("")
+    private val searchRetries = MutableStateFlow(0)
+    private val topicRefreshes = MutableStateFlow(0)
+
+    private val _selected = MutableStateFlow<String?>(null)
+
+    /** The topic slug whose accounts are listed; null is "For you". */
+    val selected: StateFlow<String?> = _selected.asStateFlow()
+
+    private val _following = MutableStateFlow<Map<String, Boolean>>(emptyMap())
+
+    /** Follow state the user changed here, by lower-case handle; it wins over what a list was loaded with. */
+    val following: StateFlow<Map<String, Boolean>> = _following.asStateFlow()
+
+    // Counts account switches, so a follow that fails after one doesn't touch the new account's state.
+    private var generation = 0
+    private val inFlight = HashSet<String>()
+
+    private val followFailures = MutableSharedFlow<Int>(extraBufferCapacity = 1)
+
+    /** String resources to show in a snackbar. */
+    val messages: Flow<Int> = followFailures
+
+    init {
+        // Who an account follows, and which topic was open, say nothing about another account.
+        accounts.activeId
+            .onEach {
+                generation++
+                _selected.value = null
+                _following.value = emptyMap()
+            }
+            .launchIn(viewModelScope)
+    }
+
+    val search: StateFlow<SearchUiState> = combine(
+        combine(active, query, searchRetries) { account, text, _ -> account to text }
+            .flatMapLatest { (account, text) ->
+                flow {
+                    if (text.length < MIN_QUERY_LENGTH) {
+                        emit(SearchUiState.Idle)
+                        return@flow
+                    }
+                    // Typing restarts this flow, so only a pause in typing gets as far as the service.
+                    delay(DEBOUNCE_MILLIS)
+                    emit(SearchUiState.Loading)
+                    emit(
+                        try {
+                            SearchUiState.Found(
+                                activityPub.searchAccounts(account.site, account.credential, text)
+                                    .filterNot { account.isMe(it.handle) }
+                                    .distinctBy { it.handle },
+                            )
+                        } catch (e: SocialWebException) {
+                            SearchUiState.Failed(e)
+                        } catch (e: GhostException) {
+                            SearchUiState.Failed(e)
+                        },
+                    )
+                }
+            },
+        moderation.hidden,
+    ) { state, hidden ->
+        if (state is SearchUiState.Found) {
+            state.copy(accounts = state.accounts.filterNot { hidden.hides(it) })
+        } else {
+            state
+        }
+    // Kept running while a profile opened from the results is on top, so they're there, not loading, on the way back.
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, SearchUiState.Idle)
+
+    /**
+     * The service's topics; empty until the first load, or when it fails, which leaves just "For you".
+     * A failed reload keeps the topics already shown, but never those of another account.
+     */
+    val topics: StateFlow<List<Topic>> = combine(active, topicRefreshes) { account, _ -> account }
+        .mapLatest { account ->
+            val loaded = try {
+                activityPub.topics(account.site, account.credential)
+            } catch (_: SocialWebException) {
+                null
+            } catch (_: GhostException) {
+                null
+            }
+            // A topic the service no longer lists can't be left selected, with no chip to show it.
+            if (loaded != null && _selected.value != null && loaded.none { it.slug == _selected.value }) {
+                _selected.value = null
+            }
+            (account.site to account.credential) to loaded
+        }
+        .runningFold(null as Pair<Any, List<Topic>>?) { shown, (owner, loaded) ->
+            when {
+                loaded != null -> owner to loaded
+                shown?.first == owner -> shown
+                else -> owner to emptyList()
+            }
+        }
+        .map { it?.second.orEmpty() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+
+    // Each topic or account starts with an empty list that is loading: paging keeps the previous
+    // generation's items until the new one's first refresh arrives, which would leave the old topic
+    // under the new chip and hide a failed load from the error state (it needs no items). A pull to
+    // refresh of the same topic goes through the pager's own refresh and so never passes this.
+    val suggestions: Flow<PagingData<SuggestedAccount>> = combine(active, _selected) { account, slug -> account to slug }
+        .flatMapLatest { (account, slug) ->
+            Pager(PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false)) {
+                SuggestionsPagingSource { next ->
+                    val page = if (slug == null) {
+                        // One list, with no further pages.
+                        SuggestedAccountsPage(activityPub.recommendations(account.site, account.credential, PAGE_SIZE))
+                    } else {
+                        activityPub.explore(account.site, account.credential, slug, next)
+                    }
+                    page.copy(accounts = page.accounts.filterNot { account.isMe(it.handle) })
+                }
+            }.flow.onStart { emit(PagingData.empty(LOADING_STATES)) }
+        }
+        .cachedIn(viewModelScope)
+        .combine(moderation.hidden) { data, hidden ->
+            if (hidden.isEmpty) data else data.filter { !hidden.hides(it.toAuthor()) }
+        }
+
+    /** Sets what the search field holds; the service is asked once typing pauses. */
+    fun setQuery(text: String) {
+        query.value = text.trim()
+    }
+
+    fun retrySearch() = searchRetries.update { it + 1 }
+
+    /** Picks the topic to list, or "For you" for null. */
+    fun select(slug: String?) {
+        if (_selected.value == slug) return
+        // The list that loads next is the service's current word on who is followed.
+        _following.value = emptyMap()
+        _selected.value = slug
+    }
+
+    /**
+     * Asks for the topics again and drops the follow changes made here, since a follow made
+     * elsewhere (a profile) would otherwise stay masked; the list of accounts reloads through
+     * its own refresh.
+     */
+    fun refresh() {
+        _following.value = emptyMap()
+        topicRefreshes.update { it + 1 }
+    }
+
+    /** Follows or unfollows [author] at once, rolling back with a message if the service refuses. */
+    fun toggleFollow(author: Author) {
+        val key = author.handle.lowercase()
+        if (!inFlight.add(key)) return
+        val before = _following.value[key] ?: author.followedByMe
+        val after = !before
+        val startedIn = generation
+        _following.update { it + (key to after) }
+        viewModelScope.launch {
+            try {
+                val account = accounts.account.first() ?: throw GhostException.Unauthorized(null)
+                if (after) {
+                    activityPub.follow(account.site, account.credential, author.handle)
+                } else {
+                    activityPub.unfollow(account.site, account.credential, author.handle)
+                }
+            } catch (e: SocialWebException) {
+                // 409: already in the requested state on the service.
+                if (e.status != 409) rollBack(key, before, startedIn)
+            } catch (_: GhostException) {
+                rollBack(key, before, startedIn)
+            } finally {
+                inFlight.remove(key)
+            }
+        }
+    }
+
+    private suspend fun rollBack(key: String, before: Boolean, startedIn: Int) {
+        if (startedIn != generation) return
+        _following.update { it + (key to before) }
+        followFailures.emit(R.string.follow_failed)
+    }
+
+    private fun StoredAccount.isMe(handle: String) = handle.equals(profile.handle, ignoreCase = true)
+
+    private companion object {
+        /** The service searches from two characters on. */
+        const val MIN_QUERY_LENGTH = 2
+        const val DEBOUNCE_MILLIS = 300L
+        const val PAGE_SIZE = 20
+
+        /** A first load in flight, with nothing yet to show. */
+        val LOADING_STATES = LoadStates(
+            refresh = LoadState.Loading,
+            prepend = LoadState.NotLoading(endOfPaginationReached = false),
+            append = LoadState.NotLoading(endOfPaginationReached = false),
+        )
+    }
+}
+
+/** Pages through the accounts of a topic with the service's offset cursor, each account once. */
+private class SuggestionsPagingSource(
+    private val loadPage: suspend (next: String?) -> SuggestedAccountsPage,
+) : PagingSource<String, SuggestedAccount>() {
+    // Lists can shift between pages; LazyColumn keys must stay unique.
+    private val seen = HashSet<String>()
+
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, SuggestedAccount> = try {
+        val page = loadPage(params.key)
+        LoadResult.Page(data = page.accounts.filter { seen.add(it.handle) }, prevKey = null, nextKey = page.next)
+    } catch (e: GhostException) {
+        LoadResult.Error(e)
+    } catch (e: SocialWebException) {
+        LoadResult.Error(e)
+    }
+
+    override fun getRefreshKey(state: PagingState<String, SuggestedAccount>): String? = null
+}

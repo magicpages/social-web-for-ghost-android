@@ -1,0 +1,23 @@
+Social Web porta il social web del tuo sito Ghost su Android.
+
+Ghost 6 collega il tuo sito al social web aperto (ActivityPub): le persone su Mastodon, WordPress, altri siti Ghost e il resto del fediverso possono seguirti, e tu puoi seguire loro. Social Web è un modo veloce e nativo per restare aggiornati e partecipare.
+
+• Note: brevi post di tutte le persone che segui. Metti Mi piace, ripubblica, cita e rispondi.
+• Lettore: articoli lunghi delle pubblicazioni che segui, in una vista di lettura pulita con audio e video.
+• Pubblica note con foto e testo alternativo, dal profilo del tuo sito.
+• Notifiche: Mi piace, ripubblicazioni, risposte, menzioni e nuovi follower, ben raggruppati. Scegli quali vengono segnalati in background.
+• Traduci note e articoli nella tua lingua, direttamente sul dispositivo.
+• Trova e segui persone e pubblicazioni su qualsiasi server del fediverso.
+• Tutti i tuoi siti Ghost in un’unica app. Passa dall’uno all’altro con un tocco.
+• Condividi un link, un testo selezionato o una foto da qualsiasi app per iniziare una nota (un’immagine, con testo alternativo).
+• Le GIF animate e altre immagini animate si riproducono direttamente nella timeline.
+• Schede di anteprima dei link nelle note e mentre scrivi.
+• Su tablet, pieghevoli e in orizzontale, una discussione o un profilo si apre accanto alla timeline.
+• Iscritti: accedi come iscritto a un sito per leggere i suoi post riservati agli iscritti.
+• Consiglia altri siti ai tuoi lettori, direttamente dal loro profilo.
+• Blocca account o interi server e segnala post e persone.
+• Colori dal colore d’accento del tuo sito, dallo sfondo o da un colore a tua scelta.
+
+Requisiti: un sito Ghost 6 con il social web attivo e un account Proprietario o Amministratore su di esso. Accedi al tuo sito; non serve creare un nuovo account.
+
+Social Web è un’app indipendente, non realizzata da Ghost Foundation né affiliata a essa. Ghost è un marchio di Ghost Foundation.

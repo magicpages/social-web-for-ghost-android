@@ -1,0 +1,23 @@
+Social Web lleva la web social de tu sitio Ghost a Android.
+
+Ghost 6 conecta tu sitio con la web social abierta (ActivityPub): las personas de Mastodon, WordPress, otros sitios Ghost y el resto del fediverso pueden seguirte, y tú puedes seguirlas. Social Web es una forma rápida y nativa de estar al día y participar.
+
+• Notas: publicaciones cortas de todas las personas a las que sigues. Da me gusta, republica, cita y responde.
+• Lector: artículos largos de las publicaciones que sigues, en una vista de lectura limpia con audio y vídeo.
+• Publica notas con fotos y texto alternativo, desde el perfil de tu sitio.
+• Notificaciones: me gusta, republicaciones, respuestas, menciones y nuevos seguidores, bien agrupados. Elige cuáles se avisan en segundo plano.
+• Traduce notas y artículos a tu idioma, en tu propio dispositivo.
+• Encuentra y sigue a personas y publicaciones de cualquier servidor del fediverso.
+• Todos tus sitios Ghost en una sola app. Cambia de uno a otro con un toque.
+• Comparte un enlace, un texto seleccionado o una foto desde cualquier app para empezar una nota (una imagen, con texto alternativo).
+• Los GIF animados y otras imágenes animadas se reproducen directamente en la cronología.
+• Tarjetas de vista previa de enlaces en las notas y mientras escribes.
+• En tabletas, plegables y en horizontal, un hilo o perfil se abre junto a la cronología.
+• Miembros: inicia sesión como miembro de un sitio para leer sus artículos solo para miembros.
+• Recomienda otros sitios a tus lectores, directamente desde su perfil.
+• Bloquea cuentas o servidores enteros y denuncia publicaciones y personas.
+• Colores a partir del color de acento de tu sitio, tu fondo de pantalla o un color que elijas.
+
+Requisitos: un sitio Ghost 6 con la web social activada y una cuenta de propietario o administrador en él. Inicias sesión en tu propio sitio; no hay que crear una cuenta nueva.
+
+Social Web es una app independiente, no creada por la Ghost Foundation ni afiliada a ella. Ghost es una marca registrada de la Ghost Foundation.

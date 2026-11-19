@@ -1,0 +1,20 @@
+.gradle/
+.kotlin/
+build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+captures/
+
+# Release signing: never commit keys or their passwords.
+keystore.properties
+*.jks
+*.keystore
+play-key.json
+.env
+
+# Build outputs that sometimes get copied out of build/.
+*.aab
+*.apk
+*.hprof

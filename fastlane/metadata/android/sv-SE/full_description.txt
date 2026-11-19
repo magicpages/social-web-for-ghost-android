@@ -1,0 +1,23 @@
+Social Web tar din Ghost-webbplats sociala webb till Android.
+
+Ghost 6 kopplar din webbplats till den öppna sociala webben (ActivityPub): människor på Mastodon, WordPress, andra Ghost-webbplatser och resten av fediversum kan följa dig, och du kan följa dem. Social Web är ett snabbt, inbyggt sätt att hänga med och delta.
+
+• Anteckningar: korta inlägg från alla du följer. Gilla, dela vidare, citera och svara.
+• Läsare: långa artiklar från publikationerna du följer, i en ren läsvy med ljud och video.
+• Posta anteckningar med bilder och alternativtext, från din webbplats egen profil.
+• Aviseringar: gillningar, delningar, svar, omnämnanden och nya följare, snyggt grupperade. Välj vilka som aviseras i bakgrunden.
+• Översätt anteckningar och artiklar till ditt språk, på din enhet.
+• Hitta och följ personer och publikationer på vilken fediversum-server som helst.
+• Alla dina Ghost-webbplatser i en app. Växla mellan dem med ett tryck.
+• Dela en länk, markerad text eller ett foto från vilken app som helst för att börja en anteckning (en bild, med alternativtext).
+• Animerade GIF:ar och andra animerade bilder spelas direkt i tidslinjen.
+• Länkförhandsvisningar i anteckningar och medan du skriver.
+• På surfplattor, vikbara enheter och i liggande läge öppnas en tråd eller profil bredvid tidslinjen.
+• Medlemmar: logga in som medlem på en webbplats för att läsa dess inlägg för medlemmar.
+• Rekommendera andra webbplatser till dina läsare, direkt från deras profil.
+• Blockera konton eller hela servrar och rapportera inlägg och personer.
+• Färger från webbplatsens accentfärg, din bakgrundsbild eller en färg du väljer.
+
+Krav: en Ghost 6-webbplats med sociala webben påslagen och ett ägar- eller administratörskonto på den. Du loggar in på din egen webbplats; inget nytt konto behövs.
+
+Social Web är en oberoende app som inte är gjord av eller ansluten till Ghost Foundation. Ghost är ett varumärke som tillhör Ghost Foundation.
