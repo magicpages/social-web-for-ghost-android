@@ -183,6 +183,14 @@
     <string name="note_posted">Notatka opublikowana</string>
     <string name="note_failed">Nie udało się opublikować notatki.</string>
     <string name="note_add_image">Dodaj obraz</string>
+    <string name="gif_add">Dodaj GIF</string>
+    <string name="gif_picker_title">GIF-y</string>
+    <string name="gif_search">Szukaj w KLIPY</string>
+    <string name="gif_none_found">Nie znaleziono GIF-ów</string>
+    <string name="gif_error_status">KLIPY zwrócił błąd (%1$d).</string>
+    <string name="gif_error_network">Nie można połączyć się z KLIPY.</string>
+    <string name="gif_error_too_large">Ten GIF jest za duży, by go załączyć.</string>
+    <string name="gif_error_save">Nie można dodać tego GIF-a.</string>
     <string name="note_remove_image">Usuń obraz</string>
     <string name="note_alt_hint">Opisz, co jest na obrazie, dla osób, które go nie widzą</string>
     <string name="note_alt_title">Opis obrazu</string>

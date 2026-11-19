@@ -165,6 +165,14 @@
     <string name="note_posted">筆記已發布</string>
     <string name="note_failed">無法發布你的筆記。</string>
     <string name="note_add_image">新增圖片</string>
+    <string name="gif_add">新增 GIF</string>
+    <string name="gif_picker_title">GIF</string>
+    <string name="gif_search">搜尋 KLIPY</string>
+    <string name="gif_none_found">找不到 GIF</string>
+    <string name="gif_error_status">KLIPY 傳回錯誤（%1$d）。</string>
+    <string name="gif_error_network">無法連線至 KLIPY。</string>
+    <string name="gif_error_too_large">此 GIF 太大，無法附加。</string>
+    <string name="gif_error_save">無法新增此 GIF。</string>
     <string name="note_remove_image">移除圖片</string>
     <string name="note_alt_hint">為看不到圖片的人描述圖片內容</string>
     <string name="note_alt_title">圖片說明</string>

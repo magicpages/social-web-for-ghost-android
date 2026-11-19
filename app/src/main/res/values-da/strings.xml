@@ -171,6 +171,14 @@
     <string name="note_posted">Note slået op</string>
     <string name="note_failed">Kunne ikke slå din note op.</string>
     <string name="note_add_image">Tilføj billede</string>
+    <string name="gif_add">Tilføj GIF</string>
+    <string name="gif_picker_title">GIF\'er</string>
+    <string name="gif_search">Søg på KLIPY</string>
+    <string name="gif_none_found">Ingen GIF\'er fundet</string>
+    <string name="gif_error_status">KLIPY returnerede en fejl (%1$d).</string>
+    <string name="gif_error_network">Kunne ikke nå KLIPY.</string>
+    <string name="gif_error_too_large">Denne GIF er for stor til at vedhæfte.</string>
+    <string name="gif_error_save">Kunne ikke tilføje denne GIF.</string>
     <string name="note_remove_image">Fjern billede</string>
     <string name="note_alt_hint">Beskriv, hvad der er på billedet, til folk der ikke kan se det</string>
     <string name="note_alt_title">Billedbeskrivelse</string>

@@ -171,6 +171,14 @@
     <string name="note_posted">Muistiinpano julkaistu</string>
     <string name="note_failed">Muistiinpanoa ei voitu julkaista.</string>
     <string name="note_add_image">Lisää kuva</string>
+    <string name="gif_add">Lisää GIF</string>
+    <string name="gif_picker_title">GIFit</string>
+    <string name="gif_search">Hae KLIPYstä</string>
+    <string name="gif_none_found">GIFejä ei löytynyt</string>
+    <string name="gif_error_status">KLIPY palautti virheen (%1$d).</string>
+    <string name="gif_error_network">KLIPYyn ei saatu yhteyttä.</string>
+    <string name="gif_error_too_large">Tämä GIF on liian suuri liitettäväksi.</string>
+    <string name="gif_error_save">Tätä GIFiä ei voitu lisätä.</string>
     <string name="note_remove_image">Poista kuva</string>
     <string name="note_alt_hint">Kuvaile, mitä kuvassa on, niille jotka eivät näe sitä</string>
     <string name="note_alt_title">Kuvaus kuvasta</string>

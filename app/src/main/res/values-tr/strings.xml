@@ -171,6 +171,14 @@
     <string name="note_posted">Not paylaşıldı</string>
     <string name="note_failed">Notunuz paylaşılamadı.</string>
     <string name="note_add_image">Görsel ekle</string>
+    <string name="gif_add">GIF ekle</string>
+    <string name="gif_picker_title">GIF\'ler</string>
+    <string name="gif_search">KLIPY\'de ara</string>
+    <string name="gif_none_found">GIF bulunamadı</string>
+    <string name="gif_error_status">KLIPY bir hata döndürdü (%1$d).</string>
+    <string name="gif_error_network">KLIPY\'ye ulaşılamadı.</string>
+    <string name="gif_error_too_large">Bu GIF eklenemeyecek kadar büyük.</string>
+    <string name="gif_error_save">Bu GIF eklenemedi.</string>
     <string name="note_remove_image">Görseli kaldır</string>
     <string name="note_alt_hint">Görseli göremeyen kişiler için görselde ne olduğunu açıklayın</string>
     <string name="note_alt_title">Görsel açıklaması</string>

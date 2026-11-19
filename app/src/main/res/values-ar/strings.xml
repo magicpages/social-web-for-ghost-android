@@ -195,6 +195,14 @@
     <string name="note_posted">تم نشر الملاحظة</string>
     <string name="note_failed">تعذّر نشر ملاحظتك.</string>
     <string name="note_add_image">إضافة صورة</string>
+    <string name="gif_add">إضافة GIF</string>
+    <string name="gif_picker_title">صور GIF</string>
+    <string name="gif_search">البحث في KLIPY</string>
+    <string name="gif_none_found">لم يُعثر على صور GIF</string>
+    <string name="gif_error_status">أعاد KLIPY خطأ (%1$d).</string>
+    <string name="gif_error_network">تعذّر الوصول إلى KLIPY.</string>
+    <string name="gif_error_too_large">صورة GIF هذه كبيرة جدًا لإرفاقها.</string>
+    <string name="gif_error_save">تعذّرت إضافة صورة GIF هذه.</string>
     <string name="note_remove_image">إزالة الصورة</string>
     <string name="note_alt_hint">صِف محتوى الصورة للأشخاص الذين لا يستطيعون رؤيتها</string>
     <string name="note_alt_title">وصف الصورة</string>

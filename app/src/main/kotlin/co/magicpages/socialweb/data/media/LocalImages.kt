@@ -48,13 +48,19 @@ class LocalImages @Inject constructor(@ApplicationContext private val context: C
             Result.UnsupportedType -> return Staged.Rejected(ImageRejection.UnsupportedType)
             Result.Unreadable -> return Staged.Rejected(ImageRejection.Unreadable)
         }
+        return stage(image.bytes, image.mimeType)
+    }
+
+    /** Saves [bytes] of a type the service accepts (a downloaded GIF, say) where [load] reads it as a `file:` Uri. */
+    suspend fun stage(bytes: ByteArray, mimeType: String): Staged {
+        val extension = FILE_EXTENSIONS[mimeType] ?: return Staged.Rejected(ImageRejection.UnsupportedType)
         return withContext(Dispatchers.IO) {
             try {
                 val dir = stagingDir().apply { mkdirs() }
                 val cutoff = System.currentTimeMillis() - STAGING_MAX_AGE_MS
                 dir.listFiles()?.forEach { if (it.lastModified() < cutoff) it.delete() }
-                val file = File(dir, "${UUID.randomUUID()}.${FILE_EXTENSIONS.getValue(image.mimeType)}")
-                file.writeBytes(image.bytes)
+                val file = File(dir, "${UUID.randomUUID()}.$extension")
+                file.writeBytes(bytes)
                 Staged.Ready(Uri.fromFile(file).toString())
             } catch (_: IOException) {
                 Staged.Rejected(ImageRejection.Unreadable)

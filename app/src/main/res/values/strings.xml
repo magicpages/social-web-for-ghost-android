@@ -221,6 +221,14 @@
     <string name="note_posted">Note posted</string>
     <string name="note_failed">Couldn\'t post your note.</string>
     <string name="note_add_image">Add image</string>
+    <string name="gif_add">Add GIF</string>
+    <string name="gif_picker_title">GIFs</string>
+    <string name="gif_search">Search KLIPY</string>
+    <string name="gif_none_found">No GIFs found</string>
+    <string name="gif_error_status">KLIPY returned an error (%1$d).</string>
+    <string name="gif_error_network">Couldn\'t reach KLIPY.</string>
+    <string name="gif_error_too_large">This GIF is too large to attach.</string>
+    <string name="gif_error_save">Couldn\'t add this GIF.</string>
     <string name="note_remove_image">Remove image</string>
     <string name="note_alt_hint">Describe what\'s in the image for people who can\'t see it</string>
     <string name="note_alt_title">Image description</string>

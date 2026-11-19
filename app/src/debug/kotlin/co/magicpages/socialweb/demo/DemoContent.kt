@@ -24,6 +24,24 @@ internal object DemoContent {
     /** The asset name behind [url] when it is one of [image]'s addresses. */
     fun imageName(url: String): String? = url.removePrefix(ImageBase).takeIf { it != url }?.removeSuffix(".webp")
 
+    private const val GifBase = "https://demo.example/gifs/"
+
+    /** The address of the bundled `assets/demo/gifs/<name>.gif`. */
+    fun gif(name: String) = "$GifBase$name.gif"
+
+    /** The asset name behind [url] when it is one of [gif]'s addresses. */
+    fun gifName(url: String): String? = url.removePrefix(GifBase).takeIf { it != url }?.removeSuffix(".gif")
+
+    /** What the demo's KLIPY finds: bundled GIFs by asset name, with what each shows. */
+    val gifs = listOf(
+        "note-coast-1" to "Sun rising over the hills",
+        "note-coast-3" to "Waves rolling in",
+        "article-harbour" to "Boats in the harbour",
+        "note-dusk" to "Dusk over the sea",
+        "note-rain-1" to "Rain on the window",
+        "note-ridge" to "Clouds over the ridge",
+    )
+
     class Persona(
         val key: String,
         val name: String,

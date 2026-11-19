@@ -171,6 +171,14 @@
     <string name="note_posted">Notatet er publisert</string>
     <string name="note_failed">Kunne ikke publisere notatet ditt.</string>
     <string name="note_add_image">Legg til bilde</string>
+    <string name="gif_add">Legg til GIF</string>
+    <string name="gif_picker_title">GIF-er</string>
+    <string name="gif_search">Søk på KLIPY</string>
+    <string name="gif_none_found">Fant ingen GIF-er</string>
+    <string name="gif_error_status">KLIPY returnerte en feil (%1$d).</string>
+    <string name="gif_error_network">Fikk ikke kontakt med KLIPY.</string>
+    <string name="gif_error_too_large">Denne GIF-en er for stor til å legges ved.</string>
+    <string name="gif_error_save">Kunne ikke legge til denne GIF-en.</string>
     <string name="note_remove_image">Fjern bilde</string>
     <string name="note_alt_hint">Beskriv hva som er på bildet, for folk som ikke kan se det</string>
     <string name="note_alt_title">Bildebeskrivelse</string>

@@ -171,6 +171,14 @@
     <string name="note_posted">Notitie geplaatst</string>
     <string name="note_failed">Je notitie kan niet worden geplaatst.</string>
     <string name="note_add_image">Afbeelding toevoegen</string>
+    <string name="gif_add">GIF toevoegen</string>
+    <string name="gif_picker_title">GIF\'s</string>
+    <string name="gif_search">Zoeken op KLIPY</string>
+    <string name="gif_none_found">Geen GIF\'s gevonden</string>
+    <string name="gif_error_status">KLIPY gaf een fout (%1$d).</string>
+    <string name="gif_error_network">Kan KLIPY niet bereiken.</string>
+    <string name="gif_error_too_large">Deze GIF is te groot om toe te voegen.</string>
+    <string name="gif_error_save">Kan deze GIF niet toevoegen.</string>
     <string name="note_remove_image">Afbeelding verwijderen</string>
     <string name="note_alt_hint">Beschrijf wat er op de afbeelding staat voor mensen die het niet kunnen zien</string>
     <string name="note_alt_title">Afbeeldingsbeschrijving</string>

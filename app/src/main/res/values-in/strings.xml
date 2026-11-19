@@ -165,6 +165,14 @@
     <string name="note_posted">Catatan diposting</string>
     <string name="note_failed">Gagal memposting catatan Anda.</string>
     <string name="note_add_image">Tambahkan gambar</string>
+    <string name="gif_add">Tambahkan GIF</string>
+    <string name="gif_picker_title">GIF</string>
+    <string name="gif_search">Cari di KLIPY</string>
+    <string name="gif_none_found">Tidak ada GIF ditemukan</string>
+    <string name="gif_error_status">KLIPY mengembalikan kesalahan (%1$d).</string>
+    <string name="gif_error_network">Tidak dapat menghubungi KLIPY.</string>
+    <string name="gif_error_too_large">GIF ini terlalu besar untuk dilampirkan.</string>
+    <string name="gif_error_save">Tidak dapat menambahkan GIF ini.</string>
     <string name="note_remove_image">Hapus gambar</string>
     <string name="note_alt_hint">Jelaskan isi gambar untuk orang yang tidak dapat melihatnya</string>
     <string name="note_alt_title">Deskripsi gambar</string>

@@ -183,6 +183,14 @@
     <string name="note_posted">Нотатку опубліковано</string>
     <string name="note_failed">Не вдалося опублікувати нотатку.</string>
     <string name="note_add_image">Додати зображення</string>
+    <string name="gif_add">Додати GIF</string>
+    <string name="gif_picker_title">GIF</string>
+    <string name="gif_search">Шукати в KLIPY</string>
+    <string name="gif_none_found">GIF не знайдено</string>
+    <string name="gif_error_status">KLIPY повернув помилку (%1$d).</string>
+    <string name="gif_error_network">Не вдалося зв’язатися з KLIPY.</string>
+    <string name="gif_error_too_large">Цей GIF завеликий, щоб його додати.</string>
+    <string name="gif_error_save">Не вдалося додати цей GIF.</string>
     <string name="note_remove_image">Вилучити зображення</string>
     <string name="note_alt_hint">Опишіть, що на зображенні, для людей, які його не бачать</string>
     <string name="note_alt_title">Опис зображення</string>

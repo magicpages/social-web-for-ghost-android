@@ -183,6 +183,14 @@
     <string name="note_posted">Poznámka publikována</string>
     <string name="note_failed">Poznámku se nepodařilo publikovat.</string>
     <string name="note_add_image">Přidat obrázek</string>
+    <string name="gif_add">Přidat GIF</string>
+    <string name="gif_picker_title">GIFy</string>
+    <string name="gif_search">Hledat v KLIPY</string>
+    <string name="gif_none_found">Žádné GIFy nenalezeny</string>
+    <string name="gif_error_status">KLIPY vrátil chybu (%1$d).</string>
+    <string name="gif_error_network">Nelze se spojit s KLIPY.</string>
+    <string name="gif_error_too_large">Tento GIF je příliš velký na přiložení.</string>
+    <string name="gif_error_save">Tento GIF nelze přidat.</string>
     <string name="note_remove_image">Odebrat obrázek</string>
     <string name="note_alt_hint">Popište, co je na obrázku, pro lidi, kteří ho nevidí</string>
     <string name="note_alt_title">Popis obrázku</string>

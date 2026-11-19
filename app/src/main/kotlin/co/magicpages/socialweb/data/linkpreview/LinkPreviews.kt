@@ -141,7 +141,8 @@ private fun charsetOf(contentType: String): Charset =
         ?.let { name -> try { Charset.forName(name) } catch (_: IllegalArgumentException) { null } }
         ?: Charsets.UTF_8
 
-private suspend fun ByteReadChannel.readUpTo(limit: Int): ByteArray {
+/** Reads at most [limit] bytes; the rest of the body is left unread. */
+internal suspend fun ByteReadChannel.readUpTo(limit: Int): ByteArray {
     val out = ByteArrayOutputStream()
     val buffer = ByteArray(8 * 1024)
     while (out.size() < limit) {

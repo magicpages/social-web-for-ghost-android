@@ -171,6 +171,14 @@
     <string name="note_posted">नोट पोस्ट हो गया</string>
     <string name="note_failed">आपका नोट पोस्ट नहीं हो सका।</string>
     <string name="note_add_image">इमेज जोड़ें</string>
+    <string name="gif_add">GIF जोड़ें</string>
+    <string name="gif_picker_title">GIF</string>
+    <string name="gif_search">KLIPY में खोजें</string>
+    <string name="gif_none_found">कोई GIF नहीं मिला</string>
+    <string name="gif_error_status">KLIPY ने त्रुटि लौटाई (%1$d)।</string>
+    <string name="gif_error_network">KLIPY तक नहीं पहुँच सके।</string>
+    <string name="gif_error_too_large">यह GIF जोड़ने के लिए बहुत बड़ा है।</string>
+    <string name="gif_error_save">यह GIF नहीं जोड़ा जा सका।</string>
     <string name="note_remove_image">इमेज हटाएँ</string>
     <string name="note_alt_hint">जो लोग इमेज नहीं देख सकते, उनके लिए बताएँ कि इमेज में क्या है</string>
     <string name="note_alt_title">इमेज का विवरण</string>

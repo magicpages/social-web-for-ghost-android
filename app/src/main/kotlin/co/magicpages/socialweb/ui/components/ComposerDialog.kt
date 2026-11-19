@@ -175,7 +175,7 @@ fun ComposerFailure(message: String, modifier: Modifier = Modifier) {
 
 /** A dialog window draws its own system bars: give them icons that show on this surface. */
 @Composable
-private fun DialogSystemBars() {
+internal fun DialogSystemBars() {
     val view = LocalView.current
     val light = MaterialTheme.colorScheme.surface.luminance() > 0.5f
     SideEffect {

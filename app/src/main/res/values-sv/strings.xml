@@ -171,6 +171,14 @@
     <string name="note_posted">Anteckningen har publicerats</string>
     <string name="note_failed">Det gick inte att publicera din anteckning.</string>
     <string name="note_add_image">Lägg till bild</string>
+    <string name="gif_add">Lägg till GIF</string>
+    <string name="gif_picker_title">GIF:ar</string>
+    <string name="gif_search">Sök på KLIPY</string>
+    <string name="gif_none_found">Inga GIF:ar hittades</string>
+    <string name="gif_error_status">KLIPY returnerade ett fel (%1$d).</string>
+    <string name="gif_error_network">Kunde inte nå KLIPY.</string>
+    <string name="gif_error_too_large">Den här GIF:en är för stor för att bifogas.</string>
+    <string name="gif_error_save">Kunde inte lägga till den här GIF:en.</string>
     <string name="note_remove_image">Ta bort bild</string>
     <string name="note_alt_hint">Beskriv vad som syns i bilden för personer som inte kan se den</string>
     <string name="note_alt_title">Bildbeskrivning</string>

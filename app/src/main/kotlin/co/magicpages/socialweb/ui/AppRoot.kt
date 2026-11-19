@@ -56,6 +56,7 @@ import co.magicpages.socialweb.data.activitypub.Moderation
 import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.data.ghost.GhostAdminClient
 import co.magicpages.socialweb.data.ghost.GhostException
+import co.magicpages.socialweb.data.gif.Gifs
 import co.magicpages.socialweb.data.linkpreview.LinkPreviews
 import co.magicpages.socialweb.data.settings.AppSettings
 import co.magicpages.socialweb.ui.about.AboutScreen
@@ -63,6 +64,7 @@ import co.magicpages.socialweb.ui.about.LicensesScreen
 import co.magicpages.socialweb.ui.components.CustomEmojiSource
 import co.magicpages.socialweb.ui.components.ImageViewerHost
 import co.magicpages.socialweb.ui.components.LocalCustomEmojis
+import co.magicpages.socialweb.ui.components.LocalGifs
 import co.magicpages.socialweb.ui.components.LocalLinkPreviews
 import co.magicpages.socialweb.ui.components.LocalMentionDirectory
 import co.magicpages.socialweb.ui.components.LocalOwnProfile
@@ -168,6 +170,8 @@ class AppViewModel @Inject constructor(
     val moderation: Moderation,
     /** Link cards in posts and the composer, through [LocalLinkPreviews]. */
     val linkPreviews: LinkPreviews,
+    /** GIF search in composers, through [LocalGifs]. */
+    val gifs: Gifs,
 ) : ViewModel() {
     private var generation = 0
 
@@ -251,6 +255,7 @@ fun AppRoot(viewModel: AppViewModel = hiltViewModel()) {
             LocalMentionDirectory provides viewModel.mentionDirectory,
             LocalModeration provides viewModel.moderation,
             LocalLinkPreviews provides viewModel.linkPreviews,
+            LocalGifs provides viewModel.gifs,
         ) {
             ImageViewerHost {
                 NoteComposerScope(viewModel.noteComposer, viewModel.sharedContent) {

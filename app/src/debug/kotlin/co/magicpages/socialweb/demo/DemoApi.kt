@@ -51,8 +51,9 @@ import okio.Buffer
  * follows, replies, new notes and picture uploads work for as long as the process lives.
  *
  * Only reached through [DemoModule]'s interceptor while [DemoMode] is on. A request to a host outside
- * the demo world (the `.example` hosts and the signed-in site's own domain) fails like a missing
- * network, and the demo world's hosts are answered here, so a demo never leaks anything.
+ * the demo world (the `.example` hosts, the signed-in site's own domain and KLIPY's API, answered
+ * from bundled GIFs) fails like a missing network, and the demo world's hosts are answered here, so
+ * a demo never leaks anything.
  */
 @Singleton
 class DemoApi @Inject constructor(@ApplicationContext private val context: Context) {
@@ -81,7 +82,9 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
     /** Answers [request], or throws an [IOException] for a host outside the demo world. */
     fun respond(request: Request): Response {
         val host = request.url.host
-        if (!host.endsWith(".example") && host != DemoContent.me.domain) throw IOException("Demo mode has no network access to $host")
+        if (!host.endsWith(".example") && host != DemoContent.me.domain && host != KlipyHost) {
+            throw IOException("Demo mode has no network access to $host")
+        }
         val path = request.url.encodedPath
         val answer = image(host, path) ?: synchronized(this) { route(request, host, path) }
         val now = System.currentTimeMillis()
@@ -109,6 +112,14 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
                 notFound()
             }
         }
+        DemoContent.gifName("https://$host$path")?.let { name ->
+            if (!name.matches(Regex("[a-z0-9-]+"))) return notFound()
+            return try {
+                Answer(200, context.assets.open("demo/gifs/$name.gif").use { it.readBytes() }, "image/gif")
+            } catch (_: IOException) {
+                notFound()
+            }
+        }
         if (path.startsWith("/content/images/")) {
             val upload = synchronized(this) { uploads[path.removePrefix("/content/images/")] } ?: return notFound()
             return Answer(200, upload.bytes, upload.mime)
@@ -117,9 +128,46 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
     }
 
     private fun route(request: Request, host: String, path: String): Answer = when {
+        host == KlipyHost -> klipy(request, path)
         path.startsWith(ActivityPubPath) -> activityPub(request, host, path.removePrefix(ActivityPubPath))
         path.startsWith(AdminPath) -> admin(request, host, path.removePrefix(AdminPath))
         else -> publicPage(request, host, path)
+    }
+
+    /**
+     * KLIPY's `featured` and `search`, from [DemoContent.gifs]: a search finds the GIFs whose
+     * description has the term in it. Everything fits on one page.
+     */
+    private fun klipy(request: Request, path: String): Answer {
+        val term = request.url.queryParameter("q").orEmpty().trim().lowercase()
+        val found = when (path) {
+            "/v2/featured" -> DemoContent.gifs
+            "/v2/search" -> DemoContent.gifs.filter { (_, title) -> term in title.lowercase() }
+            else -> return notFound()
+        }
+        return answerJson(
+            buildJsonObject {
+                putJsonArray("results") {
+                    for ((name, title) in found) {
+                        val media = buildJsonObject {
+                            put("url", DemoContent.gif(name))
+                            putJsonArray("dims") {
+                                add(JsonPrimitive(200))
+                                add(JsonPrimitive(150))
+                            }
+                        }
+                        add(
+                            buildJsonObject {
+                                put("id", name)
+                                put("content_description", title)
+                                put("media_formats", buildJsonObject { put("gif", media) })
+                            },
+                        )
+                    }
+                }
+                put("next", "")
+            },
+        )
     }
 
     private fun activityPub(request: Request, host: String, rest: String): Answer {
@@ -427,6 +475,17 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
                     putJsonArray("identities") { add(buildJsonObject { put("token", "demo.demo.demo") }) }
                 },
             )
+            // A KLIPY key turns on the composers' GIF button; the demo's KLIPY is answered by [klipy].
+            "config" -> answerJson(
+                buildJsonObject {
+                    put(
+                        "config",
+                        buildJsonObject {
+                            put("klipy", buildJsonObject { put("apiKey", "demo"); put("contentFilter", "off") })
+                        },
+                    )
+                },
+            )
             "recommendations" -> adminRecommendations(request, parts)
             else -> notFound()
         }
@@ -565,6 +624,7 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
         const val ActivityPubPath = "/.ghost/activitypub/v1/"
         const val AdminPath = "/ghost/api/admin/"
         const val JsonType = "application/json"
+        const val KlipyHost = "api.klipy.com"
         const val MaxUploads = 16
     }
 }

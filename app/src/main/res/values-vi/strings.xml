@@ -165,6 +165,14 @@
     <string name="note_posted">Đã đăng ghi chú</string>
     <string name="note_failed">Không thể đăng ghi chú của bạn.</string>
     <string name="note_add_image">Thêm ảnh</string>
+    <string name="gif_add">Thêm GIF</string>
+    <string name="gif_picker_title">GIF</string>
+    <string name="gif_search">Tìm trên KLIPY</string>
+    <string name="gif_none_found">Không tìm thấy GIF</string>
+    <string name="gif_error_status">KLIPY trả về lỗi (%1$d).</string>
+    <string name="gif_error_network">Không thể kết nối KLIPY.</string>
+    <string name="gif_error_too_large">GIF này quá lớn để đính kèm.</string>
+    <string name="gif_error_save">Không thể thêm GIF này.</string>
     <string name="note_remove_image">Xóa ảnh</string>
     <string name="note_alt_hint">Mô tả nội dung ảnh cho những người không nhìn thấy ảnh</string>
     <string name="note_alt_title">Mô tả ảnh</string>

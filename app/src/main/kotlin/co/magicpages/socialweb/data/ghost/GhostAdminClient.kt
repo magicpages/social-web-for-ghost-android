@@ -2,6 +2,8 @@ package co.magicpages.socialweb.data.ghost
 
 import co.magicpages.socialweb.data.account.Credential
 import co.magicpages.socialweb.data.account.GhostSite
+import co.magicpages.socialweb.data.gif.KlipyConfig
+import co.magicpages.socialweb.data.gif.klipyConfigFrom
 import io.ktor.client.HttpClient
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.delete
@@ -29,7 +31,7 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import kotlinx.serialization.json.putJsonArray
 
-/** Talks to the Ghost Admin API: site lookup, staff sign-in, the social web identity token and the site's recommendations. */
+/** Talks to the Ghost Admin API: site lookup, staff sign-in, the social web identity token, the site's recommendations and its GIF settings. */
 @Singleton
 class GhostAdminClient @Inject constructor(
     private val http: HttpClient,
@@ -148,6 +150,20 @@ class GhostAdminClient @Inject constructor(
             throw GhostException.Unexpected(response.status.value, e.message)
         }
         return token ?: throw GhostException.Unexpected(response.status.value, "No identity token in response")
+    }
+
+    /**
+     * The site's KLIPY settings from `GET config/`, which its editor's GIF card uses; null when the
+     * site has no KLIPY key, so no GIFs.
+     */
+    suspend fun klipyConfig(site: GhostSite, credential: Credential): KlipyConfig? {
+        val response = send { http.get("${site.adminApiUrl}config/") { authenticate(site, credential) } }
+        if (!response.status.isSuccess()) throw response.toException()
+        return try {
+            klipyConfigFrom(json.parseToJsonElement(response.bodyAsText()))
+        } catch (e: SerializationException) {
+            throw GhostException.Unexpected(response.status.value, e.message)
+        }
     }
 
     /** The sites this Ghost site recommends to its readers (`GET recommendations/?limit=all`). */

@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.magicpages.socialweb.R
+import co.magicpages.socialweb.ui.components.AddGifButton
 import co.magicpages.socialweb.ui.components.AddImageButton
 import co.magicpages.socialweb.ui.components.AltTextDialog
 import co.magicpages.socialweb.ui.components.AttachedImage
@@ -85,6 +86,10 @@ fun ReplyEditor(
         bottomBar = {
             ComposerBottomBar(text, thread, onPick = onTextChange) {
                 AddImageButton(enabled = !state.sending, onPick = onPickImage)
+                AddGifButton(enabled = !state.sending) { uri, description ->
+                    onPickImage(uri)
+                    onAltTextChange(description)
+                }
             }
         },
     ) { padding ->

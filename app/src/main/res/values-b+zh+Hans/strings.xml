@@ -165,6 +165,14 @@
     <string name="note_posted">笔记已发布</string>
     <string name="note_failed">无法发布你的笔记。</string>
     <string name="note_add_image">添加图片</string>
+    <string name="gif_add">添加 GIF</string>
+    <string name="gif_picker_title">GIF</string>
+    <string name="gif_search">搜索 KLIPY</string>
+    <string name="gif_none_found">未找到 GIF</string>
+    <string name="gif_error_status">KLIPY 返回了错误（%1$d）。</string>
+    <string name="gif_error_network">无法连接 KLIPY。</string>
+    <string name="gif_error_too_large">此 GIF 太大，无法附加。</string>
+    <string name="gif_error_save">无法添加此 GIF。</string>
     <string name="note_remove_image">移除图片</string>
     <string name="note_alt_hint">为看不到图片的人描述图片内容</string>
     <string name="note_alt_title">图片描述</string>

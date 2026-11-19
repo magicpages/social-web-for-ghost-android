@@ -12,7 +12,7 @@ The app is built by [Magic Pages](https://www.magicpages.co). It's an independen
 
 - **Notes:** short posts from everyone you follow. Like, repost, quote and reply.
 - **Reader:** long-form articles from the publications you follow, in a reading view with audio and video.
-- **Posting:** notes with photos and alt text, from your site's own profile. Share a link, text or a photo from any other app to start one.
+- **Posting:** notes and replies with photos and alt text, from your site's own profile. GIFs from KLIPY when your Ghost site has a KLIPY key, like its editor's GIF card. Share a link, text or a photo from any other app to start one.
 - **Notifications:** likes, reposts, replies, mentions and new followers, grouped. The app checks for new ones in the background with WorkManager about every 15 minutes; there is no push server.
 - **Translation** of notes and articles with ML Kit, on the device.
 - **Several sites** in one app, plus member sign-in to read a site's members-only posts.
@@ -77,7 +77,7 @@ Kotlin, Jetpack Compose with Material 3, Navigation 3, Hilt, Ktor, kotlinx.seria
 | `baselineprofile/` | Records the baseline profile by driving demo mode |
 | `fastlane/metadata/android/` | Store listing text, icon, feature graphic and screenshots |
 
-Your account data goes to your Ghost site only: the social web API under `/.ghost/activitypub/` and the Admin API, with your session. Besides that, the app loads pictures and media from where they're hosted, fetches the pages behind links to show previews, and downloads ML Kit's language models from Google the first time you translate into a language. Sign-in sessions and tokens are encrypted with Tink, using a key held in the Android Keystore, and are excluded from backups. There's no analytics, crash reporting service or tracking.
+Your account data goes to your Ghost site only: the social web API under `/.ghost/activitypub/` and the Admin API, with your session. Besides that, the app loads pictures and media from where they're hosted, fetches the pages behind links to show previews, sends what you type in the GIF search to KLIPY with your site's KLIPY key, and downloads ML Kit's language models from Google the first time you translate into a language. Sign-in sessions and tokens are encrypted with Tink, using a key held in the Android Keystore, and are excluded from backups. There's no analytics, crash reporting service or tracking.
 
 ## Contributing
 

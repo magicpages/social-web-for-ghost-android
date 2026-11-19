@@ -177,6 +177,14 @@
     <string name="note_posted">Nota postada</string>
     <string name="note_failed">Não foi possível postar sua nota.</string>
     <string name="note_add_image">Adicionar imagem</string>
+    <string name="gif_add">Adicionar GIF</string>
+    <string name="gif_picker_title">GIFs</string>
+    <string name="gif_search">Pesquisar no KLIPY</string>
+    <string name="gif_none_found">Nenhum GIF encontrado</string>
+    <string name="gif_error_status">O KLIPY retornou um erro (%1$d).</string>
+    <string name="gif_error_network">Não foi possível acessar o KLIPY.</string>
+    <string name="gif_error_too_large">Este GIF é grande demais para anexar.</string>
+    <string name="gif_error_save">Não foi possível adicionar este GIF.</string>
     <string name="note_remove_image">Remover imagem</string>
     <string name="note_alt_hint">Descreva o que há na imagem para quem não consegue vê-la</string>
     <string name="note_alt_title">Descrição da imagem</string>
