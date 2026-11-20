@@ -41,7 +41,10 @@ You need JDK 17 or newer and the Android SDK with platform 37. Android Studio br
 ```sh
 ./gradlew :app:assembleDebug        # app/build/outputs/apk/debug/app-debug.apk
 ./gradlew :app:installDebug         # build and install on the connected device
+./gradlew :app:installDev           # the same with the store build's speed: R8, not debuggable, no demo mode
 ```
+
+Debug and dev builds install as `co.magicpages.socialweb.debug`, "Social Web (dev)", next to the store app: Play signs the store app with its own key, so a local build can't replace it. Both use the debug key, so either installs over the other and keeps its sign-ins. Debug builds are much slower than the store app; try performance on a dev build.
 
 Checks:
 
@@ -55,8 +58,6 @@ A release bundle needs an upload key. [RELEASING.md](RELEASING.md) covers signin
 ### Demo mode
 
 The debug build has a demo mode that signs in to a made-up site, "Seaside Notes", and answers every request from built-in content. It needs no Ghost site and no network, never touches real accounts, and is how the screenshots are made.
-
-The debug build installs as `co.magicpages.socialweb.debug`, "Social Web (dev)", next to the store app: Play signs the store app with its own key, so a local build can't replace it.
 
 ```sh
 adb shell am force-stop co.magicpages.socialweb.debug

@@ -62,6 +62,17 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+        // The store build's speed (R8, no debuggable flag) for trying things on a phone. Signed with
+        // the debug key under debug's package, so it installs over a debug build and keeps its data.
+        // No demo mode: that lives in src/debug.
+        create("dev") {
+            initWith(getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-dev"
+            manifestPlaceholders["appLabel"] = "Social Web (dev)"
+            matchingFallbacks += "release"
+        }
     }
 
     compileOptions {
