@@ -292,6 +292,8 @@
     <string name="translation_error_unknown_language">Kunne ikke finne ut hvilket språk dette innlegget er på.</string>
     <string name="translation_error_already">Dette innlegget er allerede på %1$s.</string>
     <string name="translation_error_unsupported">Oversettelse fra %1$s er ikke tilgjengelig på denne enheten.</string>
+    <string name="translation_error_no_translator">Oversettelse krever den gratis appen Offline Translator.</string>
+    <string name="translation_get_translator">Hent den på F-Droid</string>
     <string name="translation_failed_note">Kunne ikke oversette dette notatet. Sjekk tilkoblingen og prøv igjen.</string>
     <string name="translation_failed_article">Kunne ikke oversette denne artikkelen. Sjekk tilkoblingen og prøv igjen.</string>
     <string name="explore_search_placeholder">Søk etter personer eller @user@domain</string>

@@ -306,6 +306,8 @@
     <string name="translation_error_unknown_language">Nie udało się rozpoznać języka tego wpisu.</string>
     <string name="translation_error_already">Ten wpis jest już w tym języku (%1$s).</string>
     <string name="translation_error_unsupported">Tłumaczenie z tego języka (%1$s) nie jest dostępne na tym urządzeniu.</string>
+    <string name="translation_error_no_translator">Do tłumaczenia potrzebna jest darmowa aplikacja Offline Translator.</string>
+    <string name="translation_get_translator">Pobierz z F-Droid</string>
     <string name="translation_failed_note">Nie udało się przetłumaczyć tej notatki. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="translation_failed_article">Nie udało się przetłumaczyć tego artykułu. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="explore_search_placeholder">Szukaj osób lub @user@domain</string>

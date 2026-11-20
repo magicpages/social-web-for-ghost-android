@@ -68,13 +68,13 @@ jobs:
           SOCIALWEB_KEYSTORE_PASSWORD: ${{ secrets.SOCIALWEB_KEYSTORE_PASSWORD }}
           SOCIALWEB_KEY_ALIAS: ${{ secrets.SOCIALWEB_KEY_ALIAS }}
           SOCIALWEB_KEY_PASSWORD: ${{ secrets.SOCIALWEB_KEY_PASSWORD }}
-        run: ./gradlew --no-daemon :app:testDebugUnitTest :app:lintDebug :app:bundleRelease
+        run: ./gradlew --no-daemon :app:testPlayDebugUnitTest :app:testFossDebugUnitTest :app:lintPlayDebug :app:compileFossReleaseKotlin :app:bundlePlayRelease
 
       - name: Check the bundle
         run: |
-          aab=app/build/outputs/bundle/release/app-release.aab
+          aab=app/build/outputs/bundle/playRelease/app-play-release.aab
           jarsigner -verify "$aab" | grep -q '^jar verified' || { echo "::error::The bundle isn't signed"; exit 1; }
-          if grep -q 'socialweb\.demo' app/build/outputs/mapping/release/mapping.txt; then
+          if grep -q 'socialweb\.demo' app/build/outputs/mapping/playRelease/mapping.txt; then
             echo "::error::Demo mode ended up in the release build"
             exit 1
           fi
@@ -108,8 +108,8 @@ jobs:
             --package_name co.magicpages.socialweb \
             --track internal \
             --release_status completed \
-            --aab app/build/outputs/bundle/release/app-release.aab \
-            --mapping app/build/outputs/mapping/release/mapping.txt \
+            --aab app/build/outputs/bundle/playRelease/app-play-release.aab \
+            --mapping app/build/outputs/mapping/playRelease/mapping.txt \
             --metadata_path fastlane/metadata/android \
             --skip_upload_metadata true \
             --skip_upload_images true \

@@ -285,6 +285,8 @@
     <string name="translation_error_unknown_language">Không thể xác định bài đăng này viết bằng ngôn ngữ nào.</string>
     <string name="translation_error_already">Bài đăng này đã được viết bằng %1$s.</string>
     <string name="translation_error_unsupported">Thiết bị này không hỗ trợ dịch từ %1$s.</string>
+    <string name="translation_error_no_translator">Để dịch, bạn cần ứng dụng miễn phí Offline Translator.</string>
+    <string name="translation_get_translator">Tải trên F-Droid</string>
     <string name="translation_failed_note">Không thể dịch ghi chú này. Hãy kiểm tra kết nối và thử lại.</string>
     <string name="translation_failed_article">Không thể dịch bài viết này. Hãy kiểm tra kết nối và thử lại.</string>
     <string name="explore_search_placeholder">Tìm người hoặc @user@domain</string>

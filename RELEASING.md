@@ -28,7 +28,7 @@ adb shell am start -n co.magicpages.socialweb.debug/co.magicpages.socialweb.Main
 
 ## Versioning
 
-- `versionCode`: integer, must rise with every upload to Play. CI uploads use the commit count on `main` (`git rev-list --count HEAD`, passed as `SOCIALWEB_VERSION_CODE`); without that variable it's 1. Don't rewrite `main`'s history: a lower count means Play refuses the upload until the count passes the last one.
+- `versionCode`: integer, must rise with every upload to Play. CI uploads use the commit count on `main` (`git rev-list --count HEAD`, passed as `SOCIALWEB_VERSION_CODE`); without that variable Gradle counts the commits itself, so a build of any commit (F-Droid's) gets the same code as CI's. Don't rewrite `main`'s history: a lower count means Play refuses the upload until the count passes the last one.
 - `versionName`: shown to users (`0.1.0`, `1.0.0`, …), set in `app/build.gradle.kts`. Several internal builds share one; testers tell them apart by the versionCode in brackets.
 - Release notes: CI writes the en-US "What's new" from the pushed commits' subject lines. For a release that should carry written notes (closed testing, production), add `fastlane/metadata/android/<locale>/changelogs/<versionCode>.txt` in every locale (500 characters max) before promoting it.
 
@@ -90,7 +90,7 @@ Without them the workflow stops at its first step and names the missing ones.
 
 ## Baseline profile
 
-A baseline profile tells ART which classes and methods to compile ahead of time, so the app starts and scrolls faster right after installation. The `:baselineprofile` module records it (`BaselineProfileGenerator`) by driving the app's demo mode: cold start, scroll Notes, open a thread and a profile, Reader with an article, Explore, Notifications. Because it runs on made-up content it needs no account and no network. The result is committed and `:app:bundleRelease` packs it into the bundle.
+A baseline profile tells ART which classes and methods to compile ahead of time, so the app starts and scrolls faster right after installation. The `:baselineprofile` module records it (`BaselineProfileGenerator`) by driving the app's demo mode: cold start, scroll Notes, open a thread and a profile, Reader with an article, Explore, Notifications. Because it runs on made-up content it needs no account and no network. The result is committed in `src/main`, so both flavors get it: `:app:bundlePlayRelease` packs it into the bundle, F-Droid's `foss` build into the APK.
 
 Regenerate it when the start-up path or the main screens change a lot, and before a release if it hasn't been done for a while:
 
@@ -101,18 +101,18 @@ Regenerate it when the start-up path or the main screens change a lot, and befor
    ./gradlew :app:generateBaselineProfile
    ```
 
-   It builds `nonMinifiedRelease`, runs the generator on the connected device (several cold starts until the profile stops changing) and writes the profile into the app.
-3. Commit `app/src/release/generated/baselineProfiles/baseline-prof.txt` and `startup-prof.txt`. `startup-prof.txt` is the part for the first launch only; R8 uses it to put the start-up classes together in the primary dex.
+   It builds `nonMinifiedRelease` of both flavors, runs the generator on the connected device for each (several cold starts until the profile stops changing) and merges the result into the app.
+3. Commit `app/src/main/generated/baselineProfiles/baseline-prof.txt` and `startup-prof.txt`. `startup-prof.txt` is the part for the first launch only; R8 uses it to put the start-up classes together in the primary dex.
 
 Compare cold start with and without the profile (the profile must be generated first):
 
 ```bash
-./gradlew :baselineprofile:connectedBenchmarkReleaseAndroidTest
+./gradlew :baselineprofile:connectedPlayBenchmarkReleaseAndroidTest
 ```
 
 `StartupBenchmarks` runs 10 cold starts each with `CompilationMode.None()` and with the profile compiled in, on the `benchmarkRelease` variant (R8, profileable, signed with the debug key). Read `timeToInitialDisplayMs` of the two tests in the console output or in the JSON files under `baselineprofile/build/outputs/connected_android_test_additional_output/`. Emulator numbers are only good for comparing the two runs with each other; the build suppresses Macrobenchmark's emulator error for that reason.
 
-Why the profiled variants contain demo code: `nonMinifiedRelease` and `benchmarkRelease` are created by the Baseline Profile plugin as copies of `release`, so without it they would start at the login screen. `app/build.gradle.kts` therefore adds `src/debug`'s Kotlin, assets and manifest to those two variants. The real `release`, and so the bundle, is untouched. Rules for `co.magicpages.socialweb.demo` classes do end up in `baseline-prof.txt` and `startup-prof.txt` (the plugin's `filter { exclude(...) }` didn't remove them with 1.5.0); ART and R8 ignore rules for classes the build doesn't have. To check a release build is clean, build it and search for the package: `grep -c 'socialweb.demo' app/build/outputs/mapping/release/mapping.txt` must print `0`.
+Why the profiled variants contain demo code: `nonMinifiedRelease` and `benchmarkRelease` are created by the Baseline Profile plugin as copies of `release`, so without it they would start at the login screen. `app/build.gradle.kts` therefore adds `src/debug`'s Kotlin, assets and manifest to those two variants. The real `release`, and so the bundle, is untouched. Rules for `co.magicpages.socialweb.demo` classes do end up in `baseline-prof.txt` and `startup-prof.txt` (the plugin's `filter { exclude(...) }` didn't remove them with 1.5.0); ART and R8 ignore rules for classes the build doesn't have. To check a release build is clean, build it and search for the package: `grep -c 'socialweb.demo' app/build/outputs/mapping/playRelease/mapping.txt` must print `0`.
 
 ## Each release
 
@@ -126,17 +126,17 @@ Internal testing needs nothing: [CI](#4-automatic-internal-releases) uploads eve
 To upload by hand instead (no CI), set `SOCIALWEB_VERSION_CODE` above Play's latest versionCode and build the signed bundle:
 
 ```bash
-SOCIALWEB_VERSION_CODE=… ./gradlew :app:bundleRelease
+SOCIALWEB_VERSION_CODE=… ./gradlew :app:bundlePlayRelease
 ```
 
-Output: `app/build/outputs/bundle/release/app-release.aab`. If it says it is unsigned, `keystore.properties` or the environment variables weren't found. Upload it, either way:
+Output: `app/build/outputs/bundle/playRelease/app-play-release.aab`. If it says it is unsigned, `keystore.properties` or the environment variables weren't found. Upload it, either way:
 
 - **Console:** Testing → Internal testing → Create new release → upload the `.aab` → Save → Review → Start rollout.
 - **fastlane supply** (install with `gem install fastlane`):
 
   ```bash
   fastlane supply --json_key play-key.json --package_name co.magicpages.socialweb \
-    --aab app/build/outputs/bundle/release/app-release.aab --track internal \
+    --aab app/build/outputs/bundle/playRelease/app-play-release.aab --track internal \
     --metadata_path fastlane/metadata/android
   ```
 
@@ -206,3 +206,46 @@ Answers:
 - **User-generated content policy:** the app meets it with in-app **Report** (posts and accounts), **Block** (accounts and whole servers) and a blocked list in Settings. Mention these if Play asks.
 - **Government apps, financial features, health, news, COVID, advertising ID, exact alarms, foreground services:** none apply. **Trader status:** a trader (Magic Pages e.U.).
 - **Data safety, privacy and content rating** must all be complete before a release can be sent for review.
+
+## F-Droid
+
+F-Droid builds the `foss` flavor from source and signs it with its own key, so the F-Droid and Play apps can't update each other: switching means uninstalling first. `foss` has no Google code: it identifies a text's language with Android's text classifier (`TextClassificationManager`) and translates through the [Offline Translator](https://f-droid.org/packages/dev.davidv.translator/) app over its AIDL service (`app/src/foss/aidl/`, copied from that app under its `GPL-3.0-or-later OR MIT` licence, which allows exactly this). Without Offline Translator, Translate says the app is needed and links its F-Droid page. A language the user hasn't downloaded in Offline Translator gets its "isn't available" or general error.
+
+F-Droid reads the listing (`fastlane/metadata/android/`), including `changelogs/<versionCode>.txt`, from this repo.
+
+The app is added with a merge request to [fdroiddata](https://gitlab.com/fdroid/fdroiddata) adding `metadata/co.magicpages.socialweb.yml`:
+
+```yaml
+Categories:
+  - Social
+License: MIT
+AuthorName: Magic Pages
+AuthorEmail: help@magicpages.co
+WebSite: https://www.magicpages.co/features/android-app/
+SourceCode: https://github.com/magicpages/social-web-for-ghost-android
+IssueTracker: https://github.com/magicpages/social-web-for-ghost-android/issues
+
+AutoName: Social Web
+
+RepoType: git
+Repo: https://github.com/magicpages/social-web-for-ghost-android.git
+
+AntiFeatures:
+  NonFreeNet:
+    en-US: GIF search in the editor uses KLIPY, a proprietary service.
+
+Builds:
+  - versionName: 1.0.0
+    versionCode: <commit count of the built commit>
+    commit: <tag or commit>
+    subdir: app
+    gradle:
+      - foss
+
+AutoUpdateMode: None
+UpdateCheckMode: None
+CurrentVersion: 1.0.0
+CurrentVersionCode: <same versionCode>
+```
+
+The versionCode isn't written in the source (it's the commit count), so F-Droid's update check can't read it from a tag; each release is a new `Builds` entry, and the F-Droid reviewers may suggest a better way. Before submitting, check the build the way F-Droid does with `fdroid build -v -l co.magicpages.socialweb` in a clone of fdroiddata, or at least `./gradlew :app:assembleFossRelease`.

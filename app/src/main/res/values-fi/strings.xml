@@ -292,6 +292,8 @@
     <string name="translation_error_unknown_language">Julkaisun kieltä ei voitu tunnistaa.</string>
     <string name="translation_error_already">Tämän julkaisun kieli on jo %1$s.</string>
     <string name="translation_error_unsupported">Kääntäminen tästä kielestä (%1$s) ei ole käytettävissä tällä laitteella.</string>
+    <string name="translation_error_no_translator">Kääntäminen vaatii ilmaisen Offline Translator ‑sovelluksen.</string>
+    <string name="translation_get_translator">Hae F-Droidista</string>
     <string name="translation_failed_note">Muistiinpanoa ei voitu kääntää. Tarkista yhteytesi ja yritä uudelleen.</string>
     <string name="translation_failed_article">Artikkelia ei voitu kääntää. Tarkista yhteytesi ja yritä uudelleen.</string>
     <string name="explore_search_placeholder">Hae ihmisiä tai @user@domain</string>

@@ -78,7 +78,7 @@ class ArticleTranslationViewModel @Inject constructor(
     /** Why a translation the reader asked for didn't happen. */
     val failures: Flow<TranslationFailure> = _failures.receiveAsFlow()
 
-    /** Whether articles can be translated: the app's language is one ML Kit translates into. */
+    /** Whether articles can be translated: the app's language is one the device translates into. */
     val isAvailable: Boolean get() = translator.targetLanguage != null
 
     private var source: Source? = null

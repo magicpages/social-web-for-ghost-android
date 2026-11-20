@@ -21,6 +21,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.dp
 import co.magicpages.socialweb.R
+import co.magicpages.socialweb.data.translation.TranslationProblem
 import co.magicpages.socialweb.ui.components.ActionSheetScope
 import co.magicpages.socialweb.ui.components.AppIcons
 import co.magicpages.socialweb.ui.components.HtmlText
@@ -56,11 +57,7 @@ fun TranslatableText(
             }
 
             is PostTranslations.State.Failed -> {
-                Text(
-                    state.failure.message(LocalResources.current, article = false),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.error,
-                )
+                TranslationFailureText(state.failure)
                 HtmlText(item.content, style = style, emojiSourceId = post.id)
             }
 
@@ -82,6 +79,24 @@ private fun TranslationStatus(text: String) {
         Icon(AppIcons.Translate, contentDescription = null, modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
         Text(text, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
+}
+
+/** Why a note wasn't translated; with a link to get Offline Translator when that is why. */
+@Composable
+private fun TranslationFailureText(failure: TranslationFailure) {
+    val message = failure.message(LocalResources.current, article = false)
+    val getIt = stringResource(R.string.translation_get_translator)
+    val linkColor = MaterialTheme.colorScheme.primary
+    val text = remember(message, getIt, linkColor, failure.problem) {
+        buildAnnotatedString {
+            append(message)
+            if (failure.problem == TranslationProblem.NoTranslator) {
+                append(' ')
+                withLink(LinkAnnotation.Url(OfflineTranslatorUrl, TextLinkStyles(SpanStyle(color = linkColor)))) { append(getIt) }
+            }
+        }
+    }
+    Text(text, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.error)
 }
 
 /** "Translated from Turkish · Show original". */

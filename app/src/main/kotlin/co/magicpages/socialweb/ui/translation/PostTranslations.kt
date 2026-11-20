@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import co.magicpages.socialweb.data.translation.TextTranslator
 import co.magicpages.socialweb.data.translation.TranslationException
+import co.magicpages.socialweb.data.translation.TranslationProblem
 import co.magicpages.socialweb.di.ApplicationScope
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,7 +36,7 @@ class PostTranslations @Inject constructor(
         data class Failed(val failure: TranslationFailure) : State
     }
 
-    /** Whether notes can be translated: the app's language is one ML Kit translates into. */
+    /** Whether notes can be translated: the app's language is one the device translates into. */
     val isAvailable: Boolean get() = translator.targetLanguage != null
 
     // Compose state, so cards recompose when their post's state changes.
@@ -67,7 +68,8 @@ class PostTranslations @Inject constructor(
                 State.Failed(e.toFailure(translator))
             }
             put(key, result)
-            if (result is State.Failed) {
+            // A missing translator stays said, with its link, until the next try; the rest fade.
+            if (result is State.Failed && result.failure.problem != TranslationProblem.NoTranslator) {
                 delay(FailureShownMillis)
                 if (states[key] === result) forget(key)
             }

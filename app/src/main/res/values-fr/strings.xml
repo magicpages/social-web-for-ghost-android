@@ -299,6 +299,8 @@
     <string name="translation_error_unknown_language">Impossible de déterminer la langue de cette publication.</string>
     <string name="translation_error_already">Cette publication est déjà en %1$s.</string>
     <string name="translation_error_unsupported">La traduction depuis cette langue (%1$s) n\'est pas disponible sur cet appareil.</string>
+    <string name="translation_error_no_translator">Pour traduire, il faut l\'app gratuite Offline Translator.</string>
+    <string name="translation_get_translator">L\'obtenir sur F-Droid</string>
     <string name="translation_failed_note">Impossible de traduire cette note. Vérifiez votre connexion et réessayez.</string>
     <string name="translation_failed_article">Impossible de traduire cet article. Vérifiez votre connexion et réessayez.</string>
     <string name="explore_search_placeholder">Rechercher des personnes ou @utilisateur@domaine</string>

@@ -41,10 +41,13 @@ Or build it yourself, see below.
 
 You need JDK 17 or newer and the Android SDK with platform 37. Android Studio brings both.
 
+There are two flavors. `play` is the Google Play app: it translates with Google's ML Kit. `foss` is the F-Droid app, free software only: it identifies languages with Android's own text classifier and translates through the [Offline Translator](https://f-droid.org/packages/dev.davidv.translator/) app, which the user installs from F-Droid. Everything else is the same code.
+
 ```sh
-./gradlew :app:assembleDebug        # app/build/outputs/apk/debug/app-debug.apk
-./gradlew :app:installDebug         # build and install on the connected device
-./gradlew :app:installDev           # the same with the store build's speed: R8, not debuggable, no demo mode
+./gradlew :app:assemblePlayDebug    # app/build/outputs/apk/play/debug/app-play-debug.apk
+./gradlew :app:installPlayDebug     # build and install on the connected device
+./gradlew :app:installFossDebug     # the F-Droid flavor
+./gradlew :app:installPlayDev       # the store build's speed: R8, not debuggable, no demo mode
 ```
 
 Debug and dev builds install as `co.magicpages.socialweb.debug`, "Social Web (dev)", next to the store app: Play signs the store app with its own key, so a local build can't replace it. Both use the debug key, so either installs over the other and keeps its sign-ins. Debug builds are much slower than the store app; try performance on a dev build.
@@ -52,8 +55,8 @@ Debug and dev builds install as `co.magicpages.socialweb.debug`, "Social Web (de
 Checks:
 
 ```sh
-./gradlew :app:testDebugUnitTest    # unit tests
-./gradlew :app:lintDebug            # Android lint
+./gradlew :app:testPlayDebugUnitTest :app:testFossDebugUnitTest   # unit tests
+./gradlew :app:lintPlayDebug :app:lintFossDebug                   # Android lint
 ```
 
 A release bundle needs an upload key. [RELEASING.md](RELEASING.md) covers signing, versioning, the store listing and the baseline profile.
@@ -79,11 +82,12 @@ Kotlin, Jetpack Compose with Material 3, Navigation 3, Hilt, Ktor, kotlinx.seria
 | `app/src/main/kotlin/co/magicpages/socialweb/ui/` | One package per screen (`feed`, `thread`, `profile`, `notifications`, `article`, …) plus shared `components` and `theme` |
 | `app/src/main/kotlin/co/magicpages/socialweb/background/` | Background notification checks and notification actions |
 | `app/src/debug/` | Demo mode: made-up content and placeholder pictures |
+| `app/src/play/`, `app/src/foss/` | The two translators: ML Kit for Play, Offline Translator for F-Droid (with its AIDL interface) |
 | `app/src/test/` | Unit tests |
 | `baselineprofile/` | Records the baseline profile by driving demo mode |
 | `fastlane/metadata/android/` | Store listing text, icon, feature graphic and screenshots |
 
-Your account data goes to your Ghost site only: the social web API under `/.ghost/activitypub/` and the Admin API, with your session. Besides that, the app loads pictures and media from where they're hosted, fetches the pages behind links to show previews, sends what you type in the GIF search to KLIPY with your site's KLIPY key, and downloads ML Kit's language models from Google the first time you translate into a language. Sign-in sessions and tokens are encrypted with Tink, using a key held in the Android Keystore, and are excluded from backups. There's no analytics, crash reporting service or tracking.
+Your account data goes to your Ghost site only: the social web API under `/.ghost/activitypub/` and the Admin API, with your session. Besides that, the app loads pictures and media from where they're hosted, fetches the pages behind links to show previews, sends what you type in the GIF search to KLIPY with your site's KLIPY key, and (Play app only) downloads ML Kit's language models from Google the first time you translate into a language. The F-Droid app hands the text to Offline Translator on the device instead. Sign-in sessions and tokens are encrypted with Tink, using a key held in the Android Keystore, and are excluded from backups. There's no analytics, crash reporting service or tracking.
 
 ## Contributing
 

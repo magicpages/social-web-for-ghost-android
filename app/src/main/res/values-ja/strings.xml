@@ -285,6 +285,8 @@
     <string name="translation_error_unknown_language">この投稿の言語を判別できませんでした。</string>
     <string name="translation_error_already">この投稿はすでに%1$sです。</string>
     <string name="translation_error_unsupported">%1$sからの翻訳は、このデバイスでは利用できません。</string>
+    <string name="translation_error_no_translator">翻訳には無料のアプリ Offline Translator が必要です。</string>
+    <string name="translation_get_translator">F-Droid で入手</string>
     <string name="translation_failed_note">このノートを翻訳できませんでした。接続を確認して、もう一度お試しください。</string>
     <string name="translation_failed_article">この記事を翻訳できませんでした。接続を確認して、もう一度お試しください。</string>
     <string name="explore_search_placeholder">ユーザーまたは @user@domain を検索</string>

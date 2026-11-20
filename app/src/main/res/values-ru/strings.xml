@@ -306,6 +306,8 @@
     <string name="translation_error_unknown_language">Не удалось определить язык этого поста.</string>
     <string name="translation_error_already">Этот пост уже на этом языке (%1$s).</string>
     <string name="translation_error_unsupported">Перевод с этого языка (%1$s) недоступен на этом устройстве.</string>
+    <string name="translation_error_no_translator">Для перевода нужно бесплатное приложение Offline Translator.</string>
+    <string name="translation_get_translator">Скачать в F-Droid</string>
     <string name="translation_failed_note">Не удалось перевести заметку. Проверьте подключение и повторите попытку.</string>
     <string name="translation_failed_article">Не удалось перевести статью. Проверьте подключение и повторите попытку.</string>
     <string name="explore_search_placeholder">Поиск людей или @user@domain</string>

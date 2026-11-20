@@ -320,6 +320,8 @@
     <string name="translation_error_unknown_language">تعذّر تحديد لغة هذا المنشور.</string>
     <string name="translation_error_already">هذا المنشور مكتوب بالفعل باللغة %1$s.</string>
     <string name="translation_error_unsupported">الترجمة من اللغة %1$s غير متاحة على هذا الجهاز.</string>
+    <string name="translation_error_no_translator">تحتاج الترجمة إلى تطبيق Offline Translator المجاني.</string>
+    <string name="translation_get_translator">احصل عليه من F-Droid</string>
     <string name="translation_failed_note">تعذّرت ترجمة هذه الملاحظة. تحقق من اتصالك ثم حاول مرة أخرى.</string>
     <string name="translation_failed_article">تعذّرت ترجمة هذا المقال. تحقق من اتصالك ثم حاول مرة أخرى.</string>
     <string name="explore_search_placeholder">ابحث عن أشخاص أو @user@domain</string>

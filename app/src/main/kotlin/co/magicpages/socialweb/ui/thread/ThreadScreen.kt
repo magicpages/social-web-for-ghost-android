@@ -29,6 +29,8 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -54,6 +56,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -66,6 +69,7 @@ import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.data.ghost.isGhostActivityPubUrl
+import co.magicpages.socialweb.data.translation.TranslationProblem
 import co.magicpages.socialweb.ui.article.LocalArticleAudio
 import co.magicpages.socialweb.ui.article.articleItems
 import co.magicpages.socialweb.ui.article.rememberArticleAudio
@@ -93,6 +97,7 @@ import co.magicpages.socialweb.ui.translation.ArticleTranslation
 import co.magicpages.socialweb.ui.translation.ArticleTranslationBanner
 import co.magicpages.socialweb.ui.translation.ArticleTranslateAction
 import co.magicpages.socialweb.ui.translation.ArticleTranslationViewModel
+import co.magicpages.socialweb.ui.translation.OfflineTranslatorUrl
 import co.magicpages.socialweb.ui.translation.message
 import kotlinx.coroutines.flow.first
 
@@ -155,8 +160,17 @@ fun ThreadScreen(
         if (articleOpen && loadedArticle != null && focused != null) translation.show(focused.post, loadedArticle)
     }
     val resources = LocalResources.current
+    val uriHandler = LocalUriHandler.current
     LaunchedEffect(translation) {
-        translation.failures.collect { snackbar.showSnackbar(it.message(resources, article = true)) }
+        translation.failures.collect { failure ->
+            val noTranslator = failure.problem == TranslationProblem.NoTranslator
+            val result = snackbar.showSnackbar(
+                failure.message(resources, article = true),
+                actionLabel = if (noTranslator) resources.getString(R.string.translation_get_translator) else null,
+                duration = if (noTranslator) SnackbarDuration.Long else SnackbarDuration.Short,
+            )
+            if (result == SnackbarResult.ActionPerformed) uriHandler.openUri(OfflineTranslatorUrl)
+        }
     }
 
     Scaffold(

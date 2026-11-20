@@ -20,6 +20,10 @@ fun TranslationFailure.message(resources: Resources, article: Boolean): String =
     TranslationProblem.UnknownLanguage -> resources.getString(R.string.translation_error_unknown_language)
     TranslationProblem.AlreadyInTargetLanguage -> resources.getString(R.string.translation_error_already, languageName.orEmpty())
     TranslationProblem.UnsupportedLanguage -> resources.getString(R.string.translation_error_unsupported, languageName.orEmpty())
+    TranslationProblem.NoTranslator -> resources.getString(R.string.translation_error_no_translator)
     TranslationProblem.Failed ->
         resources.getString(if (article) R.string.translation_failed_article else R.string.translation_failed_note)
 }
+
+/** Where [TranslationProblem.NoTranslator] sends the reader: Offline Translator on F-Droid. */
+const val OfflineTranslatorUrl = "https://f-droid.org/packages/dev.davidv.translator/"

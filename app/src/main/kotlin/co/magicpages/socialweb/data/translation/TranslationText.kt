@@ -14,6 +14,9 @@ enum class TranslationProblem {
     /** The text's language can't be translated on device. */
     UnsupportedLanguage,
 
+    /** The F-Droid build translates through the Offline Translator app, which isn't installed. */
+    NoTranslator,
+
     /** Anything else: the language files couldn't be downloaded, the translator failed. */
     Failed,
 }
@@ -88,7 +91,7 @@ fun splitForTranslation(text: String): TranslationParts {
 /**
  * The language a [tag] (BCP 47, as the language identifier or a locale gives it) is about, as
  * the translator names it: the primary subtag, in lower case, with the legacy and Android codes
- * mapped to the ones ML Kit uses ("iw" is Hebrew "he", "fil" Filipino "tl", "nb" Norwegian "no").
+ * mapped to the ones the translators use ("iw" is Hebrew "he", "fil" Filipino "tl", "nb" Norwegian "no").
  */
 fun translationLanguage(tag: String): String {
     val primary = tag.trim().substringBefore('-').substringBefore('_').lowercase()
@@ -104,11 +107,12 @@ fun translationLanguage(tag: String): String {
 
 /**
  * The language to translate from: the [detected] tag of the language identifier (`und` when it
- * couldn't tell), checked against the [target] language and the [supported] ones.
+ * couldn't tell), checked against the [target] language and the [supported] ones; null [supported]
+ * leaves that check to the translator.
  *
  * @throws TranslationException when the language is unknown, is the target, or isn't supported
  */
-fun sourceLanguage(detected: String, target: String, supported: Set<String>): String {
+fun sourceLanguage(detected: String, target: String, supported: Set<String>?): String {
     val tag = detected.trim()
     if (tag.isEmpty() || tag.equals("und", ignoreCase = true)) {
         throw TranslationException(TranslationProblem.UnknownLanguage)
@@ -117,6 +121,6 @@ fun sourceLanguage(detected: String, target: String, supported: Set<String>): St
     // Romanised text such as "ja-Latn" is the language written in Latin letters; translating it as the language itself would garble it.
     if (tag.endsWith("-Latn", ignoreCase = true)) throw TranslationException(TranslationProblem.UnsupportedLanguage, source)
     if (source == target) throw TranslationException(TranslationProblem.AlreadyInTargetLanguage, target)
-    if (source !in supported) throw TranslationException(TranslationProblem.UnsupportedLanguage, source)
+    if (supported != null && source !in supported) throw TranslationException(TranslationProblem.UnsupportedLanguage, source)
     return source
 }

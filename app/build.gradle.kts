@@ -29,8 +29,10 @@ android {
         applicationId = "co.magicpages.socialweb"
         minSdk = 29
         targetSdk = 37
-        // CI sets SOCIALWEB_VERSION_CODE (the commit count on main) for each Play upload.
-        versionCode = providers.environmentVariable("SOCIALWEB_VERSION_CODE").orNull?.toInt() ?: 1
+        // CI sets SOCIALWEB_VERSION_CODE (the commit count on main) for each Play upload. Without it
+        // the count is taken from git here, so a build of a release tag (F-Droid's) gets the same code.
+        versionCode = providers.environmentVariable("SOCIALWEB_VERSION_CODE").orNull?.toInt()
+            ?: providers.exec { commandLine("git", "rev-list", "--count", "HEAD") }.standardOutput.asText.get().trim().toInt()
         versionName = "1.0.0"
         manifestPlaceholders["appLabel"] = "Social Web"
     }
@@ -76,12 +78,21 @@ android {
         }
     }
 
+    // Where the app is distributed. Play translates with Google's ML Kit; F-Droid only builds free
+    // software, so `foss` translates through the Offline Translator app instead (src/foss).
+    flavorDimensions += "store"
+    productFlavors {
+        create("play") { dimension = "store" }
+        create("foss") { dimension = "store" }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
+        aidl = true
         buildConfig = true
         compose = true
     }
@@ -118,6 +129,8 @@ baselineProfile {
     // `filter { exclude(...) }` left them in, 1.5.0); ART and R8 skip rules for classes the release doesn't have.
     // Uses startup-prof.txt to lay out the primary dex with the classes startup needs.
     dexLayoutOptimization = true
+    // Both store flavors run the same code: one profile, in src/main, recorded against `play`.
+    mergeIntoMain = true
 }
 
 dependencies {
@@ -167,9 +180,9 @@ dependencies {
     implementation(libs.media3.exoplayer.hls)
     implementation(libs.media3.ui.compose)
 
-    implementation(libs.mlkit.translate)
-    implementation(libs.mlkit.language.id)
-    implementation(libs.kotlinx.coroutines.play.services)
+    "playImplementation"(libs.mlkit.translate)
+    "playImplementation"(libs.mlkit.language.id)
+    "playImplementation"(libs.kotlinx.coroutines.play.services)
     implementation(libs.aboutlibraries.compose.m3)
 
     testImplementation(libs.junit)
