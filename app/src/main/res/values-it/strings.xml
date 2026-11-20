@@ -149,6 +149,7 @@
         <item quantity="many">%1$d min di lettura</item>
         <item quantity="other">%1$d min di lettura</item>
     </plurals>
+    <string name="post_byline">Di %1$s</string>
     <string name="action_reply">Rispondi</string>
     <string name="action_repost">Ripubblica</string>
     <string name="action_undo_repost">Annulla ripubblicazione</string>

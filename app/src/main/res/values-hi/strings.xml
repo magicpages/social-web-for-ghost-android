@@ -143,6 +143,7 @@
         <item quantity="one">%1$d मिनट में पढ़ें</item>
         <item quantity="other">%1$d मिनट में पढ़ें</item>
     </plurals>
+    <string name="post_byline">लेखक: %1$s</string>
     <string name="action_reply">जवाब दें</string>
     <string name="action_repost">रीपोस्ट करें</string>
     <string name="action_undo_repost">रीपोस्ट हटाएँ</string>

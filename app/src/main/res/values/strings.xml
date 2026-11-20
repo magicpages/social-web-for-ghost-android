@@ -160,6 +160,7 @@
         <item quantity="one">%1$d min read</item>
         <item quantity="other">%1$d min read</item>
     </plurals>
+    <string name="post_byline">By %1$s</string>
     <string name="action_reply">Reply</string>
     <string name="action_repost">Repost</string>
     <string name="action_undo_repost">Undo repost</string>

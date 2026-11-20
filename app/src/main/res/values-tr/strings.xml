@@ -143,6 +143,7 @@
         <item quantity="one">%1$d dk okuma</item>
         <item quantity="other">%1$d dk okuma</item>
     </plurals>
+    <string name="post_byline">Yazan: %1$s</string>
     <string name="action_reply">Yanıtla</string>
     <string name="action_repost">Yeniden paylaş</string>
     <string name="action_undo_repost">Yeniden paylaşımı geri al</string>

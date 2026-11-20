@@ -155,6 +155,7 @@
         <item quantity="many">%1$d min czytania</item>
         <item quantity="other">%1$d min czytania</item>
     </plurals>
+    <string name="post_byline">Autor: %1$s</string>
     <string name="action_reply">Odpowiedz</string>
     <string name="action_repost">Udostępnij ponownie</string>
     <string name="action_undo_repost">Cofnij udostępnienie</string>

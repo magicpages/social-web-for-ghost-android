@@ -95,6 +95,7 @@ import co.magicpages.socialweb.ui.components.HtmlText
 import co.magicpages.socialweb.ui.components.LocalImageViewer
 import co.magicpages.socialweb.ui.components.ViewerImage
 import co.magicpages.socialweb.ui.posts.MaxContentWidth
+import co.magicpages.socialweb.ui.posts.articleByline
 import co.magicpages.socialweb.ui.posts.displayName
 import co.magicpages.socialweb.ui.theme.Gutter
 import co.magicpages.socialweb.ui.theme.reading
@@ -227,6 +228,9 @@ private fun Byline(post: Post, onOpenProfile: (Author) -> Unit) {
                     overflow = TextOverflow.Ellipsis,
                 )
             }
+        }
+        articleByline(post)?.let {
+            Text(it, style = MaterialTheme.typography.titleSmall)
         }
         val meta = listOfNotNull(published, readingTime).joinToString(" · ")
         if (meta.isNotEmpty()) {

@@ -11,6 +11,7 @@ import co.magicpages.socialweb.data.activitypub.Hidden
 import co.magicpages.socialweb.data.activitypub.Moderation
 import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.data.activitypub.PostInteractions
+import co.magicpages.socialweb.data.activitypub.PostMetadata
 import co.magicpages.socialweb.data.activitypub.ReplyChain
 import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.ghost.GhostException
@@ -186,6 +187,10 @@ class ThreadViewModel @AssistedInject constructor(
     private var parentJob: Job? = null
     private var earlierJob: Job? = null
     private var unlockJob: Job? = null
+    private var writersJob: Job? = null
+
+    /** The writers of one of the site's own articles, once looked up. */
+    private var writers: PostMetadata? = null
 
     /** The members-only article in full, once a member session has opened it. */
     private var unlocked: ArticleDocument? = null
@@ -220,7 +225,7 @@ class ThreadViewModel @AssistedInject constructor(
                 val fresh = fetch(postId, next = null).toContent(withArticle = true)
                 // A refresh keeps the earlier posts the reader loaded; the fresh response alone holds only the last ten.
                 val previous = if (keepContent) (loaded.value as? ThreadUiState.Loaded)?.content else null
-                ThreadUiState.Loaded(withUnlocked(withKnownParent(if (previous != null) fresh.keepingEarlier(previous) else fresh)))
+                ThreadUiState.Loaded(withWriters(withUnlocked(withKnownParent(if (previous != null) fresh.keepingEarlier(previous) else fresh))))
             } catch (e: GhostException) {
                 if (keepContent) (loaded.value as? ThreadUiState.Loaded)?.copy(refreshing = false) ?: ThreadUiState.Failed(e)
                 else ThreadUiState.Failed(e)
@@ -230,6 +235,7 @@ class ThreadViewModel @AssistedInject constructor(
             }
             (loaded.value as? ThreadUiState.Loaded)?.content?.takeIf { it.mayMissParent }?.let { findParent(it.post.post.id) }
             unlockArticle()
+            loadWriters()
         }
     }
 
@@ -310,6 +316,35 @@ class ThreadViewModel @AssistedInject constructor(
     private fun withUnlocked(content: ThreadContent): ThreadContent {
         val full = unlocked ?: return content
         return if (content.article?.isLocked == true) content.copy(article = full, articleAccess = null) else content
+    }
+
+    /**
+     * Looks up who wrote one of the site's own articles. The service keeps that only for the site's own posts
+     * and sends it only with a single post, not with a thread, so ask for the post on its own.
+     */
+    private fun loadWriters() {
+        val post = (loaded.value as? ThreadUiState.Loaded)?.content?.post?.post ?: return
+        if (!post.isArticle || !post.authoredByMe || post.ghostAuthors.isNotEmpty() || writersJob?.isActive == true) return
+        writersJob = viewModelScope.launch {
+            val metadata = try {
+                val account = accounts.account.first() ?: return@launch
+                activityPub.post(account.site, account.credential, post.id).metadata
+            } catch (e: GhostException) {
+                null
+            } catch (e: SocialWebException) {
+                null
+            }
+            if (metadata == null || metadata.ghostAuthors.isEmpty()) return@launch
+            writers = metadata
+            loaded.update { state -> if (state is ThreadUiState.Loaded) state.copy(content = withWriters(state.content)) else state }
+        }
+    }
+
+    /** A refresh keeps the writers already looked up: the thread response doesn't carry them. */
+    private fun withWriters(content: ThreadContent): ThreadContent {
+        val metadata = writers ?: return content
+        val item = content.post
+        return if (item.post.ghostAuthors.isEmpty()) content.copy(post = item.copy(post = item.post.copy(metadata = metadata))) else content
     }
 
     /** Loads the next page of replies. */

@@ -143,6 +143,7 @@
         <item quantity="one">%1$d Min. Lesezeit</item>
         <item quantity="other">%1$d Min. Lesezeit</item>
     </plurals>
+    <string name="post_byline">Von %1$s</string>
     <string name="action_reply">Antworten</string>
     <string name="action_repost">Reposten</string>
     <string name="action_undo_repost">Repost rückgängig machen</string>

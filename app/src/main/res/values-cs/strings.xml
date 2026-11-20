@@ -155,6 +155,7 @@
         <item quantity="many">%1$d min čtení</item>
         <item quantity="other">%1$d min čtení</item>
     </plurals>
+    <string name="post_byline">Autor: %1$s</string>
     <string name="action_reply">Odpovědět</string>
     <string name="action_repost">Sdílet znovu</string>
     <string name="action_undo_repost">Zrušit opětovné sdílení</string>

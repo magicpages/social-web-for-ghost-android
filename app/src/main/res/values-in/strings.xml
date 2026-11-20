@@ -137,6 +137,7 @@
     <plurals name="post_reading_time">
         <item quantity="other">Baca %1$d menit</item>
     </plurals>
+    <string name="post_byline">Oleh %1$s</string>
     <string name="action_reply">Balas</string>
     <string name="action_repost">Posting ulang</string>
     <string name="action_undo_repost">Batalkan posting ulang</string>

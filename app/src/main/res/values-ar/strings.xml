@@ -167,6 +167,7 @@
         <item quantity="many">قراءة %1$d دقيقة</item>
         <item quantity="other">قراءة %1$d دقيقة</item>
     </plurals>
+    <string name="post_byline">بقلم %1$s</string>
     <string name="action_reply">رد</string>
     <string name="action_repost">إعادة نشر</string>
     <string name="action_undo_repost">التراجع عن إعادة النشر</string>

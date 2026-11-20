@@ -143,6 +143,7 @@
         <item quantity="one">%1$d min lesing</item>
         <item quantity="other">%1$d min lesing</item>
     </plurals>
+    <string name="post_byline">Av %1$s</string>
     <string name="action_reply">Svar</string>
     <string name="action_repost">Del videre</string>
     <string name="action_undo_repost">Angre deling</string>

@@ -627,6 +627,15 @@ private fun ArticleBodyContent(post: Post, titleStyle: TextStyle, bottomPadding:
                 overflow = TextOverflow.Ellipsis,
             )
         }
+        articleByline(post)?.let {
+            Text(
+                it,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
         if (post.readingTimeMinutes > 0) {
             Text(
                 pluralStringResource(R.plurals.post_reading_time, post.readingTimeMinutes, post.readingTimeMinutes),

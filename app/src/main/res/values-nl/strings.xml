@@ -143,6 +143,7 @@
         <item quantity="one">%1$d min leestijd</item>
         <item quantity="other">%1$d min leestijd</item>
     </plurals>
+    <string name="post_byline">Door %1$s</string>
     <string name="action_reply">Reageren</string>
     <string name="action_repost">Reposten</string>
     <string name="action_undo_repost">Repost ongedaan maken</string>

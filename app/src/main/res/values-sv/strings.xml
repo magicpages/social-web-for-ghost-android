@@ -143,6 +143,7 @@
         <item quantity="one">%1$d min läsning</item>
         <item quantity="other">%1$d min läsning</item>
     </plurals>
+    <string name="post_byline">Av %1$s</string>
     <string name="action_reply">Svara</string>
     <string name="action_repost">Dela vidare</string>
     <string name="action_undo_repost">Ångra vidaredelning</string>

@@ -143,6 +143,7 @@
         <item quantity="one">%1$d min lukuaika</item>
         <item quantity="other">%1$d min lukuaika</item>
     </plurals>
+    <string name="post_byline">Kirjoittanut %1$s</string>
     <string name="action_reply">Vastaa</string>
     <string name="action_repost">Jaa uudelleen</string>
     <string name="action_undo_repost">Peruuta uudelleenjako</string>

@@ -155,6 +155,7 @@
         <item quantity="many">%1$d хв читання</item>
         <item quantity="other">%1$d хв читання</item>
     </plurals>
+    <string name="post_byline">Автор: %1$s</string>
     <string name="action_reply">Відповісти</string>
     <string name="action_repost">Репост</string>
     <string name="action_undo_repost">Скасувати репост</string>

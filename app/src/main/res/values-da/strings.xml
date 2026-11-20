@@ -143,6 +143,7 @@
         <item quantity="one">%1$d min. læsning</item>
         <item quantity="other">%1$d min. læsning</item>
     </plurals>
+    <string name="post_byline">Af %1$s</string>
     <string name="action_reply">Svar</string>
     <string name="action_repost">Del videre</string>
     <string name="action_undo_repost">Fortryd deling</string>

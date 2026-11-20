@@ -59,6 +59,23 @@ internal object AttachmentListSerializer :
     }
 }
 
+/**
+ * `metadata.ghostAuthors`: keeps the entries that are objects with a usable name, so one odd
+ * entry (a null, a number) costs a name rather than the whole post.
+ */
+internal object GhostAuthorListSerializer :
+    JsonTransformingSerializer<List<GhostAuthor>>(ListSerializer(GhostAuthor.serializer())) {
+    override fun transformDeserialize(element: JsonElement): JsonElement {
+        val items = element as? JsonArray ?: return JsonArray(emptyList())
+        return JsonArray(
+            items.filter { item ->
+                val name = (item as? JsonObject)?.get("name") as? JsonPrimitive
+                name != null && name.isString && name.content.isNotBlank()
+            },
+        )
+    }
+}
+
 /** A URL that may arrive as a string, a Link/Image object, or a list of either. */
 internal object LinkUrlSerializer : KSerializer<String?> {
     override val descriptor = PrimitiveSerialDescriptor("LinkUrl", PrimitiveKind.STRING).nullable
@@ -122,8 +139,11 @@ data class Post(
     val repostCount: Int = 0,
     val repostedByMe: Boolean = false,
     val repostedBy: Author? = null,
+    /** Extra data on the site's own Ghost articles (their writers); only the single-post route sends it. */
+    val metadata: PostMetadata? = null,
 ) {
     val isArticle: Boolean get() = type == TYPE_ARTICLE
+    val ghostAuthors: List<GhostAuthor> get() = metadata?.ghostAuthors.orEmpty()
     val isDeleted: Boolean get() = type == TYPE_TOMBSTONE
     val images: List<Attachment> get() = attachments.filter { it.mediaType?.startsWith("image/") == true || it.type == "Image" }
 
@@ -142,6 +162,19 @@ data class Post(
         const val TYPE_TOMBSTONE = 2
     }
 }
+
+/** Only filled for articles published by the signed-in user's own Ghost site; extra keys are ignored. */
+@Serializable
+data class PostMetadata(
+    @Serializable(with = GhostAuthorListSerializer::class) val ghostAuthors: List<GhostAuthor> = emptyList(),
+)
+
+/** A staff user who wrote an article of the site; the post's `author` is the site's account. */
+@Serializable
+data class GhostAuthor(
+    val name: String,
+    @SerialName("profile_image") @Serializable(with = LinkUrlSerializer::class) val profileImage: String? = null,
+)
 
 @Serializable
 data class Attachment(

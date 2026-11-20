@@ -137,6 +137,7 @@
     <plurals name="post_reading_time">
         <item quantity="other">Đọc %1$d phút</item>
     </plurals>
+    <string name="post_byline">Bởi %1$s</string>
     <string name="action_reply">Trả lời</string>
     <string name="action_repost">Đăng lại</string>
     <string name="action_undo_repost">Hủy đăng lại</string>
