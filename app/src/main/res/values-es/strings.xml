@@ -474,6 +474,12 @@
     <string name="explore_topic_posts_empty">Aún no hay publicaciones en este tema. Desliza hacia abajo para volver a intentarlo.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Hacer una foto</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">Contenido sensible</string>
+    <string name="settings_sensitive_media_show">Mostrar contenido multimedia sensible</string>
+    <string name="settings_sensitive_media_summary">Muestra contenido para adultos y multimedia marcado como sensible sin tener que tocar. Las publicaciones con aviso de contenido siguen ocultas. Se aplica a %1$s.</string>
+    <string name="settings_network_retry_hint">No se pudo cargar este ajuste. Toca para reintentar.</string>
+    <string name="settings_network_rate_limited">Demasiadas solicitudes. Espera un momento y vuelve a intentarlo.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtros del feed</string>
     <string name="feed_filters_summary">Oculta republicaciones y palabras silenciadas en Notas y Lector</string>

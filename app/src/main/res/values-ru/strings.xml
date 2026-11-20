@@ -486,6 +486,12 @@
     <string name="explore_topic_posts_empty">В этой теме пока нет публикаций. Потяните вниз, чтобы повторить.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Сделать снимок</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">Чувствительные медиа</string>
+    <string name="settings_sensitive_media_show">Показывать чувствительные медиафайлы</string>
+    <string name="settings_sensitive_media_summary">Показывает контент для взрослых и медиафайлы, помеченные как чувствительные, без нажатия. Записи с предупреждением о содержимом остаются скрытыми. Действует для %1$s.</string>
+    <string name="settings_network_retry_hint">Не удалось загрузить эту настройку. Нажмите, чтобы повторить.</string>
+    <string name="settings_network_rate_limited">Слишком много запросов. Подождите немного и повторите.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Фильтры ленты</string>
     <string name="feed_filters_summary">Скрывать репосты и заглушённые слова в Заметках и Чтении</string>

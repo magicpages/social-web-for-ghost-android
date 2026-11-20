@@ -157,11 +157,12 @@ internal object DemoContent {
         liked: Boolean = false,
         reposted: Boolean = false,
         warning: String? = null,
+        sensitive: Boolean = false,
     ): Post {
         val id = noteId(by, key)
         ages[id] = minutesAgo
         return Post(
-            id = id, content = html, url = id, sensitive = warning != null, contentWarning = warning,
+            id = id, content = html, url = id, sensitive = sensitive || warning != null, contentWarning = warning,
             likeCount = likes, likedByMe = liked, replyCount = replies, attachments = images,
             author = by.author(), authoredByMe = by === me, repostCount = reposts, repostedByMe = reposted,
         ).also { all[id] = it }
@@ -243,6 +244,13 @@ internal object DemoContent {
             photo("note-rain-2", "A quiet alley lit by lanterns", 900, 600),
         ),
         likes = 198, reposts = 33, replies = 12, liked = true,
+    )
+    /** Marked sensitive without a content warning: its picture is blurred unless "Show sensitive media" is on. */
+    val sensitiveShot = note(
+        "sensitive-shot", lucas, 140,
+        "<p>Back alley after the storm. Flagging this one as sensitive, it is a little gritty.</p>",
+        listOf(photo("note-rain-2", "A dark alley lit by a few lanterns after rain", 900, 600)),
+        likes = 9, replies = 0, sensitive = true,
     )
     val finale = note(
         "finale", sam, 170,
@@ -389,7 +397,7 @@ internal object DemoContent {
 
     val notesFeed = listOf(
         Entry(ridge.id, kofi), Entry(bench.id), Entry(serif.id, elena), Entry(coast.id, kofi), Entry(huts.id), Entry(rain.id),
-        Entry(finale.id), Entry(winterFerries.id), Entry(tools.id),
+        Entry(sensitiveShot.id), Entry(finale.id), Entry(winterFerries.id), Entry(tools.id),
     )
     val readerFeed = listOf(
         Entry(serif.id, kofi), Entry(ferry.id), Entry(myArticle.id), Entry(sourdough.id), Entry(tinyTools.id), Entry(marketDay.id),

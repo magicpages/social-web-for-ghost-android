@@ -510,6 +510,12 @@
     <string name="explore_topic_posts_empty">لا توجد منشورات في هذا الموضوع بعد. اسحب لأسفل لإعادة المحاولة.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">التقاط صورة</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">الوسائط الحساسة</string>
+    <string name="settings_sensitive_media_show">عرض الوسائط الحساسة</string>
+    <string name="settings_sensitive_media_summary">يعرض المحتوى للبالغين والوسائط المصنّفة حساسة دون نقرة. تبقى المنشورات التي تحمل تحذير محتوى مخفية. ينطبق على %1$s.</string>
+    <string name="settings_network_retry_hint">تعذّر تحميل هذا الإعداد. انقر لإعادة المحاولة.</string>
+    <string name="settings_network_rate_limited">طلبات كثيرة جدًا. انتظر قليلًا ثم أعد المحاولة.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">عوامل تصفية الخلاصة</string>
     <string name="feed_filters_summary">إخفاء إعادات النشر والكلمات المكتومة في الملاحظات والقارئ</string>

@@ -450,6 +450,12 @@
     <string name="explore_topic_posts_empty">这个话题下还没有帖子。下拉可重试。</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">拍照</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">敏感媒体</string>
+    <string name="settings_sensitive_media_show">显示敏感媒体</string>
+    <string name="settings_sensitive_media_summary">无需点按即可显示成人内容和标记为敏感的媒体。带内容警告的帖子仍保持隐藏。适用于 %1$s。</string>
+    <string name="settings_network_retry_hint">无法加载此设置。点按重试。</string>
+    <string name="settings_network_rate_limited">请求过多。请稍等片刻再试。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">信息流过滤</string>
     <string name="feed_filters_summary">在笔记和阅读器中隐藏转发和屏蔽词</string>

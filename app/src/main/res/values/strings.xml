@@ -469,6 +469,12 @@
     <string name="explore_topic_posts_empty">No posts in this topic yet. Pull down to try again.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Take photo</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">Sensitive media</string>
+    <string name="settings_sensitive_media_show">Show sensitive media</string>
+    <string name="settings_sensitive_media_summary">Show adult content and media marked as sensitive without a tap. Posts with a content warning stay hidden. Applies to %1$s.</string>
+    <string name="settings_network_retry_hint">Couldn\'t load this setting. Tap to try again.</string>
+    <string name="settings_network_rate_limited">Too many requests. Wait a moment, then try again.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feed filters</string>
     <string name="feed_filters_summary">Hide reposts and muted words in Notes and Reader</string>

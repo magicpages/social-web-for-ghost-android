@@ -474,6 +474,12 @@
     <string name="explore_topic_posts_empty">Ainda não há posts neste tópico. Puxe para baixo para tentar de novo.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Tirar foto</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">Mídia sensível</string>
+    <string name="settings_sensitive_media_show">Mostrar mídia sensível</string>
+    <string name="settings_sensitive_media_summary">Mostra conteúdo adulto e mídia marcada como sensível sem precisar tocar. Posts com aviso de conteúdo continuam ocultos. Vale para %1$s.</string>
+    <string name="settings_network_retry_hint">Não foi possível carregar esta configuração. Toque para tentar de novo.</string>
+    <string name="settings_network_rate_limited">Muitas solicitações. Espere um instante e tente de novo.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtros do feed</string>
     <string name="feed_filters_summary">Oculte reposts e palavras silenciadas em Notas e Leitor</string>

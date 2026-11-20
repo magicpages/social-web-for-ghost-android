@@ -486,6 +486,12 @@
     <string name="explore_topic_posts_empty">У цій темі ще немає дописів. Потягніть униз, щоб спробувати ще раз.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Зробити знімок</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">Чутливі медіа</string>
+    <string name="settings_sensitive_media_show">Показувати чутливі медіафайли</string>
+    <string name="settings_sensitive_media_summary">Показує вміст для дорослих і медіафайли, позначені як чутливі, без дотику. Дописи з попередженням про вміст залишаються прихованими. Діє для %1$s.</string>
+    <string name="settings_network_retry_hint">Не вдалося завантажити це налаштування. Торкніться, щоб повторити.</string>
+    <string name="settings_network_rate_limited">Забагато запитів. Зачекайте трохи й повторіть.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Фільтри стрічки</string>
     <string name="feed_filters_summary">Ховати репости й заглушені слова в Нотатках і Читанні</string>

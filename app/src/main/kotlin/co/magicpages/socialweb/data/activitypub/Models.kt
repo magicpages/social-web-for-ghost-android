@@ -230,6 +230,10 @@ data class Account(
     val avatarUrl: String? = null,
 )
 
+/** The site's own account settings, `v1/preferences`. */
+@Serializable
+data class Preferences(val showSensitiveMedia: Boolean = false)
+
 /** Full profile from `account/:handle` (the service's AccountDTO). */
 @Serializable
 data class Profile(

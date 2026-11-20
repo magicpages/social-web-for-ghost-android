@@ -53,6 +53,7 @@ import co.magicpages.socialweb.data.activitypub.Author
 import co.magicpages.socialweb.data.activitypub.FollowList
 import co.magicpages.socialweb.data.activitypub.MentionDirectory
 import co.magicpages.socialweb.data.activitypub.Moderation
+import co.magicpages.socialweb.data.activitypub.SensitiveMediaPreference
 import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.data.ghost.GhostAdminClient
 import co.magicpages.socialweb.data.ghost.GhostException
@@ -84,6 +85,7 @@ import co.magicpages.socialweb.ui.feed.NoteComposerScope
 import co.magicpages.socialweb.ui.quote.SharedContentRequests
 import co.magicpages.socialweb.ui.posts.LinkedPosts
 import co.magicpages.socialweb.ui.posts.LocalLinkedPosts
+import co.magicpages.socialweb.ui.posts.LocalShowSensitiveMedia
 import co.magicpages.socialweb.ui.profile.FollowsScreen
 import co.magicpages.socialweb.ui.profile.ProfileScreen
 import co.magicpages.socialweb.ui.settings.BlockedScreen
@@ -172,6 +174,8 @@ class AppViewModel @Inject constructor(
     val linkPreviews: LinkPreviews,
     /** GIF search in composers, through [LocalGifs]. */
     val gifs: Gifs,
+    /** Whether sensitive media shows without a tap, through [LocalShowSensitiveMedia]. */
+    val sensitiveMedia: SensitiveMediaPreference,
 ) : ViewModel() {
     private var generation = 0
 
@@ -244,6 +248,7 @@ sealed interface AppState {
 fun AppRoot(viewModel: AppViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val ownProfile by viewModel.ownProfile.collectAsStateWithLifecycle()
+    val showSensitiveMedia by viewModel.sensitiveMedia.preference.collectAsStateWithLifecycle()
     when (val current = state) {
         AppState.Loading -> Surface(Modifier.fillMaxSize()) {}
         AppState.SignedOut -> SignedOutFlow()
@@ -256,6 +261,7 @@ fun AppRoot(viewModel: AppViewModel = hiltViewModel()) {
             LocalModeration provides viewModel.moderation,
             LocalLinkPreviews provides viewModel.linkPreviews,
             LocalGifs provides viewModel.gifs,
+            LocalShowSensitiveMedia provides (showSensitiveMedia == true),
         ) {
             ImageViewerHost {
                 NoteComposerScope(viewModel.noteComposer, viewModel.sharedContent) {

@@ -445,12 +445,14 @@ private val Post.isWarned: Boolean get() = sensitive || !contentWarning.isNullOr
  * Hides content-warned posts (and sensitive articles) behind a tap, as Ghost Admin does. A post that
  * is only marked sensitive keeps its words in view and veils just its media; either way, a
  * [SensitiveMedia] tells [PostMedia] whether the reader has asked to see it, and that choice lasts
- * the session.
+ * the session. With [LocalShowSensitiveMedia] on, a post that is only marked sensitive has no gate.
  */
 @Composable
 private fun SensitiveGate(post: Post, content: @Composable () -> Unit) {
     val warning = post.contentWarning?.takeIf { it.isNotBlank() }
     if (warning == null && !post.sensitive) return content()
+    // The reader turned on "Show sensitive media": only a content warning still waits for a tap.
+    if (warning == null && LocalShowSensitiveMedia.current) return content()
     var revealed by rememberSaveable(post.id) { mutableStateOf(false) }
     val media = remember(revealed, warning) { SensitiveMedia(revealed, canHide = warning == null) { revealed = !revealed } }
     CompositionLocalProvider(LocalSensitiveMedia provides media) {
@@ -478,6 +480,9 @@ private class SensitiveMedia(val revealed: Boolean, val canHide: Boolean, val to
 
 /** The veil state of the post being drawn, from [SensitiveGate]; null outside one. */
 private val LocalSensitiveMedia = compositionLocalOf<SensitiveMedia?> { null }
+
+/** Whether the active account shows sensitive media without asking, from its preference on the service; false until that is known. */
+val LocalShowSensitiveMedia = compositionLocalOf { false }
 
 /**
  * The post a quote post quotes, as an embedded card that opens it. Loads on first show; until

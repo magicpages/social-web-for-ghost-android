@@ -34,6 +34,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.put
@@ -200,6 +201,7 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
                     ok(NotificationsPage.serializer(), notifications())
                 }
                 "account" -> account(host, second, parts.getOrNull(3))
+                "preferences" -> preferences(request)
                 "post" -> view(second)?.let { ok(Post.serializer(), it) } ?: notFound()
                 "replies" -> replies(second)?.let { ok(ReplyChain.serializer(), it) } ?: notFound()
                 "topics" -> ok(TopicsList.serializer(), TopicsList(DemoContent.topics.map { Topic(it.slug, it.name) }))
@@ -224,6 +226,7 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
         val target = parts.getOrNull(2).orEmpty()
         when {
             first == "upload" -> return upload(request, host)
+            first == "preferences" -> return preferences(request)
             first == "notifications" -> unread = 0
             first == "post" && method == "DELETE" -> delete(verb)
             first == "actions" -> when (verb) {
@@ -401,6 +404,21 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
             return i
         }
         return -1
+    }
+
+    // MARK: Preferences
+
+    private var showSensitiveMedia = false
+
+    /** `v1/preferences`: like the service, a PUT takes exactly `showSensitiveMedia` and refuses anything else. */
+    private fun preferences(request: Request): Answer {
+        if (request.method == "PUT") {
+            val body = request.jsonBody()
+            val flag = (body["showSensitiveMedia"] as? JsonPrimitive)?.booleanOrNull
+            if (flag == null || body.keys != setOf("showSensitiveMedia")) return Answer(400, "{}".encodeToByteArray())
+            showSensitiveMedia = flag
+        }
+        return answerJson(buildJsonObject { put("showSensitiveMedia", showSensitiveMedia) })
     }
 
     // MARK: Accounts and discovery

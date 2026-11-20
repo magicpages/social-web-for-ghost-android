@@ -227,6 +227,16 @@ class ActivityPubClient @Inject constructor(
             send(site, credential, HttpMethod.Get, "recommendations", params = arrayOf("limit" to limit.toString())),
         ).accounts
 
+    /** Whether the account wants media marked sensitive shown without a tap (shared with Ghost Admin). */
+    suspend fun preferences(site: GhostSite, credential: Credential): Preferences =
+        decode(send(site, credential, HttpMethod.Get, "preferences"))
+
+    /** Saves whether to show sensitive media; the service answers with the preferences it stored. */
+    suspend fun setShowSensitiveMedia(site: GhostSite, credential: Credential, show: Boolean): Preferences =
+        decode(
+            send(site, credential, HttpMethod.Put, "preferences", body = jsonBody(PreferencesBody.serializer(), PreferencesBody(show))),
+        )
+
     private suspend fun send(
         site: GhostSite,
         credential: Credential,
@@ -322,6 +332,10 @@ class ActivityPubClient @Inject constructor(
 
     @Serializable
     private data class UnreadCount(val count: Int = 0)
+
+    /** No default, so the flag is always sent: the service rejects a body without it. */
+    @Serializable
+    private data class PreferencesBody(val showSensitiveMedia: Boolean)
 
     private data class CachedToken(val site: GhostSite, val credential: Credential, val token: String)
 

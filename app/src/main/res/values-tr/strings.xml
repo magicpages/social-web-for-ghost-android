@@ -462,6 +462,12 @@
     <string name="explore_topic_posts_empty">Bu konuda henüz gönderi yok. Tekrar denemek için aşağı çekin.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Fotoğraf çek</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">Hassas medya</string>
+    <string name="settings_sensitive_media_show">Hassas medyayı göster</string>
+    <string name="settings_sensitive_media_summary">Yetişkinlere yönelik içeriği ve hassas olarak işaretlenmiş medyayı dokunmadan gösterir. İçerik uyarısı olan gönderiler gizli kalır. %1$s için geçerlidir.</string>
+    <string name="settings_network_retry_hint">Bu ayar yüklenemedi. Tekrar denemek için dokun.</string>
+    <string name="settings_network_rate_limited">Çok fazla istek. Biraz bekleyip tekrar dene.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Akış filtreleri</string>
     <string name="feed_filters_summary">Notlar ve Okuyucu\'da yeniden paylaşımları ve sessize alınan sözcükleri gizle</string>

@@ -462,6 +462,12 @@
     <string name="explore_topic_posts_empty">इस विषय में अभी कोई पोस्ट नहीं है। दोबारा कोशिश करने के लिए नीचे खींचें।</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">फ़ोटो लें</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">संवेदनशील मीडिया</string>
+    <string name="settings_sensitive_media_show">संवेदनशील मीडिया दिखाएँ</string>
+    <string name="settings_sensitive_media_summary">वयस्क सामग्री और संवेदनशील चिह्नित मीडिया को बिना टैप किए दिखाता है। कंटेंट चेतावनी वाली पोस्ट छिपी रहती हैं। %1$s पर लागू।</string>
+    <string name="settings_network_retry_hint">यह सेटिंग लोड नहीं हो सकी। फिर कोशिश करने के लिए टैप करें।</string>
+    <string name="settings_network_rate_limited">बहुत ज़्यादा अनुरोध। थोड़ा रुककर फिर कोशिश करें।</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">फ़ीड फ़िल्टर</string>
     <string name="feed_filters_summary">नोट्स और रीडर में रीपोस्ट और म्यूट किए गए शब्द छिपाएँ</string>

@@ -450,6 +450,12 @@
     <string name="explore_topic_posts_empty">這個話題下還沒有貼文。下拉即可重試。</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">拍照</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">敏感媒體</string>
+    <string name="settings_sensitive_media_show">顯示敏感媒體</string>
+    <string name="settings_sensitive_media_summary">無需點按即可顯示成人內容和標記為敏感的媒體。含內容警告的貼文仍保持隱藏。適用於 %1$s。</string>
+    <string name="settings_network_retry_hint">無法載入此設定。點按重試。</string>
+    <string name="settings_network_rate_limited">要求過多。請稍候片刻再試。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">動態過濾</string>
     <string name="feed_filters_summary">在筆記和閱讀器中隱藏轉發與靜音字詞</string>

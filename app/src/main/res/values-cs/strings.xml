@@ -486,6 +486,12 @@
     <string name="explore_topic_posts_empty">V tomto tématu zatím nejsou žádné příspěvky. Přetažením dolů to zkusíte znovu.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Vyfotit</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">Citlivá média</string>
+    <string name="settings_sensitive_media_show">Zobrazit citlivá média</string>
+    <string name="settings_sensitive_media_summary">Zobrazuje obsah pro dospělé a média označená jako citlivá bez klepnutí. Příspěvky s upozorněním na obsah zůstanou skryté. Platí pro %1$s.</string>
+    <string name="settings_network_retry_hint">Toto nastavení se nepodařilo načíst. Klepnutím to zkusíte znovu.</string>
+    <string name="settings_network_rate_limited">Příliš mnoho požadavků. Chvíli počkejte a zkuste to znovu.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtry kanálu</string>
     <string name="feed_filters_summary">Skrýt sdílení a ztlumená slova v Poznámkách a Čtečce</string>

@@ -450,6 +450,12 @@
     <string name="explore_topic_posts_empty">Belum ada kiriman di topik ini. Tarik ke bawah untuk mencoba lagi.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Ambil foto</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">Media sensitif</string>
+    <string name="settings_sensitive_media_show">Tampilkan media sensitif</string>
+    <string name="settings_sensitive_media_summary">Menampilkan konten dewasa dan media yang ditandai sensitif tanpa perlu mengetuk. Postingan dengan peringatan konten tetap tersembunyi. Berlaku untuk %1$s.</string>
+    <string name="settings_network_retry_hint">Pengaturan ini tidak bisa dimuat. Ketuk untuk mencoba lagi.</string>
+    <string name="settings_network_rate_limited">Terlalu banyak permintaan. Tunggu sebentar, lalu coba lagi.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filter feed</string>
     <string name="feed_filters_summary">Sembunyikan posting ulang dan kata yang dibisukan di Catatan dan Pembaca</string>

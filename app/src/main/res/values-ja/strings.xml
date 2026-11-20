@@ -450,6 +450,12 @@
     <string name="explore_topic_posts_empty">このトピックにはまだ投稿がありません。下にスワイプしてもう一度お試しください。</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">写真を撮る</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">センシティブなメディア</string>
+    <string name="settings_sensitive_media_show">センシティブなメディアを表示</string>
+    <string name="settings_sensitive_media_summary">成人向けコンテンツやセンシティブと設定されたメディアを、タップせずに表示します。コンテンツ警告付きの投稿は非表示のままです。%1$s に適用されます。</string>
+    <string name="settings_network_retry_hint">この設定を読み込めませんでした。タップして再試行してください。</string>
+    <string name="settings_network_rate_limited">リクエストが多すぎます。しばらくしてからもう一度お試しください。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">フィードのフィルター</string>
     <string name="feed_filters_summary">ノートとリーダーでリポストとミュートした語句を非表示にします</string>

@@ -450,6 +450,12 @@
     <string name="explore_topic_posts_empty">이 주제에는 아직 게시물이 없어요. 아래로 당겨 다시 시도하세요.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">사진 촬영</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">민감한 미디어</string>
+    <string name="settings_sensitive_media_show">민감한 미디어 보기</string>
+    <string name="settings_sensitive_media_summary">성인 콘텐츠와 민감한 콘텐츠로 표시된 미디어를 탭하지 않고 바로 보여줘요. 콘텐츠 경고가 있는 게시물은 계속 숨겨져요. %1$s에 적용돼요.</string>
+    <string name="settings_network_retry_hint">이 설정을 불러오지 못했어요. 탭해서 다시 시도하세요.</string>
+    <string name="settings_network_rate_limited">요청이 너무 많아요. 잠시 기다린 뒤 다시 시도하세요.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">피드 필터</string>
     <string name="feed_filters_summary">노트와 리더에서 리포스트와 뮤트한 단어를 숨깁니다</string>

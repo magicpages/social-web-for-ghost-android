@@ -462,6 +462,12 @@
     <string name="explore_topic_posts_empty">Nog geen berichten in dit onderwerp. Trek omlaag om het opnieuw te proberen.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Foto maken</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">Gevoelige media</string>
+    <string name="settings_sensitive_media_show">Gevoelige media tonen</string>
+    <string name="settings_sensitive_media_summary">Toont inhoud voor volwassenen en media die als gevoelig zijn gemarkeerd zonder tikken. Berichten met een inhoudswaarschuwing blijven verborgen. Geldt voor %1$s.</string>
+    <string name="settings_network_retry_hint">Deze instelling kon niet worden geladen. Tik om het opnieuw te proberen.</string>
+    <string name="settings_network_rate_limited">Te veel verzoeken. Wacht even en probeer het dan opnieuw.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feedfilters</string>
     <string name="feed_filters_summary">Verberg reposts en gedempte woorden in Notities en Lezer</string>

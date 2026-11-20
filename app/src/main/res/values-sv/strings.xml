@@ -462,6 +462,12 @@
     <string name="explore_topic_posts_empty">Inga inlägg i det här ämnet än. Dra nedåt för att försöka igen.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Ta ett foto</string>
+    <!-- Bluesky sharing and sensitive media -->
+    <string name="settings_sensitive_media">Känsligt innehåll</string>
+    <string name="settings_sensitive_media_show">Visa känsligt mediainnehåll</string>
+    <string name="settings_sensitive_media_summary">Visar vuxeninnehåll och media markerat som känsligt utan ett tryck. Inlägg med innehållsvarning förblir dolda. Gäller för %1$s.</string>
+    <string name="settings_network_retry_hint">Det gick inte att läsa in den här inställningen. Tryck för att försöka igen.</string>
+    <string name="settings_network_rate_limited">För många förfrågningar. Vänta en stund och försök igen.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Flödesfilter</string>
     <string name="feed_filters_summary">Dölj delningar och tystade ord i Anteckningar och Läsare</string>

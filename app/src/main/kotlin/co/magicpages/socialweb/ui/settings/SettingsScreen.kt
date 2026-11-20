@@ -228,6 +228,8 @@ private fun SettingsContent(
                     }
                 }
 
+                colors?.let { NetworkSettings(it.siteTitle) }
+
                 SectionTitle(R.string.settings_notifications, Modifier.padding(top = if (colors != null) 16.dp else 0.dp))
                 Text(
                     stringResource(R.string.settings_notifications_explainer),
