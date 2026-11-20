@@ -161,6 +161,7 @@ dependencies {
     implementation(libs.tink.android)
     implementation(libs.jsoup)
     implementation(libs.zxing.core)
+    implementation(libs.androidx.exifinterface)
 
     implementation(libs.media3.exoplayer)
     implementation(libs.media3.exoplayer.hls)

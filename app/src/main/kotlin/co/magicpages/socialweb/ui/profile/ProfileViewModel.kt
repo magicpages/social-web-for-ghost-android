@@ -135,10 +135,16 @@ class ProfileViewModel @AssistedInject constructor(
     private val _tab = MutableStateFlow(ProfileTab.Posts)
     val tab: StateFlow<ProfileTab> = _tab.asStateFlow()
 
+    /**
+     * Who the service is asked about: [handle], until the signed-in account has been edited. Its handle may
+     * have changed then, so what [handle] spells no longer finds it, and `me` always does.
+     */
+    private var target = handle
+
     // Another server's outbox comes through the service with like counts fixed at 0, so it must not
     // overwrite what the rest of the app knows about those posts.
     private val postsPages = pages(authoritative = handle == "me") { account, next ->
-        activityPub.postsBy(account.site, account.credential, handle, next)
+        activityPub.postsBy(account.site, account.credential, target, next)
     }
     private val likesPages = pages { account, next -> activityPub.likedPosts(account.site, account.credential, next) }
     private val repliesPages = Pager(PagingConfig(pageSize = 20, enablePlaceholders = false)) {
@@ -207,6 +213,12 @@ class ProfileViewModel @AssistedInject constructor(
         _tab.value = tab
     }
 
+    /** The site's own profile was edited: shows what it says now. The post list refreshes through the UI. */
+    fun onEdited() {
+        target = "me"
+        load()
+    }
+
     fun toggleLike(post: Post) = interactions.toggleLike(post)
     fun toggleRepost(post: Post) = interactions.toggleRepost(post)
 
@@ -217,8 +229,8 @@ class ProfileViewModel @AssistedInject constructor(
         loadJob = viewModelScope.launch {
             val result = try {
                 val account = accounts.account.first() ?: throw GhostException.Unauthorized(null)
-                val profile = activityPub.profile(account.site, account.credential, handle)
-                val isMe = handle == "me" || profile.handle == account.profile.handle
+                val profile = activityPub.profile(account.site, account.credential, target)
+                val isMe = target == "me" || profile.handle == account.profile.handle
                 ProfileUiState.Loaded(profile.toContent(isMe))
             } catch (e: GhostException) {
                 ProfileUiState.Failed(e)

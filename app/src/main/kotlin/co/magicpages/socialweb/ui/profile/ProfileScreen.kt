@@ -59,6 +59,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -154,6 +155,15 @@ fun ProfileScreen(
     val site by viewModel.site.collectAsStateWithLifecycle()
     var confirmRecommendation by remember { mutableStateOf(false) }
     var shareOpen by rememberSaveable { mutableStateOf(false) }
+    // The edit form's own state, so a rotation or a trip to the photo picker keeps what was typed.
+    val edit = hiltViewModel<ProfileEditViewModel>(key = "edit-$handle")
+    val editing by edit.state.collectAsStateWithLifecycle()
+    LaunchedEffect(edit) {
+        edit.saved.collect {
+            viewModel.onEdited()
+            posts.refresh()
+        }
+    }
     // What the menu or the Unblock button asked to change, and whether to block (or unblock) it.
     var blockDialog by remember { mutableStateOf<Pair<BlockTarget, Boolean>?>(null) }
     val uris = LocalUriHandler.current
@@ -277,6 +287,7 @@ fun ProfileScreen(
                                 onRecommend = { confirmRecommendation = true },
                                 onToggleFollow = viewModel::toggleFollow,
                                 onUnblock = { blockDialog = BlockTarget.Account(profile.handle) to false },
+                                onEdit = { edit.begin(profile) },
                                 onShare = { shareOpen = true },
                                 onShowPosts = {
                                     viewModel.select(ProfileTab.Posts)
@@ -332,6 +343,7 @@ fun ProfileScreen(
             )
         }
     }
+    editing?.let { ProfileEditDialog(it, edit) }
     ReplyEditorHost(viewModel.composer)
 }
 
@@ -413,6 +425,7 @@ private fun ProfileHeader(
     onShowFollows: (FollowList) -> Unit,
     site: ProfileSite?,
     onRecommend: () -> Unit,
+    onEdit: () -> Unit,
     onShare: () -> Unit,
 ) {
     val profile = content.profile
@@ -458,8 +471,15 @@ private fun ProfileHeader(
             }
             val buttonModifier = Modifier.align(Alignment.TopEnd).padding(top = bannerHeight + 12.dp, end = Gutter)
             if (content.isMe) {
-                FilledTonalIconButton(onClick = onShare, modifier = buttonModifier) {
-                    Icon(AppIcons.Share, contentDescription = stringResource(R.string.action_share_profile))
+                Row(buttonModifier, horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    FilledTonalIconButton(onClick = onShare) {
+                        Icon(AppIcons.Share, contentDescription = stringResource(R.string.action_share_profile))
+                    }
+                    FilledTonalButton(onClick = onEdit) {
+                        Icon(AppIcons.Edit, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
+                        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                        Text(stringResource(R.string.profile_edit))
+                    }
                 }
             } else if (profile.blockedByMe) {
                 // A blocked account can't be followed: the way back is unblocking, so that takes the button's place.

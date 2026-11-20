@@ -98,6 +98,29 @@ class ActivityPubClient @Inject constructor(
     suspend fun currentAccount(site: GhostSite, credential: Credential): Account =
         decode<Account>(send(site, credential, HttpMethod.Get, "account/me")).also { avatars.record(it) }
 
+    /**
+     * Replaces the site's own profile (`PUT account`, Owner and Administrator only). The service takes
+     * every field each time and has no partial update: [avatarUrl] and [bannerImageUrl] are
+     * uploaded-image URLs, or "" for none. 400 means a field was missing or not text.
+     */
+    suspend fun updateAccount(
+        site: GhostSite,
+        credential: Credential,
+        name: String,
+        username: String,
+        bio: String,
+        avatarUrl: String,
+        bannerImageUrl: String,
+    ) {
+        send(
+            site,
+            credential,
+            HttpMethod.Put,
+            "account",
+            body = jsonBody(AccountUpdateBody.serializer(), AccountUpdateBody(name, bio, username, avatarUrl, bannerImageUrl)),
+        )
+    }
+
     /** [handle] is `@user@domain`, or `me` for the site's own account. */
     suspend fun profile(site: GhostSite, credential: Credential, handle: String): Profile =
         decode<Profile>(send(site, credential, HttpMethod.Get, "account/${handle.encodeURLPathPart()}")).also { avatars.record(it) }
@@ -332,6 +355,15 @@ class ActivityPubClient @Inject constructor(
 
     @Serializable
     private data class UnreadCount(val count: Int = 0)
+
+    @Serializable
+    private data class AccountUpdateBody(
+        val name: String,
+        val bio: String,
+        val username: String,
+        val avatarUrl: String,
+        val bannerImageUrl: String,
+    )
 
     /** No default, so the flag is always sent: the service rejects a body without it. */
     @Serializable

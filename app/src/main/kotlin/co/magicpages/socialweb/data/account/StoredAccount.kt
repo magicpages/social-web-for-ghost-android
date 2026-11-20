@@ -10,14 +10,26 @@ data class StoredAccount(
     val site: GhostSite,
     val credential: Credential,
     val profile: Profile,
+    /**
+     * The id this account was stored under before its handle changed, so a username change keeps the
+     * session and everything stored per account. Null while the handle is the one it signed in with.
+     */
+    val originalId: String? = null,
 ) {
     /**
-     * Who this account is: its site and its social web handle. Signing in again to the same site
-     * as the same user gives the same id, so it replaces the stored account instead of adding one.
-     * Stable across sign-ins, safe in intents and preference keys.
+     * Who this account is: its site and its social web handle when it was first stored. Signing in
+     * again to the same site as the same user gives the same id, so it replaces the stored account
+     * instead of adding one. Stable across sign-ins and username changes, safe in intents and preference keys.
      */
     val id: String
+        get() = originalId ?: currentId
+
+    /** The id the account's handle gives it today; differs from [id] after a username change. */
+    private val currentId: String
         get() = accountId(site.siteUrl, profile.handle)
+
+    /** Whether [other] is this account signed in again, under either its original or its current handle. */
+    fun isSameAs(other: StoredAccount): Boolean = other.id == id || other.id == currentId
 
     companion object {
         fun accountId(siteUrl: String, handle: String): String =
@@ -90,11 +102,12 @@ data class AccountsFile(
         return AccountsFile(accounts = accounts, activeId = activeId)
     }
 
-    /** Adds [account], or replaces the stored one with the same id (keeping its place), and makes it active. */
+    /** Adds [account], or replaces the stored one it signs in again (keeping its place and id), and makes it active. */
     fun withAdded(account: StoredAccount): AccountsFile {
-        val index = accounts.indexOfFirst { it.id == account.id }
-        val next = if (index < 0) accounts + account else accounts.toMutableList().also { it[index] = account }
-        return copy(accounts = next, activeId = account.id)
+        val index = accounts.indexOfFirst { it.isSameAs(account) }
+        if (index < 0) return copy(accounts = accounts + account, activeId = account.id)
+        val replaced = account.copy(originalId = accounts[index].id.takeIf { it != account.id })
+        return copy(accounts = accounts.toMutableList().also { it[index] = replaced }, activeId = replaced.id)
     }
 
     /** Makes [id] the active account; unchanged when no stored account has that id. */
@@ -111,4 +124,17 @@ data class AccountsFile(
     /** Records [accentColor] as the site colour of every stored account on [siteUrl]. */
     fun withAccentColor(siteUrl: String, accentColor: String?): AccountsFile =
         copy(accounts = accounts.map { if (it.site.siteUrl == siteUrl) it.copy(site = it.site.copy(accentColor = accentColor)) else it })
+
+    /**
+     * Replaces the cached profile of [id] (its name, handle and avatar as the site now has them). A new
+     * handle keeps the account's id, so the session and everything stored per account carry on.
+     * Unchanged when no stored account has [id].
+     */
+    fun withProfile(id: String, profile: Profile): AccountsFile {
+        val index = accounts.indexOfFirst { it.id == id }
+        if (index < 0) return this
+        val renamed = accounts[index].copy(profile = profile, originalId = null)
+        val updated = if (renamed.id == id) renamed else renamed.copy(originalId = id)
+        return copy(accounts = accounts.toMutableList().also { it[index] = updated })
+    }
 }

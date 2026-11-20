@@ -227,6 +227,7 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
         when {
             first == "upload" -> return upload(request, host)
             first == "preferences" -> return preferences(request)
+            first == "account" && method == "PUT" -> return updateOwnProfile(request)
             first == "notifications" -> unread = 0
             first == "post" && method == "DELETE" -> delete(verb)
             first == "actions" -> when (verb) {
@@ -421,6 +422,36 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
         return answerJson(buildJsonObject { put("showSensitiveMedia", showSensitiveMedia) })
     }
 
+    // MARK: Own profile
+
+    /** What the signed-in site's profile says after an edit: the persona's own values until then. */
+    private class OwnProfile(val name: String, val username: String, val bio: String, val avatarUrl: String, val bannerUrl: String)
+
+    private var ownProfile: OwnProfile? = null
+
+    /** `PUT v1/account`: like the service, all five fields must be strings, else 400; the answer is `{}`. */
+    private fun updateOwnProfile(request: Request): Answer {
+        val body = request.jsonBody()
+        fun text(key: String) = (body[key] as? JsonPrimitive)?.takeIf { it.isString }?.contentOrNull
+        val name = text("name")
+        val username = text("username")
+        val bio = text("bio")
+        val avatarUrl = text("avatarUrl")
+        val bannerUrl = text("bannerImageUrl")
+        if (name == null || username == null || bio == null || avatarUrl == null || bannerUrl == null) {
+            return Answer(400, "{}".encodeToByteArray())
+        }
+        ownProfile = OwnProfile(name, username, bio, avatarUrl, bannerUrl)
+        return answerJson(buildJsonObject {})
+    }
+
+    /** The bio as the service sends it: sanitized HTML, one paragraph per blank line. */
+    private fun bioHtml(text: String): String {
+        if (text.isBlank()) return ""
+        fun escape(line: String) = line.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        return text.trim().split(Regex("\n{2,}")).joinToString("") { "<p>${escape(it).replace("\n", "<br>")}</p>" }
+    }
+
     // MARK: Accounts and discovery
 
     private fun account(host: String, who: String, relation: String?): Answer {
@@ -432,6 +463,7 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
         }
         val followed = persona.handle in following
         val delta = if (persona === DemoContent.me || followed == persona.followedByMe) 0 else if (followed) 1 else -1
+        val edited = ownProfile.takeIf { persona === DemoContent.me }
         val profile = Profile(
             id = (DemoContent.everyone.indexOf(persona) + 1).toString(), apId = persona.apId, name = persona.name, handle = persona.handle,
             avatarUrl = persona.avatar, bio = persona.bio, url = persona.url, bannerImageUrl = persona.bannerUrl,
@@ -442,7 +474,16 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
             },
             postCount = persona.posts, likedCount = 56, followingCount = persona.following,
             followerCount = persona.followers + delta, followsMe = persona !== DemoContent.me, followedByMe = followed,
-        )
+        ).let {
+            if (edited == null) {
+                it
+            } else {
+                it.copy(
+                    name = edited.name, handle = "@${edited.username}@${persona.domain}", bio = bioHtml(edited.bio),
+                    avatarUrl = edited.avatarUrl.ifBlank { null }, bannerImageUrl = edited.bannerUrl.ifBlank { null },
+                )
+            }
+        }
         return ok(Profile.serializer(), profile)
     }
 

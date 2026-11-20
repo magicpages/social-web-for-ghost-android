@@ -79,6 +79,11 @@ class AccountStore @Inject constructor(
         dataStore.updateData { it.withAccentColor(siteUrl, accentColor) }
     }
 
+    /** Records the profile the site now has for the account [id]; the id stays the same even when the handle changed. */
+    suspend fun updateProfile(id: String, profile: Profile) {
+        dataStore.updateData { it.withProfile(id, profile) }
+    }
+
     private class EncryptedJsonSerializer(aead: Lazy<Aead>, private val json: Json) : Serializer<AccountsFile> {
         private val aead by aead
 
