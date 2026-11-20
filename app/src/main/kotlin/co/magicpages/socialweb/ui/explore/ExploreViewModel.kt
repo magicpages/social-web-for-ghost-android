@@ -13,6 +13,16 @@ import androidx.paging.PagingState
 import androidx.paging.cachedIn
 import androidx.paging.filter
 import co.magicpages.socialweb.R
+import co.magicpages.socialweb.data.activitypub.FreshAvatars
+import co.magicpages.socialweb.data.activitypub.Post
+import co.magicpages.socialweb.data.activitypub.PostInteractions
+import co.magicpages.socialweb.ui.posts.FeedItem
+import co.magicpages.socialweb.ui.posts.PostsPagingSource
+import co.magicpages.socialweb.ui.posts.ReplyComposer
+import co.magicpages.socialweb.ui.posts.postMessages
+import androidx.paging.map
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.merge
 import co.magicpages.socialweb.data.account.AccountStore
 import co.magicpages.socialweb.data.account.StoredAccount
 import co.magicpages.socialweb.data.activitypub.ActivityPubClient
@@ -62,6 +72,9 @@ sealed interface SearchUiState {
     data class Failed(val error: Throwable) : SearchUiState
 }
 
+/** What a selected topic lists. */
+enum class TopicView { Posts, People }
+
 /**
  * The Explore tab: searching for accounts, and the accounts the service suggests, either for the
  * site ("For you") or under one of its topics. Follow changes made here are kept in [following] so
@@ -72,7 +85,9 @@ sealed interface SearchUiState {
 class ExploreViewModel @Inject constructor(
     private val accounts: AccountStore,
     private val activityPub: ActivityPubClient,
-    moderation: Moderation,
+    private val interactions: PostInteractions,
+    private val freshAvatars: FreshAvatars,
+    private val moderation: Moderation,
 ) : ViewModel() {
     // The same account with a replaced credential keeps its lists; a switch starts them anew.
     private val active: Flow<StoredAccount> = accounts.account
@@ -88,6 +103,11 @@ class ExploreViewModel @Inject constructor(
     /** The topic slug whose accounts are listed; null is "For you". */
     val selected: StateFlow<String?> = _selected.asStateFlow()
 
+    private val _topicView = MutableStateFlow(TopicView.Posts)
+
+    /** Whether a selected topic shows its posts or its people; "For you" only has people. */
+    val topicView: StateFlow<TopicView> = _topicView.asStateFlow()
+
     private val _following = MutableStateFlow<Map<String, Boolean>>(emptyMap())
 
     /** Follow state the user changed here, by lower-case handle; it wins over what a list was loaded with. */
@@ -99,8 +119,11 @@ class ExploreViewModel @Inject constructor(
 
     private val followFailures = MutableSharedFlow<Int>(extraBufferCapacity = 1)
 
+    /** Reply editor state for the posts of a topic. */
+    val composer = ReplyComposer(viewModelScope, interactions)
+
     /** String resources to show in a snackbar. */
-    val messages: Flow<Int> = followFailures
+    val messages: Flow<Int> = merge(followFailures, postMessages(interactions, composer, moderation))
 
     init {
         // Who an account follows, and which topic was open, say nothing about another account.
@@ -108,6 +131,7 @@ class ExploreViewModel @Inject constructor(
             .onEach {
                 generation++
                 _selected.value = null
+                _topicView.value = TopicView.Posts
                 _following.value = emptyMap()
             }
             .launchIn(viewModelScope)
@@ -201,6 +225,30 @@ class ExploreViewModel @Inject constructor(
             if (hidden.isEmpty) data else data.filter { !hidden.hides(it.toAuthor()) }
         }
 
+    // Like the suggestions, a topic or account starts with an empty list that is loading. The posts of
+    // a topic are the same posts the Notes list shows, so likes and reposts made there agree with these.
+    val topicPosts: Flow<PagingData<FeedItem>> = combine(active, _selected) { account, slug -> account to slug }
+        .flatMapLatest { (account, slug) ->
+            if (slug == null) {
+                // "For you" has no posts of its own.
+                flowOf(PagingData.empty<FeedItem>())
+            } else {
+                Pager(PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false)) {
+                    PostsPagingSource(interactions) { next ->
+                        activityPub.discoverFeed(account.site, account.credential, slug, next).also { freshAvatars.track(it.posts) }
+                    }
+                }.flow.onStart { emit(PagingData.empty(LOADING_STATES)) }
+            }
+        }
+        .cachedIn(viewModelScope)
+        .combine(interactions.overrides) { data, overrides ->
+            if (overrides.isEmpty()) data else data.map { it.with(overrides) }
+        }
+        // What was deleted or blocked just now leaves at once; the service leaves it out of the next load.
+        .combine(moderation.hidden) { data, hidden ->
+            if (hidden.isEmpty) data else data.filter { !it.isHiddenBy(hidden) }
+        }
+
     /** Sets what the search field holds; the service is asked once typing pauses. */
     fun setQuery(text: String) {
         query.value = text.trim()
@@ -215,6 +263,14 @@ class ExploreViewModel @Inject constructor(
         _following.value = emptyMap()
         _selected.value = slug
     }
+
+    /** Switches a selected topic between its posts and its people. */
+    fun setTopicView(view: TopicView) {
+        _topicView.value = view
+    }
+
+    fun toggleLike(post: Post) = interactions.toggleLike(post)
+    fun toggleRepost(post: Post) = interactions.toggleRepost(post)
 
     /**
      * Asks for the topics again and drops the follow changes made here, since a follow made

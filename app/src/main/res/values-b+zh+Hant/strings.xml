@@ -444,6 +444,10 @@
     <string name="onboarding_requirements">需要已開啟社群網路的 Ghost 6 或更新版本，並以擁有者或管理員身分登入。</string>
     <string name="onboarding_add_site">新增你的網站</string>
     <string name="link_preview_remove">移除連結預覽</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">貼文</string>
+    <string name="explore_topic_people">用戶</string>
+    <string name="explore_topic_posts_empty">這個話題下還沒有貼文。下拉即可重試。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">動態過濾</string>
     <string name="feed_filters_summary">在筆記和閱讀器中隱藏轉發與靜音字詞</string>

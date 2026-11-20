@@ -456,6 +456,10 @@
     <string name="onboarding_requirements">Kræver Ghost 6 eller nyere med det sociale web slået til og login som ejer eller administrator.</string>
     <string name="onboarding_add_site">Tilføj dit website</string>
     <string name="link_preview_remove">Fjern linkforhåndsvisning</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">Opslag</string>
+    <string name="explore_topic_people">Personer</string>
+    <string name="explore_topic_posts_empty">Ingen opslag i dette emne endnu. Træk ned for at prøve igen.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feedfiltre</string>
     <string name="feed_filters_summary">Skjul videredelinger og dæmpede ord i Noter og Læser</string>

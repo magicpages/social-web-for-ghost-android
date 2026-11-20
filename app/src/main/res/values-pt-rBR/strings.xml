@@ -468,6 +468,10 @@
     <string name="onboarding_requirements">Requer Ghost 6 ou posterior com a web social ativada e um login como proprietário ou administrador.</string>
     <string name="onboarding_add_site">Adicionar seu site</string>
     <string name="link_preview_remove">Remover pré-visualização do link</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">Posts</string>
+    <string name="explore_topic_people">Pessoas</string>
+    <string name="explore_topic_posts_empty">Ainda não há posts neste tópico. Puxe para baixo para tentar de novo.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtros do feed</string>
     <string name="feed_filters_summary">Oculte reposts e palavras silenciadas em Notas e Leitor</string>

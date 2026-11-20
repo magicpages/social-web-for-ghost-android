@@ -480,6 +480,10 @@
     <string name="onboarding_requirements">Vyžaduje Ghost 6 nebo novější se zapnutým sociálním webem a přihlášení jako vlastník nebo správce.</string>
     <string name="onboarding_add_site">Přidat váš web</string>
     <string name="link_preview_remove">Odstranit náhled odkazu</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">Příspěvky</string>
+    <string name="explore_topic_people">Lidé</string>
+    <string name="explore_topic_posts_empty">V tomto tématu zatím nejsou žádné příspěvky. Přetažením dolů to zkusíte znovu.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtry kanálu</string>
     <string name="feed_filters_summary">Skrýt sdílení a ztlumená slova v Poznámkách a Čtečce</string>

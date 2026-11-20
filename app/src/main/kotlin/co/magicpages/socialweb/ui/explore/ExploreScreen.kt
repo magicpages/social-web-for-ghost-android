@@ -100,6 +100,13 @@ import co.magicpages.socialweb.ui.posts.MaxContentWidth
 import co.magicpages.socialweb.ui.posts.displayName
 import co.magicpages.socialweb.ui.theme.Gutter
 import kotlinx.coroutines.launch
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import co.magicpages.socialweb.data.activitypub.Post
+import co.magicpages.socialweb.ui.posts.PostCallbacks
+import co.magicpages.socialweb.ui.posts.ReplyEditorHost
+import co.magicpages.socialweb.ui.posts.feedItems
 
 /**
  * The Explore tab: the search for accounts, which sits where the other tabs have their title and
@@ -116,6 +123,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun ExploreScreen(
     reselections: Int,
+    onOpenPost: (Post) -> Unit,
     onOpenProfile: (Author) -> Unit,
     onSignOut: () -> Unit,
     accountMenu: @Composable () -> Unit,
@@ -127,6 +135,18 @@ fun ExploreScreen(
     val selected by viewModel.selected.collectAsStateWithLifecycle()
     val followingState = viewModel.following.collectAsStateWithLifecycle()
     val following by followingState
+    val topicPosts = viewModel.topicPosts.collectAsLazyPagingItems()
+    val topicView by viewModel.topicView.collectAsStateWithLifecycle()
+    val showPosts = selected != null && topicView == TopicView.Posts
+    val callbacks = remember(viewModel) {
+        PostCallbacks(
+            open = onOpenPost,
+            openProfile = onOpenProfile,
+            reply = viewModel.composer::start,
+            toggleLike = viewModel::toggleLike,
+            toggleRepost = viewModel::toggleRepost,
+        )
+    }
     val searchState = viewModel.search.collectAsStateWithLifecycle()
     val search by searchState
 
@@ -148,7 +168,7 @@ fun ExploreScreen(
         if (listState.canScrollBackward) listState.scrollToTop() else searchBarState.animateToExpanded()
     }
     // Each list starts at its own top, not at the offset the other one was left at.
-    LaunchedEffect(selected) { listState.scrollToItem(0) }
+    LaunchedEffect(selected, showPosts) { listState.scrollToItem(0) }
 
     // Beside the tabs the profile opens in the detail pane, which a back gesture closes without ever hiding
     // this tab, so there is nothing to cover and the search simply closes.
@@ -247,14 +267,35 @@ fun ExploreScreen(
                 }
             }
 
-            val refresh = suggestions.loadState.refresh
-            val refreshing = refresh is LoadState.Loading && suggestions.itemCount > 0
+            if (selected != null) {
+                SingleChoiceSegmentedButtonRow(
+                    Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(horizontal = Gutter).padding(bottom = 8.dp),
+                ) {
+                    TopicView.entries.forEachIndexed { index, view ->
+                        SegmentedButton(
+                            selected = topicView == view,
+                            onClick = { viewModel.setTopicView(view) },
+                            shape = SegmentedButtonDefaults.itemShape(index, TopicView.entries.size),
+                        ) {
+                            Text(stringResource(if (view == TopicView.Posts) R.string.explore_topic_posts else R.string.explore_topic_people))
+                        }
+                    }
+                }
+            }
+
+            val refresh = if (showPosts) topicPosts.loadState.refresh else suggestions.loadState.refresh
+            val itemCount = if (showPosts) topicPosts.itemCount else suggestions.itemCount
+            val refreshing = refresh is LoadState.Loading && itemCount > 0
             val pullState = rememberPullToRefreshState()
             PullToRefreshBox(
                 isRefreshing = refreshing,
                 onRefresh = {
-                    viewModel.refresh()
-                    suggestions.refresh()
+                    if (showPosts) {
+                        topicPosts.refresh()
+                    } else {
+                        viewModel.refresh()
+                        suggestions.refresh()
+                    }
                 },
                 state = pullState,
                 indicator = {
@@ -263,15 +304,23 @@ fun ExploreScreen(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 when {
-                    refresh is LoadState.Error && suggestions.itemCount == 0 -> FullScreenError(
+                    refresh is LoadState.Error && itemCount == 0 -> FullScreenError(
                         errorMessage(refresh.error),
-                        onRetry = suggestions::retry,
+                        onRetry = if (showPosts) topicPosts::retry else suggestions::retry,
                         sessionEnded = refresh.error is GhostException.Unauthorized,
                         onSignOut = onSignOut,
                     )
-                    refresh is LoadState.Loading && suggestions.itemCount == 0 -> CenteredLoading()
-                    refresh is LoadState.NotLoading && suggestions.itemCount == 0 ->
-                        ScrollableMessage(stringResource(R.string.explore_empty))
+                    refresh is LoadState.Loading && itemCount == 0 -> CenteredLoading()
+                    refresh is LoadState.NotLoading && itemCount == 0 ->
+                        ScrollableMessage(stringResource(if (showPosts) R.string.explore_topic_posts_empty else R.string.explore_empty))
+                    showPosts -> LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        state = listState,
+                        contentPadding = PaddingValues(vertical = 8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        feedItems(topicPosts, callbacks)
+                    }
                     else -> LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         state = listState,
@@ -297,6 +346,7 @@ fun ExploreScreen(
             }
         }
     }
+    ReplyEditorHost(viewModel.composer)
 }
 
 /** Frames given to the cover or the search to be drawn before the other one goes. */

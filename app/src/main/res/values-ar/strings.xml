@@ -504,6 +504,10 @@
     <string name="onboarding_requirements">يتطلب Ghost 6 أو أحدث مع تفعيل الويب الاجتماعي، وتسجيل الدخول بصفتك مالكًا أو مسؤولًا.</string>
     <string name="onboarding_add_site">أضف موقعك</string>
     <string name="link_preview_remove">إزالة معاينة الرابط</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">المنشورات</string>
+    <string name="explore_topic_people">الأشخاص</string>
+    <string name="explore_topic_posts_empty">لا توجد منشورات في هذا الموضوع بعد. اسحب لأسفل لإعادة المحاولة.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">عوامل تصفية الخلاصة</string>
     <string name="feed_filters_summary">إخفاء إعادات النشر والكلمات المكتومة في الملاحظات والقارئ</string>

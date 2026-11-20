@@ -456,6 +456,10 @@
     <string name="onboarding_requirements">Vaatii Ghost 6:n tai uudemman, sosiaalisen verkon päälle kytkettynä, ja kirjautumisen omistajana tai ylläpitäjänä.</string>
     <string name="onboarding_add_site">Lisää sivustosi</string>
     <string name="link_preview_remove">Poista linkin esikatselu</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">Julkaisut</string>
+    <string name="explore_topic_people">Ihmiset</string>
+    <string name="explore_topic_posts_empty">Tässä aiheessa ei ole vielä julkaisuja. Yritä uudelleen vetämällä alas.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Syötteen suodattimet</string>
     <string name="feed_filters_summary">Piilota uudelleenjaot ja mykistetyt sanat Muistiinpanoissa ja Lukijassa</string>

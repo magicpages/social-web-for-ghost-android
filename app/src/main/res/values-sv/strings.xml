@@ -456,6 +456,10 @@
     <string name="onboarding_requirements">Kräver Ghost 6 eller senare med det sociala webben påslaget, och inloggning som ägare eller administratör.</string>
     <string name="onboarding_add_site">Lägg till din webbplats</string>
     <string name="link_preview_remove">Ta bort länkförhandsvisning</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">Inlägg</string>
+    <string name="explore_topic_people">Personer</string>
+    <string name="explore_topic_posts_empty">Inga inlägg i det här ämnet än. Dra nedåt för att försöka igen.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Flödesfilter</string>
     <string name="feed_filters_summary">Dölj delningar och tystade ord i Anteckningar och Läsare</string>

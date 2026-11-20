@@ -189,6 +189,7 @@ fun HomeScreen(
                     )
                     HomeTab.Explore -> ExploreScreen(
                         reselections = count,
+                        onOpenPost = onOpenPost,
                         onOpenProfile = onOpenProfile,
                         onSignOut = onSignOut,
                         accountMenu = accountMenu,

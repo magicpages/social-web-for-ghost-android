@@ -456,6 +456,10 @@
     <string name="onboarding_requirements">Krever Ghost 6 eller nyere med det sosiale nettet slått på, og innlogging som eier eller administrator.</string>
     <string name="onboarding_add_site">Legg til nettstedet ditt</string>
     <string name="link_preview_remove">Fjern lenkeforhåndsvisning</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">Innlegg</string>
+    <string name="explore_topic_people">Folk</string>
+    <string name="explore_topic_posts_empty">Ingen innlegg i dette emnet ennå. Dra ned for å prøve igjen.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feedfiltre</string>
     <string name="feed_filters_summary">Skjul videredelinger og dempede ord i Notater og Leser</string>

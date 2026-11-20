@@ -444,6 +444,10 @@
     <string name="onboarding_requirements">Memerlukan Ghost 6 atau lebih baru dengan web sosial aktif, dan login sebagai Pemilik atau Administrator.</string>
     <string name="onboarding_add_site">Tambahkan situs Anda</string>
     <string name="link_preview_remove">Hapus pratinjau tautan</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">Kiriman</string>
+    <string name="explore_topic_people">Orang</string>
+    <string name="explore_topic_posts_empty">Belum ada kiriman di topik ini. Tarik ke bawah untuk mencoba lagi.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filter feed</string>
     <string name="feed_filters_summary">Sembunyikan posting ulang dan kata yang dibisukan di Catatan dan Pembaca</string>

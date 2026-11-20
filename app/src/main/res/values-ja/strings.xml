@@ -444,6 +444,10 @@
     <string name="onboarding_requirements">ソーシャルウェブがオンの Ghost 6 以降と、オーナーまたは管理者としてのログインが必要です。</string>
     <string name="onboarding_add_site">サイトを追加</string>
     <string name="link_preview_remove">リンクプレビューを削除</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">投稿</string>
+    <string name="explore_topic_people">人</string>
+    <string name="explore_topic_posts_empty">このトピックにはまだ投稿がありません。下にスワイプしてもう一度お試しください。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">フィードのフィルター</string>
     <string name="feed_filters_summary">ノートとリーダーでリポストとミュートした語句を非表示にします</string>

@@ -186,6 +186,7 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
                         ok(PostsPage.serializer(), feedPage(notesEntries(), next))
                     }
                     "reader" -> ok(PostsPage.serializer(), feedPage(DemoContent.readerFeed, request.url.queryParameter("next")))
+                    "discover" -> discover(parts.getOrNull(2).orEmpty())?.let { ok(PostsPage.serializer(), PostsPage(it)) } ?: notFound()
                     else -> notFound()
                 }
                 "posts" -> if (second == "me" && parts.getOrNull(2) == "liked") {
@@ -433,6 +434,15 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
     )
 
     private fun explore(slug: String) = DemoContent.topics.firstOrNull { it.slug == slug }?.people.orEmpty().map(::suggested)
+
+    /** The posts of a topic: what the topic's people published, newest first; null for an unknown topic. */
+    private fun discover(slug: String): List<Post>? {
+        val handles = DemoContent.topics.firstOrNull { it.slug == slug }?.people?.map { it.handle } ?: return null
+        return posts.keys
+            .filter { it !in parents && posts.getValue(it).author.handle in handles }
+            .sortedBy(::age)
+            .mapNotNull(::view)
+    }
 
     private fun search(query: String): List<Author> {
         val q = query.trim().removePrefix("@").lowercase()

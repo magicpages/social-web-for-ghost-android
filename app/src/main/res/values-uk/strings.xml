@@ -480,6 +480,10 @@
     <string name="onboarding_requirements">Потрібен Ghost 6 або новіший з увімкненим соціальним вебом і вхід як власник або адміністратор.</string>
     <string name="onboarding_add_site">Додати сайт</string>
     <string name="link_preview_remove">Вилучити попередній перегляд посилання</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">Дописи</string>
+    <string name="explore_topic_people">Люди</string>
+    <string name="explore_topic_posts_empty">У цій темі ще немає дописів. Потягніть униз, щоб спробувати ще раз.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Фільтри стрічки</string>
     <string name="feed_filters_summary">Ховати репости й заглушені слова в Нотатках і Читанні</string>

@@ -456,6 +456,10 @@
     <string name="onboarding_requirements">Vereist Ghost 6 of nieuwer met het sociale web ingeschakeld, en een login als eigenaar of beheerder.</string>
     <string name="onboarding_add_site">Je site toevoegen</string>
     <string name="link_preview_remove">Linkvoorbeeld verwijderen</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">Berichten</string>
+    <string name="explore_topic_people">Mensen</string>
+    <string name="explore_topic_posts_empty">Nog geen berichten in dit onderwerp. Trek omlaag om het opnieuw te proberen.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feedfilters</string>
     <string name="feed_filters_summary">Verberg reposts en gedempte woorden in Notities en Lezer</string>

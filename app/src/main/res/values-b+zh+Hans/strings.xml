@@ -444,6 +444,10 @@
     <string name="onboarding_requirements">需要已开启社交网络的 Ghost 6 或更高版本，并以所有者或管理员身份登录。</string>
     <string name="onboarding_add_site">添加你的站点</string>
     <string name="link_preview_remove">移除链接预览</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">帖子</string>
+    <string name="explore_topic_people">用户</string>
+    <string name="explore_topic_posts_empty">这个话题下还没有帖子。下拉可重试。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">信息流过滤</string>
     <string name="feed_filters_summary">在笔记和阅读器中隐藏转发和屏蔽词</string>

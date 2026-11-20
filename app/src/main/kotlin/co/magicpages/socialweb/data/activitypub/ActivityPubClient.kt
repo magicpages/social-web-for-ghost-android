@@ -217,6 +217,10 @@ class ActivityPubClient @Inject constructor(
     suspend fun explore(site: GhostSite, credential: Credential, topic: String, next: String? = null): SuggestedAccountsPage =
         decode(send(site, credential, HttpMethod.Get, "explore/${topic.encodeURLPathPart()}", params = arrayOf("next" to next)))
 
+    /** A page of the posts the service files under [topic], newest first; [next] is the previous page's cursor. */
+    suspend fun discoverFeed(site: GhostSite, credential: Credential, topic: String, next: String? = null): PostsPage =
+        decode(send(site, credential, HttpMethod.Get, "feed/discover/${topic.encodeURLPathPart()}", params = arrayOf("next" to next)))
+
     /** Accounts suggested for the site, from its topics first; none it already follows. */
     suspend fun recommendations(site: GhostSite, credential: Credential, limit: Int = 20): List<SuggestedAccount> =
         decode<SuggestedAccountsPage>(

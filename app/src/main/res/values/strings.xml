@@ -463,6 +463,10 @@
     <string name="onboarding_requirements">Needs Ghost 6 or later with the social web turned on, and an Owner or Administrator sign-in.</string>
     <string name="onboarding_add_site">Add your site</string>
     <string name="link_preview_remove">Remove link preview</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">Posts</string>
+    <string name="explore_topic_people">People</string>
+    <string name="explore_topic_posts_empty">No posts in this topic yet. Pull down to try again.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feed filters</string>
     <string name="feed_filters_summary">Hide reposts and muted words in Notes and Reader</string>

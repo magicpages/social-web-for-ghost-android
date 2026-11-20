@@ -444,6 +444,10 @@
     <string name="onboarding_requirements">Cần Ghost 6 trở lên với mạng xã hội web được bật, và đăng nhập bằng tài khoản Chủ sở hữu hoặc Quản trị viên.</string>
     <string name="onboarding_add_site">Thêm trang của bạn</string>
     <string name="link_preview_remove">Xóa bản xem trước liên kết</string>
+    <!-- topic feeds -->
+    <string name="explore_topic_posts">Bài đăng</string>
+    <string name="explore_topic_people">Mọi người</string>
+    <string name="explore_topic_posts_empty">Chưa có bài đăng nào trong chủ đề này. Kéo xuống để thử lại.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Bộ lọc bảng tin</string>
     <string name="feed_filters_summary">Ẩn bài đăng lại và từ đã tắt tiếng trong Ghi chú và Trình đọc</string>
