@@ -1,4 +1,4 @@
-Social Web přináší sociální web vašeho webu Ghost na Android.
+Váš web Ghost ve fediversu, přímo z telefonu.
 
 Ghost 6 propojuje váš web s otevřeným sociálním webem (ActivityPub): lidé na Mastodonu, WordPressu, dalších webech Ghost i zbytku fediversa vás mohou sledovat a vy je také. Social Web je rychlý nativní způsob, jak držet krok a zapojit se.
 

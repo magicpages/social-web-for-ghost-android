@@ -1,4 +1,4 @@
-Social Web 把你的 Ghost 網站的社群網路帶到 Android。
+你的 Ghost 網站，在聯邦宇宙中，就在手機上。
 
 Ghost 6 將你的網站連上開放的社群網路（ActivityPub）：Mastodon、WordPress、其他 Ghost 網站以及聯邦宇宙中的其他人都能追蹤你，你也能追蹤他們。Social Web 是跟上動態並參與其中的快速原生方式。
 

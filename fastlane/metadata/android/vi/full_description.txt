@@ -1,4 +1,4 @@
-Social Web đưa web xã hội của trang Ghost của bạn lên Android.
+Trang Ghost của bạn trên fediverse, ngay trên điện thoại.
 
 Ghost 6 kết nối trang của bạn với web xã hội mở (ActivityPub): mọi người trên Mastodon, WordPress, các trang Ghost khác và phần còn lại của fediverse có thể theo dõi bạn, và bạn cũng có thể theo dõi họ. Social Web là cách nhanh chóng, gốc để theo kịp và tham gia.
 

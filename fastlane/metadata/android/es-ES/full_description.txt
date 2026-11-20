@@ -1,4 +1,4 @@
-Social Web lleva la web social de tu sitio Ghost a Android.
+Tu sitio Ghost en el fediverso, directamente desde tu móvil.
 
 Ghost 6 conecta tu sitio con la web social abierta (ActivityPub): las personas de Mastodon, WordPress, otros sitios Ghost y el resto del fediverso pueden seguirte, y tú puedes seguirlas. Social Web es una forma rápida y nativa de estar al día y participar.
 

@@ -1,4 +1,4 @@
-Social Web은 Ghost 사이트의 소셜 웹을 Android로 가져옵니다.
+페디버스 속 내 Ghost 사이트를 휴대폰에서 바로.
 
 Ghost 6은 사이트를 열린 소셜 웹(ActivityPub)에 연결합니다. Mastodon, WordPress, 다른 Ghost 사이트 등 페디버스의 사람들이 나를 팔로우할 수 있고, 나도 그들을 팔로우할 수 있습니다. Social Web은 소식을 따라가고 대화에 참여하는 빠른 네이티브 방법입니다.
 
