@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The debug build's copy of src/main's shortcuts: a shortcut names its app's package, and this build's has the ".debug" suffix. Keep the two in step. -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="new_note"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_new_note"
+        android:shortcutShortLabel="@string/shortcut_new_note_short"
+        android:shortcutLongLabel="@string/shortcut_new_note_long">
+        <intent
+            android:action="co.magicpages.socialweb.action.NEW_NOTE"
+            android:targetClass="co.magicpages.socialweb.MainActivity"
+            android:targetPackage="co.magicpages.socialweb.debug" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="notifications"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_notifications"
+        android:shortcutShortLabel="@string/shortcut_notifications_short"
+        android:shortcutLongLabel="@string/shortcut_notifications_long">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetClass="co.magicpages.socialweb.MainActivity"
+            android:targetPackage="co.magicpages.socialweb.debug">
+            <extra
+                android:name="co.magicpages.socialweb.OPEN_TAB"
+                android:value="Notifications" />
+        </intent>
+    </shortcut>
+</shortcuts>

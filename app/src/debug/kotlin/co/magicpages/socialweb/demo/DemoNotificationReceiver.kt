@@ -24,10 +24,10 @@ import kotlinx.coroutines.launch
  * in the running process and the notification permission:
  *
  * ```
- * adb shell pm grant co.magicpages.socialweb android.permission.POST_NOTIFICATIONS
- * adb shell am start -n co.magicpages.socialweb/.MainActivity --ez demo true
+ * adb shell pm grant co.magicpages.socialweb.debug android.permission.POST_NOTIFICATIONS
+ * adb shell am start -n co.magicpages.socialweb.debug/co.magicpages.socialweb.MainActivity --ez demo true
  * adb shell input keyevent KEYCODE_HOME
- * adb shell am broadcast -n co.magicpages.socialweb/.demo.DemoNotificationReceiver
+ * adb shell am broadcast -n co.magicpages.socialweb.debug/co.magicpages.socialweb.demo.DemoNotificationReceiver
  * ```
  *
  * Does nothing outside demo mode, so it can never announce a real account's notifications.

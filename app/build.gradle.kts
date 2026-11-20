@@ -31,6 +31,7 @@ android {
         targetSdk = 37
         versionCode = 1
         versionName = "0.1.0"
+        manifestPlaceholders["appLabel"] = "Social Web"
     }
 
     val uploadStore = signingValue("storeFile", "SOCIALWEB_KEYSTORE_FILE")?.let { rootProject.file(it) }
@@ -48,6 +49,13 @@ android {
     }
 
     buildTypes {
+        // Installs next to the store app (which Play signs with another key) instead of clashing with
+        // it, with its own data and sign-ins, and says so under its icon.
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+            manifestPlaceholders["appLabel"] = "Social Web (dev)"
+        }
         release {
             signingConfigs.findByName("release")?.let { signingConfig = it }
             isMinifyEnabled = true

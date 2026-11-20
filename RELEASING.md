@@ -20,8 +20,8 @@ English screenshots live in `fastlane/metadata/android/en-US/images/`: six phone
 To retake them offline, use the debug build's **demo mode**: the app signs in as "Seaside Notes", the made-up sample site of Magic Pages' feature pages, and every request is answered from made-up content (Notes, Reader, Explore, Notifications, threads, profiles, articles, link cards, image posts, and replying with a picture). Start it on a fresh emulator or device with:
 
 ```sh
-adb shell am force-stop co.magicpages.socialweb
-adb shell am start -n co.magicpages.socialweb/.MainActivity --ez demo true
+adb shell am force-stop co.magicpages.socialweb.debug
+adb shell am start -n co.magicpages.socialweb.debug/co.magicpages.socialweb.MainActivity --ez demo true
 ```
 
 `--ez demo false` switches a running app back to the real accounts. The flag lasts as long as the process, and demo mode never touches real accounts. Pictures are placeholders in `app/src/debug/assets/demo/`, the content is in `app/src/debug/kotlin/co/magicpages/socialweb/demo/`. The store `release` build doesn't contain any of it; only the `nonMinifiedRelease` and `benchmarkRelease` variants of the [baseline profile](#baseline-profile) add it.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Long-press the launcher icon. The intents go to MainActivity, which opens the composer or the tab for the active account (nothing while signed out). -->
+<!-- Long-press the launcher icon. The intents go to MainActivity, which opens the composer or the tab for the active account (nothing while signed out). src/debug has a copy for the debug build's package; keep the two in step. -->
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:shortcutId="new_note"

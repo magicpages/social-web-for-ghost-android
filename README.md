@@ -56,9 +56,11 @@ A release bundle needs an upload key. [RELEASING.md](RELEASING.md) covers signin
 
 The debug build has a demo mode that signs in to a made-up site, "Seaside Notes", and answers every request from built-in content. It needs no Ghost site and no network, never touches real accounts, and is how the screenshots are made.
 
+The debug build installs as `co.magicpages.socialweb.debug`, "Social Web (dev)", next to the store app: Play signs the store app with its own key, so a local build can't replace it.
+
 ```sh
-adb shell am force-stop co.magicpages.socialweb
-adb shell am start -n co.magicpages.socialweb/.MainActivity --ez demo true
+adb shell am force-stop co.magicpages.socialweb.debug
+adb shell am start -n co.magicpages.socialweb.debug/co.magicpages.socialweb.MainActivity --ez demo true
 ```
 
 `--ez demo false` switches back. The release build doesn't contain demo mode.

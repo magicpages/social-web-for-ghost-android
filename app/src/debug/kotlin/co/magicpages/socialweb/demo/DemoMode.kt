@@ -20,8 +20,8 @@ import kotlinx.coroutines.flow.asStateFlow
  * Start it with an extra on the launch intent:
  *
  * ```
- * adb shell am force-stop co.magicpages.socialweb
- * adb shell am start -n co.magicpages.socialweb/.MainActivity --ez demo true
+ * adb shell am force-stop co.magicpages.socialweb.debug
+ * adb shell am start -n co.magicpages.socialweb.debug/co.magicpages.socialweb.MainActivity --ez demo true
  * ```
  *
  * `--ez demo false` on a running app switches back to the real accounts (the activity restarts either
