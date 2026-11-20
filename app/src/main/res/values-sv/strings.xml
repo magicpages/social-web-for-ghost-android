@@ -533,4 +533,5 @@
         <item quantity="one">%1$d nytt inlägg</item>
         <item quantity="other">%1$d nya inlägg</item>
     </plurals>
+    <string name="feed_caught_up">Du är ikapp</string>
 </resources>

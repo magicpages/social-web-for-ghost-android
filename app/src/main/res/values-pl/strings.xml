@@ -559,4 +559,5 @@
         <item quantity="many">%1$d nowych wpisów</item>
         <item quantity="other">%1$d nowego wpisu</item>
     </plurals>
+    <string name="feed_caught_up">Jesteś na bieżąco</string>
 </resources>

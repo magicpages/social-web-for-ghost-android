@@ -546,4 +546,5 @@
         <item quantity="other">%1$d nuovi post</item>
         <item quantity="many">%1$d nuovi post</item>
     </plurals>
+    <string name="feed_caught_up">Sei in pari</string>
 </resources>

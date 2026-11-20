@@ -559,4 +559,5 @@
         <item quantity="many">%1$d новых постов</item>
         <item quantity="other">%1$d нового поста</item>
     </plurals>
+    <string name="feed_caught_up">Вы всё прочитали</string>
 </resources>

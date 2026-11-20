@@ -188,11 +188,11 @@ fun FeedScreen(
                     contentPadding = PaddingValues(vertical = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    feedItems(posts, callbacks, articleCards = feed == Feed.Reader)
+                    feedItems(posts, callbacks, articleCards = feed == Feed.Reader, caughtUpAbove = newPosts.caughtUpAbove)
                 }
             }
             NewPostsPill(
-                count = newPosts,
+                count = newPosts.count,
                 onClick = { scope.launch { listState.scrollToTop() } },
                 modifier = Modifier.align(Alignment.TopCenter).padding(top = 8.dp),
             )

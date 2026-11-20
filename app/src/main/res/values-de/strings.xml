@@ -533,4 +533,5 @@
         <item quantity="one">%1$d neuer Beitrag</item>
         <item quantity="other">%1$d neue Beiträge</item>
     </plurals>
+    <string name="feed_caught_up">Du bist auf dem neuesten Stand</string>
 </resources>

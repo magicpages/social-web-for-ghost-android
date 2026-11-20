@@ -533,4 +533,5 @@
         <item quantity="one">%1$d nytt innlegg</item>
         <item quantity="other">%1$d nye innlegg</item>
     </plurals>
+    <string name="feed_caught_up">Du er oppdatert</string>
 </resources>

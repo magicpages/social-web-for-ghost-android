@@ -520,4 +520,5 @@
     <plurals name="feed_new_posts">
         <item quantity="other">%1$d 篇新帖子</item>
     </plurals>
+    <string name="feed_caught_up">你已看完所有内容</string>
 </resources>

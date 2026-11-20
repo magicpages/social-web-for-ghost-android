@@ -15,6 +15,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,17 +45,29 @@ import kotlinx.coroutines.withTimeoutOrNull
 /** How many pages the restoring of a position may load to find the post the user was at. */
 private const val MaxRestoreLoads = 15
 
+/** What [rememberNewPosts] knows about the posts that arrived above the user. */
+@Stable
+internal class NewPosts(count: State<Int>, caughtUpAbove: State<String?>) {
+    /** How many new posts are above the first visible one; 0 at the top. */
+    val count by count
+
+    /**
+     * The newest post the user had seen before the latest new posts arrived, so the "caught up" line
+     * goes above it. It stays put while they read and moves only when new posts arrive again.
+     */
+    val caughtUpAbove by caughtUpAbove
+}
+
 /**
- * Keeps the list where the user left it, and counts what arrived above them.
+ * Keeps the list where the user left it, and tracks what arrived above them.
  *
  * - The first post on screen, with its scroll offset, is saved per account and feed whenever the list
  *   comes to rest, and restored once per start of the app, loading further pages if that post is
  *   deeper than the first one.
  * - The newest post the user has seen is remembered too. Posts above it are new; while the user is
- *   below them the result says how many are above the screen. A refresh that brings posts when the
- *   user is at the very top shows them instead (the list would otherwise stay on the old first post).
- *
- * @return how many new posts are above the first visible one; 0 at the top.
+ *   below them [NewPosts.count] says how many are above the screen. A refresh that brings posts when
+ *   the user is at the very top shows them instead (the list would otherwise stay on the old first post).
+ * - When new posts arrive, the newest post seen until then becomes [NewPosts.caughtUpAbove].
  */
 @Composable
 internal fun rememberNewPosts(
@@ -61,8 +75,9 @@ internal fun rememberNewPosts(
     accountId: String?,
     posts: LazyPagingItems<FeedItem>,
     listState: LazyListState,
-): Int {
+): NewPosts {
     var seenTop by rememberSaveable { mutableStateOf<String?>(null) }
+    val caughtUpAbove = rememberSaveable { mutableStateOf<String?>(null) }
     // Not saved with the screen: after the app's process died the position has to be restored again.
     var ready by remember { mutableStateOf(viewModel.positionRestored) }
     val ids by remember(posts) {
@@ -77,6 +92,7 @@ internal fun rememberNewPosts(
         }
         val saved = viewModel.savedPosition(accountId)
         seenTop = saved?.topId ?: ids.firstOrNull()
+        caughtUpAbove.value = saved?.topId?.takeIf { ids.indexOf(it) > 0 }
         if (saved != null && !saved.wasAtTop) restorePosition(posts, listState, saved)
         viewModel.positionRestored = true
         ready = true
@@ -93,6 +109,10 @@ internal fun rememberNewPosts(
             val list = ids
             if (list.isEmpty()) return@collect
             val wasAtTop = before != null && before.first != null && before.second == 0 && before.third == 0
+            if (before != null && before.first != now.first) {
+                // New posts came in above the newest one seen so far: that's where the user was caught up.
+                seenTop?.takeIf { list.indexOf(it) > 0 }?.let { caughtUpAbove.value = it }
+            }
             if (wasAtTop && before?.first != now.first) {
                 // The user was at the very top and what is first changed: show it, don't stay on the old first post.
                 listState.scrollToItem(0)
@@ -120,10 +140,10 @@ internal fun rememberNewPosts(
     }
 
     // Derived, so scrolling recomposes the caller only when the count changes, not on every frame.
-    val count by remember(listState) {
+    val count = remember(listState) {
         derivedStateOf { if (ready) newPostsAbove(ids, seenTop, listState.firstVisibleItemIndex) else 0 }
     }
-    return count
+    return remember(listState) { NewPosts(count, caughtUpAbove) }
 }
 
 private suspend fun restorePosition(posts: LazyPagingItems<FeedItem>, listState: LazyListState, target: SavedFeedPosition) {

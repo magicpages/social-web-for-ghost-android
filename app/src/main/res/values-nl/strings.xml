@@ -533,4 +533,5 @@
         <item quantity="one">%1$d nieuw bericht</item>
         <item quantity="other">%1$d nieuwe berichten</item>
     </plurals>
+    <string name="feed_caught_up">Je bent helemaal bij</string>
 </resources>

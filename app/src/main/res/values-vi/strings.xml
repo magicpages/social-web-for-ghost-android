@@ -520,4 +520,5 @@
     <plurals name="feed_new_posts">
         <item quantity="other">%1$d bài mới</item>
     </plurals>
+    <string name="feed_caught_up">Bạn đã xem hết rồi</string>
 </resources>

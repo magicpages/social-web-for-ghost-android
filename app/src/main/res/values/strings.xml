@@ -541,4 +541,5 @@
         <item quantity="one">%1$d new post</item>
         <item quantity="other">%1$d new posts</item>
     </plurals>
+    <string name="feed_caught_up">You\'re all caught up</string>
 </resources>

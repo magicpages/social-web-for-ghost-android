@@ -520,4 +520,5 @@
     <plurals name="feed_new_posts">
         <item quantity="other">新しい投稿 %1$d 件</item>
     </plurals>
+    <string name="feed_caught_up">すべて読み終えました</string>
 </resources>

@@ -2,7 +2,7 @@ Social Web brings your Ghost site’s social web to Android.
 
 Ghost 6 connects your site to the open social web (ActivityPub): people on Mastodon, WordPress, other Ghost sites and the rest of the fediverse can follow you, and you can follow them. Social Web is a fast, native way to keep up and join in.
 
-• Notes: short posts from everyone you follow. Like, repost, quote and reply. The feed keeps your place and shows a “new posts” button instead of jumping.
+• Notes: short posts from everyone you follow. Like, repost, quote and reply. The feed keeps your place, shows a “new posts” button instead of jumping, and marks where you’re caught up.
 • Feed filters: hide reposts and posts with words you mute.
 • Reader: long-form articles from the publications you follow, in a clean reading view with audio and video.
 • Post notes with photos and alt text, from your site’s own profile, or take a photo right in the composer.

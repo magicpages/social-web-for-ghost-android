@@ -533,4 +533,5 @@
         <item quantity="one">%1$d yeni gönderi</item>
         <item quantity="other">%1$d yeni gönderi</item>
     </plurals>
+    <string name="feed_caught_up">Hepsini gördünüz</string>
 </resources>

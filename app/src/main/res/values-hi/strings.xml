@@ -533,4 +533,5 @@
         <item quantity="one">%1$d नई पोस्ट</item>
         <item quantity="other">%1$d नई पोस्ट</item>
     </plurals>
+    <string name="feed_caught_up">आप पूरी तरह अप टू डेट हैं</string>
 </resources>
