@@ -468,6 +468,21 @@
     <string name="settings_sensitive_media_summary">Zeigt Inhalte für Erwachsene und als sensibel markierte Medien ohne Tippen. Beiträge mit Inhaltswarnung bleiben verborgen. Gilt für %1$s.</string>
     <string name="settings_network_retry_hint">Diese Einstellung konnte nicht geladen werden. Tippe, um es erneut zu versuchen.</string>
     <string name="settings_network_rate_limited">Zu viele Anfragen. Warte einen Moment und versuche es dann erneut.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Auf Bluesky teilen</string>
+    <string name="settings_bluesky_explainer">Verbinde %1$s mit Bridgy Fed, um die Beiträge auf einem eigenen Bluesky-Profil zu teilen und im Social Web mehr Menschen zu erreichen.</string>
+    <string name="settings_bluesky_needs_avatar">Füge deinem Social-Web-Profil ein Profilbild hinzu, um dich mit Bluesky zu verbinden. Profilbilder helfen gegen Spam.</string>
+    <string name="settings_bluesky_handle_warning">Du kannst deinen Bluesky-Namen nicht ändern. Prüfe also vor dem Verbinden, ob dir dein Social-Web-Handle %1$s gefällt.</string>
+    <string name="settings_bluesky_connecting">Verbindung mit Bluesky wird hergestellt … Du kannst diesen Bildschirm verlassen und später nachsehen.</string>
+    <string name="settings_bluesky_connected">%1$s ist über Bridgy Fed mit Bluesky verbunden. Beiträge werden nach kurzer Verzögerung synchronisiert, um die Aktivierung abzuschließen.</string>
+    <string name="settings_bluesky_timed_out">Bluesky hat nicht rechtzeitig geantwortet, daher wurde das Teilen ausgeschaltet. Bitte versuche es erneut.</string>
+    <string name="settings_bluesky_disable_title">Teilen auf Bluesky deaktivieren?</string>
+    <string name="settings_bluesky_disable_text">Dein verbundenes Bluesky-Konto wird deaktiviert und deine Inhalte werden nicht mehr auf Bluesky geteilt. Du kannst das Teilen jederzeit wieder einschalten.</string>
+    <string name="settings_bluesky_disable">Deaktivieren</string>
+    <string name="settings_bluesky_handle_label">Bluesky-Handle</string>
+    <string name="settings_bluesky_copy_handle">Handle kopieren</string>
+    <string name="settings_bluesky_handle_copied">Kopiert</string>
+    <string name="settings_bluesky_open_profile">Profil öffnen</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Profil teilen</string>
     <string name="profile_edit">Profil bearbeiten</string>

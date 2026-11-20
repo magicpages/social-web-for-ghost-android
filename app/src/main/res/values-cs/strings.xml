@@ -492,6 +492,21 @@
     <string name="settings_sensitive_media_summary">Zobrazuje obsah pro dospělé a média označená jako citlivá bez klepnutí. Příspěvky s upozorněním na obsah zůstanou skryté. Platí pro %1$s.</string>
     <string name="settings_network_retry_hint">Toto nastavení se nepodařilo načíst. Klepnutím to zkusíte znovu.</string>
     <string name="settings_network_rate_limited">Příliš mnoho požadavků. Chvíli počkejte a zkuste to znovu.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Sdílet na Bluesky</string>
+    <string name="settings_bluesky_explainer">Propojte %1$s s Bridgy Fed, abyste mohli sdílet příspěvky na vlastním profilu Bluesky a oslovit víc lidí na sociálním webu.</string>
+    <string name="settings_bluesky_needs_avatar">Přidejte do profilu na sociálním webu profilový obrázek, abyste se mohli propojit s Bluesky. Profilové obrázky pomáhají proti spamu.</string>
+    <string name="settings_bluesky_handle_warning">Uživatelské jméno na Bluesky nelze změnit, takže si před propojením ověřte, že vám vyhovuje váš handle na sociálním webu, %1$s.</string>
+    <string name="settings_bluesky_connecting">Připojování k Bluesky… Tuto obrazovku můžete opustit a podívat se později.</string>
+    <string name="settings_bluesky_connected">%1$s je přes Bridgy Fed propojený s Bluesky. Příspěvky se po krátké prodlevě synchronizují, aby se aktivace dokončila.</string>
+    <string name="settings_bluesky_timed_out">Bluesky neodpovědělo včas, proto bylo sdílení vypnuto. Zkuste to znovu.</string>
+    <string name="settings_bluesky_disable_title">Vypnout sdílení na Bluesky?</string>
+    <string name="settings_bluesky_disable_text">Váš propojený účet Bluesky bude deaktivován a váš obsah se už na Bluesky nebude sdílet. Sdílení můžete kdykoli znovu zapnout.</string>
+    <string name="settings_bluesky_disable">Vypnout</string>
+    <string name="settings_bluesky_handle_label">Handle na Bluesky</string>
+    <string name="settings_bluesky_copy_handle">Kopírovat handle</string>
+    <string name="settings_bluesky_handle_copied">Zkopírováno</string>
+    <string name="settings_bluesky_open_profile">Otevřít profil</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Sdílet profil</string>
     <string name="profile_edit">Upravit profil</string>

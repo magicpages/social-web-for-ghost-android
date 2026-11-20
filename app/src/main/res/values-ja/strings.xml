@@ -456,6 +456,21 @@
     <string name="settings_sensitive_media_summary">成人向けコンテンツやセンシティブと設定されたメディアを、タップせずに表示します。コンテンツ警告付きの投稿は非表示のままです。%1$s に適用されます。</string>
     <string name="settings_network_retry_hint">この設定を読み込めませんでした。タップして再試行してください。</string>
     <string name="settings_network_rate_limited">リクエストが多すぎます。しばらくしてからもう一度お試しください。</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Bluesky で共有</string>
+    <string name="settings_bluesky_explainer">%1$s を Bridgy Fed に接続すると、投稿を専用の Bluesky プロフィールで共有でき、ソーシャルウェブでより多くの人に届きます。</string>
+    <string name="settings_bluesky_needs_avatar">Bluesky に接続するには、ソーシャルウェブのプロフィールにプロフィール画像を追加してください。プロフィール画像はスパム対策に役立ちます。</string>
+    <string name="settings_bluesky_handle_warning">Bluesky のユーザー名は後から変更できません。接続する前に、ソーシャルウェブのハンドル %1$s で問題ないか確認してください。</string>
+    <string name="settings_bluesky_connecting">Bluesky に接続しています…この画面を離れても、あとで確認できます。</string>
+    <string name="settings_bluesky_connected">%1$s は Bridgy Fed 経由で Bluesky に接続されています。有効化を完了するため、投稿は少し遅れて同期されます。</string>
+    <string name="settings_bluesky_timed_out">Bluesky から時間内に応答がなかったため、共有をオフにしました。もう一度お試しください。</string>
+    <string name="settings_bluesky_disable_title">Bluesky での共有を無効にしますか？</string>
+    <string name="settings_bluesky_disable_text">連携した Bluesky アカウントは無効になり、コンテンツは Bluesky で共有されなくなります。共有はいつでもオンに戻せます。</string>
+    <string name="settings_bluesky_disable">無効にする</string>
+    <string name="settings_bluesky_handle_label">Bluesky ハンドル</string>
+    <string name="settings_bluesky_copy_handle">ハンドルをコピー</string>
+    <string name="settings_bluesky_handle_copied">コピーしました</string>
+    <string name="settings_bluesky_open_profile">プロフィールを開く</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">プロフィールを共有</string>
     <string name="profile_edit">プロフィールを編集</string>

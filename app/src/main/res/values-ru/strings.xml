@@ -492,6 +492,21 @@
     <string name="settings_sensitive_media_summary">Показывает контент для взрослых и медиафайлы, помеченные как чувствительные, без нажатия. Записи с предупреждением о содержимом остаются скрытыми. Действует для %1$s.</string>
     <string name="settings_network_retry_hint">Не удалось загрузить эту настройку. Нажмите, чтобы повторить.</string>
     <string name="settings_network_rate_limited">Слишком много запросов. Подождите немного и повторите.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Делиться в Bluesky</string>
+    <string name="settings_bluesky_explainer">Подключите %1$s к Bridgy Fed, чтобы делиться записями в отдельном профиле Bluesky и охватить больше людей в социальном вебе.</string>
+    <string name="settings_bluesky_needs_avatar">Добавьте изображение в профиль социального веба, чтобы подключиться к Bluesky. Аватары помогают бороться со спамом.</string>
+    <string name="settings_bluesky_handle_warning">Имя пользователя в Bluesky изменить нельзя, поэтому перед подключением убедитесь, что вам подходит ваш адрес в социальном вебе, %1$s.</string>
+    <string name="settings_bluesky_connecting">Подключение к Bluesky… Можно закрыть этот экран и вернуться позже.</string>
+    <string name="settings_bluesky_connected">%1$s подключён к Bluesky через Bridgy Fed. Записи синхронизируются с небольшой задержкой, чтобы завершить активацию.</string>
+    <string name="settings_bluesky_timed_out">Bluesky не ответил вовремя, поэтому публикация отключена. Попробуйте ещё раз.</string>
+    <string name="settings_bluesky_disable_title">Отключить публикацию в Bluesky?</string>
+    <string name="settings_bluesky_disable_text">Связанная учётная запись Bluesky будет деактивирована, а ваш контент перестанет публиковаться в Bluesky. Публикацию можно включить снова в любой момент.</string>
+    <string name="settings_bluesky_disable">Отключить</string>
+    <string name="settings_bluesky_handle_label">Адрес в Bluesky</string>
+    <string name="settings_bluesky_copy_handle">Копировать адрес</string>
+    <string name="settings_bluesky_handle_copied">Скопировано</string>
+    <string name="settings_bluesky_open_profile">Открыть профиль</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Поделиться профилем</string>
     <string name="profile_edit">Изменить профиль</string>

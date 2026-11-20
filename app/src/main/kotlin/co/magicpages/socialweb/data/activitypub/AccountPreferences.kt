@@ -100,3 +100,39 @@ class SensitiveMediaPreference @Inject constructor(
         }
     }
 }
+
+/**
+ * Bluesky sharing for the active account, through Bridgy Fed. Every call throws [GhostException] or
+ * [SocialWebException] when the service doesn't do it. Only Owners and Administrators may use it.
+ */
+@Singleton
+class BlueskySharing @Inject constructor(
+    private val accounts: AccountStore,
+    private val client: ActivityPubClient,
+) {
+    /** What the site's account says about Bluesky now, with what enabling needs to know of it. */
+    data class State(val status: BlueskyStatus, val name: String, val handle: String, val avatarUrl: String?)
+
+    suspend fun state(): State = with(active()) {
+        val account = client.currentAccount(site, credential)
+        State(
+            BlueskyStatus(
+                enabled = account.blueskyEnabled,
+                handleConfirmed = account.blueskyHandleConfirmed,
+                handle = account.blueskyHandle,
+            ),
+            account.name.ifBlank { account.handle },
+            account.handle,
+            account.avatarUrl,
+        )
+    }
+
+    suspend fun enable(): BlueskyStatus = with(active()) { client.enableBluesky(site, credential) }
+
+    /** Whether Bridgy Fed has made the Bluesky account yet; the handle comes with the first yes. */
+    suspend fun confirmHandle(): BlueskyStatus = with(active()) { client.confirmBlueskyHandle(site, credential) }
+
+    suspend fun disable() = with(active()) { client.disableBluesky(site, credential) }
+
+    private suspend fun active(): StoredAccount = accounts.account.first() ?: throw GhostException.Unauthorized(null)
+}

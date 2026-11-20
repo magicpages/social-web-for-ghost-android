@@ -456,6 +456,21 @@
     <string name="settings_sensitive_media_summary">Menampilkan konten dewasa dan media yang ditandai sensitif tanpa perlu mengetuk. Postingan dengan peringatan konten tetap tersembunyi. Berlaku untuk %1$s.</string>
     <string name="settings_network_retry_hint">Pengaturan ini tidak bisa dimuat. Ketuk untuk mencoba lagi.</string>
     <string name="settings_network_rate_limited">Terlalu banyak permintaan. Tunggu sebentar, lalu coba lagi.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Bagikan ke Bluesky</string>
+    <string name="settings_bluesky_explainer">Hubungkan %1$s ke Bridgy Fed untuk membagikan postingannya di profil Bluesky tersendiri dan menjangkau lebih banyak orang di web sosial.</string>
+    <string name="settings_bluesky_needs_avatar">Tambahkan foto profil ke profil web sosial Anda untuk terhubung ke Bluesky. Foto profil membantu mencegah spam.</string>
+    <string name="settings_bluesky_handle_warning">Nama pengguna Bluesky tidak bisa diubah, jadi pastikan Anda puas dengan handle web sosial Anda, %1$s, sebelum menghubungkan.</string>
+    <string name="settings_bluesky_connecting">Menghubungkan ke Bluesky… Anda bisa meninggalkan layar ini dan memeriksanya lagi nanti.</string>
+    <string name="settings_bluesky_connected">%1$s terhubung ke Bluesky lewat Bridgy Fed. Postingan disinkronkan setelah jeda singkat untuk menyelesaikan aktivasi.</string>
+    <string name="settings_bluesky_timed_out">Bluesky tidak merespons tepat waktu, jadi berbagi dimatikan. Silakan coba lagi.</string>
+    <string name="settings_bluesky_disable_title">Nonaktifkan berbagi ke Bluesky?</string>
+    <string name="settings_bluesky_disable_text">Akun Bluesky yang terhubung akan dinonaktifkan dan konten Anda tidak lagi dibagikan ke Bluesky. Anda bisa mengaktifkan berbagi lagi kapan saja.</string>
+    <string name="settings_bluesky_disable">Nonaktifkan</string>
+    <string name="settings_bluesky_handle_label">Handle Bluesky</string>
+    <string name="settings_bluesky_copy_handle">Salin handle</string>
+    <string name="settings_bluesky_handle_copied">Tersalin</string>
+    <string name="settings_bluesky_open_profile">Buka profil</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Bagikan profil</string>
     <string name="profile_edit">Edit profil</string>

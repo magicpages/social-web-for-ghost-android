@@ -10,11 +10,14 @@ The app is built by [Magic Pages](https://www.magicpages.co). It's an independen
 
 ## What it does
 
-- **Notes:** short posts from everyone you follow. Like, repost, quote and reply.
+- **Notes:** short posts from everyone you follow. Like, repost, quote and reply. The feed remembers where you were and shows a "new posts" button instead of jumping. Hide reposts or posts with muted words.
 - **Reader:** long-form articles from the publications you follow, in a reading view with audio and video.
-- **Posting:** notes and replies with photos and alt text, from your site's own profile. GIFs from KLIPY when your Ghost site has a KLIPY key, like its editor's GIF card. Share a link, text or a photo from any other app to start one.
+- **Explore:** find people and publications, or browse topics like News or Photography as posts or as people to follow.
+- **Posting:** notes and replies with photos and alt text, from your site's own profile. Take a photo with the camera right in the composer. GIFs from KLIPY when your Ghost site has a KLIPY key, like its editor's GIF card. Share a link, text or a photo from any other app to start one.
+- **Your profile:** edit your name, username, bio, picture and cover image. Share any profile as a QR code, a link or a picture card.
 - **Notifications:** likes, reposts, replies, mentions and new followers, grouped. The app checks for new ones in the background with WorkManager about every 15 minutes; there is no push server.
 - **Translation** of notes and articles with ML Kit, on the device.
+- **Bluesky:** share your site on Bluesky through Bridgy Fed, like Ghost's own setting. Choose whether media marked as sensitive shows without a tap.
 - **Several sites** in one app, plus member sign-in to read a site's members-only posts.
 - **Moderation:** block accounts or whole servers, report posts and people.
 - **Large screens:** on tablets, foldables and in landscape, a thread or profile opens next to the list.

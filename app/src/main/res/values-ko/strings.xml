@@ -456,6 +456,21 @@
     <string name="settings_sensitive_media_summary">성인 콘텐츠와 민감한 콘텐츠로 표시된 미디어를 탭하지 않고 바로 보여줘요. 콘텐츠 경고가 있는 게시물은 계속 숨겨져요. %1$s에 적용돼요.</string>
     <string name="settings_network_retry_hint">이 설정을 불러오지 못했어요. 탭해서 다시 시도하세요.</string>
     <string name="settings_network_rate_limited">요청이 너무 많아요. 잠시 기다린 뒤 다시 시도하세요.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Bluesky에 공유</string>
+    <string name="settings_bluesky_explainer">%1$s을(를) Bridgy Fed에 연결하면 게시물을 전용 Bluesky 프로필에 공유하고 소셜 웹에서 더 많은 사람에게 닿을 수 있어요.</string>
+    <string name="settings_bluesky_needs_avatar">Bluesky에 연결하려면 소셜 웹 프로필에 프로필 이미지를 추가하세요. 프로필 사진은 스팸을 막는 데 도움이 돼요.</string>
+    <string name="settings_bluesky_handle_warning">Bluesky 사용자 이름은 나중에 바꿀 수 없어요. 연결하기 전에 소셜 웹 핸들 %1$s이(가) 마음에 드는지 확인하세요.</string>
+    <string name="settings_bluesky_connecting">Bluesky에 연결하는 중… 이 화면을 나갔다가 나중에 다시 확인해도 돼요.</string>
+    <string name="settings_bluesky_connected">%1$s이(가) Bridgy Fed를 통해 Bluesky에 연결됐어요. 활성화를 마치려고 게시물은 잠시 후에 동기화돼요.</string>
+    <string name="settings_bluesky_timed_out">Bluesky가 제때 응답하지 않아 공유를 껐어요. 다시 시도하세요.</string>
+    <string name="settings_bluesky_disable_title">Bluesky 공유를 끌까요?</string>
+    <string name="settings_bluesky_disable_text">연결된 Bluesky 계정이 비활성화되고 콘텐츠가 더 이상 Bluesky에 공유되지 않아요. 공유는 언제든 다시 켤 수 있어요.</string>
+    <string name="settings_bluesky_disable">끄기</string>
+    <string name="settings_bluesky_handle_label">Bluesky 핸들</string>
+    <string name="settings_bluesky_copy_handle">핸들 복사</string>
+    <string name="settings_bluesky_handle_copied">복사했어요</string>
+    <string name="settings_bluesky_open_profile">프로필 열기</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">프로필 공유</string>
     <string name="profile_edit">프로필 편집</string>

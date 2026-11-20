@@ -468,6 +468,21 @@
     <string name="settings_sensitive_media_summary">Toont inhoud voor volwassenen en media die als gevoelig zijn gemarkeerd zonder tikken. Berichten met een inhoudswaarschuwing blijven verborgen. Geldt voor %1$s.</string>
     <string name="settings_network_retry_hint">Deze instelling kon niet worden geladen. Tik om het opnieuw te proberen.</string>
     <string name="settings_network_rate_limited">Te veel verzoeken. Wacht even en probeer het dan opnieuw.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Delen op Bluesky</string>
+    <string name="settings_bluesky_explainer">Koppel %1$s aan Bridgy Fed om de berichten te delen op een eigen Bluesky-profiel en meer mensen te bereiken op het sociale web.</string>
+    <string name="settings_bluesky_needs_avatar">Voeg een profielfoto toe aan je profiel op het sociale web om te koppelen met Bluesky. Profielfoto’s helpen tegen spam.</string>
+    <string name="settings_bluesky_handle_warning">Je kunt je Bluesky-gebruikersnaam niet wijzigen. Controleer dus of je tevreden bent met je handle op het sociale web, %1$s, voordat je koppelt.</string>
+    <string name="settings_bluesky_connecting">Verbinden met Bluesky… Je kunt dit scherm verlaten en later terugkomen.</string>
+    <string name="settings_bluesky_connected">%1$s is via Bridgy Fed gekoppeld aan Bluesky. Berichten worden na een korte vertraging gesynchroniseerd om de activatie af te ronden.</string>
+    <string name="settings_bluesky_timed_out">Bluesky reageerde niet op tijd, dus delen is uitgezet. Probeer het opnieuw.</string>
+    <string name="settings_bluesky_disable_title">Delen op Bluesky uitschakelen?</string>
+    <string name="settings_bluesky_disable_text">Je gekoppelde Bluesky-account wordt gedeactiveerd en je inhoud wordt niet meer gedeeld op Bluesky. Je kunt delen op elk moment weer aanzetten.</string>
+    <string name="settings_bluesky_disable">Uitschakelen</string>
+    <string name="settings_bluesky_handle_label">Bluesky-handle</string>
+    <string name="settings_bluesky_copy_handle">Handle kopiëren</string>
+    <string name="settings_bluesky_handle_copied">Gekopieerd</string>
+    <string name="settings_bluesky_open_profile">Profiel openen</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Profiel delen</string>
     <string name="profile_edit">Profiel bewerken</string>

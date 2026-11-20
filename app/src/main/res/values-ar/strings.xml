@@ -516,6 +516,21 @@
     <string name="settings_sensitive_media_summary">يعرض المحتوى للبالغين والوسائط المصنّفة حساسة دون نقرة. تبقى المنشورات التي تحمل تحذير محتوى مخفية. ينطبق على %1$s.</string>
     <string name="settings_network_retry_hint">تعذّر تحميل هذا الإعداد. انقر لإعادة المحاولة.</string>
     <string name="settings_network_rate_limited">طلبات كثيرة جدًا. انتظر قليلًا ثم أعد المحاولة.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">المشاركة على Bluesky</string>
+    <string name="settings_bluesky_explainer">اربط %1$s بـ Bridgy Fed لمشاركة منشوراته في ملف شخصي خاص على Bluesky والوصول إلى مزيد من الناس عبر الويب الاجتماعي.</string>
+    <string name="settings_bluesky_needs_avatar">أضف صورة إلى ملفك الشخصي على الويب الاجتماعي للربط مع Bluesky. تساعد صور الملفات الشخصية في منع الرسائل المزعجة.</string>
+    <string name="settings_bluesky_handle_warning">لا يمكنك تغيير اسم المستخدم على Bluesky، فتأكد من رضاك عن معرّفك على الويب الاجتماعي، %1$s، قبل الربط.</string>
+    <string name="settings_bluesky_connecting">جارٍ الاتصال بـ Bluesky… يمكنك مغادرة هذه الشاشة والعودة لاحقًا للتحقق.</string>
+    <string name="settings_bluesky_connected">%1$s متصل بـ Bluesky عبر Bridgy Fed. تتم مزامنة المنشورات بعد تأخير قصير لإكمال التفعيل.</string>
+    <string name="settings_bluesky_timed_out">لم يستجب Bluesky في الوقت المناسب، لذا أُوقفت المشاركة. أعد المحاولة.</string>
+    <string name="settings_bluesky_disable_title">إيقاف المشاركة على Bluesky؟</string>
+    <string name="settings_bluesky_disable_text">سيتم إلغاء تفعيل حساب Bluesky المرتبط ولن تتم مشاركة محتواك على Bluesky بعد الآن. يمكنك تشغيل المشاركة مجددًا في أي وقت.</string>
+    <string name="settings_bluesky_disable">إيقاف</string>
+    <string name="settings_bluesky_handle_label">معرّف Bluesky</string>
+    <string name="settings_bluesky_copy_handle">نسخ المعرّف</string>
+    <string name="settings_bluesky_handle_copied">تم النسخ</string>
+    <string name="settings_bluesky_open_profile">فتح الملف الشخصي</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">مشاركة الملف الشخصي</string>
     <string name="profile_edit">تعديل الملف الشخصي</string>

@@ -468,6 +468,21 @@
     <string name="settings_sensitive_media_summary">Näyttää aikuisille tarkoitetun sisällön ja arkaluonteiseksi merkityn median ilman napautusta. Sisältövaroituksella varustetut julkaisut pysyvät piilossa. Koskee kohdetta %1$s.</string>
     <string name="settings_network_retry_hint">Asetusta ei voitu ladata. Yritä uudelleen napauttamalla.</string>
     <string name="settings_network_rate_limited">Liian monta pyyntöä. Odota hetki ja yritä uudelleen.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Jaa Blueskyssa</string>
+    <string name="settings_bluesky_explainer">Yhdistä %1$s Bridgy Fediin, niin voit jakaa sen julkaisut omalla Bluesky-profiililla ja tavoittaa enemmän ihmisiä sosiaalisessa verkossa.</string>
+    <string name="settings_bluesky_needs_avatar">Lisää sosiaalisen verkon profiiliisi profiilikuva, jotta voit yhdistää Blueskyn. Profiilikuvat auttavat torjumaan roskapostia.</string>
+    <string name="settings_bluesky_handle_warning">Bluesky-käyttäjänimeä ei voi vaihtaa, joten varmista ennen yhdistämistä, että sosiaalisen verkon tunnuksesi %1$s on mieleinen.</string>
+    <string name="settings_bluesky_connecting">Yhdistetään Blueskyyn… Voit poistua tästä näkymästä ja palata myöhemmin.</string>
+    <string name="settings_bluesky_connected">%1$s on yhdistetty Blueskyyn Bridgy Fedin kautta. Julkaisut synkronoidaan lyhyen viiveen jälkeen aktivoinnin viimeistelemiseksi.</string>
+    <string name="settings_bluesky_timed_out">Bluesky ei vastannut ajoissa, joten jakaminen kytkettiin pois. Yritä uudelleen.</string>
+    <string name="settings_bluesky_disable_title">Poistetaanko Bluesky-jakaminen käytöstä?</string>
+    <string name="settings_bluesky_disable_text">Yhdistetty Bluesky-tilisi poistetaan käytöstä, eikä sisältöäsi enää jaeta Blueskyssa. Voit kytkeä jakamisen takaisin päälle milloin tahansa.</string>
+    <string name="settings_bluesky_disable">Poista käytöstä</string>
+    <string name="settings_bluesky_handle_label">Bluesky-tunnus</string>
+    <string name="settings_bluesky_copy_handle">Kopioi tunnus</string>
+    <string name="settings_bluesky_handle_copied">Kopioitu</string>
+    <string name="settings_bluesky_open_profile">Avaa profiili</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Jaa profiili</string>
     <string name="profile_edit">Muokkaa profiilia</string>

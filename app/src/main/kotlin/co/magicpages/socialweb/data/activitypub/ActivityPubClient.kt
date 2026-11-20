@@ -260,6 +260,21 @@ class ActivityPubClient @Inject constructor(
             send(site, credential, HttpMethod.Put, "preferences", body = jsonBody(PreferencesBody.serializer(), PreferencesBody(show))),
         )
 
+    /**
+     * Starts bridging the site's account to Bluesky. The Bluesky handle isn't known yet in the
+     * answer: Bridgy Fed creates the account in its own time, see [confirmBlueskyHandle].
+     */
+    suspend fun enableBluesky(site: GhostSite, credential: Credential): BlueskyStatus =
+        decode(send(site, credential, HttpMethod.Post, "actions/bluesky/enable", version = "v2"))
+
+    /** Asks whether Bridgy Fed has created the Bluesky account yet; 400 when sharing isn't enabled. */
+    suspend fun confirmBlueskyHandle(site: GhostSite, credential: Credential): BlueskyStatus =
+        decode(send(site, credential, HttpMethod.Post, "actions/bluesky/confirm-handle", version = "v2"))
+
+    suspend fun disableBluesky(site: GhostSite, credential: Credential) {
+        send(site, credential, HttpMethod.Post, "actions/bluesky/disable", version = "v2")
+    }
+
     private suspend fun send(
         site: GhostSite,
         credential: Credential,
@@ -267,8 +282,9 @@ class ActivityPubClient @Inject constructor(
         path: String,
         body: OutgoingContent? = null,
         params: Array<out Pair<String, String?>> = emptyArray(),
+        version: String = "v1",
     ): HttpResponse {
-        val url = "${site.siteUrl}.ghost/activitypub/v1/$path"
+        val url = "${site.siteUrl}.ghost/activitypub/$version/$path"
         val token = token(site, credential, rejected = null)
         var response = request(method, url, token, body, params)
         if (response.rejectsToken()) {

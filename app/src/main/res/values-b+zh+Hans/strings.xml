@@ -456,6 +456,21 @@
     <string name="settings_sensitive_media_summary">无需点按即可显示成人内容和标记为敏感的媒体。带内容警告的帖子仍保持隐藏。适用于 %1$s。</string>
     <string name="settings_network_retry_hint">无法加载此设置。点按重试。</string>
     <string name="settings_network_rate_limited">请求过多。请稍等片刻再试。</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">分享到 Bluesky</string>
+    <string name="settings_bluesky_explainer">将 %1$s 连接到 Bridgy Fed，即可在专属的 Bluesky 个人资料上分享其帖子，在社交网络上触达更多人。</string>
+    <string name="settings_bluesky_needs_avatar">请先为你的社交网络个人资料添加头像，再连接 Bluesky。头像有助于防止垃圾信息。</string>
+    <string name="settings_bluesky_handle_warning">Bluesky 用户名无法更改，所以连接前请确认你满意自己的社交网络账号 %1$s。</string>
+    <string name="settings_bluesky_connecting">正在连接 Bluesky……你可以离开此屏幕，稍后再来查看。</string>
+    <string name="settings_bluesky_connected">%1$s 已通过 Bridgy Fed 连接到 Bluesky。帖子会在短暂延迟后同步，以完成激活。</string>
+    <string name="settings_bluesky_timed_out">Bluesky 未及时响应，已关闭分享。请重试。</string>
+    <string name="settings_bluesky_disable_title">停用 Bluesky 分享？</string>
+    <string name="settings_bluesky_disable_text">已桥接的 Bluesky 账号将被停用，你的内容将不再分享到 Bluesky。你可以随时重新开启分享。</string>
+    <string name="settings_bluesky_disable">停用</string>
+    <string name="settings_bluesky_handle_label">Bluesky 账号</string>
+    <string name="settings_bluesky_copy_handle">复制账号</string>
+    <string name="settings_bluesky_handle_copied">已复制</string>
+    <string name="settings_bluesky_open_profile">打开个人资料</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">分享个人资料</string>
     <string name="profile_edit">编辑个人资料</string>

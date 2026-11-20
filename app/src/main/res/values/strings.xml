@@ -475,6 +475,21 @@
     <string name="settings_sensitive_media_summary">Show adult content and media marked as sensitive without a tap. Posts with a content warning stay hidden. Applies to %1$s.</string>
     <string name="settings_network_retry_hint">Couldn\'t load this setting. Tap to try again.</string>
     <string name="settings_network_rate_limited">Too many requests. Wait a moment, then try again.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Share on Bluesky</string>
+    <string name="settings_bluesky_explainer">Connect %1$s to Bridgy Fed to share its posts on a Bluesky profile of its own and reach more people across the social web.</string>
+    <string name="settings_bluesky_needs_avatar">Add a profile image to your social web profile to connect to Bluesky. Profile pictures help prevent spam.</string>
+    <string name="settings_bluesky_handle_warning">You can\'t change your Bluesky username, so make sure you\'re happy with your social web handle, %1$s, before connecting.</string>
+    <string name="settings_bluesky_connecting">Connecting to Bluesky… You can leave this screen and check back later.</string>
+    <string name="settings_bluesky_connected">%1$s is connected to Bluesky through Bridgy Fed. Posts sync after a short delay to complete activation.</string>
+    <string name="settings_bluesky_timed_out">Bluesky didn\'t respond in time, so sharing was turned off. Please try again.</string>
+    <string name="settings_bluesky_disable_title">Disable Bluesky sharing?</string>
+    <string name="settings_bluesky_disable_text">Your bridged Bluesky account will be deactivated and your content will no longer be shared on Bluesky. You can turn sharing on again at any time.</string>
+    <string name="settings_bluesky_disable">Disable</string>
+    <string name="settings_bluesky_handle_label">Bluesky handle</string>
+    <string name="settings_bluesky_copy_handle">Copy handle</string>
+    <string name="settings_bluesky_handle_copied">Copied</string>
+    <string name="settings_bluesky_open_profile">Open profile</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Share profile</string>
     <string name="profile_edit">Edit profile</string>

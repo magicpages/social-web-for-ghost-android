@@ -492,6 +492,21 @@
     <string name="settings_sensitive_media_summary">Показує вміст для дорослих і медіафайли, позначені як чутливі, без дотику. Дописи з попередженням про вміст залишаються прихованими. Діє для %1$s.</string>
     <string name="settings_network_retry_hint">Не вдалося завантажити це налаштування. Торкніться, щоб повторити.</string>
     <string name="settings_network_rate_limited">Забагато запитів. Зачекайте трохи й повторіть.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Ділитися в Bluesky</string>
+    <string name="settings_bluesky_explainer">Підключіть %1$s до Bridgy Fed, щоб ділитися дописами в окремому профілі Bluesky та охопити більше людей у соціальному вебі.</string>
+    <string name="settings_bluesky_needs_avatar">Додайте зображення до профілю в соціальному вебі, щоб підключитися до Bluesky. Зображення профілю допомагають проти спаму.</string>
+    <string name="settings_bluesky_handle_warning">Ім’я користувача в Bluesky змінити не можна, тож перед підключенням переконайтеся, що вам підходить ваша адреса в соціальному вебі, %1$s.</string>
+    <string name="settings_bluesky_connecting">Підключення до Bluesky… Можна закрити цей екран і повернутися пізніше.</string>
+    <string name="settings_bluesky_connected">%1$s підключено до Bluesky через Bridgy Fed. Дописи синхронізуються з невеликою затримкою, щоб завершити активацію.</string>
+    <string name="settings_bluesky_timed_out">Bluesky не відповів вчасно, тому поширення вимкнено. Спробуйте ще раз.</string>
+    <string name="settings_bluesky_disable_title">Вимкнути поширення в Bluesky?</string>
+    <string name="settings_bluesky_disable_text">Пов’язаний обліковий запис Bluesky буде деактивовано, а ваш вміст перестане поширюватися в Bluesky. Поширення можна знову ввімкнути будь-коли.</string>
+    <string name="settings_bluesky_disable">Вимкнути</string>
+    <string name="settings_bluesky_handle_label">Адреса в Bluesky</string>
+    <string name="settings_bluesky_copy_handle">Копіювати адресу</string>
+    <string name="settings_bluesky_handle_copied">Скопійовано</string>
+    <string name="settings_bluesky_open_profile">Відкрити профіль</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Поділитися профілем</string>
     <string name="profile_edit">Редагувати профіль</string>

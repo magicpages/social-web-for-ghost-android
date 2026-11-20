@@ -228,11 +228,24 @@ data class Account(
     val name: String = "",
     val handle: String,
     val avatarUrl: String? = null,
+    /** Whether the site's account is bridged to Bluesky; the handle may not be known yet, see [blueskyHandleConfirmed]. */
+    val blueskyEnabled: Boolean = false,
+    val blueskyHandleConfirmed: Boolean = false,
+    /** The bridged account's Bluesky handle, with its leading `@`; null until confirmed. */
+    val blueskyHandle: String? = null,
 )
 
 /** The site's own account settings, `v1/preferences`. */
 @Serializable
 data class Preferences(val showSensitiveMedia: Boolean = false)
+
+/** Where Bluesky sharing stands, as `v2/actions/bluesky/enable` and `confirm-handle` answer it. */
+@Serializable
+data class BlueskyStatus(
+    val enabled: Boolean = false,
+    val handleConfirmed: Boolean = false,
+    val handle: String? = null,
+)
 
 /** Full profile from `account/:handle` (the service's AccountDTO). */
 @Serializable

@@ -468,6 +468,21 @@
     <string name="settings_sensitive_media_summary">वयस्क सामग्री और संवेदनशील चिह्नित मीडिया को बिना टैप किए दिखाता है। कंटेंट चेतावनी वाली पोस्ट छिपी रहती हैं। %1$s पर लागू।</string>
     <string name="settings_network_retry_hint">यह सेटिंग लोड नहीं हो सकी। फिर कोशिश करने के लिए टैप करें।</string>
     <string name="settings_network_rate_limited">बहुत ज़्यादा अनुरोध। थोड़ा रुककर फिर कोशिश करें।</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Bluesky पर शेयर करें</string>
+    <string name="settings_bluesky_explainer">%1$s को Bridgy Fed से जोड़ें, ताकि उसकी पोस्ट Bluesky की अलग प्रोफ़ाइल पर शेयर हों और सोशल वेब पर ज़्यादा लोगों तक पहुँचें।</string>
+    <string name="settings_bluesky_needs_avatar">Bluesky से जुड़ने के लिए अपनी सोशल वेब प्रोफ़ाइल में प्रोफ़ाइल फ़ोटो जोड़ें। प्रोफ़ाइल फ़ोटो स्पैम रोकने में मदद करती हैं।</string>
+    <string name="settings_bluesky_handle_warning">Bluesky यूज़रनेम बदला नहीं जा सकता, इसलिए जोड़ने से पहले देख लें कि आपका सोशल वेब हैंडल %1$s आपको पसंद है।</string>
+    <string name="settings_bluesky_connecting">Bluesky से जोड़ा जा रहा है… आप इस स्क्रीन से बाहर जाकर बाद में देख सकते हैं।</string>
+    <string name="settings_bluesky_connected">%1$s, Bridgy Fed के ज़रिए Bluesky से जुड़ गया है। सक्रियण पूरा करने के लिए पोस्ट थोड़ी देर बाद सिंक होती हैं।</string>
+    <string name="settings_bluesky_timed_out">Bluesky ने समय पर जवाब नहीं दिया, इसलिए शेयरिंग बंद कर दी गई। फिर कोशिश करें।</string>
+    <string name="settings_bluesky_disable_title">Bluesky शेयरिंग बंद करें?</string>
+    <string name="settings_bluesky_disable_text">आपका जुड़ा हुआ Bluesky खाता निष्क्रिय हो जाएगा और आपकी सामग्री Bluesky पर शेयर नहीं होगी। आप शेयरिंग कभी भी फिर से चालू कर सकते हैं।</string>
+    <string name="settings_bluesky_disable">बंद करें</string>
+    <string name="settings_bluesky_handle_label">Bluesky हैंडल</string>
+    <string name="settings_bluesky_copy_handle">हैंडल कॉपी करें</string>
+    <string name="settings_bluesky_handle_copied">कॉपी हो गया</string>
+    <string name="settings_bluesky_open_profile">प्रोफ़ाइल खोलें</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">प्रोफ़ाइल साझा करें</string>
     <string name="profile_edit">प्रोफ़ाइल संपादित करें</string>

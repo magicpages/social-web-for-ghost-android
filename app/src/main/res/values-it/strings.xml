@@ -480,6 +480,21 @@
     <string name="settings_sensitive_media_summary">Mostra contenuti per adulti e media contrassegnati come sensibili senza toccare. I post con avviso sui contenuti restano nascosti. Vale per %1$s.</string>
     <string name="settings_network_retry_hint">Impossibile caricare questa impostazione. Tocca per riprovare.</string>
     <string name="settings_network_rate_limited">Troppe richieste. Attendi un momento, poi riprova.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Condividi su Bluesky</string>
+    <string name="settings_bluesky_explainer">Collega %1$s a Bridgy Fed per condividere i suoi post su un profilo Bluesky dedicato e raggiungere più persone nel social web.</string>
+    <string name="settings_bluesky_needs_avatar">Aggiungi un’immagine al tuo profilo del social web per collegarti a Bluesky. Le immagini del profilo aiutano a contrastare lo spam.</string>
+    <string name="settings_bluesky_handle_warning">Non puoi cambiare il tuo nome utente Bluesky, quindi assicurati che l’handle del social web, %1$s, ti piaccia prima di collegare.</string>
+    <string name="settings_bluesky_connecting">Collegamento a Bluesky in corso… Puoi uscire da questa schermata e controllare più tardi.</string>
+    <string name="settings_bluesky_connected">%1$s è collegato a Bluesky tramite Bridgy Fed. I post si sincronizzano dopo una breve attesa per completare l’attivazione.</string>
+    <string name="settings_bluesky_timed_out">Bluesky non ha risposto in tempo, quindi la condivisione è stata disattivata. Riprova.</string>
+    <string name="settings_bluesky_disable_title">Disattivare la condivisione su Bluesky?</string>
+    <string name="settings_bluesky_disable_text">Il tuo account Bluesky collegato verrà disattivato e i tuoi contenuti non saranno più condivisi su Bluesky. Puoi riattivare la condivisione quando vuoi.</string>
+    <string name="settings_bluesky_disable">Disattiva</string>
+    <string name="settings_bluesky_handle_label">Handle Bluesky</string>
+    <string name="settings_bluesky_copy_handle">Copia handle</string>
+    <string name="settings_bluesky_handle_copied">Copiato</string>
+    <string name="settings_bluesky_open_profile">Apri profilo</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Condividi profilo</string>
     <string name="profile_edit">Modifica profilo</string>

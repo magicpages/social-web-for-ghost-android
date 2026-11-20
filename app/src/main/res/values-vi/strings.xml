@@ -456,6 +456,21 @@
     <string name="settings_sensitive_media_summary">Hiện nội dung người lớn và phương tiện được đánh dấu nhạy cảm mà không cần chạm. Bài viết có cảnh báo nội dung vẫn bị ẩn. Áp dụng cho %1$s.</string>
     <string name="settings_network_retry_hint">Không tải được cài đặt này. Chạm để thử lại.</string>
     <string name="settings_network_rate_limited">Quá nhiều yêu cầu. Hãy đợi một lát rồi thử lại.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Chia sẻ lên Bluesky</string>
+    <string name="settings_bluesky_explainer">Kết nối %1$s với Bridgy Fed để chia sẻ bài viết lên một hồ sơ Bluesky riêng và tiếp cận nhiều người hơn trên mạng xã hội web.</string>
+    <string name="settings_bluesky_needs_avatar">Hãy thêm ảnh hồ sơ vào hồ sơ mạng xã hội web của bạn để kết nối với Bluesky. Ảnh hồ sơ giúp ngăn thư rác.</string>
+    <string name="settings_bluesky_handle_warning">Bạn không thể đổi tên người dùng Bluesky, nên hãy chắc chắn bạn ưng handle mạng xã hội web của mình, %1$s, trước khi kết nối.</string>
+    <string name="settings_bluesky_connecting">Đang kết nối với Bluesky… Bạn có thể rời màn hình này và quay lại kiểm tra sau.</string>
+    <string name="settings_bluesky_connected">%1$s đã được kết nối với Bluesky qua Bridgy Fed. Bài viết sẽ đồng bộ sau một khoảng trễ ngắn để hoàn tất kích hoạt.</string>
+    <string name="settings_bluesky_timed_out">Bluesky không phản hồi kịp nên tính năng chia sẻ đã được tắt. Hãy thử lại.</string>
+    <string name="settings_bluesky_disable_title">Tắt chia sẻ lên Bluesky?</string>
+    <string name="settings_bluesky_disable_text">Tài khoản Bluesky đã kết nối sẽ bị vô hiệu hóa và nội dung của bạn sẽ không còn được chia sẻ lên Bluesky. Bạn có thể bật lại chia sẻ bất cứ lúc nào.</string>
+    <string name="settings_bluesky_disable">Tắt</string>
+    <string name="settings_bluesky_handle_label">Handle Bluesky</string>
+    <string name="settings_bluesky_copy_handle">Sao chép handle</string>
+    <string name="settings_bluesky_handle_copied">Đã sao chép</string>
+    <string name="settings_bluesky_open_profile">Mở hồ sơ</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Chia sẻ hồ sơ</string>
     <string name="profile_edit">Chỉnh sửa hồ sơ</string>

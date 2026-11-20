@@ -31,6 +31,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.contentOrNull
@@ -134,6 +135,7 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
     private fun route(request: Request, host: String, path: String): Answer = when {
         host == KlipyHost -> klipy(request, path)
         path.startsWith(ActivityPubPath) -> activityPub(request, host, path.removePrefix(ActivityPubPath))
+        path.startsWith(ActivityPubV2Path) -> bluesky(request, host, path.removePrefix(ActivityPubV2Path))
         path.startsWith(AdminPath) -> admin(request, host, path.removePrefix(AdminPath))
         else -> publicPage(request, host, path)
     }
@@ -407,9 +409,12 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
         return -1
     }
 
-    // MARK: Preferences
+    // MARK: Preferences and Bluesky sharing
 
     private var showSensitiveMedia = false
+    private var blueskyEnabled = false
+    private var blueskyConfirmed = false
+    private var blueskyChecks = 0
 
     /** `v1/preferences`: like the service, a PUT takes exactly `showSensitiveMedia` and refuses anything else. */
     private fun preferences(request: Request): Answer {
@@ -452,6 +457,52 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
         return text.trim().split(Regex("\n{2,}")).joinToString("") { "<p>${escape(it).replace("\n", "<br>")}</p>" }
     }
 
+    private fun blueskyHandle(domain: String) = "@$domain.ap.brid.gy"
+
+    private fun blueskyFields(domain: String): Map<String, JsonElement> = mapOf(
+        "blueskyEnabled" to JsonPrimitive(blueskyEnabled),
+        "blueskyHandleConfirmed" to JsonPrimitive(blueskyConfirmed),
+        "blueskyHandle" to if (blueskyConfirmed) JsonPrimitive(blueskyHandle(domain)) else JsonNull,
+    )
+
+    private fun blueskyStatus(domain: String) = answerJson(
+        buildJsonObject {
+            put("enabled", blueskyEnabled)
+            put("handleConfirmed", blueskyConfirmed)
+            put("handle", if (blueskyConfirmed) JsonPrimitive(blueskyHandle(domain)) else JsonNull)
+        },
+    )
+
+    /**
+     * `v2/actions/bluesky/...`. Enabling starts the bridge without a handle; the first
+     * `confirm-handle` after it still finds nothing, the second finds the account, as Bridgy Fed's delay does.
+     */
+    private fun bluesky(request: Request, host: String, rest: String): Answer {
+        val action = rest.trim('/').removePrefix("actions/bluesky/")
+        if (request.method != "POST") return notFound()
+        return when (action) {
+            "enable" -> {
+                blueskyEnabled = true
+                blueskyConfirmed = false
+                blueskyChecks = 0
+                blueskyStatus(host)
+            }
+            "confirm-handle" -> if (!blueskyEnabled) {
+                Answer(400, buildJsonObject { put("error", "Bluesky integration not enabled") }.toString().encodeToByteArray())
+            } else {
+                if (++blueskyChecks >= 2) blueskyConfirmed = true
+                blueskyStatus(host)
+            }
+            "disable" -> {
+                blueskyEnabled = false
+                blueskyConfirmed = false
+                blueskyChecks = 0
+                Answer(204, ByteArray(0))
+            }
+            else -> notFound()
+        }
+    }
+
     // MARK: Accounts and discovery
 
     private fun account(host: String, who: String, relation: String?): Answer {
@@ -484,6 +535,8 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
                 )
             }
         }
+        // The site's own account also says where Bluesky sharing stands.
+        if (who == "me") return answerJson(JsonObject(json.encodeToJsonElement(Profile.serializer(), profile).jsonObject + blueskyFields(persona.domain)))
         return ok(Profile.serializer(), profile)
     }
 
@@ -719,6 +772,7 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
         /** Entries per page of the Notes and Reader feeds, so that they page like the real ones. */
         const val FeedPageSize = 8
         const val ActivityPubPath = "/.ghost/activitypub/v1/"
+        const val ActivityPubV2Path = "/.ghost/activitypub/v2/"
         const val AdminPath = "/ghost/api/admin/"
         const val JsonType = "application/json"
         const val KlipyHost = "api.klipy.com"

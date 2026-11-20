@@ -468,6 +468,21 @@
     <string name="settings_sensitive_media_summary">Viser indhold for voksne og medier markeret som følsomme uden et tryk. Opslag med en indholdsadvarsel forbliver skjult. Gælder for %1$s.</string>
     <string name="settings_network_retry_hint">Denne indstilling kunne ikke indlæses. Tryk for at prøve igen.</string>
     <string name="settings_network_rate_limited">For mange forespørgsler. Vent et øjeblik, og prøv igen.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Del på Bluesky</string>
+    <string name="settings_bluesky_explainer">Forbind %1$s med Bridgy Fed for at dele opslagene på en egen Bluesky-profil og nå flere mennesker på det sociale web.</string>
+    <string name="settings_bluesky_needs_avatar">Tilføj et profilbillede til din profil på det sociale web for at forbinde til Bluesky. Profilbilleder hjælper mod spam.</string>
+    <string name="settings_bluesky_handle_warning">Du kan ikke ændre dit Bluesky-brugernavn, så sørg for, at du er tilfreds med dit handle på det sociale web, %1$s, før du forbinder.</string>
+    <string name="settings_bluesky_connecting">Forbinder til Bluesky… Du kan forlade denne skærm og kigge forbi senere.</string>
+    <string name="settings_bluesky_connected">%1$s er forbundet til Bluesky via Bridgy Fed. Opslag synkroniseres efter en kort forsinkelse for at fuldføre aktiveringen.</string>
+    <string name="settings_bluesky_timed_out">Bluesky svarede ikke i tide, så deling blev slået fra. Prøv igen.</string>
+    <string name="settings_bluesky_disable_title">Slå deling på Bluesky fra?</string>
+    <string name="settings_bluesky_disable_text">Din forbundne Bluesky-konto bliver deaktiveret, og dit indhold deles ikke længere på Bluesky. Du kan slå deling til igen når som helst.</string>
+    <string name="settings_bluesky_disable">Slå fra</string>
+    <string name="settings_bluesky_handle_label">Bluesky-handle</string>
+    <string name="settings_bluesky_copy_handle">Kopiér handle</string>
+    <string name="settings_bluesky_handle_copied">Kopieret</string>
+    <string name="settings_bluesky_open_profile">Åbn profil</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Del profil</string>
     <string name="profile_edit">Rediger profil</string>

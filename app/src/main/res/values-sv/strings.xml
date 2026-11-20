@@ -468,6 +468,21 @@
     <string name="settings_sensitive_media_summary">Visar vuxeninnehåll och media markerat som känsligt utan ett tryck. Inlägg med innehållsvarning förblir dolda. Gäller för %1$s.</string>
     <string name="settings_network_retry_hint">Det gick inte att läsa in den här inställningen. Tryck för att försöka igen.</string>
     <string name="settings_network_rate_limited">För många förfrågningar. Vänta en stund och försök igen.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Dela på Bluesky</string>
+    <string name="settings_bluesky_explainer">Anslut %1$s till Bridgy Fed för att dela inläggen på en egen Bluesky-profil och nå fler på det sociala webben.</string>
+    <string name="settings_bluesky_needs_avatar">Lägg till en profilbild i din profil på det sociala webben för att ansluta till Bluesky. Profilbilder hjälper mot skräppost.</string>
+    <string name="settings_bluesky_handle_warning">Du kan inte ändra ditt Bluesky-användarnamn, så se till att du är nöjd med ditt handtag på det sociala webben, %1$s, innan du ansluter.</string>
+    <string name="settings_bluesky_connecting">Ansluter till Bluesky… Du kan lämna den här skärmen och titta tillbaka senare.</string>
+    <string name="settings_bluesky_connected">%1$s är anslutet till Bluesky via Bridgy Fed. Inlägg synkas efter en kort fördröjning för att slutföra aktiveringen.</string>
+    <string name="settings_bluesky_timed_out">Bluesky svarade inte i tid, så delningen stängdes av. Försök igen.</string>
+    <string name="settings_bluesky_disable_title">Stänga av delning på Bluesky?</string>
+    <string name="settings_bluesky_disable_text">Ditt kopplade Bluesky-konto inaktiveras och ditt innehåll delas inte längre på Bluesky. Du kan slå på delningen igen när du vill.</string>
+    <string name="settings_bluesky_disable">Stäng av</string>
+    <string name="settings_bluesky_handle_label">Bluesky-handtag</string>
+    <string name="settings_bluesky_copy_handle">Kopiera handtag</string>
+    <string name="settings_bluesky_handle_copied">Kopierat</string>
+    <string name="settings_bluesky_open_profile">Öppna profil</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Dela profil</string>
     <string name="profile_edit">Redigera profil</string>

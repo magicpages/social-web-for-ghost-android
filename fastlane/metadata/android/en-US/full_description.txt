@@ -2,12 +2,17 @@ Social Web brings your Ghost site’s social web to Android.
 
 Ghost 6 connects your site to the open social web (ActivityPub): people on Mastodon, WordPress, other Ghost sites and the rest of the fediverse can follow you, and you can follow them. Social Web is a fast, native way to keep up and join in.
 
-• Notes: short posts from everyone you follow. Like, repost, quote and reply.
+• Notes: short posts from everyone you follow. Like, repost, quote and reply. The feed keeps your place and shows a “new posts” button instead of jumping.
+• Feed filters: hide reposts and posts with words you mute.
 • Reader: long-form articles from the publications you follow, in a clean reading view with audio and video.
-• Post notes with photos and alt text, from your site’s own profile.
+• Post notes with photos and alt text, from your site’s own profile, or take a photo right in the composer.
+• Edit your profile: name, username, bio, picture and cover image.
+• Share any profile as a QR code, a link or a picture card.
 • Notifications: likes, reposts, replies, mentions and new followers, neatly grouped. Choose which ones are announced in the background.
 • Translate notes and articles into your language, on your device.
-• Find and follow people and publications on any fediverse server.
+• Find and follow people and publications on any fediverse server, or browse topics like News or Photography.
+• Share your site on Bluesky through Bridgy Fed.
+• Choose whether media marked as sensitive shows without a tap.
 • All your Ghost sites in one app. Switch between them in a tap.
 • Share a link, selected text or a photo from any app to start a new note (one image, with alt text).
 • Animated GIFs and other animated images play right in the timeline.

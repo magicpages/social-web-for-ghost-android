@@ -492,6 +492,21 @@
     <string name="settings_sensitive_media_summary">Pokazuje treści dla dorosłych i multimedia oznaczone jako wrażliwe bez dotykania. Wpisy z ostrzeżeniem o treści pozostają ukryte. Dotyczy %1$s.</string>
     <string name="settings_network_retry_hint">Nie udało się wczytać tego ustawienia. Dotknij, aby spróbować ponownie.</string>
     <string name="settings_network_rate_limited">Zbyt wiele żądań. Poczekaj chwilę i spróbuj ponownie.</string>
+    <string name="settings_bluesky">Bluesky</string>
+    <string name="settings_bluesky_share">Udostępniaj na Bluesky</string>
+    <string name="settings_bluesky_explainer">Połącz %1$s z Bridgy Fed, aby udostępniać wpisy na osobnym profilu Bluesky i docierać do większej liczby osób w sieci społecznościowej.</string>
+    <string name="settings_bluesky_needs_avatar">Dodaj zdjęcie do swojego profilu w sieci społecznościowej, aby połączyć się z Bluesky. Zdjęcia profilowe pomagają ograniczać spam.</string>
+    <string name="settings_bluesky_handle_warning">Nazwy użytkownika na Bluesky nie można zmienić, więc przed połączeniem upewnij się, że odpowiada Ci Twój uchwyt w sieci społecznościowej, %1$s.</string>
+    <string name="settings_bluesky_connecting">Łączenie z Bluesky… Możesz opuścić ten ekran i sprawdzić później.</string>
+    <string name="settings_bluesky_connected">%1$s jest połączony z Bluesky przez Bridgy Fed. Wpisy synchronizują się po krótkim opóźnieniu, aby dokończyć aktywację.</string>
+    <string name="settings_bluesky_timed_out">Bluesky nie odpowiedziało na czas, więc udostępnianie zostało wyłączone. Spróbuj ponownie.</string>
+    <string name="settings_bluesky_disable_title">Wyłączyć udostępnianie na Bluesky?</string>
+    <string name="settings_bluesky_disable_text">Połączone konto Bluesky zostanie dezaktywowane, a Twoje treści nie będą już udostępniane na Bluesky. Udostępnianie możesz włączyć ponownie w dowolnej chwili.</string>
+    <string name="settings_bluesky_disable">Wyłącz</string>
+    <string name="settings_bluesky_handle_label">Uchwyt na Bluesky</string>
+    <string name="settings_bluesky_copy_handle">Kopiuj uchwyt</string>
+    <string name="settings_bluesky_handle_copied">Skopiowano</string>
+    <string name="settings_bluesky_open_profile">Otwórz profil</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Udostępnij profil</string>
     <string name="profile_edit">Edytuj profil</string>
