@@ -1,0 +1,116 @@
+# Every push to main that touches the app goes to Play's internal testing track. Setup and the
+# secrets it needs: RELEASING.md, "Automatic internal releases".
+name: Play internal testing
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'fastlane/metadata/**'
+  workflow_dispatch:
+
+# One upload at a time, in push order: versionCodes have to rise.
+concurrency:
+  group: play-internal
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  internal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # the versionCode is the commit count
+
+      - name: Check secrets
+        env:
+          PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          KEYSTORE_BASE64: ${{ secrets.SOCIALWEB_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.SOCIALWEB_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.SOCIALWEB_KEY_ALIAS }}
+        run: |
+          missing=""
+          [ -n "$PLAY_SERVICE_ACCOUNT_JSON" ] || missing="$missing PLAY_SERVICE_ACCOUNT_JSON"
+          [ -n "$KEYSTORE_BASE64" ] || missing="$missing SOCIALWEB_KEYSTORE_BASE64"
+          [ -n "$KEYSTORE_PASSWORD" ] || missing="$missing SOCIALWEB_KEYSTORE_PASSWORD"
+          [ -n "$KEY_ALIAS" ] || missing="$missing SOCIALWEB_KEY_ALIAS"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets:$missing (see RELEASING.md)"
+            exit 1
+          fi
+
+      - name: Version
+        id: version
+        run: echo "code=$(git rev-list --count HEAD)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Upload key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.SOCIALWEB_KEYSTORE_BASE64 }}
+        run: echo "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/upload.jks"
+
+      - name: Test, lint and build the bundle
+        env:
+          SOCIALWEB_VERSION_CODE: ${{ steps.version.outputs.code }}
+          SOCIALWEB_KEYSTORE_FILE: ${{ runner.temp }}/upload.jks
+          SOCIALWEB_KEYSTORE_PASSWORD: ${{ secrets.SOCIALWEB_KEYSTORE_PASSWORD }}
+          SOCIALWEB_KEY_ALIAS: ${{ secrets.SOCIALWEB_KEY_ALIAS }}
+          SOCIALWEB_KEY_PASSWORD: ${{ secrets.SOCIALWEB_KEY_PASSWORD }}
+        run: ./gradlew --no-daemon :app:testDebugUnitTest :app:lintDebug :app:bundleRelease
+
+      - name: Check the bundle
+        run: |
+          aab=app/build/outputs/bundle/release/app-release.aab
+          jarsigner -verify "$aab" | grep -q '^jar verified' || { echo "::error::The bundle isn't signed"; exit 1; }
+          if grep -q 'socialweb\.demo' app/build/outputs/mapping/release/mapping.txt; then
+            echo "::error::Demo mode ended up in the release build"
+            exit 1
+          fi
+
+      # "What's new" for testers: the subjects of the commits in this push, within Play's 500 characters.
+      - name: Release notes
+        env:
+          BEFORE: ${{ github.event.before }}
+          CODE: ${{ steps.version.outputs.code }}
+        run: |
+          # A manual run, or a push whose previous head is gone, lists the last five commits instead.
+          if [ -n "$BEFORE" ] && git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            git log --no-merges --format='• %s' "$BEFORE..HEAD"
+          else
+            git log --no-merges --format='• %s' -5 HEAD
+          fi \
+            | awk '{ if (total + length($0) + 1 > 500) exit; total += length($0) + 1; print }' \
+            > "fastlane/metadata/android/en-US/changelogs/$CODE.txt"
+          cat "fastlane/metadata/android/en-US/changelogs/$CODE.txt"
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+
+      - name: Upload to internal testing
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          gem install fastlane -v 2.242.0 --no-document
+          fastlane supply \
+            --package_name co.magicpages.socialweb \
+            --track internal \
+            --release_status completed \
+            --aab app/build/outputs/bundle/release/app-release.aab \
+            --mapping app/build/outputs/mapping/release/mapping.txt \
+            --metadata_path fastlane/metadata/android \
+            --skip_upload_metadata true \
+            --skip_upload_images true \
+            --skip_upload_screenshots true

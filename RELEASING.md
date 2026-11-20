@@ -28,9 +28,9 @@ adb shell am start -n co.magicpages.socialweb.debug/co.magicpages.socialweb.Main
 
 ## Versioning
 
-- `versionCode`: integer, must rise with every upload to Play. Bump it by one.
-- `versionName`: shown to users (`0.1.0`, `1.0.0`, …).
-- Add `fastlane/metadata/android/<locale>/changelogs/<versionCode>.txt` for each new `versionCode` (all 24 languages + en-US; 500 characters max).
+- `versionCode`: integer, must rise with every upload to Play. CI uploads use the commit count on `main` (`git rev-list --count HEAD`, passed as `SOCIALWEB_VERSION_CODE`); without that variable it's 1. Don't rewrite `main`'s history: a lower count means Play refuses the upload until the count passes the last one.
+- `versionName`: shown to users (`0.1.0`, `1.0.0`, …), set in `app/build.gradle.kts`. Several internal builds share one; testers tell them apart by the versionCode in brackets.
+- Release notes: CI writes the en-US "What's new" from the pushed commits' subject lines. For a release that should carry written notes (closed testing, production), add `fastlane/metadata/android/<locale>/changelogs/<versionCode>.txt` in every locale (500 characters max) before promoting it.
 
 ## One-time setup
 
@@ -64,9 +64,25 @@ For CI, set these environment variables instead (the file wins when both exist):
 
 Personal developer accounts created after November 2023 must run a closed test with at least 12 testers for 14 days before they can apply for production access. Organization accounts don't.
 
-### 3. API access for fastlane (optional)
+### 3. API access for fastlane and CI
 
 Play Console → **Setup → API access** → link a Google Cloud project, create a service account, grant it **Release apps to testing tracks** (and **Manage store presence** for listing text), and download its JSON key. Keep the key outside the repo.
+
+### 4. Automatic internal releases
+
+`.github/workflows/play-internal.yml` sends every push to `main` to the **internal testing** track, except pushes that only touch Markdown, `docs/` or `fastlane/metadata/`. It runs the unit tests and lint, builds the signed bundle, checks that it's signed and has no demo code, and uploads it with its R8 mapping file (so Play shows readable stack traces). Run it by hand from the Actions tab (**Run workflow**) to re-send the current `main`.
+
+It needs these repository secrets. Set them from the repo root with the GitHub CLI; the values go straight from your files or prompt to GitHub:
+
+```bash
+gh secret set PLAY_SERVICE_ACCOUNT_JSON < play-key.json
+base64 -w0 upload.jks | gh secret set SOCIALWEB_KEYSTORE_BASE64
+gh secret set SOCIALWEB_KEYSTORE_PASSWORD     # prompts for the value
+gh secret set SOCIALWEB_KEY_ALIAS             # "upload" if you followed step 1
+gh secret set SOCIALWEB_KEY_PASSWORD          # only if it differs from the store password
+```
+
+Without them the workflow stops at its first step and names the missing ones.
 
 ## Baseline profile
 
@@ -96,27 +112,31 @@ Why the profiled variants contain demo code: `nonMinifiedRelease` and `benchmark
 
 ## Each release
 
-1. Bump `versionCode` (and `versionName`) in `app/build.gradle.kts`; add `changelogs/<versionCode>.txt` in every locale. If the screens or the start-up path changed a lot, [regenerate the baseline profile](#baseline-profile).
-2. Build the signed bundle:
+Internal testing needs nothing: [CI](#4-automatic-internal-releases) uploads every push to `main`. For a closed-testing or production release:
 
-   ```bash
-   ./gradlew :app:bundleRelease
-   ```
+1. Raise `versionName` in `app/build.gradle.kts` if users should see a new version, and push. If the screens or the start-up path changed a lot, [regenerate the baseline profile](#baseline-profile) first.
+2. Once CI has uploaded the build, add `changelogs/<versionCode>.txt` in every locale and push them; they don't trigger a build. Then upload them to the release with `fastlane supply --json_key play-key.json --package_name co.magicpages.socialweb --track internal --version_code <versionCode> --skip_upload_aab --skip_upload_apk --skip_upload_metadata --skip_upload_images --skip_upload_screenshots --metadata_path fastlane/metadata/android`, or paste them in the Console.
+3. Promote the release to Closed testing, then Production, from the internal track's **Promote release** menu.
+4. Testers: Testing → Internal testing → Testers → create an email list, then share the opt-in link. Internal testing has no review and is live within minutes (up to 100 testers).
 
-   Output: `app/build/outputs/bundle/release/app-release.aab`. If it says it is unsigned, `keystore.properties` or the environment variables weren't found.
-3. Upload it, either way:
-   - **Console:** Testing → Internal testing → Create new release → upload the `.aab` → Save → Review → Start rollout.
-   - **fastlane supply** (install with `gem install fastlane`):
+To upload by hand instead (no CI), set `SOCIALWEB_VERSION_CODE` above Play's latest versionCode and build the signed bundle:
 
-     ```bash
-     fastlane supply --json_key play-key.json --package_name co.magicpages.socialweb \
-       --aab app/build/outputs/bundle/release/app-release.aab --track internal \
-       --metadata_path fastlane/metadata/android
-     ```
+```bash
+SOCIALWEB_VERSION_CODE=… ./gradlew :app:bundleRelease
+```
 
-     Add `--release_status draft` while the app has no finished listing (Play refuses to publish a release for an incomplete app).
-4. Add testers: Testing → Internal testing → Testers → create an email list, then share the opt-in link. Internal testing has no review and is live within minutes (up to 100 testers).
-5. Promote the same release to Closed testing, then Production, from the track's **Promote release** menu.
+Output: `app/build/outputs/bundle/release/app-release.aab`. If it says it is unsigned, `keystore.properties` or the environment variables weren't found. Upload it, either way:
+
+- **Console:** Testing → Internal testing → Create new release → upload the `.aab` → Save → Review → Start rollout.
+- **fastlane supply** (install with `gem install fastlane`):
+
+  ```bash
+  fastlane supply --json_key play-key.json --package_name co.magicpages.socialweb \
+    --aab app/build/outputs/bundle/release/app-release.aab --track internal \
+    --metadata_path fastlane/metadata/android
+  ```
+
+  Add `--release_status draft` while the app has no finished listing (Play refuses to publish a release for an incomplete app).
 
 ### Store listing
 

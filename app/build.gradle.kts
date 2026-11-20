@@ -29,7 +29,8 @@ android {
         applicationId = "co.magicpages.socialweb"
         minSdk = 29
         targetSdk = 37
-        versionCode = 1
+        // CI sets SOCIALWEB_VERSION_CODE (the commit count on main) for each Play upload.
+        versionCode = providers.environmentVariable("SOCIALWEB_VERSION_CODE").orNull?.toInt() ?: 1
         versionName = "0.1.0"
         manifestPlaceholders["appLabel"] = "Social Web"
     }
