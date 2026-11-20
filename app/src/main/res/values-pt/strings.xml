@@ -468,4 +468,10 @@
     <string name="onboarding_requirements">Requer Ghost 6 ou posterior com a web social ativada e um início de sessão como proprietário ou administrador.</string>
     <string name="onboarding_add_site">Adicionar o seu site</string>
     <string name="link_preview_remove">Remover pré-visualização da ligação</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts" tools:ignore="ImpliedQuantity">
+        <item quantity="one">%1$d nova publicação</item>
+        <item quantity="other">%1$d novas publicações</item>
+        <item quantity="many">%1$d novas publicações</item>
+    </plurals>
 </resources>

@@ -456,4 +456,9 @@
     <string name="onboarding_requirements">Vereist Ghost 6 of nieuwer met het sociale web ingeschakeld, en een login als eigenaar of beheerder.</string>
     <string name="onboarding_add_site">Je site toevoegen</string>
     <string name="link_preview_remove">Linkvoorbeeld verwijderen</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="one">%1$d nieuw bericht</item>
+        <item quantity="other">%1$d nieuwe berichten</item>
+    </plurals>
 </resources>

@@ -3,6 +3,7 @@ package co.magicpages.socialweb.data.settings
 import android.content.Context
 import androidx.core.content.edit
 import co.magicpages.socialweb.data.activitypub.Notification
+import co.magicpages.socialweb.data.feed.SavedFeedPosition
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -59,8 +60,19 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         prefs.edit {
             remove(KeyColorSource + accountId)
             remove(KeyCustomColor + accountId)
+            prefs.all.keys
+                .filter { it.startsWith("$KeyFeedPosition$accountId:") }
+                .forEach { remove(it) }
         }
         _accountColors.value -= accountId
+    }
+
+    /** Where [accountId] left the feed named [feed] (a `Feed` name), or null before the first time. */
+    fun feedPosition(accountId: String, feed: String): SavedFeedPosition? =
+        SavedFeedPosition.decode(prefs.getString("$KeyFeedPosition$accountId:$feed", null))
+
+    fun saveFeedPosition(accountId: String, feed: String, position: SavedFeedPosition) {
+        prefs.edit { putString("$KeyFeedPosition$accountId:$feed", position.encode()) }
     }
 
     private fun readAccountColors(): Map<String, AccountColors> =
@@ -79,5 +91,6 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         private const val KeyAnnounced = "announced_notification_types"
         private const val KeyColorSource = "color_source:"
         private const val KeyCustomColor = "custom_color:"
+        private const val KeyFeedPosition = "feed_position:"
     }
 }

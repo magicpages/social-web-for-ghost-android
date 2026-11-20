@@ -444,4 +444,8 @@
     <string name="onboarding_requirements">ソーシャルウェブがオンの Ghost 6 以降と、オーナーまたは管理者としてのログインが必要です。</string>
     <string name="onboarding_add_site">サイトを追加</string>
     <string name="link_preview_remove">リンクプレビューを削除</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="other">新しい投稿 %1$d 件</item>
+    </plurals>
 </resources>

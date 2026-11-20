@@ -480,4 +480,11 @@
     <string name="onboarding_requirements">Потрібен Ghost 6 або новіший з увімкненим соціальним вебом і вхід як власник або адміністратор.</string>
     <string name="onboarding_add_site">Додати сайт</string>
     <string name="link_preview_remove">Вилучити попередній перегляд посилання</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts" tools:ignore="ImpliedQuantity">
+        <item quantity="one">%1$d новий допис</item>
+        <item quantity="few">%1$d нові дописи</item>
+        <item quantity="many">%1$d нових дописів</item>
+        <item quantity="other">%1$d нового допису</item>
+    </plurals>
 </resources>

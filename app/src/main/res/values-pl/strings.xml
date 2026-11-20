@@ -480,4 +480,11 @@
     <string name="onboarding_requirements">Wymaga Ghost 6 lub nowszego z włączoną siecią społecznościową oraz logowania jako właściciel lub administrator.</string>
     <string name="onboarding_add_site">Dodaj swoją witrynę</string>
     <string name="link_preview_remove">Usuń podgląd linku</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="one">%1$d nowy wpis</item>
+        <item quantity="few">%1$d nowe wpisy</item>
+        <item quantity="many">%1$d nowych wpisów</item>
+        <item quantity="other">%1$d nowego wpisu</item>
+    </plurals>
 </resources>

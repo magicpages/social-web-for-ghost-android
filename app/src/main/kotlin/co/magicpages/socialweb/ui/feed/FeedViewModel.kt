@@ -1,5 +1,6 @@
 package co.magicpages.socialweb.ui.feed
 
+import android.os.SystemClock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -15,6 +16,8 @@ import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.data.activitypub.Moderation
 import co.magicpages.socialweb.data.activitypub.FreshAvatars
 import co.magicpages.socialweb.data.activitypub.PostInteractions
+import co.magicpages.socialweb.data.feed.SavedFeedPosition
+import co.magicpages.socialweb.data.settings.AppSettings
 import co.magicpages.socialweb.ui.posts.FeedItem
 import co.magicpages.socialweb.ui.posts.PostsPagingSource
 import co.magicpages.socialweb.ui.posts.RepostGroups
@@ -53,6 +56,7 @@ class FeedViewModel @AssistedInject constructor(
     private val interactions: PostInteractions,
     private val freshAvatars: FreshAvatars,
     private val moderation: Moderation,
+    private val settings: AppSettings,
     /** The app's one note composer, hosted above the navigation. */
     val noteComposer: NoteComposer,
 ) : ViewModel() {
@@ -99,4 +103,16 @@ class FeedViewModel @AssistedInject constructor(
 
     fun toggleLike(post: Post) = interactions.toggleLike(post)
     fun toggleRepost(post: Post) = interactions.toggleRepost(post)
+
+    private val feedName = feed.name
+
+    /** Set once the saved position has been restored (or found to need no restoring): it happens once per start of the app. */
+    var positionRestored = false
+
+    /** When the list last finished loading, on the [SystemClock.elapsedRealtime] clock: an old list is reloaded on coming back to the app. */
+    var lastRefreshed = SystemClock.elapsedRealtime()
+
+    fun savedPosition(accountId: String): SavedFeedPosition? = settings.feedPosition(accountId, feedName)
+
+    fun savePosition(accountId: String, position: SavedFeedPosition) = settings.saveFeedPosition(accountId, feedName, position)
 }

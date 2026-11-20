@@ -456,4 +456,9 @@
     <string name="onboarding_requirements">Sosyal web\'in açık olduğu Ghost 6 veya üstü ve sahip ya da yönetici girişi gerekir.</string>
     <string name="onboarding_add_site">Sitenizi ekleyin</string>
     <string name="link_preview_remove">Bağlantı önizlemesini kaldır</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="one">%1$d yeni gönderi</item>
+        <item quantity="other">%1$d yeni gönderi</item>
+    </plurals>
 </resources>

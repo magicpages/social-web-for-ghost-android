@@ -1,5 +1,6 @@
 package co.magicpages.socialweb.ui.feed
 
+import android.os.SystemClock
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -21,6 +22,7 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,6 +32,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import co.magicpages.socialweb.R
@@ -49,7 +52,11 @@ import co.magicpages.socialweb.ui.posts.PostCallbacks
 import co.magicpages.socialweb.ui.posts.ReplyEditorHost
 import co.magicpages.socialweb.ui.posts.feedItems
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
+
+/** A list that has been loaded this long ago is loaded again when the user comes back to it. */
+private const val StaleAfterMillis = 5 * 60_000L
 
 /**
  * One timeline tab. [reselections] counts taps on its already-selected tab, each a request to
@@ -70,9 +77,11 @@ fun FeedScreen(
     val posts = viewModel.posts.collectAsLazyPagingItems()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
     OnReselect(reselections) { listState.scrollToTop() }
     val snackbar = remember { SnackbarHostState() }
     CollectMessages(viewModel.messages, snackbar)
+    val newPosts = rememberNewPosts(viewModel, account?.id, posts, listState)
     // A fresh note belongs at the top of the Notes list, which the server has but we don't yet.
     // It arrives above the first visible post, and the list keeps that post in place: scroll up
     // only once the refresh has landed.
@@ -85,6 +94,17 @@ fun FeedScreen(
             snapshotFlow { posts.loadState.refresh }.first { it !is LoadState.Loading }
             listState.scrollToTop()
         }
+    }
+    // Remember when the list was last up to date, and reload one that went stale while the app was away.
+    LaunchedEffect(posts) {
+        snapshotFlow { posts.loadState.refresh }.collect {
+            if (it is LoadState.NotLoading) viewModel.lastRefreshed = SystemClock.elapsedRealtime()
+        }
+    }
+    LifecycleResumeEffect(posts) {
+        val stale = SystemClock.elapsedRealtime() - viewModel.lastRefreshed > StaleAfterMillis
+        if (stale && viewModel.positionRestored && posts.loadState.refresh !is LoadState.Loading) posts.refresh()
+        onPauseOrDispose {}
     }
     val callbacks = remember(viewModel) {
         PostCallbacks(
@@ -167,6 +187,11 @@ fun FeedScreen(
                     feedItems(posts, callbacks, articleCards = feed == Feed.Reader)
                 }
             }
+            NewPostsPill(
+                count = newPosts,
+                onClick = { scope.launch { listState.scrollToTop() } },
+                modifier = Modifier.align(Alignment.TopCenter).padding(top = 8.dp),
+            )
         }
     }
     ReplyEditorHost(viewModel.composer)

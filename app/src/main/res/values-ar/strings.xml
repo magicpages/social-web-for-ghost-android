@@ -504,4 +504,13 @@
     <string name="onboarding_requirements">يتطلب Ghost 6 أو أحدث مع تفعيل الويب الاجتماعي، وتسجيل الدخول بصفتك مالكًا أو مسؤولًا.</string>
     <string name="onboarding_add_site">أضف موقعك</string>
     <string name="link_preview_remove">إزالة معاينة الرابط</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts" tools:ignore="ImpliedQuantity">
+        <item quantity="zero">لا منشورات جديدة</item>
+        <item quantity="one">منشور جديد واحد</item>
+        <item quantity="two">منشوران جديدان</item>
+        <item quantity="few">%1$d منشورات جديدة</item>
+        <item quantity="many">%1$d منشورًا جديدًا</item>
+        <item quantity="other">%1$d منشور جديد</item>
+    </plurals>
 </resources>

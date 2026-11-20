@@ -444,4 +444,8 @@
     <string name="onboarding_requirements">Cần Ghost 6 trở lên với mạng xã hội web được bật, và đăng nhập bằng tài khoản Chủ sở hữu hoặc Quản trị viên.</string>
     <string name="onboarding_add_site">Thêm trang của bạn</string>
     <string name="link_preview_remove">Xóa bản xem trước liên kết</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="other">%1$d bài mới</item>
+    </plurals>
 </resources>

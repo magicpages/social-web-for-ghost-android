@@ -73,6 +73,9 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
     private val parents = HashMap(DemoContent.parents)
     private val following = DemoContent.everyone.filter { it.followedByMe }.mapTo(HashSet()) { it.handle }
     private val newNotes = ArrayList<String>()
+    /** How often the Notes feed was loaded from its start; later loads find the notes in [DemoContent.arrivals]. */
+    private var notesLoads = 0
+    private val feedCursors = HashMap<String, String>()
     private val recommendations = DemoContent.defaultRecommendations.toMutableList()
     private val uploads = LinkedHashMap<String, Upload>()
     private var unread = 3
@@ -177,8 +180,12 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
         return if (request.method == "GET") {
             when (first) {
                 "feed" -> when (second) {
-                    "notes" -> ok(PostsPage.serializer(), PostsPage(DemoContent.notesFeed.let(::feed)))
-                    "reader" -> ok(PostsPage.serializer(), PostsPage(feed(DemoContent.readerFeed)))
+                    "notes" -> {
+                        val next = request.url.queryParameter("next")
+                        if (next == null) notesLoads++
+                        ok(PostsPage.serializer(), feedPage(notesEntries(), next))
+                    }
+                    "reader" -> ok(PostsPage.serializer(), feedPage(DemoContent.readerFeed, request.url.queryParameter("next")))
                     else -> notFound()
                 }
                 "posts" -> if (second == "me" && parts.getOrNull(2) == "liked") {
@@ -244,11 +251,30 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
         )
     }
 
-    private fun feed(entries: List<DemoContent.Entry>): List<Post> {
-        val own = if (entries === DemoContent.notesFeed) newNotes.map { DemoContent.Entry(it) } else emptyList()
-        return (own + entries).mapNotNull { entry ->
+    /** The entries of the Notes feed now: what arrived since it was first loaded, the user's own notes, then the rest. */
+    private fun notesEntries(): List<DemoContent.Entry> {
+        val arrived = DemoContent.arrivals.take((notesLoads - 1).coerceIn(0, DemoContent.arrivals.size)).asReversed()
+        return arrived + newNotes.map { DemoContent.Entry(it) } + DemoContent.notesFeed
+    }
+
+    private fun entryKey(entry: DemoContent.Entry) = entry.postId + "|" + entry.repostedBy?.handle
+
+    /** One page of a feed. [next] is a cursor an earlier page handed out: the time of its last entry, as the service does. */
+    private fun feedPage(entries: List<DemoContent.Entry>, next: String?): PostsPage {
+        val start = if (next == null) {
+            0
+        } else {
+            val last = feedCursors[next] ?: return PostsPage()
+            entries.indexOfFirst { entryKey(it) == last } + 1
+        }
+        val page = entries.drop(start).take(FeedPageSize)
+        val posts = page.mapNotNull { entry ->
             view(entry.postId)?.copy(repostedBy = entry.repostedBy?.author(entry.repostedBy.handle in following))
         }
+        val last = page.lastOrNull()
+        val cursor = if (last != null && start + page.size < entries.size) view(last.postId)?.publishedAt else null
+        if (cursor != null && last != null) feedCursors[cursor] = entryKey(last)
+        return PostsPage(posts, cursor)
     }
 
     private fun postsBy(handle: String): List<Post> {
@@ -621,6 +647,8 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
     private fun escape(text: String) = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;")
 
     private companion object {
+        /** Entries per page of the Notes and Reader feeds, so that they page like the real ones. */
+        const val FeedPageSize = 8
         const val ActivityPubPath = "/.ghost/activitypub/v1/"
         const val AdminPath = "/ghost/api/admin/"
         const val JsonType = "application/json"

@@ -444,4 +444,8 @@
     <string name="onboarding_requirements">需要已開啟社群網路的 Ghost 6 或更新版本，並以擁有者或管理員身分登入。</string>
     <string name="onboarding_add_site">新增你的網站</string>
     <string name="link_preview_remove">移除連結預覽</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="other">%1$d 則新貼文</item>
+    </plurals>
 </resources>

@@ -456,4 +456,9 @@
     <string name="onboarding_requirements">Kræver Ghost 6 eller nyere med det sociale web slået til og login som ejer eller administrator.</string>
     <string name="onboarding_add_site">Tilføj dit website</string>
     <string name="link_preview_remove">Fjern linkforhåndsvisning</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="one">%1$d nyt opslag</item>
+        <item quantity="other">%1$d nye opslag</item>
+    </plurals>
 </resources>

@@ -456,4 +456,9 @@
     <string name="onboarding_requirements">सोशल वेब चालू वाला Ghost 6 या नया, और ओनर या एडमिनिस्ट्रेटर के रूप में साइन-इन चाहिए।</string>
     <string name="onboarding_add_site">अपनी साइट जोड़ें</string>
     <string name="link_preview_remove">लिंक पूर्वावलोकन हटाएं</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts" tools:ignore="ImpliedQuantity">
+        <item quantity="one">%1$d नई पोस्ट</item>
+        <item quantity="other">%1$d नई पोस्ट</item>
+    </plurals>
 </resources>

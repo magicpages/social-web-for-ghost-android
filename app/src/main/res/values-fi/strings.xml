@@ -456,4 +456,9 @@
     <string name="onboarding_requirements">Vaatii Ghost 6:n tai uudemman, sosiaalisen verkon päälle kytkettynä, ja kirjautumisen omistajana tai ylläpitäjänä.</string>
     <string name="onboarding_add_site">Lisää sivustosi</string>
     <string name="link_preview_remove">Poista linkin esikatselu</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="one">%1$d uusi julkaisu</item>
+        <item quantity="other">%1$d uutta julkaisua</item>
+    </plurals>
 </resources>

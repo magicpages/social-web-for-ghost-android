@@ -444,4 +444,8 @@
     <string name="onboarding_requirements">需要已开启社交网络的 Ghost 6 或更高版本，并以所有者或管理员身份登录。</string>
     <string name="onboarding_add_site">添加你的站点</string>
     <string name="link_preview_remove">移除链接预览</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="other">%1$d 篇新帖子</item>
+    </plurals>
 </resources>

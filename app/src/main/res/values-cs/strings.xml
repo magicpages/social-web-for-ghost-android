@@ -480,4 +480,11 @@
     <string name="onboarding_requirements">Vyžaduje Ghost 6 nebo novější se zapnutým sociálním webem a přihlášení jako vlastník nebo správce.</string>
     <string name="onboarding_add_site">Přidat váš web</string>
     <string name="link_preview_remove">Odstranit náhled odkazu</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="one">%1$d nový příspěvek</item>
+        <item quantity="few">%1$d nové příspěvky</item>
+        <item quantity="many">%1$d nového příspěvku</item>
+        <item quantity="other">%1$d nových příspěvků</item>
+    </plurals>
 </resources>

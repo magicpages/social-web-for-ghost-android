@@ -480,4 +480,11 @@
     <string name="onboarding_requirements">Нужен Ghost 6 или новее с включённым социальным вебом и вход как владелец или администратор.</string>
     <string name="onboarding_add_site">Добавить сайт</string>
     <string name="link_preview_remove">Удалить предпросмотр ссылки</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts" tools:ignore="ImpliedQuantity">
+        <item quantity="one">%1$d новый пост</item>
+        <item quantity="few">%1$d новых поста</item>
+        <item quantity="many">%1$d новых постов</item>
+        <item quantity="other">%1$d нового поста</item>
+    </plurals>
 </resources>

@@ -456,4 +456,9 @@
     <string name="onboarding_requirements">Kräver Ghost 6 eller senare med det sociala webben påslaget, och inloggning som ägare eller administratör.</string>
     <string name="onboarding_add_site">Lägg till din webbplats</string>
     <string name="link_preview_remove">Ta bort länkförhandsvisning</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="one">%1$d nytt inlägg</item>
+        <item quantity="other">%1$d nya inlägg</item>
+    </plurals>
 </resources>

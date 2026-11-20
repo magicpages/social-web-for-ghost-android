@@ -444,4 +444,8 @@
     <string name="onboarding_requirements">Memerlukan Ghost 6 atau lebih baru dengan web sosial aktif, dan login sebagai Pemilik atau Administrator.</string>
     <string name="onboarding_add_site">Tambahkan situs Anda</string>
     <string name="link_preview_remove">Hapus pratinjau tautan</string>
+    <!-- feed filters and new posts -->
+    <plurals name="feed_new_posts">
+        <item quantity="other">%1$d kiriman baru</item>
+    </plurals>
 </resources>

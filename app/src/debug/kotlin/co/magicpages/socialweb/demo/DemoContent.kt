@@ -290,6 +290,11 @@ internal object DemoContent {
         likes = 129, reposts = 17, replies = 9,
     )
 
+    // Notes that arrive while the app is open; each is newer than the last.
+    val arrivalOne = note("arrival-1", elena, 6, "<p>Snow is falling in the valley. The first of the season, and it is staying.</p>", likes = 3)
+    val arrivalTwo = note("arrival-2", sam, 4, "<p>The late ferry is late again. At least the coffee on board is good.</p>", likes = 2)
+    val arrivalThree = note("arrival-3", ines, 2, "<p>Just posted the coast path photos. Go and look!</p>", likes = 1)
+
     // MARK: Articles
 
     val serif = article(
@@ -389,6 +394,12 @@ internal object DemoContent {
     val readerFeed = listOf(
         Entry(serif.id, kofi), Entry(ferry.id), Entry(myArticle.id), Entry(sourdough.id), Entry(tinyTools.id), Entry(marketDay.id),
     )
+
+    /**
+     * Notes that reach the top of the Notes feed after it was first loaded, one more with each later
+     * load of the feed (see [DemoApi]), newest last: they are what a "new posts" pill and a refresh show.
+     */
+    val arrivals = listOf(arrivalOne, arrivalTwo, arrivalThree).map { Entry(it.id) }
 
     // MARK: Threads
 
