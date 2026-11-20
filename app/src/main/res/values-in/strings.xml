@@ -448,6 +448,8 @@
     <string name="explore_topic_posts">Kiriman</string>
     <string name="explore_topic_people">Orang</string>
     <string name="explore_topic_posts_empty">Belum ada kiriman di topik ini. Tarik ke bawah untuk mencoba lagi.</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">Ambil foto</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filter feed</string>
     <string name="feed_filters_summary">Sembunyikan posting ulang dan kata yang dibisukan di Catatan dan Pembaca</string>

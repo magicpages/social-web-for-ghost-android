@@ -448,6 +448,8 @@
     <string name="explore_topic_posts">投稿</string>
     <string name="explore_topic_people">人</string>
     <string name="explore_topic_posts_empty">このトピックにはまだ投稿がありません。下にスワイプしてもう一度お試しください。</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">写真を撮る</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">フィードのフィルター</string>
     <string name="feed_filters_summary">ノートとリーダーでリポストとミュートした語句を非表示にします</string>

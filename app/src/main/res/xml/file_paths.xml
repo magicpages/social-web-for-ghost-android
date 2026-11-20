@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cache folders the app hands to other apps through its FileProvider. -->
+<paths>
+    <!-- A photo the camera app writes for the composer. -->
+    <cache-path name="camera_captures" path="camera-captures/" />
+</paths>

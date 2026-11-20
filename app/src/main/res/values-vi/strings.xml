@@ -448,6 +448,8 @@
     <string name="explore_topic_posts">Bài đăng</string>
     <string name="explore_topic_people">Mọi người</string>
     <string name="explore_topic_posts_empty">Chưa có bài đăng nào trong chủ đề này. Kéo xuống để thử lại.</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">Chụp ảnh</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Bộ lọc bảng tin</string>
     <string name="feed_filters_summary">Ẩn bài đăng lại và từ đã tắt tiếng trong Ghi chú và Trình đọc</string>

@@ -484,6 +484,8 @@
     <string name="explore_topic_posts">Публикации</string>
     <string name="explore_topic_people">Люди</string>
     <string name="explore_topic_posts_empty">В этой теме пока нет публикаций. Потяните вниз, чтобы повторить.</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">Сделать снимок</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Фильтры ленты</string>
     <string name="feed_filters_summary">Скрывать репосты и заглушённые слова в Заметках и Чтении</string>

@@ -460,6 +460,8 @@
     <string name="explore_topic_posts">Berichten</string>
     <string name="explore_topic_people">Mensen</string>
     <string name="explore_topic_posts_empty">Nog geen berichten in dit onderwerp. Trek omlaag om het opnieuw te proberen.</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">Foto maken</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feedfilters</string>
     <string name="feed_filters_summary">Verberg reposts en gedempte woorden in Notities en Lezer</string>

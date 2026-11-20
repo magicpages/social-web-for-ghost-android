@@ -460,6 +460,8 @@
     <string name="explore_topic_posts">Inlägg</string>
     <string name="explore_topic_people">Personer</string>
     <string name="explore_topic_posts_empty">Inga inlägg i det här ämnet än. Dra nedåt för att försöka igen.</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">Ta ett foto</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Flödesfilter</string>
     <string name="feed_filters_summary">Dölj delningar och tystade ord i Anteckningar och Läsare</string>

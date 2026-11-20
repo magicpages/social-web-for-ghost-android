@@ -472,6 +472,8 @@
     <string name="explore_topic_posts">Publicaciones</string>
     <string name="explore_topic_people">Personas</string>
     <string name="explore_topic_posts_empty">Aún no hay publicaciones en este tema. Desliza hacia abajo para volver a intentarlo.</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">Hacer una foto</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtros del feed</string>
     <string name="feed_filters_summary">Oculta republicaciones y palabras silenciadas en Notas y Lector</string>

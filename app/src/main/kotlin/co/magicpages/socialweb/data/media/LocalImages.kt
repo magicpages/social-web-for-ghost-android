@@ -5,9 +5,13 @@ import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.webkit.MimeTypeMap
+import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import co.magicpages.socialweb.data.activitypub.ImageRejection
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -65,6 +69,27 @@ class LocalImages @Inject constructor(@ApplicationContext private val context: C
             } catch (_: IOException) {
                 Staged.Rejected(ImageRejection.Unreadable)
             }
+        }
+    }
+
+    /** An empty file in the cache for the camera app to write a photo to, and the `content://` Uri to hand it. */
+    class Capture(val file: File, val uri: Uri)
+
+    /**
+     * Makes the file for one camera capture, and clears out ones an earlier capture left behind (a photo too large
+     * to stage stays where the composer can still read it). Null when the cache can't be written.
+     */
+    fun newCapture(): Capture? {
+        return try {
+            val dir = File(context.cacheDir, CAPTURE_DIR).apply { mkdirs() }
+            val cutoff = System.currentTimeMillis() - STAGING_MAX_AGE_MS
+            dir.listFiles()?.forEach { if (it.lastModified() < cutoff) it.delete() }
+            val file = File(dir, "${UUID.randomUUID()}.jpg")
+            Capture(file, FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file))
+        } catch (_: IOException) {
+            null
+        } catch (_: IllegalArgumentException) {
+            null
         }
     }
 
@@ -132,6 +157,7 @@ class LocalImages @Inject constructor(@ApplicationContext private val context: C
     private companion object {
         const val DEFAULT_BUFFER = 8 * 1024
         const val STAGING_DIR = "shared-images"
+        const val CAPTURE_DIR = "camera-captures"
         const val STAGING_MAX_AGE_MS = 24L * 60 * 60 * 1000
 
         /** What the service accepts, with the extension staged copies are saved under. */
@@ -146,4 +172,11 @@ class LocalImages @Inject constructor(@ApplicationContext private val context: C
         val SUPPORTED_TYPES = FILE_EXTENSIONS.keys
         val TYPES_BY_EXTENSION = FILE_EXTENSIONS.entries.associate { it.value to it.key }
     }
+}
+
+/** Lets composables, which can't be injected, reach [LocalImages]. */
+@EntryPoint
+@InstallIn(SingletonComponent::class)
+interface LocalImagesEntryPoint {
+    fun localImages(): LocalImages
 }

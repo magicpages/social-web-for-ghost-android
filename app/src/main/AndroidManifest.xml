@@ -6,6 +6,13 @@
     <!-- Android 13+: asked once from the notifications tab, so background checks can announce new notifications. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Package visibility (Android 11+): lets the composer see whether any app can take a photo, to show its camera button. -->
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
     <!-- Backup and device transfer are off: stored credentials are encrypted with a Keystore key that can't move. -->
     <application
         android:name=".SocialWebApp"
@@ -74,6 +81,17 @@
                 android:name="androidx.work.WorkManagerInitializer"
                 android:value="androidx.startup"
                 tools:node="remove" />
+        </provider>
+
+        <!-- Hands cache files to other apps: the camera app writes composer photos here, and rendered images are shared from it. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 </manifest>

@@ -460,6 +460,8 @@
     <string name="explore_topic_posts">Julkaisut</string>
     <string name="explore_topic_people">Ihmiset</string>
     <string name="explore_topic_posts_empty">Tässä aiheessa ei ole vielä julkaisuja. Yritä uudelleen vetämällä alas.</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">Ota kuva</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Syötteen suodattimet</string>
     <string name="feed_filters_summary">Piilota uudelleenjaot ja mykistetyt sanat Muistiinpanoissa ja Lukijassa</string>

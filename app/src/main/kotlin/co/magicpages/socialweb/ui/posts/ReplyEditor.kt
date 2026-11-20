@@ -35,6 +35,7 @@ import co.magicpages.socialweb.ui.components.ComposerFailure
 import co.magicpages.socialweb.ui.components.ComposerField
 import co.magicpages.socialweb.ui.components.LocalOwnProfile
 import co.magicpages.socialweb.ui.components.PickedImagePreview
+import co.magicpages.socialweb.ui.components.TakePhotoButton
 import co.magicpages.socialweb.ui.components.rememberComposerText
 
 /** Shows the [ReplyEditor] while [composer] has a reply open. */
@@ -86,6 +87,7 @@ fun ReplyEditor(
         bottomBar = {
             ComposerBottomBar(text, thread, onPick = onTextChange) {
                 AddImageButton(enabled = !state.sending, onPick = onPickImage)
+                TakePhotoButton(enabled = !state.sending, onPick = onPickImage)
                 AddGifButton(enabled = !state.sending) { uri, description ->
                     onPickImage(uri)
                     onAltTextChange(description)

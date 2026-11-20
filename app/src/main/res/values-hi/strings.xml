@@ -460,6 +460,8 @@
     <string name="explore_topic_posts">पोस्ट</string>
     <string name="explore_topic_people">लोग</string>
     <string name="explore_topic_posts_empty">इस विषय में अभी कोई पोस्ट नहीं है। दोबारा कोशिश करने के लिए नीचे खींचें।</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">फ़ोटो लें</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">फ़ीड फ़िल्टर</string>
     <string name="feed_filters_summary">नोट्स और रीडर में रीपोस्ट और म्यूट किए गए शब्द छिपाएँ</string>

@@ -472,6 +472,8 @@
     <string name="explore_topic_posts">Post</string>
     <string name="explore_topic_people">Persone</string>
     <string name="explore_topic_posts_empty">Ancora nessun post in questo argomento. Scorri verso il basso per riprovare.</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">Scatta una foto</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtri del feed</string>
     <string name="feed_filters_summary">Nascondi ripubblicazioni e parole silenziate in Note e Lettore</string>

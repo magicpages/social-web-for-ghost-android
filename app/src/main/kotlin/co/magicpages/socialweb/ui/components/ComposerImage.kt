@@ -1,5 +1,9 @@
 package co.magicpages.socialweb.ui.components
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,20 +29,32 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import co.magicpages.socialweb.R
+import co.magicpages.socialweb.data.activitypub.ActivityPubClient
+import co.magicpages.socialweb.data.media.LocalImages
+import co.magicpages.socialweb.data.media.LocalImagesEntryPoint
 import coil3.compose.AsyncImage
+import dagger.hilt.android.EntryPointAccessors
+import java.io.File
+import kotlinx.coroutines.launch
 
 /** Opens the photo picker for one image; [onPick] gets its `content://` Uri. */
 @Composable
@@ -51,6 +67,66 @@ fun AddImageButton(enabled: Boolean, onPick: (String) -> Unit) {
         enabled = enabled,
     ) {
         Icon(AppIcons.AddPhotoAlternate, contentDescription = stringResource(R.string.note_add_image))
+    }
+}
+
+/**
+ * Takes a photo with the device's camera app (no camera permission needed: the app writes to a cache file
+ * this app hands it) and passes it on as a picked image is: copied into the staging cache, so the camera's
+ * file can go. A photo too large or unreadable to stage goes on as the capture file itself, so it is turned
+ * away at send time with the same message a picked one gets. Hidden when no camera app can take a photo.
+ */
+@Composable
+fun TakePhotoButton(enabled: Boolean, onPick: (String) -> Unit) {
+    val context = LocalContext.current
+    val available = remember(context) {
+        context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY) &&
+            Intent(MediaStore.ACTION_IMAGE_CAPTURE).resolveActivity(context.packageManager) != null
+    }
+    if (!available) return
+    val images = remember(context) {
+        EntryPointAccessors.fromApplication(context.applicationContext, LocalImagesEntryPoint::class.java).localImages()
+    }
+    val scope = rememberCoroutineScope()
+    // Saved, so a photo survives the app being stopped while the camera is open.
+    var pendingPath by rememberSaveable { mutableStateOf<String?>(null) }
+    var pendingUri by rememberSaveable { mutableStateOf<String?>(null) }
+    val camera = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { taken ->
+        val path = pendingPath ?: return@rememberLauncherForActivityResult
+        val uri = pendingUri ?: return@rememberLauncherForActivityResult
+        pendingPath = null
+        pendingUri = null
+        val file = File(path)
+        if (!taken || file.length() == 0L) {
+            file.delete()
+            return@rememberLauncherForActivityResult
+        }
+        scope.launch {
+            when (val staged = images.stage(uri, ActivityPubClient.MAX_IMAGE_BYTES)) {
+                is LocalImages.Staged.Ready -> {
+                    file.delete()
+                    onPick(staged.uri)
+                }
+                is LocalImages.Staged.Rejected -> onPick(uri)
+            }
+        }
+    }
+    IconButton(
+        onClick = {
+            val capture = images.newCapture() ?: return@IconButton
+            pendingPath = capture.file.absolutePath
+            pendingUri = capture.uri.toString()
+            try {
+                camera.launch(capture.uri)
+            } catch (_: ActivityNotFoundException) {
+                capture.file.delete()
+                pendingPath = null
+                pendingUri = null
+            }
+        },
+        enabled = enabled,
+    ) {
+        Icon(AppIcons.PhotoCamera, contentDescription = stringResource(R.string.note_take_photo))
     }
 }
 

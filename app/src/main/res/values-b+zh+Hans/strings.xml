@@ -448,6 +448,8 @@
     <string name="explore_topic_posts">帖子</string>
     <string name="explore_topic_people">用户</string>
     <string name="explore_topic_posts_empty">这个话题下还没有帖子。下拉可重试。</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">拍照</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">信息流过滤</string>
     <string name="feed_filters_summary">在笔记和阅读器中隐藏转发和屏蔽词</string>

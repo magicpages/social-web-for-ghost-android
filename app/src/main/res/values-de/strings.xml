@@ -460,6 +460,8 @@
     <string name="explore_topic_posts">Beiträge</string>
     <string name="explore_topic_people">Personen</string>
     <string name="explore_topic_posts_empty">In diesem Thema gibt es noch keine Beiträge. Zum Wiederholen nach unten ziehen.</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">Foto aufnehmen</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feed-Filter</string>
     <string name="feed_filters_summary">Reposts und stummgeschaltete Wörter in Notizen und Reader ausblenden</string>

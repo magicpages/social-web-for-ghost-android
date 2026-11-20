@@ -484,6 +484,8 @@
     <string name="explore_topic_posts">Дописи</string>
     <string name="explore_topic_people">Люди</string>
     <string name="explore_topic_posts_empty">У цій темі ще немає дописів. Потягніть униз, щоб спробувати ще раз.</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">Зробити знімок</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Фільтри стрічки</string>
     <string name="feed_filters_summary">Ховати репости й заглушені слова в Нотатках і Читанні</string>

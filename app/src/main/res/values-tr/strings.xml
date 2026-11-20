@@ -460,6 +460,8 @@
     <string name="explore_topic_posts">Gönderiler</string>
     <string name="explore_topic_people">Kişiler</string>
     <string name="explore_topic_posts_empty">Bu konuda henüz gönderi yok. Tekrar denemek için aşağı çekin.</string>
+    <!-- Take a photo in the composer -->
+    <string name="note_take_photo">Fotoğraf çek</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Akış filtreleri</string>
     <string name="feed_filters_summary">Notlar ve Okuyucu\'da yeniden paylaşımları ve sessize alınan sözcükleri gizle</string>
