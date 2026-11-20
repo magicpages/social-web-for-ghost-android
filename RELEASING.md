@@ -66,7 +66,11 @@ Personal developer accounts created after November 2023 must run a closed test w
 
 ### 3. API access for fastlane and CI
 
-Play Console → **Setup → API access** → link a Google Cloud project, create a service account, grant it **Release apps to testing tracks** (and **Manage store presence** for listing text), and download its JSON key. Keep the key outside the repo.
+Play Console no longer has an API access page; the service account is made in Google Cloud and invited to Play Console like a person:
+
+1. [Google Cloud Console](https://console.cloud.google.com/), any project: enable the [Google Play Android Developer API](https://console.cloud.google.com/apis/library/androidpublisher.googleapis.com).
+2. [Service accounts](https://console.cloud.google.com/iam-admin/serviceaccounts) → **Create service account** (no roles needed) → open it → **Keys → Add key → Create new key → JSON**. Save the file as `play-key.json` in the repo root (git-ignored) or outside the repo.
+3. Play Console → **Users and permissions → Invite new users**: the service account's email (`client_email` in the key), with **Release apps to testing tracks** for this app (and **Manage store presence** for listing text).
 
 ### 4. Automatic internal releases
 
