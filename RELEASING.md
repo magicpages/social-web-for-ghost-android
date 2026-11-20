@@ -168,7 +168,7 @@ What the app really does (checked in code):
 
 - **Network:** only HTTPS (`cleartextTrafficPermitted="false"`). It talks to the Ghost site the user signs in to (Admin API, ActivityPub endpoints, members Portal in a web view) and to fediverse servers the user's site federates with (profiles, posts, images, videos, server rules). There is no developer backend.
 - **Credentials:** email and password go only to the user's own Ghost site, to open a session; the password is not stored. The session cookie or Staff Access Token is stored encrypted (Tink AES-GCM, key in the Android Keystore) in app-private storage. Backup and device transfer are excluded (`allowBackup=false`, `data_extraction_rules.xml`).
-- **No analytics, crash reporting, ads or advertising ID.** No third-party SDK receives app data. Translation and language detection use Google ML Kit through Google Play services: text stays on the device, only the language files are downloaded.
+- **No analytics of our own, no crash reporting, ads or advertising ID.** Translation and language detection use Google ML Kit, only when the user taps Translate: the text stays on the device, but the SDK itself then sends Google diagnostics (device model and OS, app package and version, a per-installation ID, performance metrics, error codes, the languages involved) and uses Firebase installations and Remote Config for that ([ML Kit's data disclosure](https://developers.google.com/ml-kit/android-data-disclosure)). No other SDK sends app data anywhere.
 - **Permissions:** `INTERNET`, `POST_NOTIFICATIONS` (background checks for new notifications, user-controlled). Photos are picked with the system photo picker, so there is no media permission.
 - **User reports** are written as an email to `reports@magicpages.co` (and, if the user opts in, the server's moderators) that the user sends from their own mail app; nothing is sent in the background.
 
@@ -184,7 +184,9 @@ Answers:
 | **Photos and videos → Photos** | Collected, not shared. Purpose: App functionality. Optional: yes (images attached to notes). |
 | **Messages → Other in-app messages** (notes, replies) | Collected, not shared. Purpose: App functionality. |
 | **App activity → Other user-generated content** (likes, reposts, follows, blocks, reports) | Collected, not shared. Purpose: App functionality. |
-| Location, contacts, financial info, health, web history, device or other IDs, diagnostics | Not collected |
+| **App info and performance → Diagnostics** (ML Kit) | Collected, not shared. Purpose: Analytics. Optional: yes (only sent when the user taps Translate). |
+| **Device or other IDs** (ML Kit's per-installation ID) | Collected, not shared. Purpose: Analytics. |
+| Location, contacts, financial info, health, web history | Not collected |
 
 "Not shared": data goes to servers the user chose, for actions the user took, and never to third parties on the developer's behalf. Re-check the answers if an SDK that talks to the network is added.
 
