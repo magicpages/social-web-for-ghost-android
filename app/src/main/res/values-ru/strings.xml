@@ -55,6 +55,7 @@
 
     <string name="thread_title">Пост</string>
     <string name="thread_earlier">Показать предыдущие посты</string>
+    <string name="thread_earlier_failed">Не удалось загрузить предыдущие посты.</string>
     <string name="thread_in_reply_to">В ответ на</string>
     <string name="thread_more_replies">Показать больше ответов</string>
     <string name="thread_reply_prompt">Ответить пользователю %1$s…</string>

@@ -53,6 +53,7 @@
 
     <string name="thread_title">Beitrag</string>
     <string name="thread_earlier">Frühere Beiträge anzeigen</string>
+    <string name="thread_earlier_failed">Frühere Beiträge konnten nicht geladen werden.</string>
     <string name="thread_in_reply_to">Als Antwort auf</string>
     <string name="thread_more_replies">Weitere Antworten anzeigen</string>
     <string name="thread_reply_prompt">Antwort an %1$s…</string>

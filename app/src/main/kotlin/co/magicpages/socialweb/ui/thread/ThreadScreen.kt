@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -40,6 +41,7 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -231,6 +233,7 @@ fun ThreadScreen(
                     LaunchedEffect(hasParent) {
                         if (hasParent && !scrolled) listState.requestScrollToItem(0)
                     }
+                    KeepAncestorsInView(listState, current.content)
                     // Audio belongs to the screen, so it keeps playing while its player scrolls away.
                     CompositionLocalProvider(LocalArticleAudio provides articleAudio) {
                         LazyColumn(
@@ -239,7 +242,10 @@ fun ThreadScreen(
                             contentPadding = PaddingValues(top = 8.dp, bottom = 24.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            thread(current.content, articleShown, articleTranslation, callbacks, onOpenPost, viewModel::loadMore) { articleShown = true }
+                            thread(
+                                current.content, articleShown, articleTranslation, callbacks, onOpenPost,
+                                viewModel::loadMore, viewModel::loadEarlier,
+                            ) { articleShown = true }
                         }
                     }
                 }
@@ -249,6 +255,7 @@ fun ThreadScreen(
     ReplyEditorHost(viewModel.composer)
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 private fun LazyListScope.thread(
     content: ThreadContent,
     articleShown: Boolean,
@@ -256,17 +263,25 @@ private fun LazyListScope.thread(
     callbacks: PostCallbacks,
     onOpenPost: (Post) -> Unit,
     onLoadMore: () -> Unit,
+    onLoadEarlier: () -> Unit,
     onShowArticle: () -> Unit,
 ) {
     // The conversation so far runs into the post itself, joined by the thread line.
     val column = Modifier.widthIn(max = MaxContentWidth).fillMaxWidth()
     if (content.hasEarlier) {
         item(key = "earlier", contentType = "link") {
-            TextButton(
-                onClick = { content.ancestors.firstOrNull()?.let { onOpenPost(it.post) } },
+            // The progress takes the button's height, so nothing below it shifts when one swaps for the other.
+            Box(
                 // The button's own padding puts its label on the posts' text column.
-                modifier = column.padding(start = PostTextInset - 12.dp, top = 4.dp).wrapContentWidth(Alignment.Start),
-            ) { Text(stringResource(R.string.thread_earlier)) }
+                column.padding(start = PostTextInset - 12.dp, top = 4.dp).heightIn(min = 48.dp),
+                contentAlignment = Alignment.CenterStart,
+            ) {
+                if (content.loadingEarlier) {
+                    LoadingIndicator()
+                } else {
+                    TextButton(onClick = onLoadEarlier) { Text(stringResource(R.string.thread_earlier)) }
+                }
+            }
         }
     }
     content.parentLink?.let { link ->
@@ -346,6 +361,30 @@ private fun LazyListScope.thread(
         item(key = "append", contentType = "append") {
             RepliesFooter(content.next, content.appending, content.appendFailed, onLoadMore)
         }
+    }
+}
+
+/**
+ * Earlier posts land above the first ancestor, but the list keeps the view on the button above that one, which
+ * pushes the ancestor the reader was looking at down. This keeps it where it was. It runs while the new rows
+ * compose, before they are laid out, so the layout info still holds the positions from before.
+ */
+@Composable
+private fun KeepAncestorsInView(listState: LazyListState, content: ThreadContent) {
+    val top = content.ancestors.firstOrNull()?.post?.id
+    val shownTop = remember { arrayOfNulls<String>(1) }
+    SideEffect {
+        val before = shownTop[0]
+        shownTop[0] = top
+        if (before == null || top == null || before == top) return@SideEffect
+        val ids = content.ancestors.map { it.post.id }
+        val anchor = listState.layoutInfo.visibleItemsInfo.firstNotNullOfOrNull { info ->
+            val index = ids.indexOf((info.key as? String)?.removePrefix("a:") ?: return@firstNotNullOfOrNull null)
+            if (index < 0) null else index to info.offset
+        } ?: return@SideEffect
+        // The rows above the ancestors: the button and the link to a parent elsewhere.
+        val rowsAbove = (if (content.hasEarlier) 1 else 0) + (if (content.parentLink != null) 1 else 0)
+        listState.requestScrollToItem(rowsAbove + anchor.first, -anchor.second)
     }
 }
 

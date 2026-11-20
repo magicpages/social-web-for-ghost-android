@@ -3,6 +3,7 @@ package co.magicpages.socialweb.ui.thread
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.magicpages.socialweb.R
 import co.magicpages.socialweb.data.account.AccountStore
 import co.magicpages.socialweb.data.activitypub.ActivityPubClient
 import co.magicpages.socialweb.data.activitypub.Interactions
@@ -31,6 +32,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -39,6 +41,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -63,6 +66,8 @@ data class ThreadContent(
     val article: ArticleDocument? = null,
     /** Set while [article] stops at a members-only gate: the site to sign in to, and how far unlocking has got. */
     val articleAccess: ArticleAccess? = null,
+    /** Set while the posts above the topmost ancestor load. */
+    val loadingEarlier: Boolean = false,
 ) {
     fun with(overrides: Map<String, Interactions>) = copy(
         ancestors = ancestors.map { it.with(overrides) },
@@ -87,6 +92,31 @@ data class ThreadContent(
         is ReplyParents.Parent.Found -> copy(ancestors = listOf(parent.item))
         is ReplyParents.Parent.Elsewhere -> copy(parentLink = parent)
         ReplyParents.Parent.None -> this
+    }
+
+    /**
+     * The content with [chain], the posts above the topmost ancestor, put in front of the ancestors.
+     * Posts already shown are skipped, in case the responses overlap.
+     */
+    fun withEarlier(chain: List<FeedItem>, hasMore: Boolean): ThreadContent {
+        val known = HashSet<String>()
+        ancestors.mapTo(known) { it.post.id }
+        known += post.post.id
+        val added = chain.filter { known.add(it.post.id) }
+        // Nothing new would leave the button doing nothing on every tap, so that ends the walk up.
+        return copy(ancestors = added + ancestors, hasEarlier = hasMore && added.isNotEmpty(), loadingEarlier = false)
+    }
+
+    /**
+     * This content, freshly loaded, with the earlier posts [previous] had loaded above its ancestors, so a
+     * refresh doesn't fold a thread the reader walked up back to its last ten posts.
+     */
+    fun keepingEarlier(previous: ThreadContent): ThreadContent {
+        val top = ancestors.firstOrNull()?.post?.id ?: return this
+        val kept = previous.ancestors.takeWhile { it.post.id != top }
+        // The old chain has to run into the new one: if it doesn't, the thread changed and those posts may not belong.
+        if (kept.isEmpty() || kept.size == previous.ancestors.size) return this
+        return copy(ancestors = kept + ancestors, hasEarlier = previous.hasEarlier)
     }
 }
 
@@ -138,17 +168,23 @@ class ThreadViewModel @AssistedInject constructor(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), false)
 
     val composer = ReplyComposer(viewModelScope, interactions)
+    private val earlierFailed = MutableSharedFlow<Int>(extraBufferCapacity = 1)
+
     // A delete or block of the post this thread is about closes the thread: the screen it returns to tells.
-    val messages: Flow<Int> = postMessages(interactions, composer, moderation) { report ->
-        val focused = (loaded.value as? ThreadUiState.Loaded)?.content?.post?.post
-        focused == null || !report.affects.hides(focused)
-    }
+    val messages: Flow<Int> = merge(
+        postMessages(interactions, composer, moderation) { report ->
+            val focused = (loaded.value as? ThreadUiState.Loaded)?.content?.post?.post
+            focused == null || !report.affects.hides(focused)
+        },
+        earlierFailed,
+    )
 
     fun toggleLike(post: Post) = interactions.toggleLike(post)
     fun toggleRepost(post: Post) = interactions.toggleRepost(post)
 
     private var loadJob: Job? = null
     private var parentJob: Job? = null
+    private var earlierJob: Job? = null
     private var unlockJob: Job? = null
 
     /** The members-only article in full, once a member session has opened it. */
@@ -167,17 +203,24 @@ class ThreadViewModel @AssistedInject constructor(
     fun refresh() {
         val current = loaded.value as? ThreadUiState.Loaded ?: return load()
         // The refresh cancels any page load in flight, so clear its footer state too.
-        loaded.value = current.copy(refreshing = true, content = current.content.copy(appending = false, appendFailed = false))
+        loaded.value = current.copy(
+            refreshing = true,
+            content = current.content.copy(appending = false, appendFailed = false, loadingEarlier = false),
+        )
         load(keepContent = true)
     }
 
     private fun load(keepContent: Boolean = false) {
         loadJob?.cancel()
+        earlierJob?.cancel()
         if (!keepContent) loaded.value = ThreadUiState.Loading
         loadJob = viewModelScope.launch {
             if (!resolveAddress()) return@launch
             loaded.value = try {
-                ThreadUiState.Loaded(withUnlocked(withKnownParent(fetch(next = null).toContent(withArticle = true))))
+                val fresh = fetch(postId, next = null).toContent(withArticle = true)
+                // A refresh keeps the earlier posts the reader loaded; the fresh response alone holds only the last ten.
+                val previous = if (keepContent) (loaded.value as? ThreadUiState.Loaded)?.content else null
+                ThreadUiState.Loaded(withUnlocked(withKnownParent(if (previous != null) fresh.keepingEarlier(previous) else fresh)))
             } catch (e: GhostException) {
                 if (keepContent) (loaded.value as? ThreadUiState.Loaded)?.copy(refreshing = false) ?: ThreadUiState.Failed(e)
                 else ThreadUiState.Failed(e)
@@ -277,7 +320,7 @@ class ThreadViewModel @AssistedInject constructor(
         loaded.value = current.copy(content = current.content.copy(appending = true, appendFailed = false))
         loadJob = viewModelScope.launch {
             val page = try {
-                fetch(next).toContent(withArticle = false)
+                fetch(postId, next).toContent(withArticle = false)
             } catch (_: GhostException) {
                 null
             } catch (_: SocialWebException) {
@@ -302,9 +345,41 @@ class ThreadViewModel @AssistedInject constructor(
         }
     }
 
-    private suspend fun fetch(next: String?): ReplyChain {
+    /**
+     * Loads the posts above the topmost ancestor shown, up to ten at a time, and puts them in front of it.
+     * The service only answers for a post it has stored, so each step asks about the ancestor the last one ended at.
+     */
+    fun loadEarlier() {
+        val current = loaded.value as? ThreadUiState.Loaded ?: return
+        val content = current.content
+        val top = content.ancestors.firstOrNull()?.post?.id ?: return
+        if (!content.hasEarlier || content.loadingEarlier || current.refreshing) return
+        loaded.value = current.copy(content = content.copy(loadingEarlier = true))
+        earlierJob = viewModelScope.launch {
+            val earlier = try {
+                val ancestors = fetch(top, next = null).ancestors
+                withContext(Dispatchers.Default) { ancestors.chain.map { it.toFeedItem() } } to ancestors.hasMore
+            } catch (_: GhostException) {
+                null
+            } catch (_: SocialWebException) {
+                null
+            }
+            loaded.update { state ->
+                if (state !is ThreadUiState.Loaded) return@update state
+                val updated = if (earlier == null) {
+                    state.content.copy(loadingEarlier = false)
+                } else {
+                    state.content.withEarlier(earlier.first, earlier.second)
+                }
+                state.copy(content = updated)
+            }
+            if (earlier == null) earlierFailed.tryEmit(R.string.thread_earlier_failed)
+        }
+    }
+
+    private suspend fun fetch(id: String, next: String?): ReplyChain {
         val account = accounts.account.first() ?: throw GhostException.Unauthorized(null)
-        return activityPub.replies(account.site, account.credential, postId, next).also { chain ->
+        return activityPub.replies(account.site, account.credential, id, next).also { chain ->
             interactions.reconcile(chain.allPosts())
         }
     }

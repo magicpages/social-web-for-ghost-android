@@ -55,6 +55,7 @@
 
     <string name="thread_title">Příspěvek</string>
     <string name="thread_earlier">Zobrazit dřívější příspěvky</string>
+    <string name="thread_earlier_failed">Dřívější příspěvky se nepodařilo načíst.</string>
     <string name="thread_in_reply_to">V odpovědi na</string>
     <string name="thread_more_replies">Zobrazit další odpovědi</string>
     <string name="thread_reply_prompt">Odpovědět uživateli %1$s…</string>

@@ -55,6 +55,7 @@
 
     <string name="thread_title">Wpis</string>
     <string name="thread_earlier">Pokaż wcześniejsze wpisy</string>
+    <string name="thread_earlier_failed">Nie udało się wczytać wcześniejszych wpisów.</string>
     <string name="thread_in_reply_to">W odpowiedzi na</string>
     <string name="thread_more_replies">Pokaż więcej odpowiedzi</string>
     <string name="thread_reply_prompt">Odpowiedz użytkownikowi %1$s…</string>

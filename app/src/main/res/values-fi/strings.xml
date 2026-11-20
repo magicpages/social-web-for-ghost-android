@@ -53,6 +53,7 @@
 
     <string name="thread_title">Julkaisu</string>
     <string name="thread_earlier">Näytä aiemmat julkaisut</string>
+    <string name="thread_earlier_failed">Aiempia julkaisuja ei voitu ladata.</string>
     <string name="thread_in_reply_to">Vastauksena käyttäjälle</string>
     <string name="thread_more_replies">Näytä lisää vastauksia</string>
     <string name="thread_reply_prompt">Vastaa käyttäjälle %1$s…</string>

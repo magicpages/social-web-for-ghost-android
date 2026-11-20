@@ -54,6 +54,7 @@
 
     <string name="thread_title">Post</string>
     <string name="thread_earlier">Mostra i post precedenti</string>
+    <string name="thread_earlier_failed">Impossibile caricare i post precedenti.</string>
     <string name="thread_in_reply_to">In risposta a</string>
     <string name="thread_more_replies">Mostra altre risposte</string>
     <string name="thread_reply_prompt">Rispondi a %1$s…</string>

@@ -52,6 +52,7 @@
 
     <string name="thread_title">投稿</string>
     <string name="thread_earlier">以前の投稿を表示</string>
+    <string name="thread_earlier_failed">以前の投稿を読み込めませんでした。</string>
     <string name="thread_in_reply_to">返信先</string>
     <string name="thread_more_replies">さらに返信を表示</string>
     <string name="thread_reply_prompt">%1$s に返信…</string>

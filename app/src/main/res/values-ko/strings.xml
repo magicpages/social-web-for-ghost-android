@@ -52,6 +52,7 @@
 
     <string name="thread_title">게시물</string>
     <string name="thread_earlier">이전 게시물 보기</string>
+    <string name="thread_earlier_failed">이전 게시물을 불러오지 못했어요.</string>
     <string name="thread_in_reply_to">답글 대상</string>
     <string name="thread_more_replies">답글 더 보기</string>
     <string name="thread_reply_prompt">%1$s님에게 답글…</string>

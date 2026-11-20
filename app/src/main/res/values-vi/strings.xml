@@ -52,6 +52,7 @@
 
     <string name="thread_title">Bài đăng</string>
     <string name="thread_earlier">Hiện các bài đăng trước đó</string>
+    <string name="thread_earlier_failed">Không thể tải các bài đăng trước đó.</string>
     <string name="thread_in_reply_to">Trả lời</string>
     <string name="thread_more_replies">Hiện thêm câu trả lời</string>
     <string name="thread_reply_prompt">Trả lời %1$s…</string>

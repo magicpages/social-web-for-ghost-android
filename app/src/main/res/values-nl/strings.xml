@@ -53,6 +53,7 @@
 
     <string name="thread_title">Bericht</string>
     <string name="thread_earlier">Eerdere berichten tonen</string>
+    <string name="thread_earlier_failed">Eerdere berichten konden niet worden geladen.</string>
     <string name="thread_in_reply_to">Als reactie op</string>
     <string name="thread_more_replies">Meer reacties tonen</string>
     <string name="thread_reply_prompt">Reageer op %1$s…</string>

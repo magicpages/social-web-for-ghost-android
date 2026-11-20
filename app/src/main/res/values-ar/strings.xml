@@ -57,6 +57,7 @@
 
     <string name="thread_title">منشور</string>
     <string name="thread_earlier">عرض المنشورات السابقة</string>
+    <string name="thread_earlier_failed">تعذّر تحميل المنشورات السابقة.</string>
     <string name="thread_in_reply_to">ردًا على</string>
     <string name="thread_more_replies">عرض المزيد من الردود</string>
     <string name="thread_reply_prompt">الرد على %1$s…</string>

@@ -52,6 +52,7 @@
 
     <string name="thread_title">帖子</string>
     <string name="thread_earlier">显示更早的帖子</string>
+    <string name="thread_earlier_failed">无法加载更早的帖子。</string>
     <string name="thread_in_reply_to">回复对象</string>
     <string name="thread_more_replies">显示更多回复</string>
     <string name="thread_reply_prompt">回复 %1$s…</string>

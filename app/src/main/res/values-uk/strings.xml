@@ -55,6 +55,7 @@
 
     <string name="thread_title">Допис</string>
     <string name="thread_earlier">Показати попередні дописи</string>
+    <string name="thread_earlier_failed">Не вдалося завантажити попередні дописи.</string>
     <string name="thread_in_reply_to">У відповідь на</string>
     <string name="thread_more_replies">Показати більше відповідей</string>
     <string name="thread_reply_prompt">Відповісти користувачу %1$s…</string>

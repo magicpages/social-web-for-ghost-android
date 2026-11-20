@@ -53,6 +53,7 @@
 
     <string name="thread_title">Gönderi</string>
     <string name="thread_earlier">Önceki gönderileri göster</string>
+    <string name="thread_earlier_failed">Önceki gönderiler yüklenemedi.</string>
     <string name="thread_in_reply_to">Yanıtlanan gönderi</string>
     <string name="thread_more_replies">Daha fazla yanıt göster</string>
     <string name="thread_reply_prompt">%1$s için yanıt yaz…</string>

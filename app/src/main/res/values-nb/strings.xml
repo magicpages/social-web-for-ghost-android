@@ -53,6 +53,7 @@
 
     <string name="thread_title">Innlegg</string>
     <string name="thread_earlier">Vis tidligere innlegg</string>
+    <string name="thread_earlier_failed">Kunne ikke laste inn tidligere innlegg.</string>
     <string name="thread_in_reply_to">Som svar til</string>
     <string name="thread_more_replies">Vis flere svar</string>
     <string name="thread_reply_prompt">Svar til %1$s…</string>

@@ -52,6 +52,7 @@
 
     <string name="thread_title">Postingan</string>
     <string name="thread_earlier">Tampilkan postingan sebelumnya</string>
+    <string name="thread_earlier_failed">Gagal memuat postingan sebelumnya.</string>
     <string name="thread_in_reply_to">Membalas</string>
     <string name="thread_more_replies">Tampilkan balasan lainnya</string>
     <string name="thread_reply_prompt">Balas %1$s…</string>

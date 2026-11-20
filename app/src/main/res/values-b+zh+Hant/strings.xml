@@ -52,6 +52,7 @@
 
     <string name="thread_title">貼文</string>
     <string name="thread_earlier">顯示較早的貼文</string>
+    <string name="thread_earlier_failed">無法載入較早的貼文。</string>
     <string name="thread_in_reply_to">回覆對象</string>
     <string name="thread_more_replies">顯示更多回覆</string>
     <string name="thread_reply_prompt">回覆 %1$s…</string>

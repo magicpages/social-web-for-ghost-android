@@ -69,6 +69,7 @@
 
     <string name="thread_title">Post</string>
     <string name="thread_earlier">Show earlier posts</string>
+    <string name="thread_earlier_failed">Couldn\'t load earlier posts.</string>
     <string name="thread_in_reply_to">In reply to</string>
     <string name="thread_more_replies">Show more replies</string>
     <string name="thread_reply_prompt">Reply to %1$s…</string>

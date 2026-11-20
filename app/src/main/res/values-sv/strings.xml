@@ -53,6 +53,7 @@
 
     <string name="thread_title">Inlägg</string>
     <string name="thread_earlier">Visa tidigare inlägg</string>
+    <string name="thread_earlier_failed">Det gick inte att ladda tidigare inlägg.</string>
     <string name="thread_in_reply_to">Som svar till</string>
     <string name="thread_more_replies">Visa fler svar</string>
     <string name="thread_reply_prompt">Svara %1$s…</string>

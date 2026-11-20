@@ -54,6 +54,7 @@
 
     <string name="thread_title">Publication</string>
     <string name="thread_earlier">Afficher les publications précédentes</string>
+    <string name="thread_earlier_failed">Impossible de charger les publications précédentes.</string>
     <string name="thread_in_reply_to">En réponse à</string>
     <string name="thread_more_replies">Afficher plus de réponses</string>
     <string name="thread_reply_prompt">Répondre à %1$s…</string>

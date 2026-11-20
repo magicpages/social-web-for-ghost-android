@@ -53,6 +53,7 @@
 
     <string name="thread_title">पोस्ट</string>
     <string name="thread_earlier">पिछली पोस्ट दिखाएँ</string>
+    <string name="thread_earlier_failed">पिछली पोस्ट लोड नहीं हो सकीं।</string>
     <string name="thread_in_reply_to">इसके जवाब में</string>
     <string name="thread_more_replies">और जवाब दिखाएँ</string>
     <string name="thread_reply_prompt">%1$s को जवाब दें…</string>
