@@ -39,10 +39,10 @@ import co.magicpages.socialweb.ui.theme.Gutter
 internal const val WebsiteUrl = "https://www.magicpages.co"
 
 /**
- * The page the Privacy policy row opens. Must point at this app's own privacy policy before release,
- * and be the same URL as the one set in the Play Console listing (see RELEASING.md).
+ * The page the Privacy policy row opens: this app's own policy, a page on magicpages.co (slug `privacy-android`).
+ * Must be the same URL as the one set in the Play Console listing (see RELEASING.md).
  */
-internal const val PrivacyPolicyUrl = "https://www.magicpages.co/legal/privacy/"
+internal const val PrivacyPolicyUrl = "https://www.magicpages.co/legal/privacy/android/"
 
 /**
  * The app's icon, name and version, links to its website and privacy policy, the open-source
