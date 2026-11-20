@@ -492,6 +492,15 @@
     <string name="settings_sensitive_media_summary">Zobrazuje obsah pro dospělé a média označená jako citlivá bez klepnutí. Příspěvky s upozorněním na obsah zůstanou skryté. Platí pro %1$s.</string>
     <string name="settings_network_retry_hint">Toto nastavení se nepodařilo načíst. Klepnutím to zkusíte znovu.</string>
     <string name="settings_network_rate_limited">Příliš mnoho požadavků. Chvíli počkejte a zkuste to znovu.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Sdílet profil</string>
+    <string name="share_profile_qr">QR kód pro %1$s</string>
+    <string name="share_profile_handle">Handle</string>
+    <string name="share_profile_handle_copied">Handle zkopírován</string>
+    <string name="share_profile_copy_handle">Kopírovat handle</string>
+    <string name="share_profile_link">Sdílet odkaz</string>
+    <string name="share_profile_image">Sdílet jako obrázek</string>
+    <string name="share_profile_image_failed">Obrázek se nepodařilo vytvořit. Zkuste to znovu.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtry kanálu</string>
     <string name="feed_filters_summary">Skrýt sdílení a ztlumená slova v Poznámkách a Čtečce</string>

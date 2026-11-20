@@ -480,6 +480,15 @@
     <string name="settings_sensitive_media_summary">Mostra contenuti per adulti e media contrassegnati come sensibili senza toccare. I post con avviso sui contenuti restano nascosti. Vale per %1$s.</string>
     <string name="settings_network_retry_hint">Impossibile caricare questa impostazione. Tocca per riprovare.</string>
     <string name="settings_network_rate_limited">Troppe richieste. Attendi un momento, poi riprova.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Condividi profilo</string>
+    <string name="share_profile_qr">Codice QR di %1$s</string>
+    <string name="share_profile_handle">Handle</string>
+    <string name="share_profile_handle_copied">Handle copiato</string>
+    <string name="share_profile_copy_handle">Copia handle</string>
+    <string name="share_profile_link">Condividi link</string>
+    <string name="share_profile_image">Condividi come immagine</string>
+    <string name="share_profile_image_failed">Impossibile creare l’immagine. Riprova.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtri del feed</string>
     <string name="feed_filters_summary">Nascondi ripubblicazioni e parole silenziate in Note e Lettore</string>

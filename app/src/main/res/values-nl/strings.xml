@@ -468,6 +468,15 @@
     <string name="settings_sensitive_media_summary">Toont inhoud voor volwassenen en media die als gevoelig zijn gemarkeerd zonder tikken. Berichten met een inhoudswaarschuwing blijven verborgen. Geldt voor %1$s.</string>
     <string name="settings_network_retry_hint">Deze instelling kon niet worden geladen. Tik om het opnieuw te proberen.</string>
     <string name="settings_network_rate_limited">Te veel verzoeken. Wacht even en probeer het dan opnieuw.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Profiel delen</string>
+    <string name="share_profile_qr">QR-code voor %1$s</string>
+    <string name="share_profile_handle">Handle</string>
+    <string name="share_profile_handle_copied">Handle gekopieerd</string>
+    <string name="share_profile_copy_handle">Handle kopiëren</string>
+    <string name="share_profile_link">Link delen</string>
+    <string name="share_profile_image">Delen als afbeelding</string>
+    <string name="share_profile_image_failed">De afbeelding kon niet worden gemaakt. Probeer het opnieuw.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feedfilters</string>
     <string name="feed_filters_summary">Verberg reposts en gedempte woorden in Notities en Lezer</string>

@@ -456,6 +456,15 @@
     <string name="settings_sensitive_media_summary">無需點按即可顯示成人內容和標記為敏感的媒體。含內容警告的貼文仍保持隱藏。適用於 %1$s。</string>
     <string name="settings_network_retry_hint">無法載入此設定。點按重試。</string>
     <string name="settings_network_rate_limited">要求過多。請稍候片刻再試。</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">分享個人檔案</string>
+    <string name="share_profile_qr">%1$s 的 QR 碼</string>
+    <string name="share_profile_handle">帳號識別</string>
+    <string name="share_profile_handle_copied">已複製帳號識別</string>
+    <string name="share_profile_copy_handle">複製帳號識別</string>
+    <string name="share_profile_link">分享連結</string>
+    <string name="share_profile_image">以圖片分享</string>
+    <string name="share_profile_image_failed">圖片產生失敗，請再試一次。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">動態過濾</string>
     <string name="feed_filters_summary">在筆記和閱讀器中隱藏轉發與靜音字詞</string>

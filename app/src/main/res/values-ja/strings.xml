@@ -456,6 +456,15 @@
     <string name="settings_sensitive_media_summary">成人向けコンテンツやセンシティブと設定されたメディアを、タップせずに表示します。コンテンツ警告付きの投稿は非表示のままです。%1$s に適用されます。</string>
     <string name="settings_network_retry_hint">この設定を読み込めませんでした。タップして再試行してください。</string>
     <string name="settings_network_rate_limited">リクエストが多すぎます。しばらくしてからもう一度お試しください。</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">プロフィールを共有</string>
+    <string name="share_profile_qr">%1$s のQRコード</string>
+    <string name="share_profile_handle">ハンドル</string>
+    <string name="share_profile_handle_copied">ハンドルをコピーしました</string>
+    <string name="share_profile_copy_handle">ハンドルをコピー</string>
+    <string name="share_profile_link">リンクを共有</string>
+    <string name="share_profile_image">画像として共有</string>
+    <string name="share_profile_image_failed">画像を作成できませんでした。もう一度お試しください。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">フィードのフィルター</string>
     <string name="feed_filters_summary">ノートとリーダーでリポストとミュートした語句を非表示にします</string>

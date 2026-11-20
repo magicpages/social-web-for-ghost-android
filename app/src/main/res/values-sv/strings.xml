@@ -468,6 +468,15 @@
     <string name="settings_sensitive_media_summary">Visar vuxeninnehåll och media markerat som känsligt utan ett tryck. Inlägg med innehållsvarning förblir dolda. Gäller för %1$s.</string>
     <string name="settings_network_retry_hint">Det gick inte att läsa in den här inställningen. Tryck för att försöka igen.</string>
     <string name="settings_network_rate_limited">För många förfrågningar. Vänta en stund och försök igen.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Dela profil</string>
+    <string name="share_profile_qr">QR-kod för %1$s</string>
+    <string name="share_profile_handle">Handtag</string>
+    <string name="share_profile_handle_copied">Handtaget kopierades</string>
+    <string name="share_profile_copy_handle">Kopiera handtag</string>
+    <string name="share_profile_link">Dela länk</string>
+    <string name="share_profile_image">Dela som bild</string>
+    <string name="share_profile_image_failed">Det gick inte att skapa bilden. Försök igen.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Flödesfilter</string>
     <string name="feed_filters_summary">Dölj delningar och tystade ord i Anteckningar och Läsare</string>

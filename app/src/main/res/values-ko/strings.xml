@@ -456,6 +456,15 @@
     <string name="settings_sensitive_media_summary">성인 콘텐츠와 민감한 콘텐츠로 표시된 미디어를 탭하지 않고 바로 보여줘요. 콘텐츠 경고가 있는 게시물은 계속 숨겨져요. %1$s에 적용돼요.</string>
     <string name="settings_network_retry_hint">이 설정을 불러오지 못했어요. 탭해서 다시 시도하세요.</string>
     <string name="settings_network_rate_limited">요청이 너무 많아요. 잠시 기다린 뒤 다시 시도하세요.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">프로필 공유</string>
+    <string name="share_profile_qr">%1$s의 QR 코드</string>
+    <string name="share_profile_handle">핸들</string>
+    <string name="share_profile_handle_copied">핸들을 복사했어요</string>
+    <string name="share_profile_copy_handle">핸들 복사</string>
+    <string name="share_profile_link">링크 공유</string>
+    <string name="share_profile_image">이미지로 공유</string>
+    <string name="share_profile_image_failed">이미지를 만들지 못했어요. 다시 시도해 주세요.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">피드 필터</string>
     <string name="feed_filters_summary">노트와 리더에서 리포스트와 뮤트한 단어를 숨깁니다</string>

@@ -3,4 +3,6 @@
 <paths>
     <!-- A photo the camera app writes for the composer. -->
     <cache-path name="camera_captures" path="camera-captures/" />
+    <!-- A rendered profile image shared out. -->
+    <cache-path name="shared_profile" path="shared-profile/" />
 </paths>

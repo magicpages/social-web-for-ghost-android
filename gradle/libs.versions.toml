@@ -21,6 +21,8 @@ coil = "3.6.3"
 media3 = "1.11.1"
 tink = "1.24.0"
 jsoup = "1.24.1"
+# QR code encoding only (no camera or Android UI parts): the profile share sheet draws the matrix itself.
+zxing = "3.5.4"
 work = "2.12.0"
 # Material's colour algorithm (Google's material-color-utilities) for Compose: turns a site's accent colour into
 # a full light and dark scheme. Google's own copy inside the Material library is internal.
@@ -82,6 +84,7 @@ coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil" }
 coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coil" }
 tink-android = { module = "com.google.crypto.tink:tink-android", version.ref = "tink" }
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
+zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
 materialkolor = { module = "com.materialkolor:material-kolor", version.ref = "materialkolor" }
 media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 media3-exoplayer-hls = { module = "androidx.media3:media3-exoplayer-hls", version.ref = "media3" }

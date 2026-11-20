@@ -468,6 +468,15 @@
     <string name="settings_sensitive_media_summary">Zeigt Inhalte für Erwachsene und als sensibel markierte Medien ohne Tippen. Beiträge mit Inhaltswarnung bleiben verborgen. Gilt für %1$s.</string>
     <string name="settings_network_retry_hint">Diese Einstellung konnte nicht geladen werden. Tippe, um es erneut zu versuchen.</string>
     <string name="settings_network_rate_limited">Zu viele Anfragen. Warte einen Moment und versuche es dann erneut.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Profil teilen</string>
+    <string name="share_profile_qr">QR-Code für %1$s</string>
+    <string name="share_profile_handle">Handle</string>
+    <string name="share_profile_handle_copied">Handle kopiert</string>
+    <string name="share_profile_copy_handle">Handle kopieren</string>
+    <string name="share_profile_link">Link teilen</string>
+    <string name="share_profile_image">Als Bild teilen</string>
+    <string name="share_profile_image_failed">Das Bild konnte nicht erstellt werden. Versuch es erneut.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feed-Filter</string>
     <string name="feed_filters_summary">Reposts und stummgeschaltete Wörter in Notizen und Reader ausblenden</string>

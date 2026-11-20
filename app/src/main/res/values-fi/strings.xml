@@ -468,6 +468,15 @@
     <string name="settings_sensitive_media_summary">Näyttää aikuisille tarkoitetun sisällön ja arkaluonteiseksi merkityn median ilman napautusta. Sisältövaroituksella varustetut julkaisut pysyvät piilossa. Koskee kohdetta %1$s.</string>
     <string name="settings_network_retry_hint">Asetusta ei voitu ladata. Yritä uudelleen napauttamalla.</string>
     <string name="settings_network_rate_limited">Liian monta pyyntöä. Odota hetki ja yritä uudelleen.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Jaa profiili</string>
+    <string name="share_profile_qr">QR-koodi: %1$s</string>
+    <string name="share_profile_handle">Tunnus</string>
+    <string name="share_profile_handle_copied">Tunnus kopioitu</string>
+    <string name="share_profile_copy_handle">Kopioi tunnus</string>
+    <string name="share_profile_link">Jaa linkki</string>
+    <string name="share_profile_image">Jaa kuvana</string>
+    <string name="share_profile_image_failed">Kuvan luonti epäonnistui. Yritä uudelleen.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Syötteen suodattimet</string>
     <string name="feed_filters_summary">Piilota uudelleenjaot ja mykistetyt sanat Muistiinpanoissa ja Lukijassa</string>

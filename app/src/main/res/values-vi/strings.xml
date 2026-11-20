@@ -456,6 +456,15 @@
     <string name="settings_sensitive_media_summary">Hiện nội dung người lớn và phương tiện được đánh dấu nhạy cảm mà không cần chạm. Bài viết có cảnh báo nội dung vẫn bị ẩn. Áp dụng cho %1$s.</string>
     <string name="settings_network_retry_hint">Không tải được cài đặt này. Chạm để thử lại.</string>
     <string name="settings_network_rate_limited">Quá nhiều yêu cầu. Hãy đợi một lát rồi thử lại.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Chia sẻ hồ sơ</string>
+    <string name="share_profile_qr">Mã QR của %1$s</string>
+    <string name="share_profile_handle">Mã định danh</string>
+    <string name="share_profile_handle_copied">Đã sao chép mã định danh</string>
+    <string name="share_profile_copy_handle">Sao chép mã định danh</string>
+    <string name="share_profile_link">Chia sẻ liên kết</string>
+    <string name="share_profile_image">Chia sẻ dưới dạng ảnh</string>
+    <string name="share_profile_image_failed">Không thể tạo ảnh. Hãy thử lại.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Bộ lọc bảng tin</string>
     <string name="feed_filters_summary">Ẩn bài đăng lại và từ đã tắt tiếng trong Ghi chú và Trình đọc</string>

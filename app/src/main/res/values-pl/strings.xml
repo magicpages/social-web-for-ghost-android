@@ -492,6 +492,15 @@
     <string name="settings_sensitive_media_summary">Pokazuje treści dla dorosłych i multimedia oznaczone jako wrażliwe bez dotykania. Wpisy z ostrzeżeniem o treści pozostają ukryte. Dotyczy %1$s.</string>
     <string name="settings_network_retry_hint">Nie udało się wczytać tego ustawienia. Dotknij, aby spróbować ponownie.</string>
     <string name="settings_network_rate_limited">Zbyt wiele żądań. Poczekaj chwilę i spróbuj ponownie.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Udostępnij profil</string>
+    <string name="share_profile_qr">Kod QR dla %1$s</string>
+    <string name="share_profile_handle">Identyfikator</string>
+    <string name="share_profile_handle_copied">Skopiowano identyfikator</string>
+    <string name="share_profile_copy_handle">Kopiuj identyfikator</string>
+    <string name="share_profile_link">Udostępnij link</string>
+    <string name="share_profile_image">Udostępnij jako obraz</string>
+    <string name="share_profile_image_failed">Nie udało się utworzyć obrazu. Spróbuj ponownie.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtry kanału</string>
     <string name="feed_filters_summary">Ukryj udostępnienia i wyciszone słowa w Notatkach i Czytniku</string>

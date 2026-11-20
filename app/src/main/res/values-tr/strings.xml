@@ -468,6 +468,15 @@
     <string name="settings_sensitive_media_summary">Yetişkinlere yönelik içeriği ve hassas olarak işaretlenmiş medyayı dokunmadan gösterir. İçerik uyarısı olan gönderiler gizli kalır. %1$s için geçerlidir.</string>
     <string name="settings_network_retry_hint">Bu ayar yüklenemedi. Tekrar denemek için dokun.</string>
     <string name="settings_network_rate_limited">Çok fazla istek. Biraz bekleyip tekrar dene.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Profili paylaş</string>
+    <string name="share_profile_qr">%1$s için QR kodu</string>
+    <string name="share_profile_handle">Tanıtıcı</string>
+    <string name="share_profile_handle_copied">Tanıtıcı kopyalandı</string>
+    <string name="share_profile_copy_handle">Tanıtıcıyı kopyala</string>
+    <string name="share_profile_link">Bağlantıyı paylaş</string>
+    <string name="share_profile_image">Görsel olarak paylaş</string>
+    <string name="share_profile_image_failed">Görsel oluşturulamadı. Tekrar dene.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Akış filtreleri</string>
     <string name="feed_filters_summary">Notlar ve Okuyucu\'da yeniden paylaşımları ve sessize alınan sözcükleri gizle</string>

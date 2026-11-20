@@ -456,6 +456,15 @@
     <string name="settings_sensitive_media_summary">Menampilkan konten dewasa dan media yang ditandai sensitif tanpa perlu mengetuk. Postingan dengan peringatan konten tetap tersembunyi. Berlaku untuk %1$s.</string>
     <string name="settings_network_retry_hint">Pengaturan ini tidak bisa dimuat. Ketuk untuk mencoba lagi.</string>
     <string name="settings_network_rate_limited">Terlalu banyak permintaan. Tunggu sebentar, lalu coba lagi.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Bagikan profil</string>
+    <string name="share_profile_qr">Kode QR untuk %1$s</string>
+    <string name="share_profile_handle">Handle</string>
+    <string name="share_profile_handle_copied">Handle disalin</string>
+    <string name="share_profile_copy_handle">Salin handle</string>
+    <string name="share_profile_link">Bagikan tautan</string>
+    <string name="share_profile_image">Bagikan sebagai gambar</string>
+    <string name="share_profile_image_failed">Gambar tidak bisa dibuat. Coba lagi.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filter feed</string>
     <string name="feed_filters_summary">Sembunyikan posting ulang dan kata yang dibisukan di Catatan dan Pembaca</string>

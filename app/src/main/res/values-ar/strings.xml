@@ -516,6 +516,15 @@
     <string name="settings_sensitive_media_summary">يعرض المحتوى للبالغين والوسائط المصنّفة حساسة دون نقرة. تبقى المنشورات التي تحمل تحذير محتوى مخفية. ينطبق على %1$s.</string>
     <string name="settings_network_retry_hint">تعذّر تحميل هذا الإعداد. انقر لإعادة المحاولة.</string>
     <string name="settings_network_rate_limited">طلبات كثيرة جدًا. انتظر قليلًا ثم أعد المحاولة.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">مشاركة الملف الشخصي</string>
+    <string name="share_profile_qr">رمز QR لـ %1$s</string>
+    <string name="share_profile_handle">المعرّف</string>
+    <string name="share_profile_handle_copied">تم نسخ المعرّف</string>
+    <string name="share_profile_copy_handle">نسخ المعرّف</string>
+    <string name="share_profile_link">مشاركة الرابط</string>
+    <string name="share_profile_image">مشاركة كصورة</string>
+    <string name="share_profile_image_failed">تعذّر إنشاء الصورة. حاول مرة أخرى.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">عوامل تصفية الخلاصة</string>
     <string name="feed_filters_summary">إخفاء إعادات النشر والكلمات المكتومة في الملاحظات والقارئ</string>

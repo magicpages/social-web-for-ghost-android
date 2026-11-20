@@ -480,6 +480,15 @@
     <string name="settings_sensitive_media_summary">Muestra contenido para adultos y multimedia marcado como sensible sin tener que tocar. Las publicaciones con aviso de contenido siguen ocultas. Se aplica a %1$s.</string>
     <string name="settings_network_retry_hint">No se pudo cargar este ajuste. Toca para reintentar.</string>
     <string name="settings_network_rate_limited">Demasiadas solicitudes. Espera un momento y vuelve a intentarlo.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Compartir perfil</string>
+    <string name="share_profile_qr">Código QR de %1$s</string>
+    <string name="share_profile_handle">Identificador</string>
+    <string name="share_profile_handle_copied">Identificador copiado</string>
+    <string name="share_profile_copy_handle">Copiar identificador</string>
+    <string name="share_profile_link">Compartir enlace</string>
+    <string name="share_profile_image">Compartir como imagen</string>
+    <string name="share_profile_image_failed">No se pudo crear la imagen. Inténtalo de nuevo.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtros del feed</string>
     <string name="feed_filters_summary">Oculta republicaciones y palabras silenciadas en Notas y Lector</string>

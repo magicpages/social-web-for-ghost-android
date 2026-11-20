@@ -480,6 +480,15 @@
     <string name="settings_sensitive_media_summary">Affiche les contenus pour adultes et les médias marqués comme sensibles sans toucher. Les publications avec avertissement restent masquées. S’applique à %1$s.</string>
     <string name="settings_network_retry_hint">Impossible de charger ce réglage. Touchez pour réessayer.</string>
     <string name="settings_network_rate_limited">Trop de requêtes. Patientez un instant, puis réessayez.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Partager le profil</string>
+    <string name="share_profile_qr">QR code de %1$s</string>
+    <string name="share_profile_handle">Identifiant</string>
+    <string name="share_profile_handle_copied">Identifiant copié</string>
+    <string name="share_profile_copy_handle">Copier l’identifiant</string>
+    <string name="share_profile_link">Partager le lien</string>
+    <string name="share_profile_image">Partager en image</string>
+    <string name="share_profile_image_failed">Impossible de créer l’image. Réessayez.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtres du fil</string>
     <string name="feed_filters_summary">Masquer les republications et les mots masqués dans Notes et Lecteur</string>

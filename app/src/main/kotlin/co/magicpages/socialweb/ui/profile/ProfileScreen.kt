@@ -153,6 +153,7 @@ fun ProfileScreen(
     val posts = viewModel.posts.collectAsLazyPagingItems()
     val site by viewModel.site.collectAsStateWithLifecycle()
     var confirmRecommendation by remember { mutableStateOf(false) }
+    var shareOpen by rememberSaveable { mutableStateOf(false) }
     // What the menu or the Unblock button asked to change, and whether to block (or unblock) it.
     var blockDialog by remember { mutableStateOf<Pair<BlockTarget, Boolean>?>(null) }
     val uris = LocalUriHandler.current
@@ -195,6 +196,7 @@ fun ProfileScreen(
     val headerGone by remember { derivedStateOf { listState.firstVisibleItemIndex > 0 } }
     val loaded = (state as? ProfileUiState.Loaded)?.content
     val profileUrl = loaded?.profile?.url?.takeIf { it.isNotBlank() } ?: fallbackUrl
+    val shareUrl = loaded?.profile?.let { profileShareUrl(it.handle, it.apId, it.url, fallbackUrl) } ?: fallbackUrl
 
     BannerStatusBar(overBanner = !scrolled && !loaded?.profile?.bannerImageUrl.isNullOrBlank())
     Scaffold(
@@ -228,7 +230,7 @@ fun ProfileScreen(
                         }
                     }
                     if (loaded != null) {
-                        ProfileMoreMenu(loaded, profileUrl, onBlock = { target, block -> blockDialog = target to block })
+                        ProfileMoreMenu(loaded, profileUrl, onShare = { shareOpen = true }, onBlock = { target, block -> blockDialog = target to block })
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = barColor),
@@ -275,6 +277,7 @@ fun ProfileScreen(
                                 onRecommend = { confirmRecommendation = true },
                                 onToggleFollow = viewModel::toggleFollow,
                                 onUnblock = { blockDialog = BlockTarget.Account(profile.handle) to false },
+                                onShare = { shareOpen = true },
                                 onShowPosts = {
                                     viewModel.select(ProfileTab.Posts)
                                     scope.launch { listState.animateScrollToItem(1) }
@@ -318,6 +321,17 @@ fun ProfileScreen(
             onDismiss = { blockDialog = null },
         )
     }
+    if (shareOpen) {
+        loaded?.profile?.let { profile ->
+            ProfileShareSheet(
+                name = profile.name,
+                handle = profile.handle,
+                avatarUrl = profile.avatarUrl?.takeIf { it.isNotBlank() },
+                url = shareUrl,
+                onDismiss = { shareOpen = false },
+            )
+        }
+    }
     ReplyEditorHost(viewModel.composer)
 }
 
@@ -327,7 +341,7 @@ fun ProfileScreen(
  * A Ghost account's link is its fedi.pub page: Ghost has no profile page, and its URL is the site's home page.
  */
 @Composable
-private fun ProfileMoreMenu(content: ProfileContent, profileUrl: String?, onBlock: (BlockTarget, Boolean) -> Unit) {
+private fun ProfileMoreMenu(content: ProfileContent, profileUrl: String?, onShare: () -> Unit, onBlock: (BlockTarget, Boolean) -> Unit) {
     var open by remember { mutableStateOf(false) }
     val copyLink = rememberCopyLink()
     val openReport = LocalOpenReport.current
@@ -337,6 +351,7 @@ private fun ProfileMoreMenu(content: ProfileContent, profileUrl: String?, onBloc
     if (!open) return
     val profile = content.profile
     ActionSheet(onDismiss = { open = false }) {
+        SheetAction(stringResource(R.string.action_share_profile), AppIcons.Share) { onShare() }
         val link = fediPubUrl(profile.handle).takeIf { ghostSiteUrl(profile.apId) != null } ?: profileUrl
         if (link != null) {
             SheetAction(stringResource(R.string.action_copy_link), AppIcons.ContentCopy) { copyLink(link) }
@@ -398,6 +413,7 @@ private fun ProfileHeader(
     onShowFollows: (FollowList) -> Unit,
     site: ProfileSite?,
     onRecommend: () -> Unit,
+    onShare: () -> Unit,
 ) {
     val profile = content.profile
     val bannerHeight = BannerHeight + statusBarHeight
@@ -440,16 +456,18 @@ private fun ProfileHeader(
                     },
                 )
             }
-            if (!content.isMe) {
-                val buttonModifier = Modifier.align(Alignment.TopEnd).padding(top = bannerHeight + 12.dp, end = Gutter)
-                // A blocked account can't be followed: the way back is unblocking, so that takes the button's place.
-                if (profile.blockedByMe) {
-                    FilledTonalButton(onClick = onUnblock, modifier = buttonModifier) {
-                        Text(stringResource(R.string.action_unblock))
-                    }
-                } else {
-                    FollowButton(following = profile.followedByMe, onClick = onToggleFollow, modifier = buttonModifier)
+            val buttonModifier = Modifier.align(Alignment.TopEnd).padding(top = bannerHeight + 12.dp, end = Gutter)
+            if (content.isMe) {
+                FilledTonalIconButton(onClick = onShare, modifier = buttonModifier) {
+                    Icon(AppIcons.Share, contentDescription = stringResource(R.string.action_share_profile))
                 }
+            } else if (profile.blockedByMe) {
+                // A blocked account can't be followed: the way back is unblocking, so that takes the button's place.
+                FilledTonalButton(onClick = onUnblock, modifier = buttonModifier) {
+                    Text(stringResource(R.string.action_unblock))
+                }
+            } else {
+                FollowButton(following = profile.followedByMe, onClick = onToggleFollow, modifier = buttonModifier)
             }
         }
 

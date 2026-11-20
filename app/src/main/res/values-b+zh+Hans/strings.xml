@@ -456,6 +456,15 @@
     <string name="settings_sensitive_media_summary">无需点按即可显示成人内容和标记为敏感的媒体。带内容警告的帖子仍保持隐藏。适用于 %1$s。</string>
     <string name="settings_network_retry_hint">无法加载此设置。点按重试。</string>
     <string name="settings_network_rate_limited">请求过多。请稍等片刻再试。</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">分享个人资料</string>
+    <string name="share_profile_qr">%1$s 的二维码</string>
+    <string name="share_profile_handle">账号标识</string>
+    <string name="share_profile_handle_copied">已复制账号标识</string>
+    <string name="share_profile_copy_handle">复制账号标识</string>
+    <string name="share_profile_link">分享链接</string>
+    <string name="share_profile_image">以图片分享</string>
+    <string name="share_profile_image_failed">图片生成失败，请重试。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">信息流过滤</string>
     <string name="feed_filters_summary">在笔记和阅读器中隐藏转发和屏蔽词</string>

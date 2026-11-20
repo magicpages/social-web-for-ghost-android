@@ -468,6 +468,15 @@
     <string name="settings_sensitive_media_summary">Viser indhold for voksne og medier markeret som følsomme uden et tryk. Opslag med en indholdsadvarsel forbliver skjult. Gælder for %1$s.</string>
     <string name="settings_network_retry_hint">Denne indstilling kunne ikke indlæses. Tryk for at prøve igen.</string>
     <string name="settings_network_rate_limited">For mange forespørgsler. Vent et øjeblik, og prøv igen.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Del profil</string>
+    <string name="share_profile_qr">QR-kode til %1$s</string>
+    <string name="share_profile_handle">Handle</string>
+    <string name="share_profile_handle_copied">Handle kopieret</string>
+    <string name="share_profile_copy_handle">Kopiér handle</string>
+    <string name="share_profile_link">Del link</string>
+    <string name="share_profile_image">Del som billede</string>
+    <string name="share_profile_image_failed">Billedet kunne ikke oprettes. Prøv igen.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feedfiltre</string>
     <string name="feed_filters_summary">Skjul videredelinger og dæmpede ord i Noter og Læser</string>

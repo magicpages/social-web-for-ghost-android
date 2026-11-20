@@ -475,6 +475,15 @@
     <string name="settings_sensitive_media_summary">Show adult content and media marked as sensitive without a tap. Posts with a content warning stay hidden. Applies to %1$s.</string>
     <string name="settings_network_retry_hint">Couldn\'t load this setting. Tap to try again.</string>
     <string name="settings_network_rate_limited">Too many requests. Wait a moment, then try again.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Share profile</string>
+    <string name="share_profile_qr">QR code for %1$s</string>
+    <string name="share_profile_handle">Handle</string>
+    <string name="share_profile_handle_copied">Handle copied</string>
+    <string name="share_profile_copy_handle">Copy handle</string>
+    <string name="share_profile_link">Share link</string>
+    <string name="share_profile_image">Share as image</string>
+    <string name="share_profile_image_failed">Couldn\'t create the image. Try again.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feed filters</string>
     <string name="feed_filters_summary">Hide reposts and muted words in Notes and Reader</string>

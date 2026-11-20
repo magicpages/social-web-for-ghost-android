@@ -492,6 +492,15 @@
     <string name="settings_sensitive_media_summary">Показывает контент для взрослых и медиафайлы, помеченные как чувствительные, без нажатия. Записи с предупреждением о содержимом остаются скрытыми. Действует для %1$s.</string>
     <string name="settings_network_retry_hint">Не удалось загрузить эту настройку. Нажмите, чтобы повторить.</string>
     <string name="settings_network_rate_limited">Слишком много запросов. Подождите немного и повторите.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Поделиться профилем</string>
+    <string name="share_profile_qr">QR-код для %1$s</string>
+    <string name="share_profile_handle">Хендл</string>
+    <string name="share_profile_handle_copied">Хендл скопирован</string>
+    <string name="share_profile_copy_handle">Копировать хендл</string>
+    <string name="share_profile_link">Поделиться ссылкой</string>
+    <string name="share_profile_image">Поделиться картинкой</string>
+    <string name="share_profile_image_failed">Не удалось создать изображение. Повторите попытку.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Фильтры ленты</string>
     <string name="feed_filters_summary">Скрывать репосты и заглушённые слова в Заметках и Чтении</string>

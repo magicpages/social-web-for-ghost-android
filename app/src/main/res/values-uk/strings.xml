@@ -492,6 +492,15 @@
     <string name="settings_sensitive_media_summary">Показує вміст для дорослих і медіафайли, позначені як чутливі, без дотику. Дописи з попередженням про вміст залишаються прихованими. Діє для %1$s.</string>
     <string name="settings_network_retry_hint">Не вдалося завантажити це налаштування. Торкніться, щоб повторити.</string>
     <string name="settings_network_rate_limited">Забагато запитів. Зачекайте трохи й повторіть.</string>
+    <!-- Edit profile and share profile -->
+    <string name="action_share_profile">Поділитися профілем</string>
+    <string name="share_profile_qr">QR-код для %1$s</string>
+    <string name="share_profile_handle">Хендл</string>
+    <string name="share_profile_handle_copied">Хендл скопійовано</string>
+    <string name="share_profile_copy_handle">Копіювати хендл</string>
+    <string name="share_profile_link">Поділитися посиланням</string>
+    <string name="share_profile_image">Поділитися зображенням</string>
+    <string name="share_profile_image_failed">Не вдалося створити зображення. Спробуйте ще раз.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Фільтри стрічки</string>
     <string name="feed_filters_summary">Ховати репости й заглушені слова в Нотатках і Читанні</string>
