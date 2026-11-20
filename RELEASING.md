@@ -15,7 +15,7 @@ The Play locale folders map to the app's languages: `in`→`id`, `nb`→`no-NO`,
 
 The Play title is "Social Web for Ghost" (Turkish: "Ghost için Social Web", as on the App Store); the launcher label is "Social Web" (`app_name`).
 
-English screenshots live in `fastlane/metadata/android/en-US/images/`: six phone shots (1080×1920, 9:16, inside Play's 2:1 limit) in `phoneScreenshots/` and two tablet shots (2560×1600) in `tenInchScreenshots/`. They were taken on an emulator signed in to a fake Ghost site, so no real account appears. Play falls back to them for other locales.
+English screenshots live in `fastlane/metadata/android/en-US/images/`: six phone shots (1080×1920, 9:16, inside Play's 2:1 limit) in `phoneScreenshots/` and two tablet shots (2560×1600) in `tenInchScreenshots/`. They were taken on an emulator signed in to a fake Ghost site, so no real account appears. Play falls back to them for other locales. Play only takes 16:9 or 9:16 tablet shots, so the 16:10 tablet shots aren't on the listing; tablet shots are optional.
 
 To retake them offline, use the debug build's **demo mode**: the app signs in as "Seaside Notes", the made-up sample site of Magic Pages' feature pages, and every request is answered from made-up content (Notes, Reader, Explore, Notifications, threads, profiles, articles, link cards, image posts, and replying with a picture). Start it on a fresh emulator or device with:
 
@@ -70,7 +70,7 @@ Play Console no longer has an API access page; the service account is made in Go
 
 1. [Google Cloud Console](https://console.cloud.google.com/), any project: enable the [Google Play Android Developer API](https://console.cloud.google.com/apis/library/androidpublisher.googleapis.com).
 2. [Service accounts](https://console.cloud.google.com/iam-admin/serviceaccounts) → **Create service account** (no roles needed) → open it → **Keys → Add key → Create new key → JSON**. Save the file as `play-key.json` in the repo root (git-ignored) or outside the repo.
-3. Play Console → **Users and permissions → Invite new users**: the service account's email (`client_email` in the key), with **Release apps to testing tracks** for this app (and **Manage store presence** for listing text).
+3. Play Console → **Users and permissions → Invite new users**: the service account's email (`client_email` in the key), with **Release apps to testing tracks** for this app. Listing uploads (text and images) also need **Manage store presence** as an *account* permission (the user's **Account permissions** tab); granted per app only, `edits:validate` answers 403 "The caller does not have permission".
 
 ### 4. Automatic internal releases
 
@@ -158,7 +158,7 @@ Also set in the Console: the privacy policy URL `https://www.magicpages.co/legal
 
 ## Reviewer access
 
-Play reviewers need to get past sign-in. In **App content → App access** choose "All or some functionality is restricted" and give a throwaway Ghost 6 test site with the social web on: its address, an Administrator email and password (or a Staff Access Token, entered under "Staff token"). Don't use a personal site.
+Play reviewers need to get past sign-in. In **App content → App access** choose "All or some functionality is restricted" and give a throwaway Ghost 6 test site with the social web on. Don't use a personal site, and don't use email sign-in: it sends a 6-digit code to the inbox. The current entry uses `https://demo-activitypub.mymagic.page` ("Seaside Notes") as the username and a Staff Access Token of its "Demo" Administrator as the password, with instructions for signing in with a Staff Access Token.
 
 ## Forms under App content
 
@@ -179,14 +179,18 @@ Answers:
 | Does your app collect or share any required user data types? | Yes. Transmitting data to any server counts as collecting, even the user's own site. Declare the types below. |
 | Is all of the user data collected by your app encrypted in transit? | Yes |
 | Do you provide a way for users to request that their data is deleted? | No: the app has no developer-held accounts. Signing out removes the stored session from the device; data on the Ghost site and on other servers is managed there. |
+| **Personal info → Name** (profile edit) | Collected, not shared. Purpose: App functionality. Optional: yes. |
 | **Personal info → Email address** | Collected, not shared. Purpose: App functionality, Account management. Optional: no (sign-in needs it, unless the user signs in with a Staff Access Token). |
 | **Personal info → User IDs** (fediverse handle) | Collected, not shared. Purpose: App functionality. |
-| **Photos and videos → Photos** | Collected, not shared. Purpose: App functionality. Optional: yes (images attached to notes). |
+| **Photos and videos → Photos** | Collected, not shared. Purpose: App functionality. Optional: yes (images attached to notes, avatar and banner). No videos: the pickers are image-only. |
 | **Messages → Other in-app messages** (notes, replies) | Collected, not shared. Purpose: App functionality. |
-| **App activity → Other user-generated content** (likes, reposts, follows, blocks, reports) | Collected, not shared. Purpose: App functionality. |
+| **App activity → In-app search history** (Explore search) | Collected, not shared. Purpose: App functionality. Optional: yes. |
+| **App activity → Other user-generated content** (profile bio) | Collected, not shared. Purpose: App functionality. Optional: yes. |
+| **App activity → Other actions** (likes, reposts, follows, blocks, reports) | Collected, not shared. Purpose: App functionality. |
 | **App info and performance → Diagnostics** (ML Kit) | Collected, not shared. Purpose: Analytics. Optional: yes (only sent when the user taps Translate). |
 | **Device or other IDs** (ML Kit's per-installation ID) | Collected, not shared. Purpose: Analytics. |
 | Location, contacts, financial info, health, web history | Not collected |
+| Account creation | "My app does not allow users to create an account", then **Yes** to logging in with accounts from outside the app, type "Out of app identification". |
 
 "Not shared": data goes to servers the user chose, for actions the user took, and never to third parties on the developer's behalf. Re-check the answers if an SDK that talks to the network is added.
 
@@ -196,8 +200,9 @@ Answers:
 - **Ads:** No ads.
 - **App access:** see Reviewer access.
 - **Account creation:** the app doesn't create accounts (it signs in to an existing Ghost site), so no account-deletion URL is needed.
-- **Target audience:** 18 and over is the simplest, since users can encounter any fediverse content. Not designed for children.
-- **Content rating (IARC questionnaire):** category *Social / communication*. Answer **Yes** to user-generated content and to users interacting with each other; **No** to sharing the user's location, digital purchases, and gambling. Violence, sexual content and similar questions: describe the app, not the content ("only user-generated, from other servers"). Expect a Teen/Mature-style rating because of unmoderated UGC.
+- **Target audience:** 18 and over, since users can encounter any fediverse content. Not designed for children.
+- **Content rating (IARC questionnaire):** category *Social*. **Yes** to nudity and to violence (fediverse posts can contain both; the sensitive-media setting only puts media marked as sensitive behind a tap), to user interaction, to blocking and to reporting. **No** to chat moderation, invited-friends-only, dating, sharing the user's location, and digital purchases. Result: 18+ everywhere (ESRB Mature 17+, PEGI 18, USK 18+).
+- **Child safety standards** (required for the Social category): the published standards page is `https://www.magicpages.co/child-safety-android/`, contact jannis@magicpages.co, and both terms ticked (in-app reporting, compliance with child safety laws).
 - **User-generated content policy:** the app meets it with in-app **Report** (posts and accounts), **Block** (accounts and whole servers) and a blocked list in Settings. Mention these if Play asks.
-- **Government apps, financial features, health, news, COVID, advertising ID, exact alarms, foreground services:** none apply.
+- **Government apps, financial features, health, news, COVID, advertising ID, exact alarms, foreground services:** none apply. **Trader status:** a trader (Magic Pages e.U.).
 - **Data safety, privacy and content rating** must all be complete before a release can be sent for review.
