@@ -296,6 +296,9 @@
     <string name="explore_search_hint">Kişileri adına göre arayın ya da başka bir sunucudaki birini bulmak için tam @user@domain adresini girin.</string>
     <string name="explore_search_clear">Aramayı temizle</string>
     <string name="explore_search_empty">Kimse bulunamadı</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Social Web\'de aç</string>
+    <string name="explore_search_open_post">gönderiyi aç</string>
     <string name="explore_for_you">Sizin için</string>
     <string name="explore_empty">Şu an önerilecek hesap yok. Tekrar denemek için aşağı çekin.</string>
     <string name="explore_follow_account">%1$s hesabını takip et</string>

@@ -289,6 +289,9 @@
     <string name="explore_search_hint">이름으로 사람을 검색하거나, 다른 서버의 사용자를 찾으려면 전체 @user@domain을 입력하세요.</string>
     <string name="explore_search_clear">검색어 지우기</string>
     <string name="explore_search_empty">검색 결과가 없어요</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Social Web에서 열기</string>
+    <string name="explore_search_open_post">게시물 열기</string>
     <string name="explore_for_you">추천</string>
     <string name="explore_empty">지금 추천할 계정이 없어요. 아래로 당겨 다시 시도하세요.</string>
     <string name="explore_follow_account">%1$s님 팔로우</string>

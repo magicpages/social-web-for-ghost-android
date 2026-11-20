@@ -64,11 +64,13 @@ import co.magicpages.socialweb.ui.about.AboutScreen
 import co.magicpages.socialweb.ui.about.LicensesScreen
 import co.magicpages.socialweb.ui.components.CustomEmojiSource
 import co.magicpages.socialweb.ui.components.ImageViewerHost
+import co.magicpages.socialweb.ui.components.LocalBrowserUriHandler
 import co.magicpages.socialweb.ui.components.LocalCustomEmojis
 import co.magicpages.socialweb.ui.components.LocalGifs
 import co.magicpages.socialweb.ui.components.LocalLinkPreviews
 import co.magicpages.socialweb.ui.components.LocalMentionDirectory
 import co.magicpages.socialweb.ui.components.LocalOwnProfile
+import co.magicpages.socialweb.ui.components.PostLinks
 import co.magicpages.socialweb.ui.components.ProfileLinks
 import co.magicpages.socialweb.ui.home.HomeScreen
 import co.magicpages.socialweb.ui.home.HomeTabRequests
@@ -114,9 +116,13 @@ private const val PredictiveBackMillis = 400
 @Serializable
 data object HomeKey : NavKey
 
-/** The thread around one post. [postId] is the post's ActivityPub id; [url] is the browser fallback. */
+/**
+ * The thread around one post. [postId] is the post's ActivityPub id; [url] is the browser fallback. With [resolve],
+ * [postId] is a web address (a link in a post, or a shared one) that the service must resolve to the post first,
+ * and the browser takes over, in place of this screen, when it isn't a post.
+ */
 @Serializable
-data class PostKey(val postId: String, val url: String? = null) : NavKey
+data class PostKey(val postId: String, val url: String? = null, val resolve: Boolean = false) : NavKey
 
 /** A profile by `@user@domain` handle, or `me`; [url] is the browser fallback if it won't load. */
 @Serializable
@@ -166,6 +172,8 @@ class AppViewModel @Inject constructor(
     /** The one note composer: quoting from any screen, and shares from other apps. */
     val noteComposer: NoteComposer,
     val sharedContent: SharedContentRequests,
+    /** Links other apps asked to open here ("Open in Social Web"). */
+    val openLinks: OpenLinkRequests,
     /** People to mention in composers, through [LocalMentionDirectory]. */
     val mentionDirectory: MentionDirectory,
     /** Deleting and blocking from post and profile menus, through [LocalModeration]. */
@@ -273,6 +281,7 @@ fun AppRoot(viewModel: AppViewModel = hiltViewModel()) {
                             onSignOut = viewModel::signOut,
                             onSwitchAccount = viewModel::switchTo,
                             tabRequests = viewModel.homeTabRequests,
+                            openLinks = viewModel.openLinks,
                         )
                     }
                 }
@@ -288,6 +297,7 @@ private fun SignedInNavigation(
     onSignOut: () -> Unit,
     onSwitchAccount: (accountId: String) -> Unit,
     tabRequests: HomeTabRequests,
+    openLinks: OpenLinkRequests,
 ) {
     // Another account starts over at Home (the caller recreates this per session): nothing open belongs to the one before.
     val backStack = rememberNavBackStack(HomeKey)
@@ -314,13 +324,26 @@ private fun SignedInNavigation(
         }
     }
 
-    // Mention links in post text open the profile in the app; every other link goes to the browser.
+    // A link from another app: a profile opens as one, anything else is tried as a post. Like a tapped notification, it starts from the tabs.
+    LaunchedEffect(openLinks, backStack) {
+        openLinks.pending.filterNotNull().collect { url ->
+            val handle = ProfileLinks.handleOf(url)
+            openFromList(if (handle != null) ProfileKey(handle, url) else PostKey(url, url, resolve = true))
+            openLinks.consume(url)
+        }
+    }
+
+    // Mention links in post text open the profile in the app, and links to a post open its thread; every other link goes to the browser.
     val browser = LocalUriHandler.current
     val uriHandler = remember(browser, backStack) {
         object : UriHandler {
             override fun openUri(uri: String) {
                 val profile = ProfileLinks.parse(uri)
-                if (profile != null) push(ProfileKey(profile.first, profile.second)) else browser.openUri(uri)
+                when {
+                    profile != null -> push(ProfileKey(profile.first, profile.second))
+                    PostLinks.matches(uri) -> push(PostKey(uri, uri, resolve = true))
+                    else -> browser.openUri(uri)
+                }
             }
         }
     }
@@ -358,7 +381,7 @@ private fun SignedInNavigation(
             ListDetailSceneStrategy.preferredPaneSize(width = ListPaneWidth)
     }
     val detailMetadata = remember { ListDetailSceneStrategy.detailPane() }
-    CompositionLocalProvider(LocalUriHandler provides uriHandler, LocalOpenReport provides openReport) {
+    CompositionLocalProvider(LocalUriHandler provides uriHandler, LocalBrowserUriHandler provides browser, LocalOpenReport provides openReport) {
         NavDisplay(
             backStack = backStack,
             onBack = back,
@@ -398,10 +421,16 @@ private fun SignedInNavigation(
                         ThreadScreen(
                             key.postId,
                             key.url,
+                            key.resolve,
                             onBack = back,
                             onOpenPost = openPost,
                             onOpenProfile = openProfile,
                             onSignOut = onSignOut,
+                            // Not a post the service can show: the browser takes the address, and this screen goes, so back doesn't land on a dead end.
+                            onUnresolved = {
+                                backStack.remove(key)
+                                browser.openUri(key.postId)
+                            },
                         )
                     }
                 }

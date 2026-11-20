@@ -310,6 +310,9 @@
     <string name="explore_search_hint">Szukaj osób po imieniu lub wpisz pełny adres @user@domain, aby znaleźć kogoś na innym serwerze.</string>
     <string name="explore_search_clear">Wyczyść wyszukiwanie</string>
     <string name="explore_search_empty">Nikogo nie znaleziono</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Otwórz w aplikacji Social Web</string>
+    <string name="explore_search_open_post">otwórz wpis</string>
     <string name="explore_for_you">Dla Ciebie</string>
     <string name="explore_empty">Brak kont do polecenia. Pociągnij w dół, aby spróbować ponownie.</string>
     <string name="explore_follow_account">Obserwuj %1$s</string>

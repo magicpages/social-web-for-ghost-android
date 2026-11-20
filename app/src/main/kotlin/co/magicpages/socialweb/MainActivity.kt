@@ -28,6 +28,7 @@ import co.magicpages.socialweb.data.activitypub.ActivityPubClient
 import co.magicpages.socialweb.data.media.LocalImages
 import co.magicpages.socialweb.data.settings.ThemeColors
 import co.magicpages.socialweb.ui.AppRoot
+import co.magicpages.socialweb.ui.OpenLinkRequests
 import co.magicpages.socialweb.ui.home.HomeTab
 import co.magicpages.socialweb.ui.home.HomeTabRequests
 import co.magicpages.socialweb.ui.quote.SharedContent
@@ -47,6 +48,7 @@ class MainActivity : ComponentActivity() {
     @Inject lateinit var accounts: AccountStore
     @Inject lateinit var tabRequests: HomeTabRequests
     @Inject lateinit var sharedContent: SharedContentRequests
+    @Inject lateinit var openLinks: OpenLinkRequests
     @Inject lateinit var videoPlayback: VideoPlayback
     @Inject lateinit var themeColors: ThemeColors
     @Inject lateinit var localImages: LocalImages
@@ -149,6 +151,10 @@ class MainActivity : ComponentActivity() {
      */
     private fun handleShare(intent: Intent?) {
         if (intent?.action != Intent.ACTION_SEND) return
+        if (intent.component?.className == OpenLinkAlias) {
+            handleOpenLink(intent)
+            return
+        }
         val text = intent.getCharSequenceExtra(Intent.EXTRA_TEXT)?.toString()
         val subject = (intent.getCharSequenceExtra(Intent.EXTRA_SUBJECT) ?: intent.getCharSequenceExtra(Intent.EXTRA_TITLE))?.toString()
         val image = if (intent.type?.startsWith("image/") == true) {
@@ -170,6 +176,17 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * The "Open in Social Web" share target: the link in the shared text opens in the app, as a profile or
+     * a post's thread. Text without a web link has nothing to open.
+     */
+    private fun handleOpenLink(intent: Intent) {
+        if (intent.type != "text/plain") return
+        val text = intent.getCharSequenceExtra(Intent.EXTRA_TEXT)?.toString()
+        val url = SharedContent.parse(text, null)?.url ?: return
+        if (url.startsWith("https://", ignoreCase = true)) openLinks.submit(url)
+    }
+
     companion object {
         /** Intent extra naming the [HomeTab] to show, set by system notifications. */
         const val ExtraOpenTab = "co.magicpages.socialweb.OPEN_TAB"
@@ -179,6 +196,9 @@ class MainActivity : ComponentActivity() {
 
         /** Intent action of the launcher shortcut that opens an empty new note. */
         const val ActionNewNote = "co.magicpages.socialweb.action.NEW_NOTE"
+
+        /** Class name of the manifest's `activity-alias` that lists the app in the share sheet as "Open in Social Web". */
+        const val OpenLinkAlias = "co.magicpages.socialweb.OpenLinkAlias"
     }
 }
 

@@ -296,6 +296,9 @@
     <string name="explore_search_hint">Zoek mensen op naam, of voer een volledige @user@domain in om iemand op een andere server te vinden.</string>
     <string name="explore_search_clear">Zoekopdracht wissen</string>
     <string name="explore_search_empty">Niemand gevonden</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Openen in Social Web</string>
+    <string name="explore_search_open_post">bericht openen</string>
     <string name="explore_for_you">Voor jou</string>
     <string name="explore_empty">Er zijn op dit moment geen accounts om voor te stellen. Trek omlaag om het opnieuw te proberen.</string>
     <string name="explore_follow_account">%1$s volgen</string>

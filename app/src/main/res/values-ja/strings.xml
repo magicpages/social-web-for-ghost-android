@@ -289,6 +289,9 @@
     <string name="explore_search_hint">名前でユーザーを検索できます。別のサーバーにいる人を探すには、@user@domain の形式で入力してください。</string>
     <string name="explore_search_clear">検索をクリア</string>
     <string name="explore_search_empty">見つかりませんでした</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Social Webで開く</string>
+    <string name="explore_search_open_post">投稿を開く</string>
     <string name="explore_for_you">おすすめ</string>
     <string name="explore_empty">現在おすすめできるアカウントはありません。下にスワイプしてもう一度お試しください。</string>
     <string name="explore_follow_account">%1$s をフォロー</string>

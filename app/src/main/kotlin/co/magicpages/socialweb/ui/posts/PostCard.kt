@@ -70,7 +70,6 @@ import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -90,6 +89,7 @@ import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.ui.components.AppIcons
+import co.magicpages.socialweb.ui.components.browserUriHandler
 import co.magicpages.socialweb.ui.components.Avatar
 import co.magicpages.socialweb.ui.components.EmojiText
 import co.magicpages.socialweb.ui.components.emojiSourceId
@@ -268,7 +268,7 @@ fun FocusedPost(item: FeedItem, callbacks: PostCallbacks, connectAbove: Boolean,
         SensitiveGate(post) {
             if (post.isArticle) {
                 // Shown here only when the reader can't lay the article out, so open it at its origin.
-                val uriHandler = LocalUriHandler.current
+                val uriHandler = browserUriHandler()
                 ArticleBody(post, contained = true) { if (post.url.isNotBlank()) uriHandler.openUri(post.url) }
             } else {
                 if (item.content.isNotEmpty()) TranslatableText(item, style = MaterialTheme.typography.reading)
@@ -560,7 +560,7 @@ private fun QuoteLink(url: String) = ExternalPostLink(stringResource(R.string.qu
 /** A post the app can't show, such as a video a reply answers: [label], its [title] if known, and where it opens. */
 @Composable
 fun ExternalPostLink(label: String, url: String, modifier: Modifier = Modifier, title: String? = null) {
-    val uriHandler = LocalUriHandler.current
+    val uriHandler = browserUriHandler()
     OutlinedCard(onClick = { uriHandler.openUri(url) }, modifier = modifier.fillMaxWidth()) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             Icon(AppIcons.OpenInNew, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)

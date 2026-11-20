@@ -324,6 +324,9 @@
     <string name="explore_search_hint">ابحث عن الأشخاص بالاسم، أو أدخل @user@domain كاملًا للعثور على شخص في خادم آخر.</string>
     <string name="explore_search_clear">مسح البحث</string>
     <string name="explore_search_empty">لم يُعثر على أحد</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">فتح في Social Web</string>
+    <string name="explore_search_open_post">فتح المنشور</string>
     <string name="explore_for_you">لك</string>
     <string name="explore_empty">لا توجد حسابات لاقتراحها الآن. اسحب لأسفل لإعادة المحاولة.</string>
     <string name="explore_follow_account">متابعة %1$s</string>

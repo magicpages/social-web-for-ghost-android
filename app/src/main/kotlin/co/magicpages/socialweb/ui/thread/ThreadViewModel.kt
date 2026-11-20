@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
@@ -97,7 +98,8 @@ sealed interface ThreadUiState {
 
 @HiltViewModel(assistedFactory = ThreadViewModel.Factory::class)
 class ThreadViewModel @AssistedInject constructor(
-    @Assisted private val postId: String,
+    @Assisted requestedId: String,
+    @Assisted resolve: Boolean,
     private val accounts: AccountStore,
     private val activityPub: ActivityPubClient,
     private val interactions: PostInteractions,
@@ -108,10 +110,19 @@ class ThreadViewModel @AssistedInject constructor(
 ) : ViewModel() {
     @AssistedFactory
     interface Factory {
-        fun create(postId: String): ThreadViewModel
+        fun create(postId: String, resolve: Boolean): ThreadViewModel
     }
 
     private val loaded = MutableStateFlow<ThreadUiState>(ThreadUiState.Loading)
+
+    /** The post's ActivityPub id: the one asked for, or what the service resolved the web address asked for to. */
+    private var postId = requestedId
+    private var resolving = resolve
+
+    private val _unresolved = MutableStateFlow(false)
+
+    /** Set when the web address asked for isn't a post the service can show: the screen hands it to the browser. */
+    val unresolved: StateFlow<Boolean> = _unresolved.asStateFlow()
 
     val state: StateFlow<ThreadUiState> = combine(loaded, interactions.overrides, moderation.hidden) { state, overrides, hidden ->
         if (state !is ThreadUiState.Loaded) return@combine state
@@ -164,6 +175,7 @@ class ThreadViewModel @AssistedInject constructor(
         loadJob?.cancel()
         if (!keepContent) loaded.value = ThreadUiState.Loading
         loadJob = viewModelScope.launch {
+            if (!resolveAddress()) return@launch
             loaded.value = try {
                 ThreadUiState.Loaded(withUnlocked(withKnownParent(fetch(next = null).toContent(withArticle = true))))
             } catch (e: GhostException) {
@@ -176,6 +188,26 @@ class ThreadViewModel @AssistedInject constructor(
             (loaded.value as? ThreadUiState.Loaded)?.content?.takeIf { it.mayMissParent }?.let { findParent(it.post.post.id) }
             unlockArticle()
         }
+    }
+
+    /**
+     * Looks a web address up before anything else: replies are only served under a post's own ActivityPub id,
+     * which the lookup returns. False when there is nothing to load. That is [unresolved] when the service
+     * has no post for the address, and the error screen for what a browser wouldn't help with (offline, signed out).
+     */
+    private suspend fun resolveAddress(): Boolean {
+        if (!resolving) return true
+        try {
+            val account = accounts.account.first() ?: throw GhostException.Unauthorized(null)
+            postId = activityPub.post(account.site, account.credential, postId).id
+            resolving = false
+            return true
+        } catch (e: SocialWebException) {
+            if (e.status == 401 || e.status == 403) loaded.value = ThreadUiState.Failed(e) else _unresolved.value = true
+        } catch (e: GhostException) {
+            loaded.value = ThreadUiState.Failed(e)
+        }
+        return false
     }
 
     /** Applies a parent found earlier this session, so a refresh doesn't drop and re-add it. */

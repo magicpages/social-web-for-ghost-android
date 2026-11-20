@@ -289,6 +289,9 @@
     <string name="explore_search_hint">按名称搜索用户，或输入完整的 @user@domain 来查找其他服务器上的用户。</string>
     <string name="explore_search_clear">清除搜索</string>
     <string name="explore_search_empty">没有找到任何人</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">在 Social Web 中打开</string>
+    <string name="explore_search_open_post">打开帖子</string>
     <string name="explore_for_you">为你推荐</string>
     <string name="explore_empty">暂时没有可推荐的账号。下拉可重试。</string>
     <string name="explore_follow_account">关注 %1$s</string>

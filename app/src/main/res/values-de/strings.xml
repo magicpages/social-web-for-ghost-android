@@ -296,6 +296,9 @@
     <string name="explore_search_hint">Suche nach Personen anhand ihres Namens oder gib eine vollständige @user@domain ein, um jemanden auf einem anderen Server zu finden.</string>
     <string name="explore_search_clear">Suche löschen</string>
     <string name="explore_search_empty">Niemand gefunden</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">In Social Web öffnen</string>
+    <string name="explore_search_open_post">Beitrag öffnen</string>
     <string name="explore_for_you">Für dich</string>
     <string name="explore_empty">Gerade gibt es keine Konten zum Vorschlagen. Zum Wiederholen nach unten ziehen.</string>
     <string name="explore_follow_account">%1$s folgen</string>

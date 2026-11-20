@@ -173,7 +173,7 @@ fun ExploreScreen(
     // Beside the tabs the profile opens in the detail pane, which a back gesture closes without ever hiding
     // this tab, so there is nothing to cover and the search simply closes.
     val sideBySide = LocalListDetailSceneScope.current != null
-    val openResult: (Author) -> Unit = { author ->
+    val openFromSearch: (open: () -> Unit) -> Unit = { open ->
         if (!sideBySide) {
             resultOpen = true
             resultsIndex = resultsState.firstVisibleItemIndex
@@ -183,9 +183,11 @@ fun ExploreScreen(
             // The cover is under the search before it closes, so the tab never shows in between.
             if (!sideBySide) repeat(COVER_FRAMES) { withFrameNanos {} }
             searchBarState.snapTo(0f)
-            onOpenProfile(author)
+            open()
         }
     }
+    val openResult: (Author) -> Unit = { author -> openFromSearch { onOpenProfile(author) } }
+    val openPostResult: (Post) -> Unit = { post -> openFromSearch { onOpenPost(post) } }
     // Back from the profile, once the gesture is through: the search opens where the cover is.
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
         if (resultOpen) scope.launch { searchBarState.snapTo(1f) }
@@ -236,6 +238,7 @@ fun ExploreScreen(
             snackbar = snackbar,
             onToggleFollow = viewModel::toggleFollow,
             onOpenProfile = openResult,
+            onOpenPost = openPostResult,
             onRetry = viewModel::retrySearch,
             onSignOut = onSignOut,
         )
@@ -403,6 +406,7 @@ private fun SearchResults(
     snackbar: SnackbarHostState?,
     onToggleFollow: (Author) -> Unit,
     onOpenProfile: (Author) -> Unit,
+    onOpenPost: (Post) -> Unit,
     onRetry: () -> Unit,
     onSignOut: () -> Unit,
 ) {
@@ -416,7 +420,7 @@ private fun SearchResults(
                 sessionEnded = state.error is GhostException.Unauthorized,
                 onSignOut = onSignOut,
             )
-            is SearchUiState.Found -> if (state.accounts.isEmpty()) {
+            is SearchUiState.Found -> if (state.accounts.isEmpty() && state.post == null) {
                 ScrollableMessage(stringResource(R.string.explore_search_empty))
             } else {
                 LazyColumn(
@@ -425,6 +429,9 @@ private fun SearchResults(
                     contentPadding = PaddingValues(vertical = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
+                    state.post?.let { post ->
+                        item(key = "post", contentType = "post") { PostRow(post, onClick = { onOpenPost(post) }) }
+                    }
                     items(state.accounts, key = { it.handle }, contentType = { "account" }) { author ->
                         AccountRow(
                             author = author,
@@ -482,6 +489,7 @@ private fun SearchCover(
                 snackbar = null,
                 onToggleFollow = {},
                 onOpenProfile = {},
+                onOpenPost = {},
                 onRetry = {},
                 onSignOut = {},
             )
@@ -500,6 +508,45 @@ private fun TopicChip(label: String, selected: Boolean, onClick: () -> Unit) {
         } else {
             null
         },
+    )
+}
+
+/** A post found by its web address: who wrote it and how it starts. Opens its thread. */
+@Composable
+private fun PostRow(post: Post, onClick: () -> Unit) {
+    val author = post.author
+    val name = author.displayName
+    val text = remember(post.id) { post.title.ifBlank { parsePostHtml(post.content).text.trim() } }
+    ListItem(
+        headlineContent = {
+            EmojiText(name, author.emojiSourceId, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        },
+        supportingContent = {
+            Column {
+                Text(
+                    author.handle,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                if (text.isNotEmpty()) {
+                    EmojiText(
+                        text,
+                        post.id,
+                        modifier = Modifier.padding(top = 4.dp),
+                        style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 4,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        },
+        leadingContent = { Avatar(author.avatarUrl, name, 48.dp) },
+        modifier = Modifier
+            .widthIn(max = MaxContentWidth)
+            .fillMaxWidth()
+            .clickable(onClickLabel = stringResource(R.string.explore_search_open_post), onClick = onClick),
     )
 }
 

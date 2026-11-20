@@ -59,6 +59,24 @@
             </intent-filter>
         </activity>
 
+        <!--
+            Share target: a link opens in the app (a post's thread, or a profile) instead of a new note. An alias of
+            MainActivity, so the share sheet lists it with its own label; MainActivity tells the two apart by the
+            component the intent was sent to (MainActivity.OpenLinkAlias).
+        -->
+        <activity-alias
+            android:name=".OpenLinkAlias"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/share_open_in_app"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity-alias>
+
         <!-- A Ghost site's Portal in a web view that keeps the member session. It handles its own configuration changes so the page survives rotation. -->
         <activity
             android:name=".ui.browser.MemberBrowserActivity"

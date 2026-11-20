@@ -289,6 +289,9 @@
     <string name="explore_search_hint">Cari orang berdasarkan nama, atau masukkan @user@domain lengkap untuk menemukan seseorang di server lain.</string>
     <string name="explore_search_clear">Hapus pencarian</string>
     <string name="explore_search_empty">Tidak ada yang ditemukan</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Buka di Social Web</string>
+    <string name="explore_search_open_post">buka postingan</string>
     <string name="explore_for_you">Untuk Anda</string>
     <string name="explore_empty">Belum ada akun yang dapat disarankan saat ini. Tarik ke bawah untuk mencoba lagi.</string>
     <string name="explore_follow_account">Ikuti %1$s</string>

@@ -296,6 +296,9 @@
     <string name="explore_search_hint">Søg efter personer ud fra navn, eller indtast et fuldt @user@domain for at finde nogen på en anden server.</string>
     <string name="explore_search_clear">Ryd søgning</string>
     <string name="explore_search_empty">Ingen fundet</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Åbn i Social Web</string>
+    <string name="explore_search_open_post">åbn opslag</string>
     <string name="explore_for_you">Til dig</string>
     <string name="explore_empty">Ingen konti at foreslå lige nu. Træk ned for at prøve igen.</string>
     <string name="explore_follow_account">Følg %1$s</string>

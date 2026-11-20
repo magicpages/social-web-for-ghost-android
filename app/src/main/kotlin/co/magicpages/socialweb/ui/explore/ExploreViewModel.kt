@@ -33,9 +33,12 @@ import co.magicpages.socialweb.data.activitypub.SuggestedAccount
 import co.magicpages.socialweb.data.activitypub.SuggestedAccountsPage
 import co.magicpages.socialweb.data.activitypub.Topic
 import co.magicpages.socialweb.data.ghost.GhostException
+import co.magicpages.socialweb.data.ghost.parseWebUri
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -67,7 +70,8 @@ sealed interface SearchUiState {
 
     data object Loading : SearchUiState
 
-    data class Found(val accounts: List<Author>) : SearchUiState
+    /** [post] is the post a pasted web address points to, when it points to one the service can show. */
+    data class Found(val accounts: List<Author>, val post: Post? = null) : SearchUiState
 
     data class Failed(val error: Throwable) : SearchUiState
 }
@@ -150,11 +154,7 @@ class ExploreViewModel @Inject constructor(
                     emit(SearchUiState.Loading)
                     emit(
                         try {
-                            SearchUiState.Found(
-                                activityPub.searchAccounts(account.site, account.credential, text)
-                                    .filterNot { account.isMe(it.handle) }
-                                    .distinctBy { it.handle },
-                            )
+                            find(account, text)
                         } catch (e: SocialWebException) {
                             SearchUiState.Failed(e)
                         } catch (e: GhostException) {
@@ -166,7 +166,10 @@ class ExploreViewModel @Inject constructor(
         moderation.hidden,
     ) { state, hidden ->
         if (state is SearchUiState.Found) {
-            state.copy(accounts = state.accounts.filterNot { hidden.hides(it) })
+            state.copy(
+                accounts = state.accounts.filterNot { hidden.hides(it) },
+                post = state.post?.takeUnless { hidden.hides(it) },
+            )
         } else {
             state
         }
@@ -255,6 +258,35 @@ class ExploreViewModel @Inject constructor(
     }
 
     fun retrySearch() = searchRetries.update { it + 1 }
+
+    /**
+     * The accounts for [text] and, when it is a web address, the post it points to: the service resolves the
+     * address as a post or as an account, and only the account search says so for an address that is neither.
+     */
+    private suspend fun find(account: StoredAccount, text: String): SearchUiState.Found = coroutineScope {
+        val post = if (isHttpsAddress(text)) async { postAt(account, text) } else null
+        val people = try {
+            activityPub.searchAccounts(account.site, account.credential, text)
+                .filterNot { account.isMe(it.handle) }
+                .distinctBy { it.handle }
+        } catch (e: SocialWebException) {
+            // The account search may refuse a post's address; that is no failure when the post was found.
+            if (post?.await() == null) throw e
+            emptyList()
+        }
+        SearchUiState.Found(people, post?.await())
+    }
+
+    /** The post at [url], or null when the service has none to show (not a post, deleted, its server unreachable). */
+    private suspend fun postAt(account: StoredAccount, url: String): Post? = try {
+        activityPub.post(account.site, account.credential, url).takeUnless { it.isDeleted }
+    } catch (_: SocialWebException) {
+        null
+    } catch (_: GhostException) {
+        null
+    }
+
+    private fun isHttpsAddress(text: String) = parseWebUri(text)?.scheme.equals("https", ignoreCase = true)
 
     /** Picks the topic to list, or "For you" for null. */
     fun select(slug: String?) {

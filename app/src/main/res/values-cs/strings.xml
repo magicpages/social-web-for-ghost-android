@@ -310,6 +310,9 @@
     <string name="explore_search_hint">Hledejte lidi podle jména, nebo zadejte celé @user@domain a najděte někoho na jiném serveru.</string>
     <string name="explore_search_clear">Vymazat hledání</string>
     <string name="explore_search_empty">Nikdo nenalezen</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Otevřít v aplikaci Social Web</string>
+    <string name="explore_search_open_post">otevřít příspěvek</string>
     <string name="explore_for_you">Pro vás</string>
     <string name="explore_empty">Teď nemáme žádné účty k doporučení. Přetažením dolů to zkusíte znovu.</string>
     <string name="explore_follow_account">Sledovat %1$s</string>

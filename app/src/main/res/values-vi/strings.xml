@@ -289,6 +289,9 @@
     <string name="explore_search_hint">Tìm người theo tên, hoặc nhập đầy đủ @user@domain để tìm ai đó trên máy chủ khác.</string>
     <string name="explore_search_clear">Xóa tìm kiếm</string>
     <string name="explore_search_empty">Không tìm thấy ai</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Mở trong Social Web</string>
+    <string name="explore_search_open_post">mở bài đăng</string>
     <string name="explore_for_you">Dành cho bạn</string>
     <string name="explore_empty">Hiện chưa có tài khoản nào để gợi ý. Kéo xuống để thử lại.</string>
     <string name="explore_follow_account">Theo dõi %1$s</string>

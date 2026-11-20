@@ -296,6 +296,9 @@
     <string name="explore_search_hint">Hae ihmisiä nimellä tai kirjoita koko @user@domain löytääksesi jonkun toiselta palvelimelta.</string>
     <string name="explore_search_clear">Tyhjennä haku</string>
     <string name="explore_search_empty">Ketään ei löytynyt</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Avaa sovelluksessa Social Web</string>
+    <string name="explore_search_open_post">avaa julkaisu</string>
     <string name="explore_for_you">Sinulle</string>
     <string name="explore_empty">Ehdotettavia tilejä ei ole juuri nyt. Yritä uudelleen vetämällä alas.</string>
     <string name="explore_follow_account">Seuraa käyttäjää %1$s</string>

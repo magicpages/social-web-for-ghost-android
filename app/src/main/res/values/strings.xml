@@ -37,6 +37,9 @@
     <string name="explore_search_hint">Search for people by name, or enter a full @user@domain to find someone on another server.</string>
     <string name="explore_search_clear">Clear search</string>
     <string name="explore_search_empty">No one found</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Open in Social Web</string>
+    <string name="explore_search_open_post">open post</string>
     <string name="explore_for_you">For you</string>
     <string name="explore_empty">No accounts to suggest right now. Pull down to try again.</string>
     <string name="explore_follow_account">Follow %1$s</string>

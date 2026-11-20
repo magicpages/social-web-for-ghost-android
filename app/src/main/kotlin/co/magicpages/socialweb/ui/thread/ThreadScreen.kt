@@ -46,12 +46,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalResources
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -69,6 +69,7 @@ import co.magicpages.socialweb.ui.article.articleItems
 import co.magicpages.socialweb.ui.article.rememberArticleAudio
 import co.magicpages.socialweb.ui.components.AppIcons
 import co.magicpages.socialweb.ui.components.CenteredLoading
+import co.magicpages.socialweb.ui.components.browserUriHandler
 import co.magicpages.socialweb.ui.components.EmojiText
 import co.magicpages.socialweb.ui.components.emojiSourceId
 import co.magicpages.socialweb.ui.components.FullScreenError
@@ -98,22 +99,29 @@ import kotlinx.coroutines.flow.first
 fun ThreadScreen(
     postId: String,
     postUrl: String?,
+    resolve: Boolean,
     onBack: () -> Unit,
     onOpenPost: (Post) -> Unit,
     onOpenProfile: (Author) -> Unit,
     onSignOut: () -> Unit,
+    onUnresolved: () -> Unit,
 ) {
-    val viewModel = hiltViewModel<ThreadViewModel, ThreadViewModel.Factory>(key = postId) { it.create(postId) }
+    val viewModel = hiltViewModel<ThreadViewModel, ThreadViewModel.Factory>(key = postId) { it.create(postId, resolve) }
     val state by viewModel.state.collectAsStateWithLifecycle()
     // Deleting the post, or blocking its author, leaves nothing to read here.
     val postHidden by viewModel.postHidden.collectAsStateWithLifecycle()
     if (postHidden) LaunchedEffect(Unit) { onBack() }
+    // A web address that isn't a post leaves for the browser, so no error screen is left behind.
+    val unresolved by viewModel.unresolved.collectAsStateWithLifecycle()
+    if (unresolved) LaunchedEffect(Unit) { onUnresolved() }
     val snackbar = remember { SnackbarHostState() }
     CollectMessages(viewModel.messages, snackbar)
+    // Not [postId]: for a web address, the thread's post has the id the service resolved it to.
+    val focusedId by rememberUpdatedState((state as? ThreadUiState.Loaded)?.content?.post?.post?.id ?: postId)
     val callbacks = remember(viewModel) {
         PostCallbacks(
             // Tapping the post the thread is about does nothing; others open their own thread.
-            open = { if (it.id != postId) onOpenPost(it) },
+            open = { if (it.id != focusedId) onOpenPost(it) },
             openProfile = onOpenProfile,
             reply = viewModel.composer::start,
             toggleLike = viewModel::toggleLike,
@@ -195,7 +203,7 @@ fun ThreadScreen(
                 secondary = {
                     // The service only has posts it has seen; others still open at their origin.
                     if (webUrl != null) {
-                        val uriHandler = LocalUriHandler.current
+                        val uriHandler = browserUriHandler()
                         OutlinedButton(onClick = { uriHandler.openUri(webUrl) }) { Text(stringResource(R.string.open_in_browser)) }
                     }
                 },
@@ -396,7 +404,7 @@ private fun ReplyBar(post: FeedItem, onClick: () -> Unit) {
 @Composable
 private fun OpenInBrowserAction(webUrl: String?) {
     if (webUrl == null) return
-    val uriHandler = LocalUriHandler.current
+    val uriHandler = browserUriHandler()
     IconButton(onClick = { uriHandler.openUri(webUrl) }) {
         Icon(AppIcons.OpenInNew, contentDescription = stringResource(R.string.open_in_browser))
     }

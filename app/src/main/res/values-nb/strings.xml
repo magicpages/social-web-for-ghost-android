@@ -296,6 +296,9 @@
     <string name="explore_search_hint">Søk etter personer på navn, eller skriv inn en full @user@domain for å finne noen på en annen tjener.</string>
     <string name="explore_search_clear">Tøm søket</string>
     <string name="explore_search_empty">Fant ingen</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Åpne i Social Web</string>
+    <string name="explore_search_open_post">åpne innlegg</string>
     <string name="explore_for_you">For deg</string>
     <string name="explore_empty">Ingen kontoer å foreslå akkurat nå. Dra ned for å prøve igjen.</string>
     <string name="explore_follow_account">Følg %1$s</string>

@@ -303,6 +303,9 @@
     <string name="explore_search_hint">Busque pessoas pelo nome ou digite um @user@domain completo para encontrar alguém em outro servidor.</string>
     <string name="explore_search_clear">Limpar busca</string>
     <string name="explore_search_empty">Ninguém encontrado</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Abrir no Social Web</string>
+    <string name="explore_search_open_post">abrir post</string>
     <string name="explore_for_you">Para você</string>
     <string name="explore_empty">Nenhuma conta para sugerir no momento. Puxe para baixo para tentar de novo.</string>
     <string name="explore_follow_account">Seguir %1$s</string>

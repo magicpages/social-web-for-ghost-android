@@ -289,6 +289,9 @@
     <string name="explore_search_hint">依名稱搜尋使用者，或輸入完整的 @user@domain 來尋找其他伺服器上的使用者。</string>
     <string name="explore_search_clear">清除搜尋</string>
     <string name="explore_search_empty">找不到任何人</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">在 Social Web 中開啟</string>
+    <string name="explore_search_open_post">開啟貼文</string>
     <string name="explore_for_you">為你推薦</string>
     <string name="explore_empty">目前沒有可推薦的帳號。下拉即可重試。</string>
     <string name="explore_follow_account">追蹤 %1$s</string>

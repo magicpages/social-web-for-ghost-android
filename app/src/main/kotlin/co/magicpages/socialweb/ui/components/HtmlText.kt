@@ -87,8 +87,7 @@ private fun linkMentions(tag: String): String {
     val handle = dataProfileAttr.find(tag)?.groupValues?.get(1) ?: run {
         val classes = classAttr.find(tag)?.groupValues?.get(1)?.split(' ').orEmpty()
         if ("mention" !in classes || "hashtag" in classes) return tag
-        val match = profileUrl.matchEntire(url) ?: return tag
-        "@${match.groupValues[2]}@${match.groupValues[1]}"
+        ProfileLinks.handleOf(url) ?: return tag
     }
     return tag.replaceRange(href.range, "href=\"${ProfileLinks.create(handle, url)}\"")
 }
@@ -109,6 +108,10 @@ object ProfileLinks {
         val url = rest.substringAfter("?url=", "").takeIf { it.isNotEmpty() }?.let { URLDecoder.decode(it, "UTF-8") }
         return handle to url
     }
+
+    /** The `@user@domain` handle a profile address spells out (`https://host/@user`, `https://host/users/user`), or null. */
+    fun handleOf(url: String): String? =
+        profileUrl.matchEntire(url.trim())?.let { "@${it.groupValues[2]}@${it.groupValues[1]}" }
 }
 
 private fun AnnotatedString.trimEnd(): AnnotatedString {

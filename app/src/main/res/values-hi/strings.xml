@@ -296,6 +296,9 @@
     <string name="explore_search_hint">नाम से लोगों को खोजें, या दूसरे सर्वर पर किसी को ढूँढने के लिए पूरा @user@domain दर्ज करें।</string>
     <string name="explore_search_clear">खोज साफ़ करें</string>
     <string name="explore_search_empty">कोई नहीं मिला</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Social Web में खोलें</string>
+    <string name="explore_search_open_post">पोस्ट खोलें</string>
     <string name="explore_for_you">आपके लिए</string>
     <string name="explore_empty">अभी सुझाने के लिए कोई खाता नहीं है। दोबारा कोशिश करने के लिए नीचे खींचें।</string>
     <string name="explore_follow_account">%1$s को फ़ॉलो करें</string>

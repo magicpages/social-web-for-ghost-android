@@ -310,6 +310,9 @@
     <string name="explore_search_hint">Шукайте людей за іменем або введіть повну адресу @user@domain, щоб знайти користувача на іншому сервері.</string>
     <string name="explore_search_clear">Очистити пошук</string>
     <string name="explore_search_empty">Нікого не знайдено</string>
+    <!-- Opening links in the app -->
+    <string name="share_open_in_app">Відкрити в застосунку Social Web</string>
+    <string name="explore_search_open_post">відкрити допис</string>
     <string name="explore_for_you">Для вас</string>
     <string name="explore_empty">Зараз немає облікових записів для рекомендації. Потягніть униз, щоб спробувати ще раз.</string>
     <string name="explore_follow_account">Підписатися на %1$s</string>
