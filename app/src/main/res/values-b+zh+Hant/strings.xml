@@ -445,6 +445,18 @@
     <string name="onboarding_add_site">新增你的網站</string>
     <string name="link_preview_remove">移除連結預覽</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">動態過濾</string>
+    <string name="feed_filters_summary">在筆記和閱讀器中隱藏轉發與靜音字詞</string>
+    <string name="feed_filters_explainer">這些過濾只會改變你在本應用程式中看到的內容，不會傳送到你的網站或任何其他人。</string>
+    <string name="feed_filters_hide_reposts">隱藏轉發</string>
+    <string name="feed_filters_hide_reposts_summary">只顯示你追蹤的帳號自己發的貼文，不顯示它們轉發的內容</string>
+    <string name="feed_filters_muted_words">靜音字詞</string>
+    <string name="feed_filters_muted_explainer">內文、標題、摘要或主題標籤含有這些字詞的貼文會被隱藏。只比對完整字詞，不分大小寫。</string>
+    <string name="feed_filters_word_label">要靜音的字詞</string>
+    <string name="feed_filters_add">新增</string>
+    <string name="feed_filters_remove_word">移除 %1$s</string>
+    <string name="feed_filters_none">還沒有靜音字詞。</string>
+    <string name="feed_filtered_empty">這裡的所有內容都被動態過濾隱藏了。</string>
     <plurals name="feed_new_posts">
         <item quantity="other">%1$d 則新貼文</item>
     </plurals>

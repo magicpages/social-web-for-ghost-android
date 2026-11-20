@@ -457,6 +457,18 @@
     <string name="onboarding_add_site">अपनी साइट जोड़ें</string>
     <string name="link_preview_remove">लिंक पूर्वावलोकन हटाएं</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">फ़ीड फ़िल्टर</string>
+    <string name="feed_filters_summary">नोट्स और रीडर में रीपोस्ट और म्यूट किए गए शब्द छिपाएँ</string>
+    <string name="feed_filters_explainer">ये फ़िल्टर सिर्फ़ इस ऐप में दिखने वाली चीज़ें बदलते हैं। आपकी साइट या किसी और को कुछ नहीं भेजा जाता।</string>
+    <string name="feed_filters_hide_reposts">रीपोस्ट छिपाएँ</string>
+    <string name="feed_filters_hide_reposts_summary">सिर्फ़ फ़ॉलो किए गए खातों की अपनी पोस्ट दिखाएँ, उनके शेयर किए हुए नहीं</string>
+    <string name="feed_filters_muted_words">म्यूट किए गए शब्द</string>
+    <string name="feed_filters_muted_explainer">जिन पोस्ट के टेक्स्ट, शीर्षक, सारांश या हैशटैग में ये शब्द हों, वे छिपा दी जाती हैं। सिर्फ़ पूरे शब्द मिलते हैं, बड़े-छोटे अक्षरों से फ़र्क़ नहीं पड़ता।</string>
+    <string name="feed_filters_word_label">म्यूट करने का शब्द</string>
+    <string name="feed_filters_add">जोड़ें</string>
+    <string name="feed_filters_remove_word">%1$s हटाएँ</string>
+    <string name="feed_filters_none">अभी कोई म्यूट शब्द नहीं है।</string>
+    <string name="feed_filtered_empty">यहाँ सब कुछ आपके फ़ीड फ़िल्टर ने छिपा दिया है।</string>
     <plurals name="feed_new_posts" tools:ignore="ImpliedQuantity">
         <item quantity="one">%1$d नई पोस्ट</item>
         <item quantity="other">%1$d नई पोस्ट</item>

@@ -464,6 +464,18 @@
     <string name="onboarding_add_site">Add your site</string>
     <string name="link_preview_remove">Remove link preview</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Feed filters</string>
+    <string name="feed_filters_summary">Hide reposts and muted words in Notes and Reader</string>
+    <string name="feed_filters_explainer">These filters only change what you see in this app. Nothing is sent to your site or to anyone else.</string>
+    <string name="feed_filters_hide_reposts">Hide reposts</string>
+    <string name="feed_filters_hide_reposts_summary">Only show posts from the accounts you follow, not what they share</string>
+    <string name="feed_filters_muted_words">Muted words</string>
+    <string name="feed_filters_muted_explainer">Posts with these words in their text, title, summary or hashtags are hidden. Whole words only, and capitals don\'t matter.</string>
+    <string name="feed_filters_word_label">Word to mute</string>
+    <string name="feed_filters_add">Add</string>
+    <string name="feed_filters_remove_word">Remove %1$s</string>
+    <string name="feed_filters_none">No muted words yet.</string>
+    <string name="feed_filtered_empty">Everything here is hidden by your feed filters.</string>
     <plurals name="feed_new_posts">
         <item quantity="one">%1$d new post</item>
         <item quantity="other">%1$d new posts</item>

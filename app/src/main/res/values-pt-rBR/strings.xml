@@ -469,6 +469,18 @@
     <string name="onboarding_add_site">Adicionar seu site</string>
     <string name="link_preview_remove">Remover pré-visualização do link</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Filtros do feed</string>
+    <string name="feed_filters_summary">Oculte reposts e palavras silenciadas em Notas e Leitor</string>
+    <string name="feed_filters_explainer">Os filtros só mudam o que você vê neste app. Nada é enviado ao seu site nem a mais ninguém.</string>
+    <string name="feed_filters_hide_reposts">Ocultar reposts</string>
+    <string name="feed_filters_hide_reposts_summary">Mostra só as publicações das contas que você segue, não o que elas compartilham</string>
+    <string name="feed_filters_muted_words">Palavras silenciadas</string>
+    <string name="feed_filters_muted_explainer">Publicações com essas palavras no texto, no título, no resumo ou nas hashtags ficam ocultas. Só palavras inteiras, sem diferenciar maiúsculas de minúsculas.</string>
+    <string name="feed_filters_word_label">Palavra a silenciar</string>
+    <string name="feed_filters_add">Adicionar</string>
+    <string name="feed_filters_remove_word">Remover %1$s</string>
+    <string name="feed_filters_none">Nenhuma palavra silenciada ainda.</string>
+    <string name="feed_filtered_empty">Tudo aqui está oculto pelos seus filtros do feed.</string>
     <plurals name="feed_new_posts" tools:ignore="ImpliedQuantity">
         <item quantity="one">%1$d nova publicação</item>
         <item quantity="other">%1$d novas publicações</item>

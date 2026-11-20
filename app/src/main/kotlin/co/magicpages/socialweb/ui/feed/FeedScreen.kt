@@ -21,6 +21,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
@@ -33,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import co.magicpages.socialweb.R
@@ -75,6 +77,7 @@ fun FeedScreen(
 ) {
     val viewModel = hiltViewModel<FeedViewModel, FeedViewModel.Factory>(key = feed.name) { it.create(feed) }
     val posts = viewModel.posts.collectAsLazyPagingItems()
+    val filtering by viewModel.filtering.collectAsStateWithLifecycle()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -172,9 +175,10 @@ fun FeedScreen(
                 refresh is LoadState.Loading && posts.itemCount == 0 -> CenteredLoading()
                 refresh is LoadState.NotLoading && posts.itemCount == 0 -> ScrollableMessage(
                     stringResource(
-                        when (feed) {
-                            Feed.Reader -> R.string.reader_empty
-                            Feed.Notes -> R.string.notes_empty
+                        when {
+                            filtering -> R.string.feed_filtered_empty
+                            feed == Feed.Reader -> R.string.reader_empty
+                            else -> R.string.notes_empty
                         },
                     ),
                 )

@@ -445,6 +445,18 @@
     <string name="onboarding_add_site">내 사이트 추가</string>
     <string name="link_preview_remove">링크 미리보기 제거</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">피드 필터</string>
+    <string name="feed_filters_summary">노트와 리더에서 리포스트와 뮤트한 단어를 숨깁니다</string>
+    <string name="feed_filters_explainer">이 필터는 이 앱에서 보이는 내용만 바꿉니다. 사이트나 다른 사람에게는 아무것도 전송되지 않습니다.</string>
+    <string name="feed_filters_hide_reposts">리포스트 숨기기</string>
+    <string name="feed_filters_hide_reposts_summary">팔로우하는 계정이 직접 쓴 게시물만 보여 주고, 공유한 게시물은 보여 주지 않습니다</string>
+    <string name="feed_filters_muted_words">뮤트한 단어</string>
+    <string name="feed_filters_muted_explainer">본문, 제목, 요약 또는 해시태그에 이 단어가 있는 게시물은 숨겨집니다. 완전한 단어만 일치하며 대소문자는 구분하지 않습니다.</string>
+    <string name="feed_filters_word_label">뮤트할 단어</string>
+    <string name="feed_filters_add">추가</string>
+    <string name="feed_filters_remove_word">%1$s 삭제</string>
+    <string name="feed_filters_none">아직 뮤트한 단어가 없습니다.</string>
+    <string name="feed_filtered_empty">여기 있는 모든 게시물이 피드 필터로 숨겨졌습니다.</string>
     <plurals name="feed_new_posts">
         <item quantity="other">새 게시물 %1$d개</item>
     </plurals>

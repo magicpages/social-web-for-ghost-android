@@ -457,6 +457,18 @@
     <string name="onboarding_add_site">Website hinzufügen</string>
     <string name="link_preview_remove">Link-Vorschau entfernen</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Feed-Filter</string>
+    <string name="feed_filters_summary">Reposts und stummgeschaltete Wörter in Notizen und Reader ausblenden</string>
+    <string name="feed_filters_explainer">Die Filter ändern nur, was du in dieser App siehst. Nichts wird an deine Website oder an andere gesendet.</string>
+    <string name="feed_filters_hide_reposts">Reposts ausblenden</string>
+    <string name="feed_filters_hide_reposts_summary">Nur Beiträge der Konten zeigen, denen du folgst, nicht das, was sie teilen</string>
+    <string name="feed_filters_muted_words">Stummgeschaltete Wörter</string>
+    <string name="feed_filters_muted_explainer">Beiträge mit diesen Wörtern in Text, Titel, Zusammenfassung oder Hashtags werden ausgeblendet. Nur ganze Wörter, Groß- und Kleinschreibung egal.</string>
+    <string name="feed_filters_word_label">Wort stummschalten</string>
+    <string name="feed_filters_add">Hinzufügen</string>
+    <string name="feed_filters_remove_word">%1$s entfernen</string>
+    <string name="feed_filters_none">Noch keine stummgeschalteten Wörter.</string>
+    <string name="feed_filtered_empty">Alles hier wird von deinen Feed-Filtern ausgeblendet.</string>
     <plurals name="feed_new_posts" tools:ignore="ImpliedQuantity">
         <item quantity="one">%1$d neuer Beitrag</item>
         <item quantity="other">%1$d neue Beiträge</item>

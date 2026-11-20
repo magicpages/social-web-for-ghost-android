@@ -445,6 +445,18 @@
     <string name="onboarding_add_site">添加你的站点</string>
     <string name="link_preview_remove">移除链接预览</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">信息流过滤</string>
+    <string name="feed_filters_summary">在笔记和阅读器中隐藏转发和屏蔽词</string>
+    <string name="feed_filters_explainer">这些过滤只影响你在本应用中看到的内容，不会发送到你的站点或其他任何人。</string>
+    <string name="feed_filters_hide_reposts">隐藏转发</string>
+    <string name="feed_filters_hide_reposts_summary">只显示你关注的账号自己发的帖子，不显示它们转发的内容</string>
+    <string name="feed_filters_muted_words">屏蔽词</string>
+    <string name="feed_filters_muted_explainer">正文、标题、摘要或话题标签中含有这些词的帖子会被隐藏。只匹配完整的词，不区分大小写。</string>
+    <string name="feed_filters_word_label">要屏蔽的词</string>
+    <string name="feed_filters_add">添加</string>
+    <string name="feed_filters_remove_word">移除 %1$s</string>
+    <string name="feed_filters_none">还没有屏蔽词。</string>
+    <string name="feed_filtered_empty">这里的所有内容都被信息流过滤隐藏了。</string>
     <plurals name="feed_new_posts">
         <item quantity="other">%1$d 篇新帖子</item>
     </plurals>

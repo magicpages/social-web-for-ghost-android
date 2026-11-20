@@ -481,6 +481,18 @@
     <string name="onboarding_add_site">Додати сайт</string>
     <string name="link_preview_remove">Вилучити попередній перегляд посилання</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Фільтри стрічки</string>
+    <string name="feed_filters_summary">Ховати репости й заглушені слова в Нотатках і Читанні</string>
+    <string name="feed_filters_explainer">Фільтри змінюють лише те, що ви бачите в цьому застосунку. Нічого не надсилається на ваш сайт чи комусь іще.</string>
+    <string name="feed_filters_hide_reposts">Ховати репости</string>
+    <string name="feed_filters_hide_reposts_summary">Показувати лише дописи самих акаунтів, на які ви підписані, без того, чим вони діляться</string>
+    <string name="feed_filters_muted_words">Заглушені слова</string>
+    <string name="feed_filters_muted_explainer">Дописи з цими словами в тексті, заголовку, описі або гештегах ховаються. Лише цілі слова, регістр не має значення.</string>
+    <string name="feed_filters_word_label">Слово для заглушення</string>
+    <string name="feed_filters_add">Додати</string>
+    <string name="feed_filters_remove_word">Вилучити %1$s</string>
+    <string name="feed_filters_none">Заглушених слів поки немає.</string>
+    <string name="feed_filtered_empty">Усе тут сховано фільтрами стрічки.</string>
     <plurals name="feed_new_posts" tools:ignore="ImpliedQuantity">
         <item quantity="one">%1$d новий допис</item>
         <item quantity="few">%1$d нові дописи</item>

@@ -469,6 +469,18 @@
     <string name="onboarding_add_site">Ajouter votre site</string>
     <string name="link_preview_remove">Retirer l\'aperçu du lien</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Filtres du fil</string>
+    <string name="feed_filters_summary">Masquer les republications et les mots masqués dans Notes et Lecteur</string>
+    <string name="feed_filters_explainer">Les filtres ne changent que ce que vous voyez dans cette appli. Rien n\'est envoyé à votre site ni à personne d\'autre.</string>
+    <string name="feed_filters_hide_reposts">Masquer les republications</string>
+    <string name="feed_filters_hide_reposts_summary">Ne montrer que les publications des comptes suivis, pas ce qu\'ils partagent</string>
+    <string name="feed_filters_muted_words">Mots masqués</string>
+    <string name="feed_filters_muted_explainer">Les publications contenant ces mots dans le texte, le titre, le résumé ou les hashtags sont masquées. Mots entiers uniquement, sans distinction majuscules/minuscules.</string>
+    <string name="feed_filters_word_label">Mot à masquer</string>
+    <string name="feed_filters_add">Ajouter</string>
+    <string name="feed_filters_remove_word">Retirer %1$s</string>
+    <string name="feed_filters_none">Aucun mot masqué pour l\'instant.</string>
+    <string name="feed_filtered_empty">Tout ce qui est ici est masqué par vos filtres du fil.</string>
     <plurals name="feed_new_posts" tools:ignore="ImpliedQuantity">
         <item quantity="one">%1$d nouvelle publication</item>
         <item quantity="other">%1$d nouvelles publications</item>

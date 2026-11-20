@@ -505,6 +505,18 @@
     <string name="onboarding_add_site">أضف موقعك</string>
     <string name="link_preview_remove">إزالة معاينة الرابط</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">عوامل تصفية الخلاصة</string>
+    <string name="feed_filters_summary">إخفاء إعادات النشر والكلمات المكتومة في الملاحظات والقارئ</string>
+    <string name="feed_filters_explainer">تغيّر هذه العوامل ما تراه في هذا التطبيق فقط. لا يُرسل شيء إلى موقعك أو إلى أي شخص آخر.</string>
+    <string name="feed_filters_hide_reposts">إخفاء إعادات النشر</string>
+    <string name="feed_filters_hide_reposts_summary">اعرض منشورات الحسابات التي تتابعها فقط، دون ما تعيد نشره</string>
+    <string name="feed_filters_muted_words">الكلمات المكتومة</string>
+    <string name="feed_filters_muted_explainer">تُخفى المنشورات التي تحتوي هذه الكلمات في نصها أو عنوانها أو ملخصها أو وسومها. الكلمات الكاملة فقط، ولا فرق بين الأحرف الكبيرة والصغيرة.</string>
+    <string name="feed_filters_word_label">كلمة لكتمها</string>
+    <string name="feed_filters_add">إضافة</string>
+    <string name="feed_filters_remove_word">إزالة %1$s</string>
+    <string name="feed_filters_none">لا توجد كلمات مكتومة بعد.</string>
+    <string name="feed_filtered_empty">كل ما هنا مخفي بسبب عوامل تصفية الخلاصة.</string>
     <plurals name="feed_new_posts" tools:ignore="ImpliedQuantity">
         <item quantity="zero">لا منشورات جديدة</item>
         <item quantity="one">منشور جديد واحد</item>

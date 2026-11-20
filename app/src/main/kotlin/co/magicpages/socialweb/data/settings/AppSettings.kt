@@ -3,6 +3,7 @@ package co.magicpages.socialweb.data.settings
 import android.content.Context
 import androidx.core.content.edit
 import co.magicpages.socialweb.data.activitypub.Notification
+import co.magicpages.socialweb.data.feed.FeedFilter
 import co.magicpages.socialweb.data.feed.SavedFeedPosition
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -67,6 +68,37 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         _accountColors.value -= accountId
     }
 
+    private val _feedFilter = MutableStateFlow(FeedFilter(prefs.getBoolean(KeyHideReposts, false), readMutedWords()))
+
+    /** What the Notes and Reader feeds leave out. Device-wide: it applies to every account. */
+    val feedFilter: StateFlow<FeedFilter> = _feedFilter.asStateFlow()
+
+    fun setHideReposts(hide: Boolean) {
+        prefs.edit { putBoolean(KeyHideReposts, hide) }
+        _feedFilter.value = _feedFilter.value.copy(hideReposts = hide)
+    }
+
+    /** Mutes [word] unless it is empty or already muted (ignoring case). Returns whether the list changed. */
+    fun addMutedWord(word: String): Boolean {
+        val clean = FeedFilter.normalizeWord(word) ?: return false
+        val words = _feedFilter.value.mutedWords
+        if (words.any { it.equals(clean, ignoreCase = true) }) return false
+        writeMutedWords(words + clean)
+        return true
+    }
+
+    fun removeMutedWord(word: String) {
+        writeMutedWords(_feedFilter.value.mutedWords - word)
+    }
+
+    private fun writeMutedWords(words: List<String>) {
+        prefs.edit { putString(KeyMutedWords, words.joinToString("\n")) }
+        _feedFilter.value = _feedFilter.value.copy(mutedWords = words)
+    }
+
+    private fun readMutedWords(): List<String> =
+        prefs.getString(KeyMutedWords, null)?.split('\n')?.mapNotNull(FeedFilter::normalizeWord)?.distinct().orEmpty()
+
     /** Where [accountId] left the feed named [feed] (a `Feed` name), or null before the first time. */
     fun feedPosition(accountId: String, feed: String): SavedFeedPosition? =
         SavedFeedPosition.decode(prefs.getString("$KeyFeedPosition$accountId:$feed", null))
@@ -91,6 +123,8 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         private const val KeyAnnounced = "announced_notification_types"
         private const val KeyColorSource = "color_source:"
         private const val KeyCustomColor = "custom_color:"
+        private const val KeyHideReposts = "feed_hide_reposts"
+        private const val KeyMutedWords = "feed_muted_words"
         private const val KeyFeedPosition = "feed_position:"
     }
 }

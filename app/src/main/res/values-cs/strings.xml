@@ -481,6 +481,18 @@
     <string name="onboarding_add_site">Přidat váš web</string>
     <string name="link_preview_remove">Odstranit náhled odkazu</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Filtry kanálu</string>
+    <string name="feed_filters_summary">Skrýt sdílení a ztlumená slova v Poznámkách a Čtečce</string>
+    <string name="feed_filters_explainer">Filtry mění jen to, co vidíte v této aplikaci. Nic se neposílá na váš web ani nikomu jinému.</string>
+    <string name="feed_filters_hide_reposts">Skrýt sdílení</string>
+    <string name="feed_filters_hide_reposts_summary">Zobrazovat jen příspěvky sledovaných účtů, ne to, co sdílejí</string>
+    <string name="feed_filters_muted_words">Ztlumená slova</string>
+    <string name="feed_filters_muted_explainer">Příspěvky s těmito slovy v textu, nadpisu, shrnutí nebo hashtazích se skryjí. Jen celá slova, na velikosti písmen nezáleží.</string>
+    <string name="feed_filters_word_label">Slovo ke ztlumení</string>
+    <string name="feed_filters_add">Přidat</string>
+    <string name="feed_filters_remove_word">Odebrat %1$s</string>
+    <string name="feed_filters_none">Zatím žádná ztlumená slova.</string>
+    <string name="feed_filtered_empty">Vše tady skrývají filtry kanálu.</string>
     <plurals name="feed_new_posts">
         <item quantity="one">%1$d nový příspěvek</item>
         <item quantity="few">%1$d nové příspěvky</item>

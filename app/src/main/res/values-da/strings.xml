@@ -457,6 +457,18 @@
     <string name="onboarding_add_site">Tilføj dit website</string>
     <string name="link_preview_remove">Fjern linkforhåndsvisning</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Feedfiltre</string>
+    <string name="feed_filters_summary">Skjul videredelinger og dæmpede ord i Noter og Læser</string>
+    <string name="feed_filters_explainer">Filtrene ændrer kun, hvad du ser i denne app. Der sendes intet til dit websted eller til nogen andre.</string>
+    <string name="feed_filters_hide_reposts">Skjul videredelinger</string>
+    <string name="feed_filters_hide_reposts_summary">Vis kun opslag fra de konti, du følger, ikke det, de deler videre</string>
+    <string name="feed_filters_muted_words">Dæmpede ord</string>
+    <string name="feed_filters_muted_explainer">Opslag med disse ord i tekst, titel, resumé eller hashtags skjules. Kun hele ord, og store og små bogstaver er ligegyldige.</string>
+    <string name="feed_filters_word_label">Ord, der skal dæmpes</string>
+    <string name="feed_filters_add">Tilføj</string>
+    <string name="feed_filters_remove_word">Fjern %1$s</string>
+    <string name="feed_filters_none">Ingen dæmpede ord endnu.</string>
+    <string name="feed_filtered_empty">Alt her er skjult af dine feedfiltre.</string>
     <plurals name="feed_new_posts">
         <item quantity="one">%1$d nyt opslag</item>
         <item quantity="other">%1$d nye opslag</item>

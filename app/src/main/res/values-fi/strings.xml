@@ -457,6 +457,18 @@
     <string name="onboarding_add_site">Lisää sivustosi</string>
     <string name="link_preview_remove">Poista linkin esikatselu</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Syötteen suodattimet</string>
+    <string name="feed_filters_summary">Piilota uudelleenjaot ja mykistetyt sanat Muistiinpanoissa ja Lukijassa</string>
+    <string name="feed_filters_explainer">Suodattimet muuttavat vain sitä, mitä näet tässä sovelluksessa. Mitään ei lähetetä sivustollesi tai muille.</string>
+    <string name="feed_filters_hide_reposts">Piilota uudelleenjaot</string>
+    <string name="feed_filters_hide_reposts_summary">Näytä vain seuraamiesi tilien omat julkaisut, ei niiden jakamia</string>
+    <string name="feed_filters_muted_words">Mykistetyt sanat</string>
+    <string name="feed_filters_muted_explainer">Julkaisut, joiden tekstissä, otsikossa, tiivistelmässä tai aihetunnisteissa on näitä sanoja, piilotetaan. Vain kokonaisia sanoja, isoilla ja pienillä kirjaimilla ei ole väliä.</string>
+    <string name="feed_filters_word_label">Mykistettävä sana</string>
+    <string name="feed_filters_add">Lisää</string>
+    <string name="feed_filters_remove_word">Poista %1$s</string>
+    <string name="feed_filters_none">Ei vielä mykistettyjä sanoja.</string>
+    <string name="feed_filtered_empty">Syötteen suodattimet piilottavat kaiken täältä.</string>
     <plurals name="feed_new_posts">
         <item quantity="one">%1$d uusi julkaisu</item>
         <item quantity="other">%1$d uutta julkaisua</item>

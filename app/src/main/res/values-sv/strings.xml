@@ -457,6 +457,18 @@
     <string name="onboarding_add_site">Lägg till din webbplats</string>
     <string name="link_preview_remove">Ta bort länkförhandsvisning</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Flödesfilter</string>
+    <string name="feed_filters_summary">Dölj delningar och tystade ord i Anteckningar och Läsare</string>
+    <string name="feed_filters_explainer">Filtren ändrar bara vad du ser i den här appen. Inget skickas till din webbplats eller till någon annan.</string>
+    <string name="feed_filters_hide_reposts">Dölj delningar</string>
+    <string name="feed_filters_hide_reposts_summary">Visa bara inlägg från konton du följer, inte det de delar vidare</string>
+    <string name="feed_filters_muted_words">Tystade ord</string>
+    <string name="feed_filters_muted_explainer">Inlägg med de här orden i text, rubrik, sammanfattning eller hashtaggar döljs. Bara hela ord, och versaler och gemener spelar ingen roll.</string>
+    <string name="feed_filters_word_label">Ord att tysta</string>
+    <string name="feed_filters_add">Lägg till</string>
+    <string name="feed_filters_remove_word">Ta bort %1$s</string>
+    <string name="feed_filters_none">Inga tystade ord än.</string>
+    <string name="feed_filtered_empty">Allt här är dolt av dina flödesfilter.</string>
     <plurals name="feed_new_posts">
         <item quantity="one">%1$d nytt inlägg</item>
         <item quantity="other">%1$d nya inlägg</item>

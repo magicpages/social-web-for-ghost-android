@@ -87,6 +87,7 @@ import co.magicpages.socialweb.data.settings.AppSettings
 import co.magicpages.socialweb.data.settings.ColorSource
 import co.magicpages.socialweb.data.settings.parseHexColor
 import co.magicpages.socialweb.ui.components.AppIcons
+import co.magicpages.socialweb.ui.feed.FeedFiltersScreen
 import co.magicpages.socialweb.ui.posts.MaxContentWidth
 import co.magicpages.socialweb.ui.theme.Gutter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -144,12 +145,28 @@ private val AnnouncedTypeLabels: List<Pair<Notification.Type, Int>> = listOf(
     Notification.Type.Follow to R.string.settings_notify_follows,
 )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+/** Settings, with the feed filters laid over it when opened from its row: they have no screen of their own to navigate to. */
 @Composable
 fun SettingsScreen(
     onBack: () -> Unit,
     onOpenBlocked: () -> Unit,
     onOpenAbout: () -> Unit,
+    viewModel: SettingsViewModel = hiltViewModel(),
+) {
+    var showFeedFilters by rememberSaveable { mutableStateOf(false) }
+    Box(Modifier.fillMaxSize()) {
+        SettingsContent(onBack, onOpenBlocked, onOpenAbout, onOpenFeedFilters = { showFeedFilters = true }, viewModel = viewModel)
+        if (showFeedFilters) FeedFiltersScreen(onBack = { showFeedFilters = false })
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun SettingsContent(
+    onBack: () -> Unit,
+    onOpenBlocked: () -> Unit,
+    onOpenAbout: () -> Unit,
+    onOpenFeedFilters: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     val autoplay by viewModel.autoplayVideos.collectAsStateWithLifecycle()
@@ -224,6 +241,18 @@ fun SettingsScreen(
                         SwitchRow(label, null, type in announced) { viewModel.setAnnounced(type, it) }
                     },
                 )
+
+                Column(Modifier.padding(top = 16.dp)) {
+                    SegmentedListItem(
+                        onClick = onOpenFeedFilters,
+                        shapes = ListItemDefaults.segmentedShapes(0, 1),
+                        colors = ListItemDefaults.segmentedColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+                        leadingContent = { Icon(AppIcons.VisibilityOff, contentDescription = null) },
+                        supportingContent = { Text(stringResource(R.string.feed_filters_summary)) },
+                    ) {
+                        Text(stringResource(R.string.feed_filters_title))
+                    }
+                }
 
                 SectionTitle(R.string.settings_video, Modifier.padding(top = 16.dp))
                 SwitchGroup(

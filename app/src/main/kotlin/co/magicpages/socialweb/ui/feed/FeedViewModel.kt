@@ -17,6 +17,7 @@ import co.magicpages.socialweb.data.activitypub.Moderation
 import co.magicpages.socialweb.data.activitypub.FreshAvatars
 import co.magicpages.socialweb.data.activitypub.PostInteractions
 import co.magicpages.socialweb.data.feed.SavedFeedPosition
+import co.magicpages.socialweb.data.feed.loadFiltered
 import co.magicpages.socialweb.data.settings.AppSettings
 import co.magicpages.socialweb.ui.posts.FeedItem
 import co.magicpages.socialweb.ui.posts.PostsPagingSource
@@ -37,6 +38,9 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 
 /** The two timelines of followed accounts. */
 enum class Feed {
@@ -68,16 +72,19 @@ class FeedViewModel @AssistedInject constructor(
     // Reposts of one post are folded into one item per load of the list: a refresh starts anew.
     private val repostGroups = MutableStateFlow(RepostGroups())
 
-    val posts: Flow<PagingData<FeedItem>> = accounts.account
-        .filterNotNull()
-        .distinctUntilChangedBy { it.site to it.credential }
-        .flatMapLatest { account ->
+    val posts: Flow<PagingData<FeedItem>> = combine(
+        accounts.account.filterNotNull().distinctUntilChangedBy { it.site to it.credential },
+        settings.feedFilter,
+    ) { account, filter -> account to filter }
+        .flatMapLatest { (account, filter) ->
             Pager(PagingConfig(pageSize = 20, enablePlaceholders = false)) {
                 val groups = RepostGroups().also { repostGroups.value = it }
                 PostsPagingSource(interactions, groups = groups) { next ->
-                    when (feed) {
-                        Feed.Reader -> activityPub.readerFeed(account.site, account.credential, next)
-                        Feed.Notes -> activityPub.notesFeed(account.site, account.credential, next)
+                    loadFiltered(filter, next) { cursor ->
+                        when (feed) {
+                            Feed.Reader -> activityPub.readerFeed(account.site, account.credential, cursor)
+                            Feed.Notes -> activityPub.notesFeed(account.site, account.credential, cursor)
+                        }
                     }.also { freshAvatars.track(it.posts) }
                 }
             }.flow
@@ -105,6 +112,11 @@ class FeedViewModel @AssistedInject constructor(
     fun toggleRepost(post: Post) = interactions.toggleRepost(post)
 
     private val feedName = feed.name
+
+    /** Whether any filter is on, for telling an empty list that was filtered from one with nothing in it. */
+    val filtering: StateFlow<Boolean> = settings.feedFilter
+        .map { it.isActive }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, settings.feedFilter.value.isActive)
 
     /** Set once the saved position has been restored (or found to need no restoring): it happens once per start of the app. */
     var positionRestored = false

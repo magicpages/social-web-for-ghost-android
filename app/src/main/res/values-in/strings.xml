@@ -445,6 +445,18 @@
     <string name="onboarding_add_site">Tambahkan situs Anda</string>
     <string name="link_preview_remove">Hapus pratinjau tautan</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Filter feed</string>
+    <string name="feed_filters_summary">Sembunyikan posting ulang dan kata yang dibisukan di Catatan dan Pembaca</string>
+    <string name="feed_filters_explainer">Filter ini hanya mengubah tampilan di aplikasi ini. Tidak ada yang dikirim ke situs atau ke orang lain.</string>
+    <string name="feed_filters_hide_reposts">Sembunyikan posting ulang</string>
+    <string name="feed_filters_hide_reposts_summary">Hanya tampilkan kiriman dari akun yang diikuti, bukan yang mereka bagikan</string>
+    <string name="feed_filters_muted_words">Kata yang dibisukan</string>
+    <string name="feed_filters_muted_explainer">Kiriman dengan kata ini di teks, judul, ringkasan, atau tagar akan disembunyikan. Hanya kata utuh, huruf besar dan kecil dianggap sama.</string>
+    <string name="feed_filters_word_label">Kata untuk dibisukan</string>
+    <string name="feed_filters_add">Tambah</string>
+    <string name="feed_filters_remove_word">Hapus %1$s</string>
+    <string name="feed_filters_none">Belum ada kata yang dibisukan.</string>
+    <string name="feed_filtered_empty">Semua di sini disembunyikan oleh filter feed.</string>
     <plurals name="feed_new_posts">
         <item quantity="other">%1$d kiriman baru</item>
     </plurals>

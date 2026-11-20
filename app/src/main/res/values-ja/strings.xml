@@ -445,6 +445,18 @@
     <string name="onboarding_add_site">サイトを追加</string>
     <string name="link_preview_remove">リンクプレビューを削除</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">フィードのフィルター</string>
+    <string name="feed_filters_summary">ノートとリーダーでリポストとミュートした語句を非表示にします</string>
+    <string name="feed_filters_explainer">このフィルターはこのアプリでの表示だけを変えます。サイトや他の人には何も送信されません。</string>
+    <string name="feed_filters_hide_reposts">リポストを非表示</string>
+    <string name="feed_filters_hide_reposts_summary">フォロー中のアカウント自身の投稿だけを表示し、共有されたものは表示しません</string>
+    <string name="feed_filters_muted_words">ミュートする語句</string>
+    <string name="feed_filters_muted_explainer">本文、タイトル、要約、ハッシュタグにこれらの語句を含む投稿を非表示にします。完全一致の単語のみで、大文字と小文字は区別しません。</string>
+    <string name="feed_filters_word_label">ミュートする語句</string>
+    <string name="feed_filters_add">追加</string>
+    <string name="feed_filters_remove_word">%1$s を削除</string>
+    <string name="feed_filters_none">ミュートした語句はまだありません。</string>
+    <string name="feed_filtered_empty">ここにあるものはすべてフィードのフィルターで非表示になっています。</string>
     <plurals name="feed_new_posts">
         <item quantity="other">新しい投稿 %1$d 件</item>
     </plurals>

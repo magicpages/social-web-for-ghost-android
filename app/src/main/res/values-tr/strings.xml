@@ -457,6 +457,18 @@
     <string name="onboarding_add_site">Sitenizi ekleyin</string>
     <string name="link_preview_remove">Bağlantı önizlemesini kaldır</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Akış filtreleri</string>
+    <string name="feed_filters_summary">Notlar ve Okuyucu\'da yeniden paylaşımları ve sessize alınan sözcükleri gizle</string>
+    <string name="feed_filters_explainer">Bu filtreler yalnızca bu uygulamada gördüklerinizi değiştirir. Sitenize ya da başkasına hiçbir şey gönderilmez.</string>
+    <string name="feed_filters_hide_reposts">Yeniden paylaşımları gizle</string>
+    <string name="feed_filters_hide_reposts_summary">Yalnızca takip ettiğiniz hesapların kendi gönderilerini göster, paylaştıklarını değil</string>
+    <string name="feed_filters_muted_words">Sessize alınan sözcükler</string>
+    <string name="feed_filters_muted_explainer">Metninde, başlığında, özetinde veya etiketlerinde bu sözcükler geçen gönderiler gizlenir. Yalnızca tam sözcükler eşleşir, büyük küçük harf fark etmez.</string>
+    <string name="feed_filters_word_label">Sessize alınacak sözcük</string>
+    <string name="feed_filters_add">Ekle</string>
+    <string name="feed_filters_remove_word">%1$s sözcüğünü kaldır</string>
+    <string name="feed_filters_none">Henüz sessize alınan sözcük yok.</string>
+    <string name="feed_filtered_empty">Buradaki her şey akış filtreleriniz tarafından gizlendi.</string>
     <plurals name="feed_new_posts">
         <item quantity="one">%1$d yeni gönderi</item>
         <item quantity="other">%1$d yeni gönderi</item>

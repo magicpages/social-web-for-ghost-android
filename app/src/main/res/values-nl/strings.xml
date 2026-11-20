@@ -457,6 +457,18 @@
     <string name="onboarding_add_site">Je site toevoegen</string>
     <string name="link_preview_remove">Linkvoorbeeld verwijderen</string>
     <!-- feed filters and new posts -->
+    <string name="feed_filters_title">Feedfilters</string>
+    <string name="feed_filters_summary">Verberg reposts en gedempte woorden in Notities en Lezer</string>
+    <string name="feed_filters_explainer">De filters veranderen alleen wat je in deze app ziet. Er wordt niets naar je site of naar anderen gestuurd.</string>
+    <string name="feed_filters_hide_reposts">Reposts verbergen</string>
+    <string name="feed_filters_hide_reposts_summary">Toon alleen berichten van accounts die je volgt, niet wat zij delen</string>
+    <string name="feed_filters_muted_words">Gedempte woorden</string>
+    <string name="feed_filters_muted_explainer">Berichten met deze woorden in tekst, titel, samenvatting of hashtags worden verborgen. Alleen hele woorden, hoofdletters maken niet uit.</string>
+    <string name="feed_filters_word_label">Woord om te dempen</string>
+    <string name="feed_filters_add">Toevoegen</string>
+    <string name="feed_filters_remove_word">%1$s verwijderen</string>
+    <string name="feed_filters_none">Nog geen gedempte woorden.</string>
+    <string name="feed_filtered_empty">Alles hier is verborgen door je feedfilters.</string>
     <plurals name="feed_new_posts">
         <item quantity="one">%1$d nieuw bericht</item>
         <item quantity="other">%1$d nieuwe berichten</item>
