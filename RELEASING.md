@@ -213,39 +213,6 @@ F-Droid builds the `foss` flavor from source and signs it with its own key, so t
 
 F-Droid reads the listing (`fastlane/metadata/android/`), including `changelogs/<versionCode>.txt`, from this repo.
 
-The app is added with a merge request to [fdroiddata](https://gitlab.com/fdroid/fdroiddata) adding `metadata/co.magicpages.socialweb.yml`:
+The recipe is `metadata/co.magicpages.socialweb.yml` in [fdroiddata](https://gitlab.com/fdroid/fdroiddata), submitted in [merge request !58352](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/58352) from the fork `betschki/fdroiddata` (branch `co.magicpages.socialweb`). It builds `gradle: [foss]` in `subdir: app` at a full commit hash, with the `NonFreeNet` anti-feature for KLIPY's GIF search. The fork's pipeline needs GitLab identity verification, which F-Droid asks contributors not to do; their maintainers run it on the merge request.
 
-```yaml
-Categories:
-  - Social
-License: MIT
-AuthorName: Magic Pages
-AuthorEmail: help@magicpages.co
-WebSite: https://www.magicpages.co/features/android-app/
-SourceCode: https://github.com/magicpages/social-web-for-ghost-android
-IssueTracker: https://github.com/magicpages/social-web-for-ghost-android/issues
-
-AutoName: Social Web
-
-RepoType: git
-Repo: https://github.com/magicpages/social-web-for-ghost-android.git
-
-AntiFeatures:
-  NonFreeNet:
-    en-US: GIF search in the editor uses KLIPY, a proprietary service.
-
-Builds:
-  - versionName: 1.0.0
-    versionCode: <commit count of the built commit>
-    commit: <tag or commit>
-    subdir: app
-    gradle:
-      - foss
-
-AutoUpdateMode: None
-UpdateCheckMode: None
-CurrentVersion: 1.0.0
-CurrentVersionCode: <same versionCode>
-```
-
-The versionCode isn't written in the source (it's the commit count), so F-Droid's update check can't read it from a tag; each release is a new `Builds` entry, and the F-Droid reviewers may suggest a better way. Before submitting, check the build the way F-Droid does with `fdroid build -v -l co.magicpages.socialweb` in a clone of fdroiddata, or at least `./gradlew :app:assembleFossRelease`.
+The versionCode isn't written in the source (it's the commit count), so F-Droid's update check can't read it from a tag: auto-update is off, and each release is a new `Builds` entry (`versionName`, `versionCode` = `git rev-list --count <commit>`, full `commit` hash) plus `CurrentVersion`/`CurrentVersionCode`. The merge request offers to change the scheme the way the reviewers suggest. Before each submission, `./gradlew :app:assembleFossRelease` from a clean clone without keys must build an unsigned APK with the expected versionCode.
