@@ -60,6 +60,16 @@
     <string name="thread_more_replies">Показать больше ответов</string>
     <string name="thread_reply_prompt">Ответить пользователю %1$s…</string>
     <string name="thread_not_found">Этот пост больше недоступен.</string>
+    <string name="reader_settings">Настройки чтения</string>
+    <string name="reader_background_auto">Авто</string>
+    <string name="reader_background_sepia">Сепия</string>
+    <string name="reader_background_light">Светлый</string>
+    <string name="reader_background_dark">Тёмный</string>
+    <string name="reader_font_sans">Системный</string>
+    <string name="reader_font_serif">С засечками</string>
+    <string name="reader_text_smaller">Уменьшить текст</string>
+    <string name="reader_text_larger">Увеличить текст</string>
+    <string name="reader_text_reset">Стандартный размер текста</string>
 
     <string name="profile_follow">Подписаться</string>
     <string name="profile_following">Вы подписаны</string>

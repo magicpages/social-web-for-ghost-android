@@ -59,6 +59,16 @@
     <string name="thread_more_replies">Mostrar mais respostas</string>
     <string name="thread_reply_prompt">Responder a %1$s…</string>
     <string name="thread_not_found">Este post não está mais disponível.</string>
+    <string name="reader_settings">Configurações de leitura</string>
+    <string name="reader_background_auto">Automático</string>
+    <string name="reader_background_sepia">Sépia</string>
+    <string name="reader_background_light">Claro</string>
+    <string name="reader_background_dark">Escuro</string>
+    <string name="reader_font_sans">Sistema</string>
+    <string name="reader_font_serif">Serifa</string>
+    <string name="reader_text_smaller">Texto menor</string>
+    <string name="reader_text_larger">Texto maior</string>
+    <string name="reader_text_reset">Tamanho de texto padrão</string>
 
     <string name="profile_follow">Seguir</string>
     <string name="profile_following">Seguindo</string>

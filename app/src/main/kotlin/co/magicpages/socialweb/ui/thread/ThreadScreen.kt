@@ -69,8 +69,12 @@ import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.data.ghost.isGhostActivityPubUrl
+import co.magicpages.socialweb.data.settings.ReaderBackground
 import co.magicpages.socialweb.data.translation.TranslationProblem
 import co.magicpages.socialweb.ui.article.LocalArticleAudio
+import co.magicpages.socialweb.ui.article.LocalReaderSettings
+import co.magicpages.socialweb.ui.article.ReaderSettingsAction
+import co.magicpages.socialweb.ui.article.ReaderSettingsViewModel
 import co.magicpages.socialweb.ui.article.articleItems
 import co.magicpages.socialweb.ui.article.rememberArticleAudio
 import co.magicpages.socialweb.ui.components.AppIcons
@@ -92,6 +96,7 @@ import co.magicpages.socialweb.ui.posts.ReplyEditorHost
 import co.magicpages.socialweb.ui.posts.PostRow
 import co.magicpages.socialweb.ui.posts.PostTextInset
 import co.magicpages.socialweb.ui.theme.Gutter
+import co.magicpages.socialweb.ui.theme.ReaderTheme
 import co.magicpages.socialweb.ui.posts.displayName
 import co.magicpages.socialweb.ui.translation.ArticleTranslation
 import co.magicpages.socialweb.ui.translation.ArticleTranslationBanner
@@ -173,93 +178,100 @@ fun ThreadScreen(
         }
     }
 
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        snackbarHost = { SnackbarHost(snackbar) },
-        topBar = {
-            TopAppBar(
-                title = {
-                    when {
-                        articleTitle == null -> Text(stringResource(R.string.thread_title))
-                        headerScrolledAway -> Text(articleTitle, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(AppIcons.ArrowBack, contentDescription = stringResource(R.string.back))
-                    }
-                },
-                actions = {
-                    OpenInBrowserAction(webUrl)
-                    if (articleOpen && focused != null) {
-                        ArticleMoreMenu(focused) {
-                            if (canTranslate) ArticleTranslateAction(articleTranslation, onToggle = translation::toggle)
+    val readerSettingsModel = hiltViewModel<ReaderSettingsViewModel>()
+    val readerSettings by readerSettingsModel.settings.collectAsStateWithLifecycle()
+
+    // The reader's page colour covers the whole screen while an article is open, replies included.
+    ReaderTheme(if (articleOpen) readerSettings.background else ReaderBackground.Auto) {
+        Scaffold(
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+            snackbarHost = { SnackbarHost(snackbar) },
+            topBar = {
+                TopAppBar(
+                    title = {
+                        when {
+                            articleTitle == null -> Text(stringResource(R.string.thread_title))
+                            headerScrolledAway -> Text(articleTitle, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
-                    }
-                },
-                scrollBehavior = scrollBehavior,
-            )
-        },
-        bottomBar = {
-            focused?.takeIf { !it.post.isDeleted }?.let { ReplyBar(it) { viewModel.composer.start(it) } }
-        },
-    ) { padding ->
-        when (val current = state) {
-            ThreadUiState.Loading -> CenteredLoading(Modifier.padding(padding))
-            is ThreadUiState.Failed -> FullScreenError(
-                message = if ((current.error as? SocialWebException)?.status == 404) {
-                    stringResource(R.string.thread_not_found)
-                } else {
-                    errorMessage(current.error)
-                },
-                onRetry = viewModel::retry,
-                modifier = Modifier.padding(padding),
-                sessionEnded = current.error is GhostException.Unauthorized,
-                onSignOut = onSignOut,
-                secondary = {
-                    // The service only has posts it has seen; others still open at their origin.
-                    if (webUrl != null) {
-                        val uriHandler = browserUriHandler()
-                        OutlinedButton(onClick = { uriHandler.openUri(webUrl) }) { Text(stringResource(R.string.open_in_browser)) }
-                    }
-                },
-            )
-            is ThreadUiState.Loaded -> Column(Modifier.fillMaxSize().padding(padding)) {
-                if (articleOpen) ArticleTranslationBanner(articleTranslation, onShowOriginal = translation::showOriginal)
-                val pullState = rememberPullToRefreshState()
-                PullToRefreshBox(
-                    isRefreshing = current.refreshing,
-                    onRefresh = viewModel::refresh,
-                    state = pullState,
-                    indicator = {
-                        PullToRefreshDefaults.LoadingIndicator(pullState, current.refreshing, Modifier.align(Alignment.TopCenter))
                     },
-                    modifier = Modifier.fillMaxWidth().weight(1f),
-                ) {
-                    var scrolled by remember { mutableStateOf(false) }
-                    LaunchedEffect(listState) {
-                        snapshotFlow { listState.isScrollInProgress }.first { it }
-                        scrolled = true
-                    }
-                    val hasParent = current.content.ancestors.isNotEmpty() || current.content.parentLink != null
-                    // A parent found after the thread showed lands above the post, and the list keeps the
-                    // post in place. Bring the parent into view unless the reader has moved on.
-                    LaunchedEffect(hasParent) {
-                        if (hasParent && !scrolled) listState.requestScrollToItem(0)
-                    }
-                    KeepAncestorsInView(listState, current.content)
-                    // Audio belongs to the screen, so it keeps playing while its player scrolls away.
-                    CompositionLocalProvider(LocalArticleAudio provides articleAudio) {
-                        LazyColumn(
-                            Modifier.fillMaxSize(),
-                            state = listState,
-                            contentPadding = PaddingValues(top = 8.dp, bottom = 24.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            thread(
-                                current.content, articleShown, articleTranslation, callbacks, onOpenPost,
-                                viewModel::loadMore, viewModel::loadEarlier,
-                            ) { articleShown = true }
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(AppIcons.ArrowBack, contentDescription = stringResource(R.string.back))
+                        }
+                    },
+                    actions = {
+                        if (articleOpen && focused != null) ReaderSettingsAction(readerSettings, readerSettingsModel::update)
+                        OpenInBrowserAction(webUrl)
+                        if (articleOpen && focused != null) {
+                            ArticleMoreMenu(focused) {
+                                if (canTranslate) ArticleTranslateAction(articleTranslation, onToggle = translation::toggle)
+                            }
+                        }
+                    },
+                    scrollBehavior = scrollBehavior,
+                )
+            },
+            bottomBar = {
+                focused?.takeIf { !it.post.isDeleted }?.let { ReplyBar(it) { viewModel.composer.start(it) } }
+            },
+        ) { padding ->
+            when (val current = state) {
+                ThreadUiState.Loading -> CenteredLoading(Modifier.padding(padding))
+                is ThreadUiState.Failed -> FullScreenError(
+                    message = if ((current.error as? SocialWebException)?.status == 404) {
+                        stringResource(R.string.thread_not_found)
+                    } else {
+                        errorMessage(current.error)
+                    },
+                    onRetry = viewModel::retry,
+                    modifier = Modifier.padding(padding),
+                    sessionEnded = current.error is GhostException.Unauthorized,
+                    onSignOut = onSignOut,
+                    secondary = {
+                        // The service only has posts it has seen; others still open at their origin.
+                        if (webUrl != null) {
+                            val uriHandler = browserUriHandler()
+                            OutlinedButton(onClick = { uriHandler.openUri(webUrl) }) { Text(stringResource(R.string.open_in_browser)) }
+                        }
+                    },
+                )
+                is ThreadUiState.Loaded -> Column(Modifier.fillMaxSize().padding(padding)) {
+                    if (articleOpen) ArticleTranslationBanner(articleTranslation, onShowOriginal = translation::showOriginal)
+                    val pullState = rememberPullToRefreshState()
+                    PullToRefreshBox(
+                        isRefreshing = current.refreshing,
+                        onRefresh = viewModel::refresh,
+                        state = pullState,
+                        indicator = {
+                            PullToRefreshDefaults.LoadingIndicator(pullState, current.refreshing, Modifier.align(Alignment.TopCenter))
+                        },
+                        modifier = Modifier.fillMaxWidth().weight(1f),
+                    ) {
+                        var scrolled by remember { mutableStateOf(false) }
+                        LaunchedEffect(listState) {
+                            snapshotFlow { listState.isScrollInProgress }.first { it }
+                            scrolled = true
+                        }
+                        val hasParent = current.content.ancestors.isNotEmpty() || current.content.parentLink != null
+                        // A parent found after the thread showed lands above the post, and the list keeps the
+                        // post in place. Bring the parent into view unless the reader has moved on.
+                        LaunchedEffect(hasParent) {
+                            if (hasParent && !scrolled) listState.requestScrollToItem(0)
+                        }
+                        KeepAncestorsInView(listState, current.content)
+                        // Audio belongs to the screen, so it keeps playing while its player scrolls away.
+                        CompositionLocalProvider(LocalArticleAudio provides articleAudio, LocalReaderSettings provides readerSettings) {
+                            LazyColumn(
+                                Modifier.fillMaxSize(),
+                                state = listState,
+                                contentPadding = PaddingValues(top = 8.dp, bottom = 24.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                thread(
+                                    current.content, articleShown, articleTranslation, callbacks, onOpenPost,
+                                    viewModel::loadMore, viewModel::loadEarlier,
+                                ) { articleShown = true }
+                            }
                         }
                     }
                 }

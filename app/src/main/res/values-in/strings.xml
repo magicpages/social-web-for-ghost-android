@@ -57,6 +57,16 @@
     <string name="thread_more_replies">Tampilkan balasan lainnya</string>
     <string name="thread_reply_prompt">Balas %1$s…</string>
     <string name="thread_not_found">Postingan ini sudah tidak tersedia.</string>
+    <string name="reader_settings">Pengaturan membaca</string>
+    <string name="reader_background_auto">Otomatis</string>
+    <string name="reader_background_sepia">Sepia</string>
+    <string name="reader_background_light">Terang</string>
+    <string name="reader_background_dark">Gelap</string>
+    <string name="reader_font_sans">Sistem</string>
+    <string name="reader_font_serif">Serif</string>
+    <string name="reader_text_smaller">Teks lebih kecil</string>
+    <string name="reader_text_larger">Teks lebih besar</string>
+    <string name="reader_text_reset">Ukuran teks default</string>
 
     <string name="profile_follow">Ikuti</string>
     <string name="profile_following">Mengikuti</string>

@@ -58,6 +58,16 @@
     <string name="thread_more_replies">Vis flere svar</string>
     <string name="thread_reply_prompt">Svar til %1$s…</string>
     <string name="thread_not_found">Dette innlegget er ikke tilgjengelig lenger.</string>
+    <string name="reader_settings">Leseinnstillinger</string>
+    <string name="reader_background_auto">Automatisk</string>
+    <string name="reader_background_sepia">Sepia</string>
+    <string name="reader_background_light">Lys</string>
+    <string name="reader_background_dark">Mørk</string>
+    <string name="reader_font_sans">System</string>
+    <string name="reader_font_serif">Serif</string>
+    <string name="reader_text_smaller">Mindre tekst</string>
+    <string name="reader_text_larger">Større tekst</string>
+    <string name="reader_text_reset">Standard tekststørrelse</string>
 
     <string name="profile_follow">Følg</string>
     <string name="profile_following">Følger</string>

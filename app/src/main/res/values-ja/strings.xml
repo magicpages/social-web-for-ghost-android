@@ -57,6 +57,16 @@
     <string name="thread_more_replies">さらに返信を表示</string>
     <string name="thread_reply_prompt">%1$s に返信…</string>
     <string name="thread_not_found">この投稿は利用できなくなりました。</string>
+    <string name="reader_settings">読書設定</string>
+    <string name="reader_background_auto">自動</string>
+    <string name="reader_background_sepia">セピア</string>
+    <string name="reader_background_light">ライト</string>
+    <string name="reader_background_dark">ダーク</string>
+    <string name="reader_font_sans">システム</string>
+    <string name="reader_font_serif">明朝</string>
+    <string name="reader_text_smaller">文字を小さく</string>
+    <string name="reader_text_larger">文字を大きく</string>
+    <string name="reader_text_reset">標準の文字サイズ</string>
 
     <string name="profile_follow">フォロー</string>
     <string name="profile_following">フォロー中</string>

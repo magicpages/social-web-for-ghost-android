@@ -57,6 +57,16 @@
     <string name="thread_more_replies">Hiện thêm câu trả lời</string>
     <string name="thread_reply_prompt">Trả lời %1$s…</string>
     <string name="thread_not_found">Bài đăng này không còn nữa.</string>
+    <string name="reader_settings">Cài đặt đọc</string>
+    <string name="reader_background_auto">Tự động</string>
+    <string name="reader_background_sepia">Nâu đỏ</string>
+    <string name="reader_background_light">Sáng</string>
+    <string name="reader_background_dark">Tối</string>
+    <string name="reader_font_sans">Hệ thống</string>
+    <string name="reader_font_serif">Có chân</string>
+    <string name="reader_text_smaller">Chữ nhỏ hơn</string>
+    <string name="reader_text_larger">Chữ lớn hơn</string>
+    <string name="reader_text_reset">Cỡ chữ mặc định</string>
 
     <string name="profile_follow">Theo dõi</string>
     <string name="profile_following">Đang theo dõi</string>

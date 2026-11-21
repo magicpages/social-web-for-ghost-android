@@ -60,6 +60,16 @@
     <string name="thread_more_replies">Показати більше відповідей</string>
     <string name="thread_reply_prompt">Відповісти користувачу %1$s…</string>
     <string name="thread_not_found">Цей допис більше недоступний.</string>
+    <string name="reader_settings">Налаштування читання</string>
+    <string name="reader_background_auto">Авто</string>
+    <string name="reader_background_sepia">Сепія</string>
+    <string name="reader_background_light">Світлий</string>
+    <string name="reader_background_dark">Темний</string>
+    <string name="reader_font_sans">Системний</string>
+    <string name="reader_font_serif">Із засічками</string>
+    <string name="reader_text_smaller">Зменшити текст</string>
+    <string name="reader_text_larger">Збільшити текст</string>
+    <string name="reader_text_reset">Стандартний розмір тексту</string>
 
     <string name="profile_follow">Підписатися</string>
     <string name="profile_following">Ви підписані</string>

@@ -58,6 +58,16 @@
     <string name="thread_more_replies">Meer reacties tonen</string>
     <string name="thread_reply_prompt">Reageer op %1$s…</string>
     <string name="thread_not_found">Dit bericht is niet meer beschikbaar.</string>
+    <string name="reader_settings">Leesinstellingen</string>
+    <string name="reader_background_auto">Automatisch</string>
+    <string name="reader_background_sepia">Sepia</string>
+    <string name="reader_background_light">Licht</string>
+    <string name="reader_background_dark">Donker</string>
+    <string name="reader_font_sans">Systeem</string>
+    <string name="reader_font_serif">Schreef</string>
+    <string name="reader_text_smaller">Kleinere tekst</string>
+    <string name="reader_text_larger">Grotere tekst</string>
+    <string name="reader_text_reset">Standaardtekstgrootte</string>
 
     <string name="profile_follow">Volgen</string>
     <string name="profile_following">Volgend</string>

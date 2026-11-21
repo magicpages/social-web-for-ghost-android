@@ -51,12 +51,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -116,7 +118,7 @@ fun LazyListScope.articleItems(
 ) {
     val dek = document.dek(post.summary)
     item(key = "article:header", contentType = "article:header") {
-        ArticleHeader(post, dek, onOpenProfile)
+        ReaderText { ArticleHeader(post, dek, onOpenProfile) }
     }
     itemsIndexed(
         document.blocks,
@@ -124,10 +126,17 @@ fun LazyListScope.articleItems(
         contentType = { _, block -> block.contentType },
     ) { _, block ->
         CompositionLocalProvider(LocalArticleAccess provides access) {
-            BlockItem(block)
+            ReaderText { BlockItem(block) }
         }
     }
 }
+
+/** Body text: the app's reading style, in the typeface the reader chose. */
+private val bodyStyle: TextStyle
+    @Composable @ReadOnlyComposable get() {
+        val reading = MaterialTheme.typography.reading
+        return LocalArticleFontFamily.current?.let { reading.copy(fontFamily = it) } ?: reading
+    }
 
 private val ArticleBlock.contentType: String
     get() = when (this) {
@@ -343,7 +352,7 @@ private fun MembersOnlyBlock(block: ArticleBlock.MembersOnly) {
 
 @Composable
 private fun ParagraphBlock(block: ArticleBlock.Paragraph) {
-    HtmlText(block.text, Modifier.fillMaxWidth().padding(bottom = 16.dp), MaterialTheme.typography.reading)
+    HtmlText(block.text, Modifier.fillMaxWidth().padding(bottom = 16.dp), bodyStyle)
 }
 
 @Composable
@@ -367,11 +376,12 @@ private fun HeadingBlock(block: ArticleBlock.Heading) {
 @Composable
 private fun QuoteBlock(block: ArticleBlock.Quote) {
     val typography = MaterialTheme.typography
+    val family = LocalArticleFontFamily.current
     if (block.alternative) {
-        val style = remember(typography) { typography.headlineSmall.copy(fontStyle = FontStyle.Italic, textAlign = TextAlign.Center) }
+        val style = remember(typography, family) { typography.headlineSmall.copy(fontStyle = FontStyle.Italic, textAlign = TextAlign.Center, fontFamily = family) }
         HtmlText(block.text, Modifier.fillMaxWidth().padding(top = 8.dp, bottom = 24.dp), style)
     } else {
-        val style = remember(typography) { typography.titleLarge.copy(fontStyle = FontStyle.Italic) }
+        val style = remember(typography, family) { typography.titleLarge.copy(fontStyle = FontStyle.Italic, fontFamily = family) }
         Row(Modifier.padding(bottom = 16.dp).height(IntrinsicSize.Min)) {
             Box(
                 Modifier
@@ -387,7 +397,7 @@ private fun QuoteBlock(block: ArticleBlock.Quote) {
 
 @Composable
 private fun ListBlock(block: ArticleBlock.BulletList) {
-    val style = MaterialTheme.typography.reading
+    val style = bodyStyle
     Column(Modifier.fillMaxWidth().padding(bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         block.entries.forEach { entry ->
             Row(Modifier.padding(start = (20 * entry.depth.coerceAtLeast(0)).dp)) {

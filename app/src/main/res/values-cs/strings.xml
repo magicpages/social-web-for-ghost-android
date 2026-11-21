@@ -60,6 +60,16 @@
     <string name="thread_more_replies">Zobrazit další odpovědi</string>
     <string name="thread_reply_prompt">Odpovědět uživateli %1$s…</string>
     <string name="thread_not_found">Tento příspěvek už není dostupný.</string>
+    <string name="reader_settings">Nastavení čtení</string>
+    <string name="reader_background_auto">Automaticky</string>
+    <string name="reader_background_sepia">Sépie</string>
+    <string name="reader_background_light">Světlé</string>
+    <string name="reader_background_dark">Tmavé</string>
+    <string name="reader_font_sans">Systémové</string>
+    <string name="reader_font_serif">Patkové</string>
+    <string name="reader_text_smaller">Menší text</string>
+    <string name="reader_text_larger">Větší text</string>
+    <string name="reader_text_reset">Výchozí velikost textu</string>
 
     <string name="profile_follow">Sledovat</string>
     <string name="profile_following">Sledujete</string>

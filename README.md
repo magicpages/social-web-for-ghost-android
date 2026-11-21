@@ -11,7 +11,7 @@ The app is built by [Magic Pages](https://www.magicpages.co). It's an independen
 ## What it does
 
 - **Notes:** short posts from everyone you follow. Like, repost, quote and reply. The feed remembers where you were and shows a "new posts" button instead of jumping, and a "You're all caught up" line marks where the posts you've already seen begin. Hide reposts or posts with muted words.
-- **Reader:** long-form articles from the publications you follow, in a reading view with audio and video.
+- **Reader:** long-form articles from the publications you follow, in a reading view with audio and video. Pick the page colour (auto, sepia, light or dark), a sans or serif typeface and the text size, as in Ghost Admin's reader.
 - **Explore:** find people and publications, or browse topics like News or Photography as posts or as people to follow.
 - **Posting:** notes and replies with photos and alt text, from your site's own profile. Take a photo with the camera right in the composer. GIFs from KLIPY when your Ghost site has a KLIPY key, like its editor's GIF card. Share a link, text or a photo from any other app to start one.
 - **Your profile:** edit your name, username, bio, picture and cover image. Share any profile as a QR code, a link or a picture card.

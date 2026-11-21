@@ -62,6 +62,16 @@
     <string name="thread_more_replies">عرض المزيد من الردود</string>
     <string name="thread_reply_prompt">الرد على %1$s…</string>
     <string name="thread_not_found">هذا المنشور لم يعد متاحًا.</string>
+    <string name="reader_settings">إعدادات القراءة</string>
+    <string name="reader_background_auto">تلقائي</string>
+    <string name="reader_background_sepia">سيبيا</string>
+    <string name="reader_background_light">فاتح</string>
+    <string name="reader_background_dark">داكن</string>
+    <string name="reader_font_sans">النظام</string>
+    <string name="reader_font_serif">مُذيَّل</string>
+    <string name="reader_text_smaller">نص أصغر</string>
+    <string name="reader_text_larger">نص أكبر</string>
+    <string name="reader_text_reset">حجم النص الافتراضي</string>
 
     <string name="profile_follow">متابعة</string>
     <string name="profile_following">تتابعه</string>

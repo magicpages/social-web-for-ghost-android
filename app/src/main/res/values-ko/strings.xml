@@ -57,6 +57,16 @@
     <string name="thread_more_replies">답글 더 보기</string>
     <string name="thread_reply_prompt">%1$s님에게 답글…</string>
     <string name="thread_not_found">이 게시물은 더 이상 볼 수 없어요.</string>
+    <string name="reader_settings">읽기 설정</string>
+    <string name="reader_background_auto">자동</string>
+    <string name="reader_background_sepia">세피아</string>
+    <string name="reader_background_light">밝게</string>
+    <string name="reader_background_dark">어둡게</string>
+    <string name="reader_font_sans">시스템</string>
+    <string name="reader_font_serif">세리프</string>
+    <string name="reader_text_smaller">글자 작게</string>
+    <string name="reader_text_larger">글자 크게</string>
+    <string name="reader_text_reset">기본 글자 크기</string>
 
     <string name="profile_follow">팔로우</string>
     <string name="profile_following">팔로잉</string>

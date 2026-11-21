@@ -58,6 +58,16 @@
     <string name="thread_more_replies">Näytä lisää vastauksia</string>
     <string name="thread_reply_prompt">Vastaa käyttäjälle %1$s…</string>
     <string name="thread_not_found">Tämä julkaisu ei ole enää saatavilla.</string>
+    <string name="reader_settings">Lukuasetukset</string>
+    <string name="reader_background_auto">Automaattinen</string>
+    <string name="reader_background_sepia">Seepia</string>
+    <string name="reader_background_light">Vaalea</string>
+    <string name="reader_background_dark">Tumma</string>
+    <string name="reader_font_sans">Järjestelmä</string>
+    <string name="reader_font_serif">Serif</string>
+    <string name="reader_text_smaller">Pienempi teksti</string>
+    <string name="reader_text_larger">Suurempi teksti</string>
+    <string name="reader_text_reset">Oletustekstikoko</string>
 
     <string name="profile_follow">Seuraa</string>
     <string name="profile_following">Seurataan</string>

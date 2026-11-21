@@ -58,6 +58,16 @@
     <string name="thread_more_replies">और जवाब दिखाएँ</string>
     <string name="thread_reply_prompt">%1$s को जवाब दें…</string>
     <string name="thread_not_found">यह पोस्ट अब उपलब्ध नहीं है।</string>
+    <string name="reader_settings">पढ़ने की सेटिंग</string>
+    <string name="reader_background_auto">स्वचालित</string>
+    <string name="reader_background_sepia">सीपिया</string>
+    <string name="reader_background_light">हल्का</string>
+    <string name="reader_background_dark">गहरा</string>
+    <string name="reader_font_sans">सिस्टम</string>
+    <string name="reader_font_serif">सेरिफ़</string>
+    <string name="reader_text_smaller">छोटा टेक्स्ट</string>
+    <string name="reader_text_larger">बड़ा टेक्स्ट</string>
+    <string name="reader_text_reset">डिफ़ॉल्ट टेक्स्ट आकार</string>
 
     <string name="profile_follow">फ़ॉलो करें</string>
     <string name="profile_following">फ़ॉलो कर रहे हैं</string>

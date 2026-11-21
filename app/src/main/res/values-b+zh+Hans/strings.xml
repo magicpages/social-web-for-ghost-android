@@ -57,6 +57,16 @@
     <string name="thread_more_replies">显示更多回复</string>
     <string name="thread_reply_prompt">回复 %1$s…</string>
     <string name="thread_not_found">此帖子已不可用。</string>
+    <string name="reader_settings">阅读设置</string>
+    <string name="reader_background_auto">自动</string>
+    <string name="reader_background_sepia">护眼</string>
+    <string name="reader_background_light">浅色</string>
+    <string name="reader_background_dark">深色</string>
+    <string name="reader_font_sans">系统</string>
+    <string name="reader_font_serif">衬线</string>
+    <string name="reader_text_smaller">缩小文字</string>
+    <string name="reader_text_larger">放大文字</string>
+    <string name="reader_text_reset">默认文字大小</string>
 
     <string name="profile_follow">关注</string>
     <string name="profile_following">已关注</string>

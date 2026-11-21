@@ -393,6 +393,14 @@ object AppIcons {
         )
     }
 
+    val FormatSize: ImageVector by lazy {
+        symbol("FormatSize", "M560-160v-520H360v-120h520v120H680v520H560Zm-360 0v-320H80v-120h360v120H320v320H200Z")
+    }
+
+    val Remove: ImageVector by lazy {
+        symbol("Remove", "M200-440v-80h560v80H200Z")
+    }
+
     // Symbols are drawn on a 960-unit grid whose y axis runs from -960 to 0.
     private fun symbol(name: String, pathData: String, autoMirror: Boolean = false) =
         ImageVector.Builder(name, 24.dp, 24.dp, 960f, 960f, autoMirror = autoMirror)

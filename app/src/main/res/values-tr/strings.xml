@@ -58,6 +58,16 @@
     <string name="thread_more_replies">Daha fazla yanıt göster</string>
     <string name="thread_reply_prompt">%1$s için yanıt yaz…</string>
     <string name="thread_not_found">Bu gönderi artık mevcut değil.</string>
+    <string name="reader_settings">Okuma ayarları</string>
+    <string name="reader_background_auto">Otomatik</string>
+    <string name="reader_background_sepia">Sepya</string>
+    <string name="reader_background_light">Açık</string>
+    <string name="reader_background_dark">Koyu</string>
+    <string name="reader_font_sans">Sistem</string>
+    <string name="reader_font_serif">Serif</string>
+    <string name="reader_text_smaller">Daha küçük metin</string>
+    <string name="reader_text_larger">Daha büyük metin</string>
+    <string name="reader_text_reset">Varsayılan metin boyutu</string>
 
     <string name="profile_follow">Takip Et</string>
     <string name="profile_following">Takip Ediliyor</string>

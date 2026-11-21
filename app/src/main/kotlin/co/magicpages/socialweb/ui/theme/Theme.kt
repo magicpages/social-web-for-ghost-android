@@ -1,8 +1,13 @@
 package co.magicpages.socialweb.ui.theme
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialExpressiveTheme
 import androidx.compose.material3.MotionScheme
 import androidx.compose.material3.darkColorScheme
@@ -10,12 +15,16 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.expressiveLightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
+import co.magicpages.socialweb.data.settings.ReaderBackground
 import com.materialkolor.PaletteStyle
 import com.materialkolor.blend.Blend
 import com.materialkolor.dynamicColorScheme
@@ -48,20 +57,115 @@ private fun likeColor(primary: Color, dark: Boolean): Color {
 @Composable
 fun SocialWebTheme(seed: Int? = null, content: @Composable () -> Unit) {
     val dark = isSystemInDarkTheme()
-    val colorScheme = when {
-        seed != null -> remember(seed, dark) { dynamicColorScheme(Color(seed), dark, style = PaletteStyle.TonalSpot) }
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (dark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-        dark -> darkColorScheme()
-        else -> expressiveLightColorScheme()
-    }
-    val like = remember(colorScheme.primary, dark) { likeColor(colorScheme.primary, dark) }
     MaterialExpressiveTheme(
-        colorScheme = colorScheme,
+        colorScheme = appColorScheme(seed, dark),
         motionScheme = MotionScheme.expressive(),
     ) {
-        CompositionLocalProvider(LocalLikeColor provides like, content = content)
+        CompositionLocalProvider(LocalThemeSeed provides seed) {
+            LikeColor(dark, content)
+        }
     }
+}
+
+/** The seed [SocialWebTheme] built its colours from, so [ReaderTheme] can build the other brightness. */
+private val LocalThemeSeed = staticCompositionLocalOf<Int?> { null }
+
+@Composable
+private fun appColorScheme(seed: Int?, dark: Boolean): ColorScheme = when {
+    seed != null -> remember(seed, dark) { dynamicColorScheme(Color(seed), dark, style = PaletteStyle.TonalSpot) }
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        val context = LocalContext.current
+        if (dark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+    }
+    dark -> darkColorScheme()
+    else -> expressiveLightColorScheme()
+}
+
+@Composable
+private fun LikeColor(dark: Boolean, content: @Composable () -> Unit) {
+    val primary = MaterialTheme.colorScheme.primary
+    val like = remember(primary, dark) { likeColor(primary, dark) }
+    CompositionLocalProvider(LocalLikeColor provides like, content = content)
+}
+
+/**
+ * The article reader's page colour around [content]: [ReaderBackground.Auto] keeps the app theme;
+ * Light and Dark build the app's colours (same seed) at that brightness whatever the system's, Light
+ * on a white page as in Ghost; Sepia is the light colours on Ghost's sepia paper (`#FCF8F1`). The
+ * system bars' icons follow the page while it shows. The tree under it stays the same for every
+ * choice, so switching keeps state.
+ */
+@Composable
+fun ReaderTheme(background: ReaderBackground, content: @Composable () -> Unit) {
+    val dark = when (background) {
+        ReaderBackground.Auto -> isSystemInDarkTheme()
+        ReaderBackground.Dark -> true
+        ReaderBackground.Sepia, ReaderBackground.Light -> false
+    }
+    val colorScheme = when (background) {
+        ReaderBackground.Auto -> MaterialTheme.colorScheme
+        ReaderBackground.Sepia -> appColorScheme(LocalThemeSeed.current, false).let { remember(it) { it.onSepia() } }
+        ReaderBackground.Light -> appColorScheme(LocalThemeSeed.current, false).let { remember(it) { it.onWhite() } }
+        ReaderBackground.Dark -> appColorScheme(LocalThemeSeed.current, true)
+    }
+    if (background != ReaderBackground.Auto) ReaderSystemBars(lightIcons = dark)
+    MaterialTheme(colorScheme = colorScheme, shapes = MaterialTheme.shapes, typography = MaterialTheme.typography) {
+        LikeColor(dark, content)
+    }
+}
+
+/** [ColorScheme] with a white page, as Ghost's light reader has. Containers keep their tint. */
+private fun ColorScheme.onWhite(): ColorScheme =
+    copy(background = Color.White, surface = Color.White, surfaceBright = Color.White, surfaceContainerLowest = Color.White)
+
+/** [ColorScheme] surfaces on warm paper; text a warm near-black. Accents stay the seed's. */
+private fun ColorScheme.onSepia(): ColorScheme = copy(
+    background = Color(0xFFFCF8F1),
+    onBackground = Color(0xFF231F18),
+    surface = Color(0xFFFCF8F1),
+    onSurface = Color(0xFF231F18),
+    surfaceVariant = Color(0xFFECE6D9),
+    onSurfaceVariant = Color(0xFF5C554A),
+    surfaceTint = primary,
+    surfaceBright = Color(0xFFFCF8F1),
+    surfaceDim = Color(0xFFE2DACB),
+    surfaceContainerLowest = Color(0xFFFFFDF9),
+    surfaceContainerLow = Color(0xFFF7F2E8),
+    surfaceContainer = Color(0xFFF2ECE0),
+    surfaceContainerHigh = Color(0xFFECE6D9),
+    surfaceContainerHighest = Color(0xFFE6DFD1),
+    outline = Color(0xFF8A8274),
+    outlineVariant = Color(0xFFD9D1C2),
+    inverseSurface = Color(0xFF383229),
+    inverseOnSurface = Color(0xFFF7F1E6),
+)
+
+/**
+ * Status and navigation bar icons that show on the reader's page, restored to the app's (dark icons
+ * on a light system theme) when the reader leaves.
+ */
+@Composable
+private fun ReaderSystemBars(lightIcons: Boolean) {
+    val view = LocalView.current
+    val systemDark = isSystemInDarkTheme()
+    DisposableEffect(view, lightIcons, systemDark) {
+        val window = view.context.findActivity()?.window
+        val controller = window?.let { WindowCompat.getInsetsController(it, view) }
+        controller?.apply {
+            isAppearanceLightStatusBars = !lightIcons
+            isAppearanceLightNavigationBars = !lightIcons
+        }
+        onDispose {
+            controller?.apply {
+                isAppearanceLightStatusBars = !systemDark
+                isAppearanceLightNavigationBars = !systemDark
+            }
+        }
+    }
+}
+
+private tailrec fun Context.findActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
 }

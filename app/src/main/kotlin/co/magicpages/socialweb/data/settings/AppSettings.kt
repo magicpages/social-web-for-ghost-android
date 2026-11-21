@@ -107,6 +107,26 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         prefs.edit { putString("$KeyFeedPosition$accountId:$feed", position.encode()) }
     }
 
+    private val _reader = MutableStateFlow(
+        ReaderSettings(
+            background = ReaderBackground.entries.firstOrNull { it.name == prefs.getString(KeyReaderBackground, null) } ?: ReaderBackground.Auto,
+            font = ReaderFont.entries.firstOrNull { it.name == prefs.getString(KeyReaderFont, null) } ?: ReaderFont.Sans,
+            textSize = prefs.getInt(KeyReaderTextSize, ReaderSettings.DefaultTextSize).coerceIn(ReaderSettings.TextScales.indices),
+        ),
+    )
+
+    /** How the article reader looks. Device-wide: it applies to every account. */
+    val reader: StateFlow<ReaderSettings> = _reader.asStateFlow()
+
+    fun setReader(settings: ReaderSettings) {
+        prefs.edit {
+            putString(KeyReaderBackground, settings.background.name)
+            putString(KeyReaderFont, settings.font.name)
+            putInt(KeyReaderTextSize, settings.textSize)
+        }
+        _reader.value = settings
+    }
+
     private fun readAccountColors(): Map<String, AccountColors> =
         prefs.all.keys.filter { it.startsWith(KeyColorSource) }.associate { key ->
             val id = key.removePrefix(KeyColorSource)
@@ -126,5 +146,8 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         private const val KeyHideReposts = "feed_hide_reposts"
         private const val KeyMutedWords = "feed_muted_words"
         private const val KeyFeedPosition = "feed_position:"
+        private const val KeyReaderBackground = "reader_background"
+        private const val KeyReaderFont = "reader_font"
+        private const val KeyReaderTextSize = "reader_text_size"
     }
 }

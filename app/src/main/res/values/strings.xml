@@ -74,6 +74,16 @@
     <string name="thread_more_replies">Show more replies</string>
     <string name="thread_reply_prompt">Reply to %1$s…</string>
     <string name="thread_not_found">This post isn\'t available anymore.</string>
+    <string name="reader_settings">Reading settings</string>
+    <string name="reader_background_auto">Auto</string>
+    <string name="reader_background_sepia">Sepia</string>
+    <string name="reader_background_light">Light</string>
+    <string name="reader_background_dark">Dark</string>
+    <string name="reader_font_sans">System</string>
+    <string name="reader_font_serif">Serif</string>
+    <string name="reader_text_smaller">Smaller text</string>
+    <string name="reader_text_larger">Larger text</string>
+    <string name="reader_text_reset">Default text size</string>
 
     <string name="profile_follow">Follow</string>
     <string name="profile_following">Following</string>

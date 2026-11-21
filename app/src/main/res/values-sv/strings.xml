@@ -58,6 +58,16 @@
     <string name="thread_more_replies">Visa fler svar</string>
     <string name="thread_reply_prompt">Svara %1$s…</string>
     <string name="thread_not_found">Det här inlägget är inte tillgängligt längre.</string>
+    <string name="reader_settings">Läsinställningar</string>
+    <string name="reader_background_auto">Automatiskt</string>
+    <string name="reader_background_sepia">Sepia</string>
+    <string name="reader_background_light">Ljus</string>
+    <string name="reader_background_dark">Mörk</string>
+    <string name="reader_font_sans">System</string>
+    <string name="reader_font_serif">Serif</string>
+    <string name="reader_text_smaller">Mindre text</string>
+    <string name="reader_text_larger">Större text</string>
+    <string name="reader_text_reset">Standardtextstorlek</string>
 
     <string name="profile_follow">Följ</string>
     <string name="profile_following">Följer</string>

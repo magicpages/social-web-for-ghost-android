@@ -60,6 +60,16 @@
     <string name="thread_more_replies">Pokaż więcej odpowiedzi</string>
     <string name="thread_reply_prompt">Odpowiedz użytkownikowi %1$s…</string>
     <string name="thread_not_found">Ten wpis jest już niedostępny.</string>
+    <string name="reader_settings">Ustawienia czytania</string>
+    <string name="reader_background_auto">Automatycznie</string>
+    <string name="reader_background_sepia">Sepia</string>
+    <string name="reader_background_light">Jasne</string>
+    <string name="reader_background_dark">Ciemne</string>
+    <string name="reader_font_sans">Systemowa</string>
+    <string name="reader_font_serif">Szeryfowa</string>
+    <string name="reader_text_smaller">Mniejszy tekst</string>
+    <string name="reader_text_larger">Większy tekst</string>
+    <string name="reader_text_reset">Domyślny rozmiar tekstu</string>
 
     <string name="profile_follow">Obserwuj</string>
     <string name="profile_following">Obserwujesz</string>
