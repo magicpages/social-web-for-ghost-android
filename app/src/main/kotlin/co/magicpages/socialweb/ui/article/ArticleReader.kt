@@ -87,6 +87,7 @@ import androidx.compose.ui.unit.dp
 import co.magicpages.socialweb.R
 import co.magicpages.socialweb.data.activitypub.Author
 import co.magicpages.socialweb.data.activitypub.Post
+import co.magicpages.socialweb.data.activitypub.GhostAuthor
 import co.magicpages.socialweb.ui.browser.PortalPage
 import co.magicpages.socialweb.ui.browser.openPortal
 import co.magicpages.socialweb.ui.components.AppIcons
@@ -97,13 +98,15 @@ import co.magicpages.socialweb.ui.components.HtmlText
 import co.magicpages.socialweb.ui.components.LocalImageViewer
 import co.magicpages.socialweb.ui.components.ViewerImage
 import co.magicpages.socialweb.ui.posts.MaxContentWidth
-import co.magicpages.socialweb.ui.posts.articleByline
+import co.magicpages.socialweb.ui.posts.articleWriters
 import co.magicpages.socialweb.ui.posts.displayName
+import co.magicpages.socialweb.ui.posts.writerNames
 import co.magicpages.socialweb.ui.theme.Gutter
 import co.magicpages.socialweb.ui.theme.reading
 import coil3.compose.AsyncImage
 import java.time.Instant
 import java.time.format.DateTimeParseException
+import java.time.ZoneId
 
 /**
  * Emits an article as list items: the header (feature image, title, dek, byline), then one item
@@ -201,25 +204,32 @@ private fun ArticleHeader(post: Post, dek: String?, onOpenProfile: (Author) -> U
     }
 }
 
+/**
+ * Two lines beside the pictures. With the writers known: their pictures (overlapping, up to three) and names, then
+ * the publication's icon and name, which open its profile, and the date. Otherwise the publication itself, opening
+ * its profile, with the date under its name.
+ */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Byline(post: Post, onOpenProfile: (Author) -> Unit) {
     val author = post.author
+    val writers = articleWriters(post)
     val context = LocalContext.current
-    val published = remember(post.publishedAt) { formatPublished(context, post.publishedAt) }
+    val published = remember(post.publishedAt) { formatPublished(context, post.publishedAt, System.currentTimeMillis()) }
     val readingTime = if (post.readingTimeMinutes > 0) {
         pluralStringResource(R.plurals.post_reading_time, post.readingTimeMinutes, post.readingTimeMinutes)
     } else {
         null
     }
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .clip(MaterialTheme.shapes.medium)
-                .clickable(onClickLabel = stringResource(R.string.open_profile), role = Role.Button) { onOpenProfile(author) },
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Avatar(author.avatarUrl, author.displayName, 40.dp)
+    val details = listOfNotNull(published, readingTime).joinToString(" · ")
+    val openProfile = Modifier
+        .clip(MaterialTheme.shapes.medium)
+        .clickable(onClickLabel = stringResource(R.string.open_profile), role = Role.Button) { onOpenProfile(author) }
+    val secondary = MaterialTheme.typography.labelLarge
+    val secondaryColor = MaterialTheme.colorScheme.onSurfaceVariant
+    if (writers.isEmpty()) {
+        Row(Modifier.fillMaxWidth().then(openProfile), verticalAlignment = Alignment.CenterVertically) {
+            Avatar(author.avatarUrl, author.displayName, BylineAvatarSize)
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 EmojiText(
@@ -229,36 +239,67 @@ private fun Byline(post: Post, onOpenProfile: (Author) -> Unit) {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Text(
-                    author.handle,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
+                if (details.isNotEmpty()) Text(details, style = secondary, color = secondaryColor)
             }
         }
-        articleByline(post)?.let {
-            Text(it, style = MaterialTheme.typography.titleSmall)
-        }
-        val meta = listOfNotNull(published, readingTime).joinToString(" · ")
-        if (meta.isNotEmpty()) {
-            Text(meta, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        return
+    }
+    val uriHandler = LocalUriHandler.current
+    // The writers' own pages aren't known; the article's page names them and links to each.
+    val openPage = Modifier
+        .clip(MaterialTheme.shapes.medium)
+        .clickable(onClickLabel = stringResource(R.string.open_in_browser), role = Role.Button) { uriHandler.openUri(post.url) }
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Box(openPage) { WriterAvatars(writers) }
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Text(writerNames(writers), openPage, style = MaterialTheme.typography.titleMedium)
+            FlowRow(itemVerticalAlignment = Alignment.CenterVertically) {
+                Row(openProfile, verticalAlignment = Alignment.CenterVertically) {
+                    Avatar(author.avatarUrl, author.displayName, 18.dp, shape = MaterialTheme.shapes.extraSmall)
+                    Spacer(Modifier.width(6.dp))
+                    EmojiText(
+                        author.displayName,
+                        author.emojiSourceId,
+                        style = secondary,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+                if (details.isNotEmpty()) Text(" · $details", style = secondary, color = secondaryColor)
+            }
         }
     }
 }
 
-private fun formatPublished(context: Context, publishedAt: String?): String? {
+private val BylineAvatarSize = 40.dp
+
+/** Up to three writers' pictures, each overlapping the one before; ringed in the page colour so they stay apart. */
+@Composable
+private fun WriterAvatars(writers: List<GhostAuthor>) {
+    val ring = MaterialTheme.colorScheme.surface
+    Row(horizontalArrangement = Arrangement.spacedBy(-BylineAvatarSize / 3)) {
+        writers.take(3).forEach { writer ->
+            Avatar(
+                writer.profileImage,
+                writer.name,
+                BylineAvatarSize,
+                Modifier.border(2.dp, ring, CircleShape),
+            )
+        }
+    }
+}
+
+/** "20 Nov" within the last year, "20 Nov 2024" before then, in the app's language. */
+private fun formatPublished(context: Context, publishedAt: String?, now: Long): String? {
     val millis = try {
         Instant.parse(publishedAt ?: return null).toEpochMilli()
     } catch (_: DateTimeParseException) {
         return null
     }
-    return DateUtils.formatDateTime(
-        context,
-        millis,
-        DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR or DateUtils.FORMAT_ABBREV_MONTH,
-    )
+    val yearAgo = Instant.ofEpochMilli(now).atZone(ZoneId.systemDefault()).minusYears(1).toInstant().toEpochMilli()
+    val year = if (millis > yearAgo) DateUtils.FORMAT_NO_YEAR else DateUtils.FORMAT_SHOW_YEAR
+    return DateUtils.formatDateTime(context, millis, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_ABBREV_MONTH or year)
 }
 
 /** Caps [block] to the content column; wide images reach 8 dp past the text and full ones the screen edges. */

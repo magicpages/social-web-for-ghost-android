@@ -136,7 +136,7 @@ private val PrivateSuffixes = listOf(".local", ".localhost", ".internal", ".lan"
 private val charsetParameter = Regex("""charset\s*=\s*"?([\w.:-]+)""", RegexOption.IGNORE_CASE)
 
 /** The charset a Content-Type header names; pages without one are UTF-8 in practice. */
-private fun charsetOf(contentType: String): Charset =
+internal fun charsetOf(contentType: String): Charset =
     charsetParameter.find(contentType)?.groupValues?.get(1)
         ?.let { name -> try { Charset.forName(name) } catch (_: IllegalArgumentException) { null } }
         ?: Charsets.UTF_8

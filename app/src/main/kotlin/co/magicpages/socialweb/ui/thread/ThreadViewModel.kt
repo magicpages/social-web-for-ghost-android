@@ -14,6 +14,7 @@ import co.magicpages.socialweb.data.activitypub.PostInteractions
 import co.magicpages.socialweb.data.activitypub.PostMetadata
 import co.magicpages.socialweb.data.activitypub.ReplyChain
 import co.magicpages.socialweb.data.activitypub.SocialWebException
+import co.magicpages.socialweb.data.article.ArticleWriters
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.data.ghost.ghostSiteUrl
 import co.magicpages.socialweb.data.member.FullArticle
@@ -24,6 +25,7 @@ import co.magicpages.socialweb.ui.article.ArticleDocument
 import co.magicpages.socialweb.ui.article.ArticleParser
 import co.magicpages.socialweb.ui.posts.FeedItem
 import co.magicpages.socialweb.ui.posts.ReplyComposer
+import co.magicpages.socialweb.ui.posts.displayName
 import co.magicpages.socialweb.ui.posts.postMessages
 import co.magicpages.socialweb.ui.posts.toFeedItem
 import dagger.assisted.Assisted
@@ -136,6 +138,7 @@ class ThreadViewModel @AssistedInject constructor(
     private val interactions: PostInteractions,
     private val replyParents: ReplyParents,
     private val memberArticles: MemberArticles,
+    private val articleWriters: ArticleWriters,
     private val memberSessions: MemberSessions,
     private val moderation: Moderation,
 ) : ViewModel() {
@@ -187,10 +190,10 @@ class ThreadViewModel @AssistedInject constructor(
     private var parentJob: Job? = null
     private var earlierJob: Job? = null
     private var unlockJob: Job? = null
-    private var writersJob: Job? = null
 
-    /** The writers of one of the site's own articles, once looked up. */
+    /** The writers of the article, once looked up ([loadWriters]). */
     private var writers: PostMetadata? = null
+    private var writersLookedUp = false
 
     /** The members-only article in full, once a member session has opened it. */
     private var unlocked: ArticleDocument? = null
@@ -319,23 +322,29 @@ class ThreadViewModel @AssistedInject constructor(
     }
 
     /**
-     * Looks up who wrote one of the site's own articles. The service keeps that only for the site's own posts
-     * and sends it only with a single post, not with a thread, so ask for the post on its own.
+     * Looks up who wrote the article. The service sends the writers only with a single post, not with a thread, so
+     * ask for the post on its own. It has none for an article from a Ghost site on another instance, which comes with
+     * the site's account only: then they're read from the article's page. Looked up once per screen.
      */
     private fun loadWriters() {
         val post = (loaded.value as? ThreadUiState.Loaded)?.content?.post?.post ?: return
-        if (!post.isArticle || !post.authoredByMe || post.ghostAuthors.isNotEmpty() || writersJob?.isActive == true) return
-        writersJob = viewModelScope.launch {
-            val metadata = try {
+        if (!post.isArticle || post.ghostAuthors.isNotEmpty() || writersLookedUp) return
+        writersLookedUp = true
+        viewModelScope.launch {
+            val fromService = try {
                 val account = accounts.account.first() ?: return@launch
-                activityPub.post(account.site, account.credential, post.id).metadata
+                activityPub.post(account.site, account.credential, post.id).metadata?.ghostAuthors.orEmpty()
             } catch (e: GhostException) {
-                null
+                emptyList()
             } catch (e: SocialWebException) {
-                null
+                emptyList()
             }
-            if (metadata == null || metadata.ghostAuthors.isEmpty()) return@launch
-            writers = metadata
+            val found = fromService.ifEmpty {
+                // Not the publication's own name again.
+                articleWriters.load(post.url).filterNot { it.name.equals(post.author.displayName.trim(), ignoreCase = true) }
+            }
+            if (found.isEmpty()) return@launch
+            writers = PostMetadata(ghostAuthors = found)
             loaded.update { state -> if (state is ThreadUiState.Loaded) state.copy(content = withWriters(state.content)) else state }
         }
     }

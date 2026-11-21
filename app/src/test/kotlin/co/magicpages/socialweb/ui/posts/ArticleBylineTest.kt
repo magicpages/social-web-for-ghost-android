@@ -6,6 +6,7 @@ import org.junit.Test
 
 class ArticleBylineTest {
     private fun writers(vararg names: String) = names.map { GhostAuthor(it) }
+    private fun bylineNames(writers: List<GhostAuthor>, authorName: String) = bylineWriters(writers, authorName).map { it.name }
 
     @Test
     fun `no writers show no byline`() {
