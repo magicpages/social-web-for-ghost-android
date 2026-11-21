@@ -19,6 +19,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.JsonTransformingSerializer
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonPrimitive
+import org.jsoup.Jsoup
 
 // Shapes follow the PostDTO/AccountDTO types of Ghost's ActivityPub service
 // (TryGhost/ActivityPub src/http/api/types.ts). Fields are lenient: remote servers
@@ -110,6 +111,40 @@ private fun linkHref(url: JsonElement?): String? = when (url) {
     else -> null
 }
 
+/**
+ * Plain text for a post's `summary` or `excerpt`. Posts the service stored arrive as plain text, but
+ * a remote outbox page passes the server's `summary` through as written, and WriteFreely (write.as)
+ * writes it as HTML paragraphs with entities, closed by a ` [...]` paragraph. Tags and entities are
+ * read as HTML; text without either stays as written, so a literal `<` survives. Whitespace runs
+ * fold to one space: cards show three lines, and the service's blank lines would waste them.
+ */
+internal fun summaryText(raw: String): String {
+    val text = if (HtmlMarkup.containsMatchIn(raw)) Jsoup.parseBodyFragment(raw).text() else raw
+    return text.replace(Whitespace, " ").trim().replace(ReadMore, "")
+}
+
+private val HtmlMarkup = Regex("""</?[a-zA-Z][^>]*>|&(?:#\d+|#[xX][0-9a-fA-F]+|[a-zA-Z]+);""")
+private val Whitespace = Regex("""\s+""")
+private val ReadMore = Regex("""\s*\[(?:\.\.\.|…)]$""")
+
+/** [summaryText] for `excerpt`, which falls back to an empty string. */
+internal object SummaryTextSerializer : KSerializer<String> {
+    override val descriptor = PrimitiveSerialDescriptor("SummaryText", PrimitiveKind.STRING)
+    override fun deserialize(decoder: Decoder): String = NullableSummaryTextSerializer.deserialize(decoder).orEmpty()
+    override fun serialize(encoder: Encoder, value: String) = encoder.encodeString(value)
+}
+
+/** [summaryText] for `summary`; null and blank stay null. */
+internal object NullableSummaryTextSerializer : KSerializer<String?> {
+    override val descriptor = PrimitiveSerialDescriptor("NullableSummaryText", PrimitiveKind.STRING).nullable
+    override fun deserialize(decoder: Decoder): String? {
+        val raw = if (decoder is JsonDecoder) (decoder.decodeJsonElement() as? JsonPrimitive)?.contentOrNull else decoder.decodeString()
+        return raw?.let(::summaryText)?.ifEmpty { null }
+    }
+    override fun serialize(encoder: Encoder, value: String?) =
+        if (value == null) encoder.encodeNull() else encoder.encodeString(value)
+}
+
 @Serializable
 data class PostsPage(
     val posts: List<Post> = emptyList(),
@@ -121,8 +156,8 @@ data class Post(
     val id: String,
     val type: Int = TYPE_NOTE,
     val title: String = "",
-    val excerpt: String = "",
-    val summary: String? = null,
+    @Serializable(with = SummaryTextSerializer::class) val excerpt: String = "",
+    @Serializable(with = NullableSummaryTextSerializer::class) val summary: String? = null,
     val sensitive: Boolean = false,
     val contentWarning: String? = null,
     val content: String = "",
