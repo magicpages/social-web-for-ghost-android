@@ -30,6 +30,7 @@ import co.magicpages.socialweb.data.ghost.ghostSiteUrl
 import co.magicpages.socialweb.data.ghost.recommends
 import co.magicpages.socialweb.data.member.MemberClient
 import co.magicpages.socialweb.data.member.MemberSessions
+import co.magicpages.socialweb.ui.components.bioHtml
 import co.magicpages.socialweb.ui.components.parsePostHtml
 import co.magicpages.socialweb.ui.posts.FeedItem
 import co.magicpages.socialweb.ui.posts.LinkedPosts
@@ -447,7 +448,7 @@ class ProfileViewModel @AssistedInject constructor(
     private suspend fun Profile.toContent(isMe: Boolean) = withContext(Dispatchers.Default) {
         ProfileContent(
             profile = this@toContent,
-            bio = if (bio.isBlank()) AnnotatedString("") else parsePostHtml(bio),
+            bio = if (bio.isBlank()) AnnotatedString("") else parsePostHtml(bioHtml(bio)),
             fields = customFields.mapNotNull { (label, value) ->
                 value?.takeIf { it.isNotBlank() }?.let { label to parsePostHtml(it) }
             },

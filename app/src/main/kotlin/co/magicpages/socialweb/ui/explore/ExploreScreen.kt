@@ -93,6 +93,7 @@ import co.magicpages.socialweb.ui.components.OnReselect
 import co.magicpages.socialweb.ui.components.ScrollableMessage
 import co.magicpages.socialweb.ui.components.emojiSourceId
 import co.magicpages.socialweb.ui.components.errorMessage
+import co.magicpages.socialweb.ui.components.bioHtml
 import co.magicpages.socialweb.ui.components.parsePostHtml
 import co.magicpages.socialweb.ui.components.scrollToTop
 import co.magicpages.socialweb.ui.posts.CollectMessages
@@ -560,7 +561,7 @@ private fun AccountRow(
     onClick: () -> Unit,
 ) {
     val name = author.displayName
-    val bioText = remember(bio) { bio?.let { parsePostHtml(it).text.trim() }.orEmpty() }
+    val bioText = remember(bio) { bio?.let { parsePostHtml(bioHtml(it)).text.trim() }.orEmpty() }
     ListItem(
         headlineContent = {
             EmojiText(name, author.emojiSourceId, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
