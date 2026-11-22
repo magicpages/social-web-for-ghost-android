@@ -608,7 +608,6 @@
         <item quantity="other">%1$d nových příspěvků</item>
     </plurals>
     <string name="feed_caught_up">Máte vše přečteno</string>
-    <string name="settings_site_summary">Barvy, blokování, citlivá média a Bluesky</string>
     <string name="settings_all_sites">Všechny weby</string>
     <string name="settings_notifications_all_on">Vše zapnuto</string>
     <string name="settings_notifications_some_on">Zapnuto %1$d z %2$d</string>
@@ -624,4 +623,12 @@
         <item quantity="many">%1$d ztlumeného slova</item>
         <item quantity="other">%1$d ztlumených slov</item>
     </plurals>
+    <string name="settings_sites">Weby</string>
+    <string name="settings_sites_footer">Každý web má vlastní nastavení. Blokování, citlivá média a Bluesky se ukládají na webu, takže je používá i Ghost Admin.</string>
+    <string name="settings_all_sites_footer">Uloženo v tomto telefonu, pro všechny tvoje weby.</string>
+    <string name="settings_remove_site">Odebrat web</string>
+    <string name="settings_remove_site_title">Odebrat %1$s?</string>
+    <string name="settings_remove_site_body">Tím se v tomto telefonu odhlásíš z %1$s. Web a vše na něm zůstane, jak je.</string>
+    <string name="settings_remove_site_confirm">Odebrat</string>
+    <string name="settings_site_actions_footer">Přihlas se znovu, když vyprší relace Ghost nebo když změníš heslo.</string>
 </resources>

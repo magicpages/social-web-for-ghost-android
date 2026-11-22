@@ -58,17 +58,19 @@ import co.magicpages.socialweb.ui.moderation.BlockTarget
 import co.magicpages.socialweb.ui.posts.MaxContentWidth
 
 /**
- * The accounts and servers the active account has blocked, one tab each, with a way to lift
- * each block after a confirmation.
+ * The accounts and servers the signed-in account [accountId] has blocked, one tab each, with a way
+ * to lift each block after a confirmation. Profiles open, and an ended session signs out, only for
+ * the active account: [onOpenProfile] and [onSignOut] are null for another, as they'd act as the active one.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BlockedScreen(
+    accountId: String,
     onBack: () -> Unit,
-    onOpenProfile: (Author) -> Unit,
-    onSignOut: () -> Unit,
-    viewModel: BlockedViewModel = hiltViewModel(),
+    onOpenProfile: ((Author) -> Unit)?,
+    onSignOut: (() -> Unit)?,
 ) {
+    val viewModel = hiltViewModel<BlockedViewModel, BlockedViewModel.Factory>(key = accountId) { it.create(accountId) }
     val ui by viewModel.ui.collectAsStateWithLifecycle()
     // The first load, and again on each return: a profile opened from here may have lifted a block.
     LifecycleResumeEffect(viewModel) {
@@ -165,7 +167,7 @@ fun BlockedScreen(
                     AccountRow(
                         author = author,
                         busy = author.id in ui.busy,
-                        onOpen = { onOpenProfile(author) },
+                        onOpen = onOpenProfile?.let { open -> { open(author) } },
                         onUnblock = { confirming = UnblockTarget.Account(author) },
                     )
                 }
@@ -207,7 +209,7 @@ private fun <T> BlockedContent(
     list: BlockedList<T>,
     emptyText: Int,
     onRetry: () -> Unit,
-    onSignOut: () -> Unit,
+    onSignOut: (() -> Unit)?,
     modifier: Modifier,
     rows: LazyListScope.(List<T>) -> Unit,
 ) {
@@ -233,7 +235,7 @@ private fun <T> BlockedContent(
 }
 
 @Composable
-private fun AccountRow(author: Author, busy: Boolean, onOpen: () -> Unit, onUnblock: () -> Unit) {
+private fun AccountRow(author: Author, busy: Boolean, onOpen: (() -> Unit)?, onUnblock: () -> Unit) {
     val name = author.name.ifBlank { author.handle }
     ListItem(
         headlineContent = {
@@ -253,7 +255,7 @@ private fun AccountRow(author: Author, busy: Boolean, onOpen: () -> Unit, onUnbl
         modifier = Modifier
             .widthIn(max = MaxContentWidth)
             .fillMaxWidth()
-            .clickable(onClickLabel = stringResource(R.string.open_profile), onClick = onOpen),
+            .then(if (onOpen != null) Modifier.clickable(onClickLabel = stringResource(R.string.open_profile), onClick = onOpen) else Modifier),
     )
 }
 

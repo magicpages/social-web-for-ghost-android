@@ -50,6 +50,16 @@ class LoginViewModel @Inject constructor(
         _state.update { it.copy(site = site, step = LoginStep.Credentials) }
     }
 
+    /**
+     * Looks up [address] straight away, for signing in again to a site that's stored: the form starts
+     * at the sign-in step. Only on a fresh form, so coming back to the screen doesn't look it up again.
+     */
+    fun startAt(address: String) {
+        if (state.value.siteInput.isNotEmpty()) return
+        _state.update { it.copy(siteInput = address) }
+        submitSite()
+    }
+
     fun submitCredentials() {
         val current = state.value
         val site = checkNotNull(current.site)

@@ -76,53 +76,64 @@ import co.magicpages.socialweb.data.settings.parseHexColor
 import co.magicpages.socialweb.ui.components.AppIcons
 import co.magicpages.socialweb.ui.posts.MaxContentWidth
 import co.magicpages.socialweb.ui.theme.Gutter
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
-/** The active site, as its settings screen shows it, with its colours: the site's own accent colour (ARGB, if it has one) and the choice. */
+/** A signed-in site, as its settings screen shows it, with its colours: the site's own accent colour (ARGB, if it has one) and the choice. */
 data class ColorsUi(
     val accountId: String,
     val siteTitle: String,
+    val siteUrl: String,
     val handle: String,
     val siteColor: Int?,
     val colors: AccountColors,
 )
 
-@HiltViewModel
-class SiteSettingsViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = SiteSettingsViewModel.Factory::class)
+class SiteSettingsViewModel @AssistedInject constructor(
+    @Assisted private val accountId: String,
     private val settings: AppSettings,
     accounts: AccountStore,
 ) : ViewModel() {
-    /** The active account's site and colours; null until the account has been read. */
-    val colors: StateFlow<ColorsUi?> = combine(accounts.account, settings.accountColors) { account, choices ->
-        account?.let {
-            ColorsUi(it.id, it.site.title, it.profile.handle, parseHexColor(it.site.accentColor), choices[it.id] ?: AccountColors())
+    @AssistedFactory
+    interface Factory {
+        fun create(accountId: String): SiteSettingsViewModel
+    }
+
+    /** The account's site and colours; null until the accounts have been read, and once it's signed out. */
+    val colors: StateFlow<ColorsUi?> = combine(accounts.accounts, settings.accountColors) { all, choices ->
+        all.firstOrNull { it.id == accountId }?.let {
+            ColorsUi(it.id, it.site.title, it.site.siteUrl, it.profile.handle, parseHexColor(it.site.accentColor), choices[it.id] ?: AccountColors())
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
-    fun setColors(colors: AccountColors) {
-        val id = this.colors.value?.accountId ?: return
-        settings.setAccountColors(id, colors)
-    }
+    fun setColors(colors: AccountColors) = settings.setAccountColors(accountId, colors)
 }
 
 /**
- * The settings of the active site, which each signed-in site keeps for itself: the app's colours,
- * blocks, sensitive media and Bluesky sharing. Titled with the site, so it's clear whose they are.
+ * The settings a signed-in site keeps for itself: the app's colours, blocks, sensitive media and
+ * Bluesky sharing, then signing in to it again and removing it. Any site's, not just the active
+ * one's; titled with the site, so it's clear whose they are.
  */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun SiteSettingsScreen(
+    accountId: String,
     onBack: () -> Unit,
     onOpenBlocked: () -> Unit,
-    viewModel: SiteSettingsViewModel = hiltViewModel(),
+    onSignInAgain: (siteUrl: String) -> Unit,
+    onRemove: () -> Unit,
 ) {
+    val viewModel = hiltViewModel<SiteSettingsViewModel, SiteSettingsViewModel.Factory>(key = accountId) { it.create(accountId) }
     val site by viewModel.colors.collectAsStateWithLifecycle()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    var confirmingRemove by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -163,7 +174,44 @@ fun SiteSettingsScreen(
                     icon = AppIcons.Block,
                 )
 
-                NetworkSettings(ui.siteTitle)
+                NetworkSettings(ui.accountId, ui.siteTitle)
+
+                Box(Modifier.padding(top = 16.dp)) {
+                    SegmentedGroup {
+                        ActionRow(
+                            title = stringResource(R.string.sign_in_again),
+                            icon = AppIcons.Login,
+                            onClick = { onSignInAgain(ui.siteUrl) },
+                            index = 0,
+                            count = 2,
+                        )
+                        ActionRow(
+                            title = stringResource(R.string.settings_remove_site),
+                            icon = AppIcons.Logout,
+                            onClick = { confirmingRemove = true },
+                            index = 1,
+                            count = 2,
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    }
+                }
+                Explainer(stringResource(R.string.settings_site_actions_footer))
+            }
+            if (confirmingRemove) {
+                AlertDialog(
+                    onDismissRequest = { confirmingRemove = false },
+                    title = { Text(stringResource(R.string.settings_remove_site_title, ui.siteTitle)) },
+                    text = { Text(stringResource(R.string.settings_remove_site_body, ui.siteTitle)) },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            confirmingRemove = false
+                            onRemove()
+                        }) { Text(stringResource(R.string.settings_remove_site_confirm), color = MaterialTheme.colorScheme.error) }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { confirmingRemove = false }) { Text(stringResource(R.string.dialog_cancel)) }
+                    },
+                )
             }
         }
     }
@@ -188,8 +236,8 @@ private val PresetColors: List<Pair<Int, Int>> = listOf(
 private fun hexDigits(argb: Int): String = "%06x".format(argb and 0xFFFFFF)
 
 /**
- * Site, device or custom colours as one single-choice segmented list. The theme follows each choice
- * at once, so the screen previews it. "Custom" asks for the colour first.
+ * Site, device or custom colours as one single-choice segmented list. For the active site the theme
+ * follows each choice at once, so the screen previews it. "Custom" asks for the colour first.
  */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable

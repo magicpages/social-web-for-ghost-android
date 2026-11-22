@@ -582,7 +582,6 @@
         <item quantity="other">%1$d nya inlägg</item>
     </plurals>
     <string name="feed_caught_up">Du är ikapp</string>
-    <string name="settings_site_summary">Färger, blockering, känsligt innehåll och Bluesky</string>
     <string name="settings_all_sites">Alla webbplatser</string>
     <string name="settings_notifications_all_on">Alla på</string>
     <string name="settings_notifications_some_on">%1$d av %2$d på</string>
@@ -596,4 +595,12 @@
         <item quantity="one">%1$d dolt ord</item>
         <item quantity="other">%1$d dolda ord</item>
     </plurals>
+    <string name="settings_sites">Webbplatser</string>
+    <string name="settings_sites_footer">Varje webbplats har sina egna inställningar. Blockeringar, känsligt innehåll och Bluesky sparas på webbplatsen, så Ghost Admin använder dem också.</string>
+    <string name="settings_all_sites_footer">Sparat på den här telefonen, för alla dina webbplatser.</string>
+    <string name="settings_remove_site">Ta bort webbplats</string>
+    <string name="settings_remove_site_title">Ta bort %1$s?</string>
+    <string name="settings_remove_site_body">Det loggar ut dig från %1$s på den här telefonen. Webbplatsen och allt på den förblir som det är.</string>
+    <string name="settings_remove_site_confirm">Ta bort</string>
+    <string name="settings_site_actions_footer">Logga in igen när din Ghost-session har gått ut eller du har bytt lösenord.</string>
 </resources>

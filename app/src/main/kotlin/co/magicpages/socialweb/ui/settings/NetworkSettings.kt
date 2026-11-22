@@ -59,13 +59,17 @@ import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.ui.components.AppIcons
 import co.magicpages.socialweb.ui.components.Avatar
 import co.magicpages.socialweb.ui.components.errorMessage
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -107,20 +111,24 @@ data class NetworkUi(
     val sensitiveError: Throwable? = null,
 )
 
-/**
- * Bluesky sharing and the sensitive-media choice of the active account. The screen belongs to one
- * account session (the navigation entries are keyed per session), so another account gets a fresh instance.
- */
-@HiltViewModel
-class NetworkSettingsViewModel @Inject constructor(
+/** Bluesky sharing and the sensitive-media choice of the signed-in account [accountId], active or not. */
+@HiltViewModel(assistedFactory = NetworkSettingsViewModel.Factory::class)
+class NetworkSettingsViewModel @AssistedInject constructor(
+    @Assisted private val accountId: String,
     private val bluesky: BlueskySharing,
     private val sensitiveMedia: SensitiveMediaPreference,
 ) : ViewModel() {
+    @AssistedFactory
+    interface Factory {
+        fun create(accountId: String): NetworkSettingsViewModel
+    }
+
     private val _ui = MutableStateFlow(NetworkUi())
     val ui: StateFlow<NetworkUi> = _ui.asStateFlow()
 
     /** The service's answer for "Show sensitive media"; null until it has given one. */
-    val showSensitiveMedia: StateFlow<Boolean?> = sensitiveMedia.preference
+    val showSensitiveMedia: StateFlow<Boolean?> =
+        sensitiveMedia.preferenceOf(accountId).stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     private var blueskyJob: Job? = null
 
@@ -132,7 +140,7 @@ class NetworkSettingsViewModel @Inject constructor(
     fun loadSensitiveMedia() {
         _ui.update { it.copy(sensitiveLoading = true, sensitiveError = null) }
         viewModelScope.launch {
-            sensitiveMedia.refresh()
+            sensitiveMedia.refresh(accountId)
             _ui.update { it.copy(sensitiveLoading = false) }
         }
     }
@@ -141,7 +149,7 @@ class NetworkSettingsViewModel @Inject constructor(
         _ui.update { it.copy(sensitiveError = null) }
         viewModelScope.launch {
             try {
-                sensitiveMedia.set(show)
+                sensitiveMedia.set(accountId, show)
             } catch (e: GhostException) {
                 _ui.update { it.copy(sensitiveError = e) }
             } catch (e: SocialWebException) {
@@ -155,7 +163,7 @@ class NetworkSettingsViewModel @Inject constructor(
         _ui.update { it.copy(bluesky = BlueskyPhase.Loading, problem = null) }
         blueskyJob = viewModelScope.launch {
             val state = try {
-                bluesky.state()
+                bluesky.state(accountId)
             } catch (e: GhostException) {
                 _ui.update { it.copy(bluesky = BlueskyPhase.Failed(e)) }
                 return@launch
@@ -176,7 +184,7 @@ class NetworkSettingsViewModel @Inject constructor(
         _ui.update { it.copy(bluesky = BlueskyPhase.Connecting, problem = null) }
         blueskyJob = viewModelScope.launch {
             val status = try {
-                bluesky.enable()
+                bluesky.enable(accountId)
             } catch (e: GhostException) {
                 failedToEnable(e)
                 return@launch
@@ -213,7 +221,7 @@ class NetworkSettingsViewModel @Inject constructor(
         repeat(MaxConfirmations) {
             delay(ConfirmInterval)
             val status = try {
-                bluesky.confirmHandle()
+                bluesky.confirmHandle(accountId)
             } catch (_: GhostException) {
                 null
             } catch (_: SocialWebException) {
@@ -226,7 +234,7 @@ class NetworkSettingsViewModel @Inject constructor(
             }
         }
         try {
-            bluesky.disable()
+            bluesky.disable(accountId)
             _ui.update { it.copy(bluesky = BlueskyPhase.Off, problem = BlueskyProblem.TimedOut) }
         } catch (e: GhostException) {
             _ui.update { it.copy(bluesky = BlueskyPhase.Failed(e)) }
@@ -248,7 +256,7 @@ class NetworkSettingsViewModel @Inject constructor(
         _ui.update { it.copy(disabling = true) }
         viewModelScope.launch {
             val failure = try {
-                bluesky.disable()
+                bluesky.disable(accountId)
                 null
             } catch (e: GhostException) {
                 e
@@ -273,11 +281,13 @@ class NetworkSettingsViewModel @Inject constructor(
 
 /**
  * The settings sections that live on the site's service: showing sensitive media, and sharing the
- * site's posts on Bluesky. [siteTitle] names the site they apply to. Emits into the screen's column.
+ * site's posts on Bluesky, for the signed-in account [accountId]. [siteTitle] names the site they
+ * apply to. Emits into the screen's column.
  */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun NetworkSettings(siteTitle: String, viewModel: NetworkSettingsViewModel = hiltViewModel()) {
+fun NetworkSettings(accountId: String, siteTitle: String) {
+    val viewModel = hiltViewModel<NetworkSettingsViewModel, NetworkSettingsViewModel.Factory>(key = "network-$accountId") { it.create(accountId) }
     val ui by viewModel.ui.collectAsStateWithLifecycle()
     val showSensitiveMedia by viewModel.showSensitiveMedia.collectAsStateWithLifecycle()
 

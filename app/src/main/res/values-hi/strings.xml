@@ -582,7 +582,6 @@
         <item quantity="other">%1$d नई पोस्ट</item>
     </plurals>
     <string name="feed_caught_up">आप पूरी तरह अप टू डेट हैं</string>
-    <string name="settings_site_summary">रंग, ब्लॉक करना, संवेदनशील मीडिया और Bluesky</string>
     <string name="settings_all_sites">सभी साइटें</string>
     <string name="settings_notifications_all_on">सभी चालू</string>
     <string name="settings_notifications_some_on">%2$d में से %1$d चालू</string>
@@ -596,4 +595,12 @@
         <item quantity="one">%1$d म्यूट किया गया शब्द</item>
         <item quantity="other">%1$d म्यूट किए गए शब्द</item>
     </plurals>
+    <string name="settings_sites">साइटें</string>
+    <string name="settings_sites_footer">हर साइट की अपनी सेटिंग होती है। ब्लॉक, संवेदनशील मीडिया और Bluesky साइट पर सेव होते हैं, इसलिए Ghost Admin भी इन्हें इस्तेमाल करता है।</string>
+    <string name="settings_all_sites_footer">इस फ़ोन पर सेव, आपकी सभी साइटों के लिए।</string>
+    <string name="settings_remove_site">साइट हटाएं</string>
+    <string name="settings_remove_site_title">%1$s हटाएं?</string>
+    <string name="settings_remove_site_body">इससे आप इस फ़ोन पर %1$s से साइन आउट हो जाएंगे। साइट और उस पर सब कुछ वैसा ही रहेगा।</string>
+    <string name="settings_remove_site_confirm">हटाएं</string>
+    <string name="settings_site_actions_footer">Ghost सेशन खत्म होने या पासवर्ड बदलने पर फिर से साइन इन करें।</string>
 </resources>

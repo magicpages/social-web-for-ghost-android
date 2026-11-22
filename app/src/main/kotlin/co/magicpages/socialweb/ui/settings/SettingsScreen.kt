@@ -63,8 +63,8 @@ class SettingsViewModel @Inject constructor(
     translation: TranslationSettings,
     accounts: AccountStore,
 ) : ViewModel() {
-    /** The active site, for the row that opens its own settings; null until it has been read. */
-    val account: StateFlow<StoredAccount?> = accounts.account.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    /** Every signed-in site, each with a row that opens its own settings; empty until they've been read. */
+    val sites: StateFlow<List<StoredAccount>> = accounts.accounts.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val autoplayVideos: StateFlow<Boolean> = settings.autoplayVideos
     val announcedTypes: StateFlow<Set<Notification.Type>> = settings.announcedTypes
@@ -91,7 +91,8 @@ class SettingsViewModel @Inject constructor(
 @Composable
 fun SettingsScreen(
     onBack: () -> Unit,
-    onOpenSite: () -> Unit,
+    onOpenSite: (accountId: String) -> Unit,
+    onAddSite: () -> Unit,
     onOpenNotifications: () -> Unit,
     onOpenTranslation: () -> Unit,
     onOpenAbout: () -> Unit,
@@ -99,27 +100,28 @@ fun SettingsScreen(
 ) {
     var showFeedFilters by rememberSaveable { mutableStateOf(false) }
     Box(Modifier.fillMaxSize()) {
-        SettingsContent(onBack, onOpenSite, onOpenNotifications, onOpenTranslation, onOpenAbout, onOpenFeedFilters = { showFeedFilters = true }, viewModel = viewModel)
+        SettingsContent(onBack, onOpenSite, onAddSite, onOpenNotifications, onOpenTranslation, onOpenAbout, onOpenFeedFilters = { showFeedFilters = true }, viewModel = viewModel)
         if (showFeedFilters) FeedFiltersScreen(onBack = { showFeedFilters = false })
     }
 }
 
 /**
- * The active site's row, which opens what that site keeps for itself, then what applies to every
- * site, each row saying how it's set, then About.
+ * A row for each signed-in site, which opens what that site keeps for itself, then what applies to
+ * every site, each row saying how it's set, then About.
  */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun SettingsContent(
     onBack: () -> Unit,
-    onOpenSite: () -> Unit,
+    onOpenSite: (accountId: String) -> Unit,
+    onAddSite: () -> Unit,
     onOpenNotifications: () -> Unit,
     onOpenTranslation: () -> Unit,
     onOpenAbout: () -> Unit,
     onOpenFeedFilters: () -> Unit,
     viewModel: SettingsViewModel,
 ) {
-    val account by viewModel.account.collectAsStateWithLifecycle()
+    val sites by viewModel.sites.collectAsStateWithLifecycle()
     val autoplay by viewModel.autoplayVideos.collectAsStateWithLifecycle()
     val announced by viewModel.announcedTypes.collectAsStateWithLifecycle()
     val notificationsAllowed by viewModel.notificationsAllowed.collectAsStateWithLifecycle()
@@ -155,18 +157,32 @@ private fun SettingsContent(
                     .padding(horizontal = Gutter, vertical = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                account?.let { site ->
-                    LinkRow(
-                        title = site.site.title,
-                        status = stringResource(R.string.settings_site_summary),
-                        onClick = onOpenSite,
-                        index = 0,
-                        count = 1,
-                        leading = { Avatar(site.profile.avatarUrl, site.site.title, 40.dp) },
-                    )
+                if (sites.isNotEmpty()) {
+                    SectionTitle(R.string.settings_sites)
+                    SegmentedGroup {
+                        sites.forEachIndexed { index, site ->
+                            LinkRow(
+                                title = site.site.title,
+                                status = site.profile.handle,
+                                onClick = { onOpenSite(site.id) },
+                                index = index,
+                                count = sites.size + 1,
+                                leading = { Avatar(site.profile.avatarUrl, site.site.title, 40.dp) },
+                            )
+                        }
+                        ActionRow(
+                            title = stringResource(R.string.account_add_site),
+                            icon = AppIcons.Add,
+                            onClick = onAddSite,
+                            index = sites.size,
+                            count = sites.size + 1,
+                            iconSize = 40.dp,
+                        )
+                    }
+                    Explainer(stringResource(R.string.settings_sites_footer))
                 }
 
-                SectionTitle(R.string.settings_all_sites, Modifier.padding(top = if (account != null) 16.dp else 0.dp))
+                SectionTitle(R.string.settings_all_sites, Modifier.padding(top = if (sites.isNotEmpty()) 16.dp else 0.dp))
                 SegmentedGroup {
                     LinkRow(
                         title = stringResource(R.string.settings_notifications),
@@ -204,6 +220,7 @@ private fun SettingsContent(
                         icon = AppIcons.PlayCircle,
                     )
                 }
+                Explainer(stringResource(R.string.settings_all_sites_footer))
 
                 LinkRow(
                     title = stringResource(R.string.settings_about),

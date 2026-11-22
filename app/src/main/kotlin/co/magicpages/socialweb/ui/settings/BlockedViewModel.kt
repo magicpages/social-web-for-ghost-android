@@ -6,8 +6,10 @@ import co.magicpages.socialweb.data.activitypub.Author
 import co.magicpages.socialweb.data.activitypub.Moderation
 import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.ghost.GhostException
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -54,14 +56,19 @@ data class BlockedUi(
 )
 
 /**
- * The active account's blocked accounts and servers. The screen belongs to one account session
- * (the navigation entries are keyed per session), so another account gets a fresh instance
- * rather than this one reloading.
+ * The blocked accounts and servers of the signed-in account [accountId], which needn't be the
+ * active one: Settings opens each site's own.
  */
-@HiltViewModel
-class BlockedViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = BlockedViewModel.Factory::class)
+class BlockedViewModel @AssistedInject constructor(
+    @Assisted private val accountId: String,
     private val moderation: Moderation,
 ) : ViewModel() {
+    @AssistedFactory
+    interface Factory {
+        fun create(accountId: String): BlockedViewModel
+    }
+
     private val _ui = MutableStateFlow(BlockedUi())
     val ui: StateFlow<BlockedUi> = _ui.asStateFlow()
 
@@ -82,7 +89,7 @@ class BlockedViewModel @Inject constructor(
         _ui.update { if (it.accounts is BlockedList.Loaded) it else it.copy(accounts = BlockedList.Loading) }
         accountsJob = viewModelScope.launch {
             val result: BlockedList<Author> = try {
-                BlockedList.Loaded(moderation.blockedAccounts())
+                BlockedList.Loaded(moderation.blockedAccounts(accountId))
             } catch (e: GhostException) {
                 BlockedList.Failed(e)
             } catch (e: SocialWebException) {
@@ -97,7 +104,7 @@ class BlockedViewModel @Inject constructor(
         _ui.update { if (it.servers is BlockedList.Loaded) it else it.copy(servers = BlockedList.Loading) }
         serversJob = viewModelScope.launch {
             val result: BlockedList<String> = try {
-                BlockedList.Loaded(moderation.blockedServers())
+                BlockedList.Loaded(moderation.blockedServers(accountId))
             } catch (e: GhostException) {
                 BlockedList.Failed(e)
             } catch (e: SocialWebException) {
@@ -114,8 +121,8 @@ class BlockedViewModel @Inject constructor(
         viewModelScope.launch {
             val failure = try {
                 when (target) {
-                    is UnblockTarget.Account -> moderation.unblock(target.author.handle, target.author.id)
-                    is UnblockTarget.Server -> moderation.unblockServer(target.host)
+                    is UnblockTarget.Account -> moderation.unblock(target.author.handle, target.author.id, accountId)
+                    is UnblockTarget.Server -> moderation.unblockServer(target.host, accountId)
                 }
                 null
             } catch (e: GhostException) {

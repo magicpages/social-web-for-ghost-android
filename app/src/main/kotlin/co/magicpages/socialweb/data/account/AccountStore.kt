@@ -20,6 +20,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
@@ -60,6 +61,9 @@ class AccountStore @Inject constructor(
 
     /** Every signed-in account, in the order they were added. */
     val accounts: Flow<List<StoredAccount>> = dataStore.data.map { it.accounts }
+
+    /** The signed-in account with [id]; null once it has been signed out. */
+    suspend fun signedIn(id: String): StoredAccount? = accounts.first().firstOrNull { it.id == id }
 
     /** Stores [account] and makes it the active one; an account with the same site and user is replaced. */
     suspend fun add(account: StoredAccount) {

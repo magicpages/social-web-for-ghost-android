@@ -49,6 +49,7 @@ import androidx.navigation3.ui.NavDisplay
 import co.magicpages.socialweb.R
 import co.magicpages.socialweb.data.account.AccountStore
 import co.magicpages.socialweb.data.account.Profile
+import co.magicpages.socialweb.data.account.StoredAccount
 import co.magicpages.socialweb.data.activitypub.Author
 import co.magicpages.socialweb.data.activitypub.FollowList
 import co.magicpages.socialweb.data.activitypub.MentionDirectory
@@ -136,21 +137,21 @@ data class ProfileKey(val handle: String, val url: String? = null) : NavKey
 @Serializable
 data class FollowsKey(val handle: String, val name: String, val list: FollowList) : NavKey
 
-/** Settings: a row for the active site's own settings, then what applies to every site. */
+/** Settings: a row for each signed-in site's own settings, then what applies to every site. */
 @Serializable
 data object SettingsKey : NavKey
 
-/** What the active site keeps for itself: colors, blocks, sensitive media, Bluesky. */
+/** What the signed-in site [accountId] keeps for itself: colors, blocks, sensitive media, Bluesky. */
 @Serializable
-data object SiteSettingsKey : NavKey
+data class SiteSettingsKey(val accountId: String) : NavKey
 
 /** Which kinds of activity become system notifications, for every site. */
 @Serializable
 data object NotificationSettingsKey : NavKey
 
-/** The accounts and servers the active account has blocked, with a way to unblock each. */
+/** The accounts and servers the signed-in site [accountId] has blocked, with a way to unblock each. */
 @Serializable
-data object BlockedKey : NavKey
+data class BlockedKey(val accountId: String) : NavKey
 
 /** About: the app's version, links, and licenses. */
 @Serializable
@@ -172,9 +173,12 @@ data object TranslationSettingsKey : NavKey
 @Serializable
 data object WelcomeTourKey : NavKey
 
-/** Signing in to another Ghost site, on top of the screens of the active account. */
+/**
+ * Signing in to a Ghost site, on top of the screens of the active account: another site, or with
+ * [siteAddress] a stored one again.
+ */
 @Serializable
-data object AddSiteKey : NavKey
+data class AddSiteKey(val siteAddress: String? = null) : NavKey
 
 @HiltViewModel
 class AppViewModel @Inject constructor(
@@ -244,17 +248,25 @@ class AppViewModel @Inject constructor(
      */
     fun signOut() {
         viewModelScope.launch {
-            withContext(NonCancellable) {
-                val account = accounts.account.first() ?: return@withContext
-                try {
-                    ghost.signOut(account.site, account.credential)
-                } catch (_: GhostException) {
-                    // Already invalid or offline: forgetting it locally is what matters.
-                }
-                accounts.remove(account.id)
-                settings.forgetAccount(account.id)
-            }
+            withContext(NonCancellable) { accounts.account.first()?.let { forget(it) } }
         }
+    }
+
+    /** Like [signOut], for any stored site: settings remove one without switching to it first. */
+    fun removeSite(accountId: String) {
+        viewModelScope.launch {
+            withContext(NonCancellable) { accounts.signedIn(accountId)?.let { forget(it) } }
+        }
+    }
+
+    private suspend fun forget(account: StoredAccount) {
+        try {
+            ghost.signOut(account.site, account.credential)
+        } catch (_: GhostException) {
+            // Already invalid or offline: forgetting it locally is what matters.
+        }
+        accounts.remove(account.id)
+        settings.forgetAccount(account.id)
     }
 }
 
@@ -299,6 +311,7 @@ fun AppRoot(viewModel: AppViewModel = hiltViewModel()) {
                         SignedInNavigation(
                             session = current,
                             onSignOut = viewModel::signOut,
+                            onRemoveSite = viewModel::removeSite,
                             onSwitchAccount = viewModel::switchTo,
                             tabRequests = viewModel.homeTabRequests,
                             openLinks = viewModel.openLinks,
@@ -315,6 +328,7 @@ fun AppRoot(viewModel: AppViewModel = hiltViewModel()) {
 private fun SignedInNavigation(
     session: AppState.SignedIn,
     onSignOut: () -> Unit,
+    onRemoveSite: (accountId: String) -> Unit,
     onSwitchAccount: (accountId: String) -> Unit,
     tabRequests: HomeTabRequests,
     openLinks: OpenLinkRequests,
@@ -430,7 +444,7 @@ private fun SignedInNavigation(
                             onOpenProfile = { openFromList(ProfileKey(it.handle, it.url)) },
                             onOpenOwnProfile = { openFromList(ProfileKey("me")) },
                             onOpenSettings = { push(SettingsKey) },
-                            onAddSite = { push(AddSiteKey) },
+                            onAddSite = { push(AddSiteKey()) },
                             onSwitchAccount = onSwitchAccount,
                             onSignOut = onSignOut,
                         )
@@ -482,14 +496,24 @@ private fun SignedInNavigation(
                 entry<SettingsKey>(clazzContentKey = contentKey) {
                     SettingsScreen(
                         onBack = back,
-                        onOpenSite = { push(SiteSettingsKey) },
+                        onOpenSite = { push(SiteSettingsKey(it)) },
+                        onAddSite = { push(AddSiteKey()) },
                         onOpenNotifications = { push(NotificationSettingsKey) },
                         onOpenTranslation = { push(TranslationSettingsKey) },
                         onOpenAbout = { push(AboutKey) },
                     )
                 }
-                entry<SiteSettingsKey>(clazzContentKey = contentKey) {
-                    SiteSettingsScreen(onBack = back, onOpenBlocked = { push(BlockedKey) })
+                entry<SiteSettingsKey>(clazzContentKey = contentKey) { key ->
+                    SiteSettingsScreen(
+                        accountId = key.accountId,
+                        onBack = back,
+                        onOpenBlocked = { push(BlockedKey(key.accountId)) },
+                        onSignInAgain = { push(AddSiteKey(it)) },
+                        onRemove = {
+                            back()
+                            onRemoveSite(key.accountId)
+                        },
+                    )
                 }
                 entry<NotificationSettingsKey>(clazzContentKey = contentKey) { NotificationSettingsScreen(onBack = back) }
                 entry<TranslationSettingsKey>(clazzContentKey = contentKey) {
@@ -509,11 +533,18 @@ private fun SignedInNavigation(
                 entry<WelcomeTourKey>(clazzContentKey = contentKey) {
                     WelcomeScreen(onContinue = back, continueLabel = R.string.about_done)
                 }
-                entry<BlockedKey>(clazzContentKey = contentKey) {
-                    BlockedScreen(onBack = back, onOpenProfile = openProfile, onSignOut = onSignOut)
+                entry<BlockedKey>(clazzContentKey = contentKey) { key ->
+                    // Profiles open as the active account, and signing in again signs it out: neither fits another site's list.
+                    val active = key.accountId == session.accountId
+                    BlockedScreen(
+                        accountId = key.accountId,
+                        onBack = back,
+                        onOpenProfile = if (active) openProfile else null,
+                        onSignOut = if (active) onSignOut else null,
+                    )
                 }
-                // A successful sign-in switches to the new account, which starts over at Home; closing it covers signing in again to the active one.
-                entry<AddSiteKey>(clazzContentKey = contentKey) { LoginScreen(onClose = back) }
+                // A successful sign-in switches to that account, which starts over at Home; closing it covers signing in again to the active one.
+                entry<AddSiteKey>(clazzContentKey = contentKey) { key -> LoginScreen(onClose = back, siteAddress = key.siteAddress) }
                 entry<ReportKey>(clazzContentKey = contentKey) { key -> ReportScreen(key, onBack = back) }
             },
         )

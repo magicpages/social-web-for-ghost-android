@@ -590,7 +590,6 @@
         <item quantity="other">%1$d new posts</item>
     </plurals>
     <string name="feed_caught_up">You\'re all caught up</string>
-    <string name="settings_site_summary">Colors, blocking, sensitive media and Bluesky</string>
     <string name="settings_all_sites">All sites</string>
     <string name="settings_notifications_all_on">All on</string>
     <string name="settings_notifications_some_on">%1$d of %2$d on</string>
@@ -604,4 +603,12 @@
         <item quantity="one">%1$d muted word</item>
         <item quantity="other">%1$d muted words</item>
     </plurals>
+    <string name="settings_sites">Sites</string>
+    <string name="settings_sites_footer">Each site keeps its own settings. Blocks, sensitive media and Bluesky are saved on the site, so Ghost Admin uses them too.</string>
+    <string name="settings_all_sites_footer">Saved on this phone, for all your sites.</string>
+    <string name="settings_remove_site">Remove site</string>
+    <string name="settings_remove_site_title">Remove %1$s?</string>
+    <string name="settings_remove_site_body">This signs you out of %1$s on this phone. The site and everything on it stay as they are.</string>
+    <string name="settings_remove_site_confirm">Remove</string>
+    <string name="settings_site_actions_footer">Sign in again when your Ghost session has ended or you\'ve changed your password.</string>
 </resources>

@@ -582,7 +582,6 @@
         <item quantity="other">%1$d uutta julkaisua</item>
     </plurals>
     <string name="feed_caught_up">Olet ajan tasalla</string>
-    <string name="settings_site_summary">Värit, estäminen, arkaluonteinen media ja Bluesky</string>
     <string name="settings_all_sites">Kaikki sivustot</string>
     <string name="settings_notifications_all_on">Kaikki päällä</string>
     <string name="settings_notifications_some_on">%1$d/%2$d päällä</string>
@@ -596,4 +595,12 @@
         <item quantity="one">%1$d mykistetty sana</item>
         <item quantity="other">%1$d mykistettyä sanaa</item>
     </plurals>
+    <string name="settings_sites">Sivustot</string>
+    <string name="settings_sites_footer">Jokaisella sivustolla on omat asetuksensa. Estot, arkaluonteinen media ja Bluesky tallennetaan sivustolle, joten Ghost Admin käyttää niitä myös.</string>
+    <string name="settings_all_sites_footer">Tallennettu tähän puhelimeen, kaikille sivustoillesi.</string>
+    <string name="settings_remove_site">Poista sivusto</string>
+    <string name="settings_remove_site_title">Poistetaanko %1$s?</string>
+    <string name="settings_remove_site_body">Tämä kirjaa sinut ulos sivustolta %1$s tässä puhelimessa. Sivusto ja kaikki sen sisältö pysyvät ennallaan.</string>
+    <string name="settings_remove_site_confirm">Poista</string>
+    <string name="settings_site_actions_footer">Kirjaudu uudelleen, kun Ghost-istuntosi on päättynyt tai olet vaihtanut salasanasi.</string>
 </resources>

@@ -582,7 +582,6 @@
         <item quantity="other">%1$d yeni gönderi</item>
     </plurals>
     <string name="feed_caught_up">Hepsini gördünüz</string>
-    <string name="settings_site_summary">Renkler, engelleme, hassas medya ve Bluesky</string>
     <string name="settings_all_sites">Tüm siteler</string>
     <string name="settings_notifications_all_on">Tümü açık</string>
     <string name="settings_notifications_some_on">%2$d bildirimden %1$d tanesi açık</string>
@@ -596,4 +595,12 @@
         <item quantity="one">%1$d sessize alınan kelime</item>
         <item quantity="other">%1$d sessize alınan kelime</item>
     </plurals>
+    <string name="settings_sites">Siteler</string>
+    <string name="settings_sites_footer">Her sitenin kendi ayarları var. Engellemeler, hassas medya ve Bluesky sitede kayıtlı, bu yüzden Ghost Admin de bunları kullanır.</string>
+    <string name="settings_all_sites_footer">Bu telefonda kayıtlı, tüm siteleriniz için.</string>
+    <string name="settings_remove_site">Siteyi kaldır</string>
+    <string name="settings_remove_site_title">%1$s kaldırılsın mı?</string>
+    <string name="settings_remove_site_body">Bu, bu telefonda %1$s oturumunu kapatır. Site ve içindeki her şey olduğu gibi kalır.</string>
+    <string name="settings_remove_site_confirm">Kaldır</string>
+    <string name="settings_site_actions_footer">Ghost oturumunuz sona erdiğinde veya şifrenizi değiştirdiğinizde yeniden giriş yapın.</string>
 </resources>

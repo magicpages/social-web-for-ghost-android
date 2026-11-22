@@ -595,7 +595,6 @@
         <item quantity="many">%1$d novas publicações</item>
     </plurals>
     <string name="feed_caught_up">Estás em dia</string>
-    <string name="settings_site_summary">Cores, bloqueios, mídia sensível e Bluesky</string>
     <string name="settings_all_sites">Todos os sites</string>
     <string name="settings_notifications_all_on">Todas ativadas</string>
     <string name="settings_notifications_some_on">%1$d de %2$d ativadas</string>
@@ -610,4 +609,12 @@
         <item quantity="many">%1$d palavras silenciadas</item>
         <item quantity="other">%1$d palavras silenciadas</item>
     </plurals>
+    <string name="settings_sites">Sites</string>
+    <string name="settings_sites_footer">Cada site tem as próprias configurações. Bloqueios, mídia sensível e Bluesky ficam salvos no site, então o Ghost Admin também os usa.</string>
+    <string name="settings_all_sites_footer">Salvo neste telefone, para todos os seus sites.</string>
+    <string name="settings_remove_site">Remover site</string>
+    <string name="settings_remove_site_title">Remover %1$s?</string>
+    <string name="settings_remove_site_body">Isso encerra sua sessão em %1$s neste telefone. O site e tudo nele continuam como estão.</string>
+    <string name="settings_remove_site_confirm">Remover</string>
+    <string name="settings_site_actions_footer">Entre de novo quando sua sessão do Ghost expirar ou depois de mudar sua senha.</string>
 </resources>

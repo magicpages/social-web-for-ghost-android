@@ -582,7 +582,6 @@
         <item quantity="other">%1$d nye innlegg</item>
     </plurals>
     <string name="feed_caught_up">Du er oppdatert</string>
-    <string name="settings_site_summary">Farger, blokkering, sensitive medier og Bluesky</string>
     <string name="settings_all_sites">Alle nettsteder</string>
     <string name="settings_notifications_all_on">Alle på</string>
     <string name="settings_notifications_some_on">%1$d av %2$d på</string>
@@ -596,4 +595,12 @@
         <item quantity="one">%1$d skjult ord</item>
         <item quantity="other">%1$d skjulte ord</item>
     </plurals>
+    <string name="settings_sites">Nettsteder</string>
+    <string name="settings_sites_footer">Hvert nettsted har sine egne innstillinger. Blokkeringer, sensitive medier og Bluesky lagres på nettstedet, så Ghost Admin bruker dem også.</string>
+    <string name="settings_all_sites_footer">Lagret på denne telefonen, for alle nettstedene dine.</string>
+    <string name="settings_remove_site">Fjern nettsted</string>
+    <string name="settings_remove_site_title">Fjerne %1$s?</string>
+    <string name="settings_remove_site_body">Dette logger deg ut av %1$s på denne telefonen. Nettstedet og alt på det forblir som det er.</string>
+    <string name="settings_remove_site_confirm">Fjern</string>
+    <string name="settings_site_actions_footer">Logg inn igjen når Ghost-økten din er utløpt eller du har byttet passord.</string>
 </resources>

@@ -582,7 +582,6 @@
         <item quantity="other">%1$d neue Beiträge</item>
     </plurals>
     <string name="feed_caught_up">Du bist auf dem neuesten Stand</string>
-    <string name="settings_site_summary">Farben, Blockieren, sensible Medien und Bluesky</string>
     <string name="settings_all_sites">Alle Websites</string>
     <string name="settings_notifications_all_on">Alle an</string>
     <string name="settings_notifications_some_on">%1$d von %2$d an</string>
@@ -596,4 +595,12 @@
         <item quantity="one">%1$d stummgeschaltetes Wort</item>
         <item quantity="other">%1$d stummgeschaltete Wörter</item>
     </plurals>
+    <string name="settings_sites">Websites</string>
+    <string name="settings_sites_footer">Jede Website hat ihre eigenen Einstellungen. Blockierungen, sensible Medien und Bluesky werden auf der Website gespeichert, also nutzt Ghost Admin sie auch.</string>
+    <string name="settings_all_sites_footer">Auf diesem Handy gespeichert, für alle deine Websites.</string>
+    <string name="settings_remove_site">Website entfernen</string>
+    <string name="settings_remove_site_title">%1$s entfernen?</string>
+    <string name="settings_remove_site_body">Damit meldest du dich auf diesem Handy von %1$s ab. Die Website und alles darauf bleibt, wie es ist.</string>
+    <string name="settings_remove_site_confirm">Entfernen</string>
+    <string name="settings_site_actions_footer">Melde dich erneut an, wenn deine Ghost-Sitzung abgelaufen ist oder du dein Passwort geändert hast.</string>
 </resources>

@@ -595,7 +595,6 @@
         <item quantity="many">%1$d nuovi post</item>
     </plurals>
     <string name="feed_caught_up">Sei in pari</string>
-    <string name="settings_site_summary">Colori, blocchi, contenuti sensibili e Bluesky</string>
     <string name="settings_all_sites">Tutti i siti</string>
     <string name="settings_notifications_all_on">Tutte attive</string>
     <string name="settings_notifications_some_on">%1$d di %2$d attive</string>
@@ -610,4 +609,12 @@
         <item quantity="many">%1$d parole silenziate</item>
         <item quantity="other">%1$d parole silenziate</item>
     </plurals>
+    <string name="settings_sites">Siti</string>
+    <string name="settings_sites_footer">Ogni sito ha le sue impostazioni. Blocchi, contenuti sensibili e Bluesky sono salvati sul sito, quindi li usa anche Ghost Admin.</string>
+    <string name="settings_all_sites_footer">Salvato su questo telefono, per tutti i tuoi siti.</string>
+    <string name="settings_remove_site">Rimuovi sito</string>
+    <string name="settings_remove_site_title">Rimuovere %1$s?</string>
+    <string name="settings_remove_site_body">Così esci da %1$s su questo telefono. Il sito e tutto ciò che contiene restano come sono.</string>
+    <string name="settings_remove_site_confirm">Rimuovi</string>
+    <string name="settings_site_actions_footer">Accedi di nuovo quando la sessione di Ghost è scaduta o hai cambiato la password.</string>
 </resources>

@@ -595,7 +595,6 @@
         <item quantity="many">%1$d nouvelles publications</item>
     </plurals>
     <string name="feed_caught_up">Vous êtes à jour</string>
-    <string name="settings_site_summary">Couleurs, blocage, médias sensibles et Bluesky</string>
     <string name="settings_all_sites">Tous les sites</string>
     <string name="settings_notifications_all_on">Toutes activées</string>
     <string name="settings_notifications_some_on">%1$d sur %2$d activées</string>
@@ -610,4 +609,12 @@
         <item quantity="many">%1$d mots masqués</item>
         <item quantity="other">%1$d mots masqués</item>
     </plurals>
+    <string name="settings_sites">Sites</string>
+    <string name="settings_sites_footer">Chaque site garde ses propres réglages. Les blocages, les médias sensibles et Bluesky sont enregistrés sur le site, donc Ghost Admin les utilise aussi.</string>
+    <string name="settings_all_sites_footer">Enregistré sur ce téléphone, pour tous tes sites.</string>
+    <string name="settings_remove_site">Retirer le site</string>
+    <string name="settings_remove_site_title">Retirer %1$s ?</string>
+    <string name="settings_remove_site_body">Tu seras déconnecté de %1$s sur ce téléphone. Le site et tout son contenu restent tels quels.</string>
+    <string name="settings_remove_site_confirm">Retirer</string>
+    <string name="settings_site_actions_footer">Reconnecte-toi quand ta session Ghost a expiré ou que tu as changé ton mot de passe.</string>
 </resources>

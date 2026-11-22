@@ -569,7 +569,6 @@
         <item quantity="other">%1$d 則新貼文</item>
     </plurals>
     <string name="feed_caught_up">你已看完所有內容</string>
-    <string name="settings_site_summary">顏色、封鎖、敏感媒體和 Bluesky</string>
     <string name="settings_all_sites">所有網站</string>
     <string name="settings_notifications_all_on">全部開啟</string>
     <string name="settings_notifications_some_on">已開啟 %1$d/%2$d 項</string>
@@ -582,4 +581,12 @@
     <plurals name="feed_filters_status_words">
         <item quantity="other">%1$d 個隱藏字詞</item>
     </plurals>
+    <string name="settings_sites">網站</string>
+    <string name="settings_sites_footer">每個網站都有自己的設定。封鎖、敏感媒體和 Bluesky 儲存在網站上，所以 Ghost Admin 也會使用它們。</string>
+    <string name="settings_all_sites_footer">儲存在這支手機上，適用於你的所有網站。</string>
+    <string name="settings_remove_site">移除網站</string>
+    <string name="settings_remove_site_title">移除 %1$s？</string>
+    <string name="settings_remove_site_body">這會讓你在這支手機上登出 %1$s。網站和上面的所有內容都會保持原樣。</string>
+    <string name="settings_remove_site_confirm">移除</string>
+    <string name="settings_site_actions_footer">Ghost 工作階段結束或變更密碼後，請重新登入。</string>
 </resources>

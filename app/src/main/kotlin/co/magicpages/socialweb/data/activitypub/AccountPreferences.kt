@@ -8,13 +8,16 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -54,9 +57,12 @@ class SensitiveMediaPreference @Inject constructor(
         }
     }
 
-    /** Asks the service again for the active account's preference; the value in use stays if that fails. */
-    suspend fun refresh() {
-        load(accounts.account.first() ?: return)
+    /** The preference of the account [accountId]; null until its service has answered. */
+    fun preferenceOf(accountId: String): Flow<Boolean?> = known.map { it[accountId] }.distinctUntilChanged()
+
+    /** Asks the service again for the preference of [accountId]; the value in use stays if that fails. */
+    suspend fun refresh(accountId: String) {
+        load(accounts.signedIn(accountId) ?: return)
     }
 
     private suspend fun load(account: StoredAccount) {
@@ -72,11 +78,11 @@ class SensitiveMediaPreference @Inject constructor(
     }
 
     /**
-     * Changes the active account's preference at once and saves it; when that fails the
+     * Changes the preference of [accountId] at once and saves it; when that fails the
      * previous value comes back and the failure is thrown ([GhostException] or [SocialWebException]).
      */
-    suspend fun set(show: Boolean) {
-        val account = accounts.account.first() ?: throw GhostException.Unauthorized(null)
+    suspend fun set(accountId: String, show: Boolean) {
+        val account = accounts.signedIn(accountId) ?: throw GhostException.Unauthorized(null)
         val before = known.value[account.id]
         known.update { it + (account.id to show) }
         // Leaving the screen mid-save must not drop the change.
@@ -102,7 +108,7 @@ class SensitiveMediaPreference @Inject constructor(
 }
 
 /**
- * Bluesky sharing for the active account, through Bridgy Fed. Every call throws [GhostException] or
+ * Bluesky sharing for a signed-in account, through Bridgy Fed. Every call throws [GhostException] or
  * [SocialWebException] when the service doesn't do it. Only Owners and Administrators may use it.
  */
 @Singleton
@@ -113,7 +119,7 @@ class BlueskySharing @Inject constructor(
     /** What the site's account says about Bluesky now, with what enabling needs to know of it. */
     data class State(val status: BlueskyStatus, val name: String, val handle: String, val avatarUrl: String?)
 
-    suspend fun state(): State = with(active()) {
+    suspend fun state(accountId: String): State = with(account(accountId)) {
         val account = client.currentAccount(site, credential)
         State(
             BlueskyStatus(
@@ -127,12 +133,12 @@ class BlueskySharing @Inject constructor(
         )
     }
 
-    suspend fun enable(): BlueskyStatus = with(active()) { client.enableBluesky(site, credential) }
+    suspend fun enable(accountId: String): BlueskyStatus = with(account(accountId)) { client.enableBluesky(site, credential) }
 
     /** Whether Bridgy Fed has made the Bluesky account yet; the handle comes with the first yes. */
-    suspend fun confirmHandle(): BlueskyStatus = with(active()) { client.confirmBlueskyHandle(site, credential) }
+    suspend fun confirmHandle(accountId: String): BlueskyStatus = with(account(accountId)) { client.confirmBlueskyHandle(site, credential) }
 
-    suspend fun disable() = with(active()) { client.disableBluesky(site, credential) }
+    suspend fun disable(accountId: String) = with(account(accountId)) { client.disableBluesky(site, credential) }
 
-    private suspend fun active(): StoredAccount = accounts.account.first() ?: throw GhostException.Unauthorized(null)
+    private suspend fun account(id: String): StoredAccount = accounts.signedIn(id) ?: throw GhostException.Unauthorized(null)
 }

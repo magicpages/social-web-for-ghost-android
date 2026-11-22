@@ -2,11 +2,13 @@ package co.magicpages.socialweb.ui.settings
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedListItem
@@ -14,8 +16,10 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -23,6 +27,7 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.toggleableState
 import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import co.magicpages.socialweb.ui.components.AppIcons
 
@@ -74,6 +79,36 @@ internal fun LinkRow(
         supportingContent = { Text(status, color = statusColor) },
     ) {
         Text(title)
+    }
+}
+
+/**
+ * A row in a segmented group that does something right away, like adding a site. [color] tints it
+ * when it's destructive. [index] of [count] gives the group its shape.
+ */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+internal fun ActionRow(
+    title: String,
+    icon: ImageVector,
+    onClick: () -> Unit,
+    index: Int,
+    count: Int,
+    color: Color = Color.Unspecified,
+    iconSize: Dp = 24.dp,
+) {
+    SegmentedListItem(
+        onClick = onClick,
+        shapes = ListItemDefaults.segmentedShapes(index, count),
+        colors = ListItemDefaults.segmentedColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+        // A box as wide as the leading content of its neighbours, so the titles line up.
+        leadingContent = {
+            Box(Modifier.size(iconSize), contentAlignment = Alignment.Center) {
+                Icon(icon, contentDescription = null, tint = color.takeOrElse { LocalContentColor.current })
+            }
+        },
+    ) {
+        Text(title, color = color)
     }
 }
 

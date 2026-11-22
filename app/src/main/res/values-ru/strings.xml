@@ -608,7 +608,6 @@
         <item quantity="other">%1$d нового поста</item>
     </plurals>
     <string name="feed_caught_up">Вы всё прочитали</string>
-    <string name="settings_site_summary">Цвета, блокировка, чувствительные медиа и Bluesky</string>
     <string name="settings_all_sites">Все сайты</string>
     <string name="settings_notifications_all_on">Все включены</string>
     <string name="settings_notifications_some_on">Включено %1$d из %2$d</string>
@@ -624,4 +623,12 @@
         <item quantity="many">%1$d скрытых слов</item>
         <item quantity="other">%1$d скрытого слова</item>
     </plurals>
+    <string name="settings_sites">Сайты</string>
+    <string name="settings_sites_footer">У каждого сайта свои настройки. Блокировки, чувствительные медиа и Bluesky хранятся на сайте, поэтому Ghost Admin тоже их использует.</string>
+    <string name="settings_all_sites_footer">Хранится на этом телефоне, для всех ваших сайтов.</string>
+    <string name="settings_remove_site">Удалить сайт</string>
+    <string name="settings_remove_site_title">Удалить %1$s?</string>
+    <string name="settings_remove_site_body">Вы выйдете из %1$s на этом телефоне. Сам сайт и всё на нём останется как есть.</string>
+    <string name="settings_remove_site_confirm">Удалить</string>
+    <string name="settings_site_actions_footer">Войдите снова, если сеанс Ghost истёк или вы сменили пароль.</string>
 </resources>

@@ -634,7 +634,6 @@
         <item quantity="other">%1$d منشور جديد</item>
     </plurals>
     <string name="feed_caught_up">لقد لحقت بكل شيء</string>
-    <string name="settings_site_summary">الألوان والحظر والوسائط الحساسة وBluesky</string>
     <string name="settings_all_sites">كل المواقع</string>
     <string name="settings_notifications_all_on">كلها مفعّلة</string>
     <string name="settings_notifications_some_on">%1$d من %2$d مفعّلة</string>
@@ -652,4 +651,12 @@
         <item quantity="many">%1$d كلمة مكتومة</item>
         <item quantity="other">%1$d كلمة مكتومة</item>
     </plurals>
+    <string name="settings_sites">المواقع</string>
+    <string name="settings_sites_footer">لكل موقع إعداداته الخاصة. الحظر والوسائط الحساسة وBluesky محفوظة على الموقع، لذا يستخدمها Ghost Admin أيضًا.</string>
+    <string name="settings_all_sites_footer">محفوظة على هذا الهاتف، لكل مواقعك.</string>
+    <string name="settings_remove_site">إزالة الموقع</string>
+    <string name="settings_remove_site_title">إزالة %1$s؟</string>
+    <string name="settings_remove_site_body">سيؤدي هذا إلى تسجيل خروجك من %1$s على هذا الهاتف. يبقى الموقع وكل ما عليه كما هو.</string>
+    <string name="settings_remove_site_confirm">إزالة</string>
+    <string name="settings_site_actions_footer">سجّل الدخول مرة أخرى عند انتهاء جلسة Ghost أو بعد تغيير كلمة المرور.</string>
 </resources>

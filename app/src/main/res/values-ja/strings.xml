@@ -569,7 +569,6 @@
         <item quantity="other">新しい投稿 %1$d 件</item>
     </plurals>
     <string name="feed_caught_up">すべて読み終えました</string>
-    <string name="settings_site_summary">カラー、ブロック、センシティブなメディア、Bluesky</string>
     <string name="settings_all_sites">すべてのサイト</string>
     <string name="settings_notifications_all_on">すべてオン</string>
     <string name="settings_notifications_some_on">%2$d 件中 %1$d 件がオン</string>
@@ -582,4 +581,12 @@
     <plurals name="feed_filters_status_words">
         <item quantity="other">ミュートした語句 %1$d 件</item>
     </plurals>
+    <string name="settings_sites">サイト</string>
+    <string name="settings_sites_footer">サイトごとに設定が分かれています。ブロック、センシティブなメディア、Bluesky はサイトに保存されるので、Ghost Admin でも同じ設定が使われます。</string>
+    <string name="settings_all_sites_footer">この端末に保存され、すべてのサイトに適用されます。</string>
+    <string name="settings_remove_site">サイトを削除</string>
+    <string name="settings_remove_site_title">%1$s を削除しますか？</string>
+    <string name="settings_remove_site_body">この端末で %1$s からログアウトします。サイトとその内容はそのまま残ります。</string>
+    <string name="settings_remove_site_confirm">削除</string>
+    <string name="settings_site_actions_footer">Ghost のセッションが切れたときや、パスワードを変更したときは、もう一度ログインしてください。</string>
 </resources>

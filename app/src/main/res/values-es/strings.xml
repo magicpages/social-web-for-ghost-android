@@ -595,7 +595,6 @@
         <item quantity="many">%1$d publicaciones nuevas</item>
     </plurals>
     <string name="feed_caught_up">Estás al día</string>
-    <string name="settings_site_summary">Colores, bloqueos, contenido sensible y Bluesky</string>
     <string name="settings_all_sites">Todos los sitios</string>
     <string name="settings_notifications_all_on">Todas activadas</string>
     <string name="settings_notifications_some_on">%1$d de %2$d activadas</string>
@@ -610,4 +609,12 @@
         <item quantity="many">%1$d palabras silenciadas</item>
         <item quantity="other">%1$d palabras silenciadas</item>
     </plurals>
+    <string name="settings_sites">Sitios</string>
+    <string name="settings_sites_footer">Cada sitio tiene sus propios ajustes. Los bloqueos, el contenido sensible y Bluesky se guardan en el sitio, así que Ghost Admin también los usa.</string>
+    <string name="settings_all_sites_footer">Guardado en este teléfono, para todos tus sitios.</string>
+    <string name="settings_remove_site">Quitar sitio</string>
+    <string name="settings_remove_site_title">¿Quitar %1$s?</string>
+    <string name="settings_remove_site_body">Esto cierra tu sesión de %1$s en este teléfono. El sitio y todo su contenido quedan como están.</string>
+    <string name="settings_remove_site_confirm">Quitar</string>
+    <string name="settings_site_actions_footer">Vuelve a iniciar sesión cuando tu sesión de Ghost haya terminado o hayas cambiado tu contraseña.</string>
 </resources>

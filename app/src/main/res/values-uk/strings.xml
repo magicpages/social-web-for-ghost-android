@@ -608,7 +608,6 @@
         <item quantity="other">%1$d нового допису</item>
     </plurals>
     <string name="feed_caught_up">Ви все переглянули</string>
-    <string name="settings_site_summary">Кольори, блокування, чутливі медіа та Bluesky</string>
     <string name="settings_all_sites">Усі сайти</string>
     <string name="settings_notifications_all_on">Усі ввімкнено</string>
     <string name="settings_notifications_some_on">Увімкнено %1$d з %2$d</string>
@@ -624,4 +623,12 @@
         <item quantity="many">%1$d прихованих слів</item>
         <item quantity="other">%1$d прихованого слова</item>
     </plurals>
+    <string name="settings_sites">Сайти</string>
+    <string name="settings_sites_footer">Кожен сайт має власні налаштування. Блокування, чутливі медіа та Bluesky зберігаються на сайті, тож Ghost Admin теж їх використовує.</string>
+    <string name="settings_all_sites_footer">Збережено на цьому телефоні, для всіх ваших сайтів.</string>
+    <string name="settings_remove_site">Видалити сайт</string>
+    <string name="settings_remove_site_title">Видалити %1$s?</string>
+    <string name="settings_remove_site_body">Ви вийдете з %1$s на цьому телефоні. Сам сайт і все на ньому залишиться як є.</string>
+    <string name="settings_remove_site_confirm">Видалити</string>
+    <string name="settings_site_actions_footer">Увійдіть знову, якщо сеанс Ghost завершився або ви змінили пароль.</string>
 </resources>

@@ -569,7 +569,6 @@
         <item quantity="other">%1$d kiriman baru</item>
     </plurals>
     <string name="feed_caught_up">Semua sudah terbaca</string>
-    <string name="settings_site_summary">Warna, pemblokiran, media sensitif, dan Bluesky</string>
     <string name="settings_all_sites">Semua situs</string>
     <string name="settings_notifications_all_on">Semua aktif</string>
     <string name="settings_notifications_some_on">%1$d dari %2$d aktif</string>
@@ -582,4 +581,12 @@
     <plurals name="feed_filters_status_words">
         <item quantity="other">%1$d kata dibisukan</item>
     </plurals>
+    <string name="settings_sites">Situs</string>
+    <string name="settings_sites_footer">Setiap situs punya pengaturannya sendiri. Blokir, media sensitif, dan Bluesky disimpan di situs, jadi Ghost Admin juga memakainya.</string>
+    <string name="settings_all_sites_footer">Disimpan di ponsel ini, untuk semua situsmu.</string>
+    <string name="settings_remove_site">Hapus situs</string>
+    <string name="settings_remove_site_title">Hapus %1$s?</string>
+    <string name="settings_remove_site_body">Ini mengeluarkanmu dari %1$s di ponsel ini. Situs dan semua isinya tetap seperti semula.</string>
+    <string name="settings_remove_site_confirm">Hapus</string>
+    <string name="settings_site_actions_footer">Masuk lagi saat sesi Ghost-mu berakhir atau setelah kamu mengganti kata sandi.</string>
 </resources>

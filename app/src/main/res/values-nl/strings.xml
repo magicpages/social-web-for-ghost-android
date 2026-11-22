@@ -582,7 +582,6 @@
         <item quantity="other">%1$d nieuwe berichten</item>
     </plurals>
     <string name="feed_caught_up">Je bent helemaal bij</string>
-    <string name="settings_site_summary">Kleuren, blokkeren, gevoelige media en Bluesky</string>
     <string name="settings_all_sites">Alle sites</string>
     <string name="settings_notifications_all_on">Alles aan</string>
     <string name="settings_notifications_some_on">%1$d van %2$d aan</string>
@@ -596,4 +595,12 @@
         <item quantity="one">%1$d gedempt woord</item>
         <item quantity="other">%1$d gedempte woorden</item>
     </plurals>
+    <string name="settings_sites">Sites</string>
+    <string name="settings_sites_footer">Elke site heeft zijn eigen instellingen. Blokkades, gevoelige media en Bluesky worden op de site opgeslagen, dus Ghost Admin gebruikt ze ook.</string>
+    <string name="settings_all_sites_footer">Opgeslagen op deze telefoon, voor al je sites.</string>
+    <string name="settings_remove_site">Site verwijderen</string>
+    <string name="settings_remove_site_title">%1$s verwijderen?</string>
+    <string name="settings_remove_site_body">Hiermee log je uit bij %1$s op deze telefoon. De site en alles erop blijft zoals het is.</string>
+    <string name="settings_remove_site_confirm">Verwijderen</string>
+    <string name="settings_site_actions_footer">Log opnieuw in als je Ghost-sessie is verlopen of je je wachtwoord hebt gewijzigd.</string>
 </resources>

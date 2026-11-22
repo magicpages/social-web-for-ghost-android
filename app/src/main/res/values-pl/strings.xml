@@ -608,7 +608,6 @@
         <item quantity="other">%1$d nowego wpisu</item>
     </plurals>
     <string name="feed_caught_up">Jesteś na bieżąco</string>
-    <string name="settings_site_summary">Kolory, blokowanie, wrażliwe multimedia i Bluesky</string>
     <string name="settings_all_sites">Wszystkie witryny</string>
     <string name="settings_notifications_all_on">Wszystkie włączone</string>
     <string name="settings_notifications_some_on">Włączone: %1$d z %2$d</string>
@@ -624,4 +623,12 @@
         <item quantity="many">%1$d wyciszonych słów</item>
         <item quantity="other">%1$d wyciszonego słowa</item>
     </plurals>
+    <string name="settings_sites">Witryny</string>
+    <string name="settings_sites_footer">Każda witryna ma własne ustawienia. Blokady, wrażliwe multimedia i Bluesky są zapisane w witrynie, więc Ghost Admin też ich używa.</string>
+    <string name="settings_all_sites_footer">Zapisane na tym telefonie, dla wszystkich twoich witryn.</string>
+    <string name="settings_remove_site">Usuń witrynę</string>
+    <string name="settings_remove_site_title">Usunąć %1$s?</string>
+    <string name="settings_remove_site_body">Spowoduje to wylogowanie z %1$s na tym telefonie. Witryna i cała jej zawartość pozostaną bez zmian.</string>
+    <string name="settings_remove_site_confirm">Usuń</string>
+    <string name="settings_site_actions_footer">Zaloguj się ponownie, gdy sesja Ghost wygaśnie lub zmienisz hasło.</string>
 </resources>

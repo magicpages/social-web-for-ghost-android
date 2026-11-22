@@ -76,13 +76,22 @@ import co.magicpages.socialweb.ui.theme.Gutter
  * Signing in to a Ghost site. Shown alone when nobody is signed in; to add another site it is
  * shown on top of the app, with [onClose] to leave it (back button and system back) and called
  * once the account was added. [onBack] is for the first run, where the screen follows the
- * welcome: it only leaves, and is not called once the account was added.
+ * welcome: it only leaves, and is not called once the account was added. With [siteAddress] it
+ * starts at the sign-in step for that site, for signing in to a stored site again.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(onClose: (() -> Unit)? = null, onBack: (() -> Unit)? = null, viewModel: LoginViewModel = hiltViewModel()) {
+fun LoginScreen(
+    onClose: (() -> Unit)? = null,
+    onBack: (() -> Unit)? = null,
+    siteAddress: String? = null,
+    viewModel: LoginViewModel = hiltViewModel(),
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val leave = onClose ?: onBack
+    LaunchedEffect(siteAddress) {
+        if (siteAddress != null) viewModel.startAt(siteAddress)
+    }
     // Back from the sign-in or code step returns to the address step instead of leaving the screen.
     // While a request is in flight it is swallowed, so a late result can't land on a reset form.
     BackHandler(enabled = state.step != LoginStep.Site || onBack != null) {
@@ -126,7 +135,7 @@ fun LoginScreen(onClose: (() -> Unit)? = null, onBack: (() -> Unit)? = null, vie
                         .padding(vertical = 24.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
-                    Text(stringResource(R.string.login_title), style = MaterialTheme.typography.headlineMedium)
+                    Text(stringResource(if (siteAddress != null) R.string.sign_in_again else R.string.login_title), style = MaterialTheme.typography.headlineMedium)
                     AnimatedContent(
                         targetState = state.step,
                         transitionSpec = {

@@ -51,7 +51,8 @@ private fun actorHost(id: String): String? =
 private fun isActorId(id: String?): Boolean = id != null && actorHost(id) != null
 
 /**
- * Deleting the site's own posts and blocking accounts and servers, as the active account. Each
+ * Deleting the site's own posts and blocking accounts and servers, as the active account. The
+ * blocked lists, and lifting a block, also work as another signed-in account, for its settings. Each
  * call throws [GhostException] or [SocialWebException] when the service doesn't do it.
  */
 @Singleton
@@ -118,7 +119,7 @@ class Moderation @Inject constructor(
         accounts.activeId.onEach { _hidden.value = Hidden() }.launchIn(scope)
     }
 
-    suspend fun delete(post: Post) = act({ client.deletePost(site, credential, post.id) }) {
+    suspend fun delete(post: Post) = act(null, { client.deletePost(site, credential, post.id) }) {
         it.copy(posts = it.posts + post.id)
     }
 
@@ -127,36 +128,40 @@ class Moderation @Inject constructor(
      * else it's looked up, as a feed's authors only come with a database number.
      */
     suspend fun block(handle: String, actorId: String? = null) =
-        act({ client.block(site, credential, resolveActorId(handle, actorId)) }) {
+        act(null, { client.block(site, credential, resolveActorId(handle, actorId)) }) {
             it.copy(accounts = it.accounts + handle.lowercase())
         }
 
-    suspend fun unblock(handle: String, actorId: String? = null) =
-        act({ client.unblock(site, credential, resolveActorId(handle, actorId)) }) {
+    /** Lifts a block as the active account, or as the signed-in account [accountId]. */
+    suspend fun unblock(handle: String, actorId: String? = null, accountId: String? = null) =
+        act(accountId, { client.unblock(site, credential, resolveActorId(handle, actorId)) }) {
             it.copy(accounts = it.accounts - handle.lowercase())
         }
 
     private suspend fun StoredAccount.resolveActorId(handle: String, actorId: String?): String =
         actorId?.takeIf(::isActorId) ?: client.profile(site, credential, handle).apId
 
-    suspend fun blockServer(host: String) = act({ client.blockDomain(site, credential, host) }) {
+    suspend fun blockServer(host: String) = act(null, { client.blockDomain(site, credential, host) }) {
         it.copy(servers = it.servers + host.lowercase())
     }
 
-    suspend fun unblockServer(host: String) = act({ client.unblockDomain(site, credential, host) }) {
+    /** Lifts a server block as the active account, or as the signed-in account [accountId]. */
+    suspend fun unblockServer(host: String, accountId: String? = null) = act(accountId, { client.unblockDomain(site, credential, host) }) {
         it.copy(servers = it.servers - host.lowercase())
     }
 
-    suspend fun blockedAccounts(): List<Author> = with(active()) { client.blockedAccounts(site, credential) }
+    suspend fun blockedAccounts(accountId: String): List<Author> = with(account(accountId)) { client.blockedAccounts(site, credential) }
 
-    suspend fun blockedServers(): List<String> = with(active()) { client.blockedDomains(site, credential) }
+    suspend fun blockedServers(accountId: String): List<String> = with(account(accountId)) { client.blockedDomains(site, credential) }
 
-    private suspend fun active(): StoredAccount = accounts.account.first() ?: throw GhostException.Unauthorized(null)
+    /** The signed-in account [id], or the active one for null. */
+    private suspend fun account(id: String?): StoredAccount =
+        (if (id == null) accounts.account.first() else accounts.signedIn(id)) ?: throw GhostException.Unauthorized(null)
 
-    private suspend fun act(call: suspend StoredAccount.() -> Unit, change: (Hidden) -> Hidden) {
-        val account = active()
+    private suspend fun act(accountId: String?, call: suspend StoredAccount.() -> Unit, change: (Hidden) -> Hidden) {
+        val account = account(accountId)
         account.call()
-        // Done for an account that is no longer active: its lists are gone already.
+        // Done as an account that isn't active (any more): none of its lists are on screen.
         if (accounts.activeId.first() == account.id) _hidden.update(change)
     }
 }

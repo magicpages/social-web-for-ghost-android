@@ -582,7 +582,6 @@
         <item quantity="other">%1$d nye opslag</item>
     </plurals>
     <string name="feed_caught_up">Du er helt med</string>
-    <string name="settings_site_summary">Farver, blokering, følsomme medier og Bluesky</string>
     <string name="settings_all_sites">Alle websites</string>
     <string name="settings_notifications_all_on">Alle til</string>
     <string name="settings_notifications_some_on">%1$d af %2$d til</string>
@@ -596,4 +595,12 @@
         <item quantity="one">%1$d skjult ord</item>
         <item quantity="other">%1$d skjulte ord</item>
     </plurals>
+    <string name="settings_sites">Websites</string>
+    <string name="settings_sites_footer">Hvert website har sine egne indstillinger. Blokeringer, følsomme medier og Bluesky gemmes på websitet, så Ghost Admin bruger dem også.</string>
+    <string name="settings_all_sites_footer">Gemt på denne telefon, for alle dine websites.</string>
+    <string name="settings_remove_site">Fjern website</string>
+    <string name="settings_remove_site_title">Fjern %1$s?</string>
+    <string name="settings_remove_site_body">Det logger dig ud af %1$s på denne telefon. Websitet og alt på det forbliver som det er.</string>
+    <string name="settings_remove_site_confirm">Fjern</string>
+    <string name="settings_site_actions_footer">Log ind igen, når din Ghost-session er udløbet, eller du har skiftet adgangskode.</string>
 </resources>
