@@ -1,5 +1,6 @@
 package co.magicpages.socialweb.ui.posts
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -37,6 +38,9 @@ import co.magicpages.socialweb.ui.components.LocalOwnProfile
 import co.magicpages.socialweb.ui.components.PickedImagePreview
 import co.magicpages.socialweb.ui.components.TakePhotoButton
 import co.magicpages.socialweb.ui.components.rememberComposerText
+import co.magicpages.socialweb.ui.translation.LocalPostTranslations
+import co.magicpages.socialweb.ui.translation.PostTranslations
+import co.magicpages.socialweb.ui.translation.TranslationNotice
 
 /** Shows the [ReplyEditor] while [composer] has a reply open. */
 @Composable
@@ -129,16 +133,26 @@ fun ReplyEditor(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-                    val quoted = target.title.takeIf { target.isArticle && it.isNotBlank() } ?: state.target.content.text
+                    // A note the reader had translated is quoted as they read it, with the way back to the original.
+                    val translations = LocalPostTranslations.current
+                    val translation = (translations?.stateOf(target.id) as? PostTranslations.State.Translated)
+                        ?.takeIf { it.showing && !target.isArticle }
+                    val quoted = target.title.takeIf { target.isArticle && it.isNotBlank() }
+                        ?: translation?.text
+                        ?: state.target.content.text
                     if (quoted.isNotBlank()) {
-                        Text(
-                            quoted,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 6,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(top = 4.dp),
-                        )
+                        Column(Modifier.padding(top = 4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            if (translation != null && translations != null) {
+                                TranslationNotice(translation.sourceName, onShowOriginal = { translations.showOriginal(target.id) })
+                            }
+                            Text(
+                                quoted,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 6,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
                     }
                 }
             }
