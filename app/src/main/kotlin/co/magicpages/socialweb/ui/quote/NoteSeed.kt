@@ -52,13 +52,31 @@ fun SharedContent.toSeed(): NoteSeed {
 private fun linkBelowEmptyLines(url: String): String = if (url.isBlank()) "" else "\n\n${url.trim()}"
 
 /**
- * A share from another app (a page to write about) that came in before it could be shown: the
- * sign-in comes first when there is no account. Stays pending until the signed-in screens take it.
+ * Words selected in the writer's own [article], quoted on a card with the article's title and site, and the
+ * article's link below an empty first line: the same note as sharing the selection from a browser.
+ */
+fun passageSeed(article: Post, passage: String): NoteSeed =
+    SharedContent(
+        url = article.webUrl,
+        quote = passage,
+        title = article.title.trim().takeIf { it.isNotEmpty() && !it.equals(passage, ignoreCase = true) },
+        plainText = null,
+    ).toSeed()
+
+/**
+ * Notes to start that came in before they could be shown, from outside the signed-in screens: a share
+ * from another app (a page to write about), or a tapped "share again" reminder (one of the writer's own
+ * posts). The sign-in comes first when there is no account. Each stays pending until the signed-in screens take it.
  */
 @Singleton
 class SharedContentRequests @Inject constructor() {
     private val _pending = MutableStateFlow<SharedContent?>(null)
     val pending: StateFlow<SharedContent?> = _pending.asStateFlow()
+
+    private val _pendingPost = MutableStateFlow<Post?>(null)
+
+    /** A post to write about, quoted as [postSeed] does. */
+    val pendingPost: StateFlow<Post?> = _pendingPost.asStateFlow()
 
     fun submit(content: SharedContent) {
         _pending.value = content
@@ -68,10 +86,22 @@ class SharedContentRequests @Inject constructor() {
     fun consume(content: SharedContent) {
         _pending.compareAndSet(content, null)
     }
+
+    fun submit(post: Post) {
+        _pendingPost.value = post
+    }
+
+    /** Forgets [post] unless a newer one has replaced it meanwhile. */
+    fun consume(post: Post) {
+        _pendingPost.compareAndSet(post, null)
+    }
 }
 
 /** Starts a new note quoting a post; null where there is no composer to open (previews). */
 val LocalQuotePost = staticCompositionLocalOf<((Post) -> Unit)?> { null }
+
+/** Starts a new note quoting a passage the writer selected in their own article: the article, then the selected words. Null where there is no composer to open. */
+val LocalQuotePassage = staticCompositionLocalOf<((Post, String) -> Unit)?> { null }
 
 /** The quote card's colours, from the theme in use. */
 @Composable

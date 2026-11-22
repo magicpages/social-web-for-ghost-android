@@ -58,8 +58,9 @@ class ActivityPubClient @Inject constructor(
     suspend fun readerFeed(site: GhostSite, credential: Credential, next: String? = null): PostsPage =
         decode(send(site, credential, HttpMethod.Get, "feed/reader", params = arrayOf("next" to next)))
 
-    suspend fun notifications(site: GhostSite, credential: Credential, next: String? = null): NotificationsPage =
-        decode(send(site, credential, HttpMethod.Get, "notifications", params = arrayOf("next" to next)))
+    /** Newest first. [limit] defaults to the service's 20 and is capped at 100 there. */
+    suspend fun notifications(site: GhostSite, credential: Credential, next: String? = null, limit: Int? = null): NotificationsPage =
+        decode(send(site, credential, HttpMethod.Get, "notifications", params = arrayOf("next" to next, "limit" to limit?.toString())))
 
     suspend fun unreadNotificationCount(site: GhostSite, credential: Credential): Int =
         decode<UnreadCount>(send(site, credential, HttpMethod.Get, "notifications/unread/count")).count

@@ -634,4 +634,53 @@
     <plurals name="explore_story_people">
         <item quantity="other">%1$d 人分享了</item>
     </plurals>
+    <string name="action_post_quote">发布这段引用</string>
+    <string name="action_remind_share_again">提醒我再次分享</string>
+    <string name="share_again_tomorrow">明天</string>
+    <string name="share_again_three_days">3 天后</string>
+    <string name="share_again_week">一周后</string>
+    <string name="share_again_set">我们会在 %1$s 提醒你。</string>
+    <string name="share_again_set_muted">已设置 %1$s 的提醒，但通知已关闭。请在设置中开启通知以收到提醒。</string>
+    <string name="share_again_notification_title">要再次分享《%1$s》吗？</string>
+    <string name="share_again_notification_text">时间线更新很快。再发一次，能让更多关注者看到。</string>
+    <string name="reach_title">传播</string>
+    <string name="reach_entry">看看你的帖子传播了多远</string>
+    <string name="reach_people_on_servers">%2$s 上的 %1$s</string>
+    <string name="reach_partial">你的网站活动太多，只统计了最近 30 天中的一部分。</string>
+    <string name="reach_top">最近传播最远</string>
+    <string name="reach_recent">你最近的帖子</string>
+    <string name="reach_nothing">还没有。有人转发、回复或喜欢你的帖子时，会显示在这里。</string>
+    <string name="reach_post_title">传播情况</string>
+    <string name="reach_open_post">打开帖子</string>
+    <string name="reach_potential_explained">你的关注者加上所有转发者的关注者。有些人同时关注你们中的多位，所以实际人数更少。</string>
+    <string name="reach_potential_counting">仍在统计所有转发者的关注者。</string>
+    <string name="reach_timeline">每日动态</string>
+    <string name="reach_day_count">第 %1$d 天：%2$d</string>
+    <string name="reach_first_day">%1$d%% 发生在第一天</string>
+    <string name="reach_reposted_by">转发者</string>
+    <string name="reach_replies">回复</string>
+    <string name="reach_liked_by">喜欢的人</string>
+    <string name="reach_listed_since">列表来自你自 %1$s 以来的通知。</string>
+    <string name="reach_see">查看传播情况</string>
+    <plurals name="reach_last_days">
+        <item quantity="other">最近 %1$d 天</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="other">转发</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="other">回复</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="other">喜欢</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="other">%1$s 人</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="other">%1$s 个服务器</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="other">最多 %1$s 人可能看到过</item>
+    </plurals>
 </resources>

@@ -92,6 +92,8 @@ import co.magicpages.socialweb.ui.posts.LocalLinkedPosts
 import co.magicpages.socialweb.ui.posts.LocalShowSensitiveMedia
 import co.magicpages.socialweb.ui.profile.FollowsScreen
 import co.magicpages.socialweb.ui.profile.ProfileScreen
+import co.magicpages.socialweb.ui.reach.PostReachScreen
+import co.magicpages.socialweb.ui.reach.ReachScreen
 import co.magicpages.socialweb.ui.settings.BlockedScreen
 import co.magicpages.socialweb.ui.settings.FediverseSettingsScreen
 import co.magicpages.socialweb.ui.settings.NotificationSettingsScreen
@@ -137,6 +139,14 @@ data class ProfileKey(val handle: String, val url: String? = null) : NavKey
 /** Followers | Following of a profile, opened on [list]; [name] titles the screen. */
 @Serializable
 data class FollowsKey(val handle: String, val name: String, val list: FollowList) : NavKey
+
+/** Reach: how far the site's own posts travelled lately. */
+@Serializable
+data object ReachKey : NavKey
+
+/** How the site's own post [postId] travelled: who passed it on, and how far it could have gone. */
+@Serializable
+data class PostReachKey(val postId: String) : NavKey
 
 /** Settings: a row for each signed-in site's own settings, then what applies to every site. */
 @Serializable
@@ -466,6 +476,7 @@ private fun SignedInNavigation(
                             onOpenPost = openPost,
                             onOpenProfile = openProfile,
                             onSignOut = onSignOut,
+                            onOpenReach = { push(PostReachKey(it)) },
                             // Not a post the service can show: the browser takes the address, and this screen goes, so back doesn't land on a dead end.
                             onUnresolved = {
                                 backStack.remove(key)
@@ -483,6 +494,7 @@ private fun SignedInNavigation(
                             onOpenPost = openPost,
                             onOpenProfile = openProfile,
                             onOpenFollows = { name, list -> push(FollowsKey(key.handle, name, list)) },
+                            onOpenReach = { push(ReachKey) },
                             onSignOut = onSignOut,
                         )
                     }
@@ -494,6 +506,22 @@ private fun SignedInNavigation(
                             key.name,
                             key.list,
                             onBack = back,
+                            onOpenProfile = openProfile,
+                            onSignOut = onSignOut,
+                        )
+                    }
+                }
+                entry<ReachKey>(clazzContentKey = contentKey, metadata = detailMetadata) {
+                    SharedEdgeInsets(WindowInsetsSides.Start) {
+                        ReachScreen(onBack = back, onOpenPostReach = { push(PostReachKey(it)) }, onSignOut = onSignOut)
+                    }
+                }
+                entry<PostReachKey>(clazzContentKey = contentKey, metadata = detailMetadata) { key ->
+                    SharedEdgeInsets(WindowInsetsSides.Start) {
+                        PostReachScreen(
+                            key.postId,
+                            onBack = back,
+                            onOpenPost = { push(PostKey(it)) },
                             onOpenProfile = openProfile,
                             onSignOut = onSignOut,
                         )

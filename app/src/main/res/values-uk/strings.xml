@@ -682,4 +682,74 @@
         <item quantity="many">Поділилися %1$d людей</item>
         <item quantity="other">Поділилися %1$d людини</item>
     </plurals>
+    <string name="action_post_quote">Опублікувати цю цитату</string>
+    <string name="action_remind_share_again">Нагадати поділитися знову</string>
+    <string name="share_again_tomorrow">Завтра</string>
+    <string name="share_again_three_days">Через 3 дні</string>
+    <string name="share_again_week">Через тиждень</string>
+    <string name="share_again_set">Ми нагадаємо вам: %1$s.</string>
+    <string name="share_again_set_muted">Нагадування встановлено на %1$s, але сповіщення вимкнено. Увімкніть їх у налаштуваннях, щоб отримати його.</string>
+    <string name="share_again_notification_title">Поділитися «%1$s» ще раз?</string>
+    <string name="share_again_notification_text">Стрічки швидко оновлюються. Повторна публікація допоможе більшій кількості підписників побачити допис.</string>
+    <string name="reach_title">Охоплення</string>
+    <string name="reach_entry">Подивіться, як далеко розійшлися ваші дописи</string>
+    <string name="reach_people_on_servers">%1$s на %2$s</string>
+    <string name="reach_partial">На вашому сайті стільки активності, що враховано лише частину останніх 30 днів.</string>
+    <string name="reach_top">Розійшлися найдалі останнім часом</string>
+    <string name="reach_recent">Ваші нещодавні дописи</string>
+    <string name="reach_nothing">Поки нічого. Коли люди поширюватимуть ваші дописи, відповідатимуть на них чи вподобатимуть їх, це з\'явиться тут.</string>
+    <string name="reach_post_title">Як далеко він розійшовся</string>
+    <string name="reach_open_post">Відкрити допис</string>
+    <string name="reach_potential_explained">Ваші підписники плюс підписники всіх, хто його поширив. Дехто підписаний на кількох із вас, тож справжнє число менше.</string>
+    <string name="reach_potential_counting">Ще підраховуємо підписників усіх, хто його поширив.</string>
+    <string name="reach_timeline">Активність за днями</string>
+    <string name="reach_day_count">День %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d%% припало на перший день</string>
+    <string name="reach_reposted_by">Поширили</string>
+    <string name="reach_replies">Відповіді</string>
+    <string name="reach_liked_by">Вподобали</string>
+    <string name="reach_listed_since">Список узято з ваших сповіщень від %1$s.</string>
+    <string name="reach_see">Подивитися, як далеко він розійшовся</string>
+    <plurals name="reach_last_days" tools:ignore="ImpliedQuantity">
+        <item quantity="one">Останній %1$d день</item>
+        <item quantity="few">Останні %1$d дні</item>
+        <item quantity="many">Останні %1$d днів</item>
+        <item quantity="other">Останні %1$d дня</item>
+    </plurals>
+    <plurals name="reach_reposts" tools:ignore="ImpliedQuantity">
+        <item quantity="one">поширення</item>
+        <item quantity="few">поширення</item>
+        <item quantity="many">поширень</item>
+        <item quantity="other">поширення</item>
+    </plurals>
+    <plurals name="reach_replies_count" tools:ignore="ImpliedQuantity">
+        <item quantity="one">відповідь</item>
+        <item quantity="few">відповіді</item>
+        <item quantity="many">відповідей</item>
+        <item quantity="other">відповіді</item>
+    </plurals>
+    <plurals name="reach_likes" tools:ignore="ImpliedQuantity">
+        <item quantity="one">вподобання</item>
+        <item quantity="few">вподобання</item>
+        <item quantity="many">вподобань</item>
+        <item quantity="other">вподобання</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s людина</item>
+        <item quantity="few">%1$s людини</item>
+        <item quantity="many">%1$s людей</item>
+        <item quantity="other">%1$s людини</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s сервері</item>
+        <item quantity="few">%1$s серверах</item>
+        <item quantity="many">%1$s серверах</item>
+        <item quantity="other">%1$s серверах</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">Його могла побачити до %1$s людини</item>
+        <item quantity="few">Його могли побачити до %1$s людей</item>
+        <item quantity="many">Його могли побачити до %1$s людей</item>
+        <item quantity="other">Його могли побачити до %1$s людини</item>
+    </plurals>
 </resources>

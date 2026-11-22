@@ -634,4 +634,53 @@
     <plurals name="explore_story_people">
         <item quantity="other">%1$d명이 공유함</item>
     </plurals>
+    <string name="action_post_quote">이 인용문 게시</string>
+    <string name="action_remind_share_again">다시 공유하도록 알려 주세요</string>
+    <string name="share_again_tomorrow">내일</string>
+    <string name="share_again_three_days">3일 후</string>
+    <string name="share_again_week">일주일 후</string>
+    <string name="share_again_set">%1$s에 알려 드릴게요.</string>
+    <string name="share_again_set_muted">%1$s에 알림을 설정했지만 알림이 꺼져 있어요. 받으려면 설정에서 알림을 켜 주세요.</string>
+    <string name="share_again_notification_title">“%1$s”을(를) 다시 공유할까요?</string>
+    <string name="share_again_notification_text">타임라인은 빠르게 흘러가요. 다시 게시하면 더 많은 팔로워가 볼 수 있어요.</string>
+    <string name="reach_title">도달 범위</string>
+    <string name="reach_entry">게시물이 얼마나 멀리 퍼졌는지 확인하세요</string>
+    <string name="reach_people_on_servers">%2$s의 %1$s</string>
+    <string name="reach_partial">사이트 활동이 너무 많아 지난 30일 중 일부만 집계했습니다.</string>
+    <string name="reach_top">최근 가장 멀리 퍼진 게시물</string>
+    <string name="reach_recent">최근 게시물</string>
+    <string name="reach_nothing">아직 없습니다. 사람들이 게시물을 리포스트하거나 답글을 달거나 좋아요를 누르면 여기에 표시됩니다.</string>
+    <string name="reach_post_title">얼마나 퍼졌는지</string>
+    <string name="reach_open_post">게시물 열기</string>
+    <string name="reach_potential_explained">내 팔로워와 리포스트한 모든 사람의 팔로워를 더한 수입니다. 여러 명을 함께 팔로우하는 사람도 있어 실제 숫자는 더 적습니다.</string>
+    <string name="reach_potential_counting">리포스트한 모든 사람의 팔로워를 아직 더하는 중입니다.</string>
+    <string name="reach_timeline">일별 활동</string>
+    <string name="reach_day_count">%1$d일째: %2$d</string>
+    <string name="reach_first_day">%1$d%%가 첫날에 일어났습니다</string>
+    <string name="reach_reposted_by">리포스트한 사람</string>
+    <string name="reach_replies">답글</string>
+    <string name="reach_liked_by">좋아요한 사람</string>
+    <string name="reach_listed_since">목록은 %1$s 이후의 알림을 바탕으로 합니다.</string>
+    <string name="reach_see">얼마나 퍼졌는지 보기</string>
+    <plurals name="reach_last_days">
+        <item quantity="other">지난 %1$d일</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="other">리포스트</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="other">답글</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="other">좋아요</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="other">%1$s명</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="other">서버 %1$s곳</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="other">최대 %1$s명이 봤을 수 있습니다</item>
+    </plurals>
 </resources>

@@ -49,8 +49,10 @@ import co.magicpages.socialweb.ui.components.LocalOwnProfile
 import co.magicpages.socialweb.ui.components.PickedImagePreview
 import co.magicpages.socialweb.ui.components.TakePhotoButton
 import co.magicpages.socialweb.ui.components.rememberComposerText
+import co.magicpages.socialweb.ui.quote.LocalQuotePassage
 import co.magicpages.socialweb.ui.quote.LocalQuotePost
 import co.magicpages.socialweb.ui.quote.SharedContentRequests
+import co.magicpages.socialweb.ui.quote.passageSeed
 import co.magicpages.socialweb.ui.quote.postSeed
 import co.magicpages.socialweb.ui.quote.rememberQuoteCardPalette
 import co.magicpages.socialweb.ui.quote.toSeed
@@ -76,13 +78,17 @@ fun NoteEditorHost(composer: NoteComposer) {
 
 /**
  * Hosts the app's one note composer above [content]: posts can be quoted from any screen through
- * [LocalQuotePost], and a page shared from another app ([shares]) opens a note as soon as the
+ * [LocalQuotePost], passages of the writer's own articles through [LocalQuotePassage], and a page
+ * shared from another app, or a post to share again ([shares]), opens a note as soon as the
  * signed-in screens are on show.
  */
 @Composable
 fun NoteComposerScope(composer: NoteComposer, shares: SharedContentRequests, content: @Composable () -> Unit) {
     val palette = rememberQuoteCardPalette()
     val quotePost: (Post) -> Unit = remember(composer, palette) { { post -> composer.startWith(postSeed(post), palette) } }
+    val quotePassage: (Post, String) -> Unit = remember(composer, palette) {
+        { article, passage -> composer.startWith(passageSeed(article, passage), palette) }
+    }
     LaunchedEffect(composer, shares, palette) {
         shares.pending.filterNotNull().collect { shared ->
             // A note being sent can't be changed under the sender; the share waits for it.
@@ -91,7 +97,14 @@ fun NoteComposerScope(composer: NoteComposer, shares: SharedContentRequests, con
             shares.consume(shared)
         }
     }
-    CompositionLocalProvider(LocalQuotePost provides quotePost) {
+    LaunchedEffect(composer, shares, palette) {
+        shares.pendingPost.filterNotNull().collect { post ->
+            composer.state.first { it?.sending != true }
+            composer.startWith(postSeed(post), palette)
+            shares.consume(post)
+        }
+    }
+    CompositionLocalProvider(LocalQuotePost provides quotePost, LocalQuotePassage provides quotePassage) {
         // The host comes before [content], not after it. Switching accounts tears down the screens in
         // [content]; a sibling composed after them then read a screen's lifecycle owner, which was
         // destroyed a moment later, and the note editor stopped opening until the app restarted.

@@ -634,4 +634,53 @@
     <plurals name="explore_story_people">
         <item quantity="other">%1$d 人がシェア</item>
     </plurals>
+    <string name="action_post_quote">この引用を投稿</string>
+    <string name="action_remind_share_again">もう一度シェアするよう通知</string>
+    <string name="share_again_tomorrow">明日</string>
+    <string name="share_again_three_days">3日後</string>
+    <string name="share_again_week">1週間後</string>
+    <string name="share_again_set">%1$s にお知らせします。</string>
+    <string name="share_again_set_muted">%1$s にリマインダーを設定しましたが、通知がオフです。受け取るには設定で通知をオンにしてください。</string>
+    <string name="share_again_notification_title">「%1$s」をもう一度シェアしますか？</string>
+    <string name="share_again_notification_text">タイムラインは流れが速いので、もう一度投稿すると、より多くのフォロワーの目に留まります。</string>
+    <string name="reach_title">リーチ</string>
+    <string name="reach_entry">投稿がどこまで届いたかを見る</string>
+    <string name="reach_people_on_servers">%2$s の %1$s</string>
+    <string name="reach_partial">サイトのアクティビティが多いため、過去 30 日間の一部だけを数えています。</string>
+    <string name="reach_top">最近いちばん遠くまで届いた投稿</string>
+    <string name="reach_recent">最近の投稿</string>
+    <string name="reach_nothing">まだありません。投稿がリポスト、返信、いいねされると、ここに表示されます。</string>
+    <string name="reach_post_title">どこまで届いたか</string>
+    <string name="reach_open_post">投稿を開く</string>
+    <string name="reach_potential_explained">あなたのフォロワーと、リポストした全員のフォロワーの合計です。複数の人をフォローしている人もいるので、実際の人数はこれより少なくなります。</string>
+    <string name="reach_potential_counting">リポストした全員のフォロワーを集計しています。</string>
+    <string name="reach_timeline">日別のアクティビティ</string>
+    <string name="reach_day_count">%1$d 日目: %2$d</string>
+    <string name="reach_first_day">%1$d%% は初日に起きました</string>
+    <string name="reach_reposted_by">リポストした人</string>
+    <string name="reach_replies">返信</string>
+    <string name="reach_liked_by">いいねした人</string>
+    <string name="reach_listed_since">このリストは %1$s 以降の通知にもとづいています。</string>
+    <string name="reach_see">どこまで届いたかを見る</string>
+    <plurals name="reach_last_days">
+        <item quantity="other">過去 %1$d 日間</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="other">リポスト</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="other">返信</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="other">いいね</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="other">%1$s 人</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="other">%1$s 台のサーバー</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="other">最大 %1$s 人が見た可能性があります</item>
+    </plurals>
 </resources>

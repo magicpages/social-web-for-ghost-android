@@ -666,4 +666,67 @@
         <item quantity="many">%1$d pessoas compartilharam isso</item>
         <item quantity="other">%1$d pessoas compartilharam isso</item>
     </plurals>
+    <string name="action_post_quote">Postar esta citação</string>
+    <string name="action_remind_share_again">Me lembrar de compartilhar de novo</string>
+    <string name="share_again_tomorrow">Amanhã</string>
+    <string name="share_again_three_days">Em 3 dias</string>
+    <string name="share_again_week">Em uma semana</string>
+    <string name="share_again_set">Vamos te lembrar em %1$s.</string>
+    <string name="share_again_set_muted">Lembrete definido para %1$s, mas as notificações estão desativadas. Ative-as nos ajustes para recebê-lo.</string>
+    <string name="share_again_notification_title">Compartilhar “%1$s” de novo?</string>
+    <string name="share_again_notification_text">As linhas do tempo andam rápido. Postar de novo ajuda mais seguidores a ver.</string>
+    <string name="reach_title">Alcance</string>
+    <string name="reach_entry">Veja até onde seus posts chegaram</string>
+    <string name="reach_people_on_servers">%1$s em %2$s</string>
+    <string name="reach_partial">Seu site tem tanta atividade que só uma parte dos últimos 30 dias é contada.</string>
+    <string name="reach_top">Os que foram mais longe ultimamente</string>
+    <string name="reach_recent">Seus posts recentes</string>
+    <string name="reach_nothing">Nada ainda. Quando alguém compartilhar, responder ou curtir seus posts, vai aparecer aqui.</string>
+    <string name="reach_post_title">Até onde chegou</string>
+    <string name="reach_open_post">Abrir post</string>
+    <string name="reach_potential_explained">Seus seguidores mais os seguidores de todo mundo que compartilhou. Algumas pessoas seguem mais de um de vocês, então o número real é menor.</string>
+    <string name="reach_potential_counting">Ainda somando os seguidores de quem compartilhou.</string>
+    <string name="reach_timeline">Atividade por dia</string>
+    <string name="reach_day_count">Dia %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d%% aconteceu no primeiro dia</string>
+    <string name="reach_reposted_by">Compartilhado por</string>
+    <string name="reach_replies">Respostas</string>
+    <string name="reach_liked_by">Curtido por</string>
+    <string name="reach_listed_since">A lista vem das suas notificações desde %1$s.</string>
+    <string name="reach_see">Veja até onde chegou</string>
+    <plurals name="reach_last_days" tools:ignore="ImpliedQuantity">
+        <item quantity="one">Último dia</item>
+        <item quantity="many">Últimos %1$d dias</item>
+        <item quantity="other">Últimos %1$d dias</item>
+    </plurals>
+    <plurals name="reach_reposts" tools:ignore="ImpliedQuantity">
+        <item quantity="one">compartilhamento</item>
+        <item quantity="many">compartilhamentos</item>
+        <item quantity="other">compartilhamentos</item>
+    </plurals>
+    <plurals name="reach_replies_count" tools:ignore="ImpliedQuantity">
+        <item quantity="one">resposta</item>
+        <item quantity="many">respostas</item>
+        <item quantity="other">respostas</item>
+    </plurals>
+    <plurals name="reach_likes" tools:ignore="ImpliedQuantity">
+        <item quantity="one">curtida</item>
+        <item quantity="many">curtidas</item>
+        <item quantity="other">curtidas</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s pessoa</item>
+        <item quantity="many">%1$s pessoas</item>
+        <item quantity="other">%1$s pessoas</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s servidor</item>
+        <item quantity="many">%1$s servidores</item>
+        <item quantity="other">%1$s servidores</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">Até %1$s pessoa pode ter visto</item>
+        <item quantity="many">Até %1$s pessoas podem ter visto</item>
+        <item quantity="other">Até %1$s pessoas podem ter visto</item>
+    </plurals>
 </resources>

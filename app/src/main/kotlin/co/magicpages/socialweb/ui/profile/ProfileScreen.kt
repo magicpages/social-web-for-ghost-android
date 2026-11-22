@@ -146,6 +146,8 @@ fun ProfileScreen(
     onOpenPost: (Post) -> Unit,
     onOpenProfile: (Author) -> Unit,
     onOpenFollows: (name: String, list: FollowList) -> Unit,
+    /** Opens Reach; only the site's own profile offers it. */
+    onOpenReach: () -> Unit,
     onSignOut: () -> Unit,
 ) {
     val viewModel = hiltViewModel<ProfileViewModel, ProfileViewModel.Factory>(key = handle) { it.create(handle) }
@@ -294,6 +296,7 @@ fun ProfileScreen(
                                     scope.launch { listState.animateScrollToItem(1) }
                                 },
                                 onShowFollows = { onOpenFollows(profile.name.ifBlank { profile.handle }, it) },
+                                onOpenReach = onOpenReach,
                             )
                         }
                         item(key = "tabs", contentType = "tabs") {
@@ -427,6 +430,7 @@ private fun ProfileHeader(
     onRecommend: () -> Unit,
     onEdit: () -> Unit,
     onShare: () -> Unit,
+    onOpenReach: () -> Unit,
 ) {
     val profile = content.profile
     val bannerHeight = BannerHeight + statusBarHeight
@@ -520,6 +524,7 @@ private fun ProfileHeader(
             if (content.fields.isNotEmpty()) ProfileFields(content.fields, profile.apId)
             site?.let { SiteActions(it, content.isMe, onRecommend) }
             Stats(profile.postCount, profile.followingCount, profile.followerCount, onShowPosts, onShowFollows)
+            if (content.isMe) ReachEntry(onOpenReach)
         }
     }
 }
@@ -672,6 +677,34 @@ private fun Stat(value: String, label: String, actionLabel: Int, onClick: () -> 
     ) {
         Text(value, style = MaterialTheme.typography.titleMediumEmphasized)
         Text(label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+
+/** The way into Reach, under the site's own stats: how far its posts travelled. */
+@Composable
+private fun ReachEntry(onClick: () -> Unit) {
+    Surface(
+        onClick = onClick,
+        color = MaterialTheme.colorScheme.surfaceContainer,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Row(
+            Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(AppIcons.TrendingUp, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.reach_title), style = MaterialTheme.typography.titleMedium)
+                Text(
+                    stringResource(R.string.reach_entry),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            Icon(AppIcons.ChevronRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
     }
 }
 

@@ -650,4 +650,60 @@
         <item quantity="one">%1$d person har delt dette</item>
         <item quantity="other">%1$d personer har delt dette</item>
     </plurals>
+    <string name="action_post_quote">Slå dette citat op</string>
+    <string name="action_remind_share_again">Mind mig om at dele igen</string>
+    <string name="share_again_tomorrow">I morgen</string>
+    <string name="share_again_three_days">Om 3 dage</string>
+    <string name="share_again_week">Om en uge</string>
+    <string name="share_again_set">Vi minder dig om det %1$s.</string>
+    <string name="share_again_set_muted">Påmindelsen er sat til %1$s, men notifikationer er slået fra. Slå dem til i indstillingerne for at få den.</string>
+    <string name="share_again_notification_title">Del “%1$s” igen?</string>
+    <string name="share_again_notification_text">Tidslinjer bevæger sig hurtigt. Hvis du deler igen, kan flere af dine følgere se det.</string>
+    <string name="reach_title">Rækkevidde</string>
+    <string name="reach_entry">Se, hvor langt dine opslag er nået</string>
+    <string name="reach_people_on_servers">%1$s på %2$s</string>
+    <string name="reach_partial">Der er så meget aktivitet på dit site, at kun en del af de sidste 30 dage tælles med.</string>
+    <string name="reach_top">Nået længst for nylig</string>
+    <string name="reach_recent">Dine seneste opslag</string>
+    <string name="reach_nothing">Intet endnu. Når folk deler, svarer på eller synes godt om dine opslag, kan du se det her.</string>
+    <string name="reach_post_title">Hvor langt det nåede</string>
+    <string name="reach_open_post">Åbn opslag</string>
+    <string name="reach_potential_explained">Dine følgere plus følgerne hos alle, der har delt det. Nogle følger flere af jer, så det rigtige tal er lavere.</string>
+    <string name="reach_potential_counting">Lægger stadig følgerne sammen hos alle, der har delt det.</string>
+    <string name="reach_timeline">Aktivitet pr. dag</string>
+    <string name="reach_day_count">Dag %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d %% af det skete den første dag</string>
+    <string name="reach_reposted_by">Delt af</string>
+    <string name="reach_replies">Svar</string>
+    <string name="reach_liked_by">Synes godt om af</string>
+    <string name="reach_listed_since">Listen kommer fra dine notifikationer siden %1$s.</string>
+    <string name="reach_see">Se, hvor langt det nåede</string>
+    <plurals name="reach_last_days">
+        <item quantity="one">Sidste %1$d dag</item>
+        <item quantity="other">Sidste %1$d dage</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="one">deling</item>
+        <item quantity="other">delinger</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="one">svar</item>
+        <item quantity="other">svar</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="one">like</item>
+        <item quantity="other">likes</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s person</item>
+        <item quantity="other">%1$s personer</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s server</item>
+        <item quantity="other">%1$s servere</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">Op til %1$s person kunne have set det</item>
+        <item quantity="other">Op til %1$s personer kunne have set det</item>
+    </plurals>
 </resources>

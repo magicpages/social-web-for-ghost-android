@@ -650,4 +650,60 @@
         <item quantity="one">%1$d persoon heeft dit gedeeld</item>
         <item quantity="other">%1$d mensen hebben dit gedeeld</item>
     </plurals>
+    <string name="action_post_quote">Dit citaat plaatsen</string>
+    <string name="action_remind_share_again">Herinner me eraan om het opnieuw te delen</string>
+    <string name="share_again_tomorrow">Morgen</string>
+    <string name="share_again_three_days">Over 3 dagen</string>
+    <string name="share_again_week">Over een week</string>
+    <string name="share_again_set">We herinneren je eraan op %1$s.</string>
+    <string name="share_again_set_muted">Herinnering ingesteld voor %1$s, maar meldingen staan uit. Zet ze aan in de instellingen om hem te krijgen.</string>
+    <string name="share_again_notification_title">“%1$s” opnieuw delen?</string>
+    <string name="share_again_notification_text">Tijdlijnen gaan snel. Opnieuw plaatsen helpt meer volgers het te zien.</string>
+    <string name="reach_title">Bereik</string>
+    <string name="reach_entry">Bekijk hoe ver je berichten zijn gekomen</string>
+    <string name="reach_people_on_servers">%1$s op %2$s</string>
+    <string name="reach_partial">Je site heeft zoveel activiteit dat maar een deel van de laatste 30 dagen meetelt.</string>
+    <string name="reach_top">Kwamen de laatste tijd het verst</string>
+    <string name="reach_recent">Je recente berichten</string>
+    <string name="reach_nothing">Nog niets. Als mensen je berichten delen, erop reageren of ze leuk vinden, zie je dat hier.</string>
+    <string name="reach_post_title">Hoe ver het kwam</string>
+    <string name="reach_open_post">Bericht openen</string>
+    <string name="reach_potential_explained">Je volgers plus de volgers van iedereen die het deelde. Sommige mensen volgen meer dan een van jullie, dus het echte aantal is lager.</string>
+    <string name="reach_potential_counting">Bezig met optellen van de volgers van iedereen die het deelde.</string>
+    <string name="reach_timeline">Activiteit per dag</string>
+    <string name="reach_day_count">Dag %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d%% ervan gebeurde op de eerste dag</string>
+    <string name="reach_reposted_by">Gedeeld door</string>
+    <string name="reach_replies">Reacties</string>
+    <string name="reach_liked_by">Leuk gevonden door</string>
+    <string name="reach_listed_since">Wie hier staat, komt uit je meldingen sinds %1$s.</string>
+    <string name="reach_see">Bekijk hoe ver het kwam</string>
+    <plurals name="reach_last_days">
+        <item quantity="one">Laatste %1$d dag</item>
+        <item quantity="other">Laatste %1$d dagen</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="one">keer gedeeld</item>
+        <item quantity="other">keer gedeeld</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="one">reactie</item>
+        <item quantity="other">reacties</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="one">like</item>
+        <item quantity="other">likes</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s persoon</item>
+        <item quantity="other">%1$s mensen</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s server</item>
+        <item quantity="other">%1$s servers</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">Tot %1$s persoon kan het gezien hebben</item>
+        <item quantity="other">Tot %1$s mensen kunnen het gezien hebben</item>
+    </plurals>
 </resources>

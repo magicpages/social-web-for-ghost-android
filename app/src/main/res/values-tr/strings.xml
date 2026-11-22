@@ -650,4 +650,60 @@
         <item quantity="one">%1$d kişi paylaştı</item>
         <item quantity="other">%1$d kişi paylaştı</item>
     </plurals>
+    <string name="action_post_quote">Bu alıntıyı gönder</string>
+    <string name="action_remind_share_again">Tekrar paylaşmam için hatırlat</string>
+    <string name="share_again_tomorrow">Yarın</string>
+    <string name="share_again_three_days">3 gün sonra</string>
+    <string name="share_again_week">Bir hafta sonra</string>
+    <string name="share_again_set">Sana %1$s tarihinde hatırlatacağız.</string>
+    <string name="share_again_set_muted">Hatırlatıcı %1$s için ayarlandı ama bildirimler kapalı. Almak için ayarlardan bildirimleri aç.</string>
+    <string name="share_again_notification_title">“%1$s” tekrar paylaşılsın mı?</string>
+    <string name="share_again_notification_text">Zaman akışları hızlı ilerler. Tekrar göndermek daha fazla takipçinin görmesine yardımcı olur.</string>
+    <string name="reach_title">Erişim</string>
+    <string name="reach_entry">Gönderilerinin ne kadar uzağa ulaştığını gör</string>
+    <string name="reach_people_on_servers">%2$s üzerinde %1$s</string>
+    <string name="reach_partial">Sitende o kadar çok etkinlik var ki son 30 günün yalnızca bir kısmı sayılıyor.</string>
+    <string name="reach_top">Son zamanlarda en uzağa gidenler</string>
+    <string name="reach_recent">Son gönderilerin</string>
+    <string name="reach_nothing">Henüz bir şey yok. İnsanlar gönderilerini paylaştığında, yanıtladığında veya beğendiğinde burada görünür.</string>
+    <string name="reach_post_title">Ne kadar uzağa gitti</string>
+    <string name="reach_open_post">Gönderiyi aç</string>
+    <string name="reach_potential_explained">Takipçilerin artı onu paylaşan herkesin takipçileri. Bazıları birden fazlanızı takip ediyor, yani gerçek sayı daha düşük.</string>
+    <string name="reach_potential_counting">Onu paylaşan herkesin takipçileri hâlâ toplanıyor.</string>
+    <string name="reach_timeline">Günlük etkinlik</string>
+    <string name="reach_day_count">Gün %1$d: %2$d</string>
+    <string name="reach_first_day">Bunun %%%1$d kadarı ilk gün oldu</string>
+    <string name="reach_reposted_by">Paylaşanlar</string>
+    <string name="reach_replies">Yanıtlar</string>
+    <string name="reach_liked_by">Beğenenler</string>
+    <string name="reach_listed_since">Liste, %1$s tarihinden beri gelen bildirimlerine dayanıyor.</string>
+    <string name="reach_see">Ne kadar uzağa gittiğini gör</string>
+    <plurals name="reach_last_days">
+        <item quantity="one">Son %1$d gün</item>
+        <item quantity="other">Son %1$d gün</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="one">paylaşım</item>
+        <item quantity="other">paylaşım</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="one">yanıt</item>
+        <item quantity="other">yanıt</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="one">beğeni</item>
+        <item quantity="other">beğeni</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s kişi</item>
+        <item quantity="other">%1$s kişi</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s sunucu</item>
+        <item quantity="other">%1$s sunucu</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">%1$s kişiye kadar görmüş olabilir</item>
+        <item quantity="other">%1$s kişiye kadar görmüş olabilir</item>
+    </plurals>
 </resources>

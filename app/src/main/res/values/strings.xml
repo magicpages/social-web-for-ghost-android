@@ -658,4 +658,60 @@
         <item quantity="one">%1$d person shared this</item>
         <item quantity="other">%1$d people shared this</item>
     </plurals>
+    <string name="action_post_quote">Post this quote</string>
+    <string name="action_remind_share_again">Remind me to share again</string>
+    <string name="share_again_tomorrow">Tomorrow</string>
+    <string name="share_again_three_days">In 3 days</string>
+    <string name="share_again_week">In a week</string>
+    <string name="share_again_set">We\'ll remind you on %1$s.</string>
+    <string name="share_again_set_muted">Reminder set for %1$s, but notifications are off. Turn them on in settings to get it.</string>
+    <string name="share_again_notification_title">Share “%1$s” again?</string>
+    <string name="share_again_notification_text">Timelines move fast. Posting again helps more of your followers see it.</string>
+    <string name="reach_title">Reach</string>
+    <string name="reach_entry">See how far your posts travelled</string>
+    <string name="reach_people_on_servers">%1$s on %2$s</string>
+    <string name="reach_partial">Your site gets so much activity that only part of the last 30 days is counted.</string>
+    <string name="reach_top">Travelled furthest lately</string>
+    <string name="reach_recent">Your recent posts</string>
+    <string name="reach_nothing">Nothing yet. When people repost, reply to or like your posts, it shows up here.</string>
+    <string name="reach_post_title">How it travelled</string>
+    <string name="reach_open_post">Open post</string>
+    <string name="reach_potential_explained">Your followers plus the followers of everyone who reposted it. Some people follow more than one of you, so the real number is lower.</string>
+    <string name="reach_potential_counting">Still adding up the followers of everyone who reposted it.</string>
+    <string name="reach_timeline">Activity by day</string>
+    <string name="reach_day_count">Day %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d%% of it happened on the first day</string>
+    <string name="reach_reposted_by">Reposted by</string>
+    <string name="reach_replies">Replies</string>
+    <string name="reach_liked_by">Liked by</string>
+    <string name="reach_listed_since">Who\'s listed comes from your notifications since %1$s.</string>
+    <string name="reach_see">See how it travelled</string>
+    <plurals name="reach_last_days" tools:ignore="ImpliedQuantity">
+        <item quantity="one">Last %1$d day</item>
+        <item quantity="other">Last %1$d days</item>
+    </plurals>
+    <plurals name="reach_reposts" tools:ignore="ImpliedQuantity">
+        <item quantity="one">repost</item>
+        <item quantity="other">reposts</item>
+    </plurals>
+    <plurals name="reach_replies_count" tools:ignore="ImpliedQuantity">
+        <item quantity="one">reply</item>
+        <item quantity="other">replies</item>
+    </plurals>
+    <plurals name="reach_likes" tools:ignore="ImpliedQuantity">
+        <item quantity="one">like</item>
+        <item quantity="other">likes</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s person</item>
+        <item quantity="other">%1$s people</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s server</item>
+        <item quantity="other">%1$s servers</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">Up to %1$s person could have seen it</item>
+        <item quantity="other">Up to %1$s people could have seen it</item>
+    </plurals>
 </resources>

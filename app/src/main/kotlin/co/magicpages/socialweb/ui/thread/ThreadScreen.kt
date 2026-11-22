@@ -2,6 +2,7 @@ package co.magicpages.socialweb.ui.thread
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +22,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -97,6 +100,7 @@ import co.magicpages.socialweb.ui.posts.PostTextInset
 import co.magicpages.socialweb.ui.theme.Gutter
 import co.magicpages.socialweb.ui.theme.ReaderTheme
 import co.magicpages.socialweb.ui.posts.displayName
+import co.magicpages.socialweb.ui.quote.LocalQuotePassage
 import co.magicpages.socialweb.ui.translation.ArticleTranslation
 import co.magicpages.socialweb.ui.translation.ArticleTranslationBanner
 import co.magicpages.socialweb.ui.translation.ArticleTranslateAction
@@ -116,6 +120,8 @@ fun ThreadScreen(
     onOpenProfile: (Author) -> Unit,
     onSignOut: () -> Unit,
     onUnresolved: () -> Unit,
+    /** Opens how one of the site's own posts travelled, by its id. */
+    onOpenReach: (String) -> Unit,
 ) {
     val viewModel = hiltViewModel<ThreadViewModel, ThreadViewModel.Factory>(key = postId) { it.create(postId, resolve) }
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -147,6 +153,12 @@ fun ThreadScreen(
     val webUrl = (focused?.post?.url?.takeIf { it.isNotBlank() } ?: postUrl)?.takeUnless(::isGhostActivityPubUrl)
     val listState = rememberLazyListState()
     val articleAudio = rememberArticleAudio()
+    // Selecting words in the writer's own article offers to post them as a quote; other people's articles keep plain reading.
+    val quotePassage = LocalQuotePassage.current
+    val ownArticle = focused?.post?.takeIf { it.authoredByMe && it.isArticle && it.webUrl != null }
+    val onQuotePassage: ((String) -> Unit)? = remember(quotePassage, ownArticle) {
+        if (quotePassage == null || ownArticle == null) null else { passage -> quotePassage(ownArticle, passage) }
+    }
     // Translating the article is the reader's choice (the top bar's menu), or the site's last one.
     // Its own key: sharing the thread's would make each ViewModel replace (and cancel) the other.
     val translation = hiltViewModel<ArticleTranslationViewModel>(key = "translation:$postId")
@@ -272,7 +284,7 @@ fun ThreadScreen(
                             ) {
                                 thread(
                                     current.content, articleShown, articleTranslation, callbacks, onOpenPost,
-                                    viewModel::loadMore, viewModel::loadEarlier,
+                                    viewModel::loadMore, viewModel::loadEarlier, onQuotePassage, onOpenReach,
                                 ) { articleShown = true }
                             }
                         }
@@ -293,6 +305,8 @@ private fun LazyListScope.thread(
     onOpenPost: (Post) -> Unit,
     onLoadMore: () -> Unit,
     onLoadEarlier: () -> Unit,
+    onQuotePassage: ((String) -> Unit)?,
+    onOpenReach: (String) -> Unit,
     onShowArticle: () -> Unit,
 ) {
     // The conversation so far runs into the post itself, joined by the thread line.
@@ -347,6 +361,7 @@ private fun LazyListScope.thread(
             translated?.document ?: article,
             callbacks.openProfile,
             content.articleAccess,
+            onQuotePassage,
         )
         item(key = "article-actions", contentType = "actions") {
             Box(
@@ -360,6 +375,18 @@ private fun LazyListScope.thread(
     } else {
         item(key = "focused:" + content.post.post.id, contentType = "focused") {
             FocusedPost(content.post, callbacks, connectAbove = content.ancestors.isNotEmpty(), modifier = column)
+        }
+    }
+    if (post.authoredByMe) {
+        item(key = "reach", contentType = "reach") {
+            TextButton(
+                onClick = { onOpenReach(post.id) },
+                modifier = column.padding(horizontal = Gutter - 12.dp),
+            ) {
+                Icon(AppIcons.TrendingUp, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
+                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                Text(stringResource(R.string.reach_see), modifier = Modifier.weight(1f))
+            }
         }
     }
 

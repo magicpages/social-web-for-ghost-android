@@ -46,14 +46,15 @@ import kotlinx.coroutines.launch
 /** Which confirmation the more menu shows once its sheet has closed. */
 private sealed interface PostMenuDialog {
     data object Delete : PostMenuDialog
+    data object ShareAgain : PostMenuDialog
     data class Block(val target: BlockTarget) : PostMenuDialog
 }
 
 /**
  * The "more" button at the end of a post's actions, with what isn't for every tap: Translate,
- * Copy link (or a Ghost note's fediverse link), Copy text for a note, and Delete for the site's
- * own posts, or Report and Block for everyone else's. [shareInMenu] adds Share, for a row too
- * narrow to show its own button.
+ * Copy link (or a Ghost note's fediverse link), Copy text for a note, and for the site's own posts
+ * Remind me to share again (articles) and Delete, or Report and Block for everyone else's. [shareInMenu]
+ * adds Share, for a row too narrow to show its own button.
  */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -125,6 +126,9 @@ private fun PostMenu(
                 SheetAction(stringResource(R.string.share), AppIcons.Share) { share(item) }
             }
             if (post.authoredByMe) {
+                if (post.canRemindToShare) {
+                    SheetAction(stringResource(R.string.action_remind_share_again), AppIcons.Notifications) { dialog = PostMenuDialog.ShareAgain }
+                }
                 if (moderation != null) {
                     SheetAction(stringResource(R.string.action_delete_post), AppIcons.Delete) { dialog = PostMenuDialog.Delete }
                 }
@@ -157,6 +161,7 @@ private fun PostMenu(
             },
             onDismiss = dismiss,
         )
+        PostMenuDialog.ShareAgain -> ShareAgainSheet(post, onFinished = dismiss)
         is PostMenuDialog.Block -> BlockDialog(
             shown.target,
             onConfirm = {

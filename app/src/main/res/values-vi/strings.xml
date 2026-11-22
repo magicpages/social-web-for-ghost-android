@@ -634,4 +634,53 @@
     <plurals name="explore_story_people">
         <item quantity="other">%1$d người đã chia sẻ</item>
     </plurals>
+    <string name="action_post_quote">Đăng trích dẫn này</string>
+    <string name="action_remind_share_again">Nhắc tôi chia sẻ lại</string>
+    <string name="share_again_tomorrow">Ngày mai</string>
+    <string name="share_again_three_days">3 ngày nữa</string>
+    <string name="share_again_week">Một tuần nữa</string>
+    <string name="share_again_set">Chúng tôi sẽ nhắc bạn vào %1$s.</string>
+    <string name="share_again_set_muted">Đã đặt lời nhắc cho %1$s, nhưng thông báo đang tắt. Hãy bật thông báo trong phần cài đặt để nhận được.</string>
+    <string name="share_again_notification_title">Chia sẻ lại “%1$s”?</string>
+    <string name="share_again_notification_text">Dòng thời gian trôi rất nhanh. Đăng lại giúp nhiều người theo dõi bạn thấy hơn.</string>
+    <string name="reach_title">Lượt tiếp cận</string>
+    <string name="reach_entry">Xem bài đăng của bạn đã lan xa đến đâu</string>
+    <string name="reach_people_on_servers">%1$s trên %2$s</string>
+    <string name="reach_partial">Trang của bạn có quá nhiều hoạt động nên chỉ một phần của 30 ngày qua được tính.</string>
+    <string name="reach_top">Lan xa nhất gần đây</string>
+    <string name="reach_recent">Bài đăng gần đây của bạn</string>
+    <string name="reach_nothing">Chưa có gì. Khi mọi người đăng lại, trả lời hoặc thích bài đăng của bạn, nó sẽ hiện ở đây.</string>
+    <string name="reach_post_title">Bài đăng đã lan xa đến đâu</string>
+    <string name="reach_open_post">Mở bài đăng</string>
+    <string name="reach_potential_explained">Người theo dõi của bạn cộng với người theo dõi của mọi người đã đăng lại. Một số người theo dõi nhiều người trong số các bạn, nên con số thật thấp hơn.</string>
+    <string name="reach_potential_counting">Vẫn đang cộng người theo dõi của mọi người đã đăng lại.</string>
+    <string name="reach_timeline">Hoạt động theo ngày</string>
+    <string name="reach_day_count">Ngày %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d%% diễn ra trong ngày đầu tiên</string>
+    <string name="reach_reposted_by">Đã đăng lại</string>
+    <string name="reach_replies">Trả lời</string>
+    <string name="reach_liked_by">Đã thích</string>
+    <string name="reach_listed_since">Danh sách lấy từ thông báo của bạn kể từ %1$s.</string>
+    <string name="reach_see">Xem bài đăng đã lan xa đến đâu</string>
+    <plurals name="reach_last_days">
+        <item quantity="other">%1$d ngày qua</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="other">lượt đăng lại</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="other">trả lời</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="other">lượt thích</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="other">%1$s người</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="other">%1$s máy chủ</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="other">Có thể có tới %1$s người đã thấy</item>
+    </plurals>
 </resources>

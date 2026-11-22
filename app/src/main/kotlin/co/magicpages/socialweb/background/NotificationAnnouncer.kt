@@ -230,6 +230,42 @@ class NotificationAnnouncer @Inject constructor(@ApplicationContext private val 
         )
     }
 
+    /**
+     * Asks whether to share [reminder]'s article again; tapping it opens the app on [account] with a new
+     * note about the article. Does nothing without permission. Its tag starts with the account id, so
+     * signing the account out removes it with the rest.
+     */
+    fun announceShareAgain(account: StoredAccount, reminder: ShareAgainReminder) {
+        if (!canAnnounce()) return
+        ensureChannel()
+        val tap = Intent(context, MainActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            // The data keeps each article's tap its own PendingIntent: intents that differ only in their extras are the same one.
+            .setData(Uri.Builder().scheme("socialweb").authority("share-again").appendPath(account.id).appendPath(reminder.postId).build())
+            .let(reminder::putInto)
+        val open = PendingIntent.getActivity(
+            context,
+            Objects.hash(account.id, reminder.postId),
+            tap,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+        )
+        val notification = NotificationCompat.Builder(context, ChannelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(context.getString(R.string.share_again_notification_title, reminder.title.ifBlank { reminder.url }))
+            .setContentText(context.getString(R.string.share_again_notification_text))
+            .setStyle(NotificationCompat.BigTextStyle().bigText(context.getString(R.string.share_again_notification_text)))
+            .setSubText(account.site.title.ifBlank { account.profile.handle })
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setContentIntent(open)
+            .setAutoCancel(true)
+            .build()
+        try {
+            manager.notify(tagPrefix(account.id) + ShareAgainTag, reminder.postId.hashCode(), notification)
+        } catch (_: SecurityException) {
+            // The permission was withdrawn after canAnnounce().
+        }
+    }
+
     private fun openNotificationsTab(accountId: String): PendingIntent {
         val intent = Intent(context, MainActivity::class.java)
             // With MainActivity's singleTop this reuses a running instance instead of stacking a second one.
@@ -249,6 +285,7 @@ class NotificationAnnouncer @Inject constructor(@ApplicationContext private val 
         const val ChannelId = "notifications"
         const val GroupKeyPrefix = "co.magicpages.socialweb.NOTIFICATIONS:"
         const val ItemTag = "item"
+        const val ShareAgainTag = "share-again"
         const val SummaryTag = "summary"
         const val SummaryId = 0
         const val MaxIndividual = 5

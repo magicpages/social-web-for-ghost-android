@@ -650,4 +650,60 @@
         <item quantity="one">%1$d व्यक्ति ने इसे शेयर किया</item>
         <item quantity="other">%1$d लोगों ने इसे शेयर किया</item>
     </plurals>
+    <string name="action_post_quote">इस उद्धरण को पोस्ट करें</string>
+    <string name="action_remind_share_again">दोबारा शेयर करने की याद दिलाएं</string>
+    <string name="share_again_tomorrow">कल</string>
+    <string name="share_again_three_days">3 दिन में</string>
+    <string name="share_again_week">एक हफ़्ते में</string>
+    <string name="share_again_set">हम आपको %1$s को याद दिलाएंगे।</string>
+    <string name="share_again_set_muted">रिमाइंडर %1$s के लिए सेट है, लेकिन सूचनाएं बंद हैं। उसे पाने के लिए सेटिंग में सूचनाएं चालू करें।</string>
+    <string name="share_again_notification_title">क्या “%1$s” को दोबारा शेयर करें?</string>
+    <string name="share_again_notification_text">टाइमलाइन तेज़ी से आगे बढ़ती हैं। दोबारा पोस्ट करने से आपके और फ़ॉलोअर इसे देख पाते हैं।</string>
+    <string name="reach_title">पहुँच</string>
+    <string name="reach_entry">देखें कि आपकी पोस्ट कितनी दूर तक गईं</string>
+    <string name="reach_people_on_servers">%2$s पर %1$s</string>
+    <string name="reach_partial">आपकी साइट पर इतनी गतिविधि है कि पिछले 30 दिनों का केवल एक हिस्सा गिना गया है।</string>
+    <string name="reach_top">हाल में सबसे दूर तक गईं</string>
+    <string name="reach_recent">आपकी हाल की पोस्ट</string>
+    <string name="reach_nothing">अभी कुछ नहीं। जब लोग आपकी पोस्ट रीपोस्ट करेंगे, उसका जवाब देंगे या उसे पसंद करेंगे, तो वह यहाँ दिखेगा।</string>
+    <string name="reach_post_title">यह कितनी दूर तक गई</string>
+    <string name="reach_open_post">पोस्ट खोलें</string>
+    <string name="reach_potential_explained">आपके फ़ॉलोअर और इसे रीपोस्ट करने वाले हर व्यक्ति के फ़ॉलोअर। कुछ लोग आप में से एक से ज़्यादा को फ़ॉलो करते हैं, इसलिए असली संख्या कम है।</string>
+    <string name="reach_potential_counting">इसे रीपोस्ट करने वाले सभी लोगों के फ़ॉलोअर अभी जोड़े जा रहे हैं।</string>
+    <string name="reach_timeline">हर दिन की गतिविधि</string>
+    <string name="reach_day_count">दिन %1$d: %2$d</string>
+    <string name="reach_first_day">इसका %1$d%% पहले दिन हुआ</string>
+    <string name="reach_reposted_by">रीपोस्ट करने वाले</string>
+    <string name="reach_replies">जवाब</string>
+    <string name="reach_liked_by">पसंद करने वाले</string>
+    <string name="reach_listed_since">सूची %1$s से आपकी सूचनाओं पर आधारित है।</string>
+    <string name="reach_see">देखें कि यह कितनी दूर तक गई</string>
+    <plurals name="reach_last_days" tools:ignore="ImpliedQuantity">
+        <item quantity="one">पिछला %1$d दिन</item>
+        <item quantity="other">पिछले %1$d दिन</item>
+    </plurals>
+    <plurals name="reach_reposts" tools:ignore="ImpliedQuantity">
+        <item quantity="one">रीपोस्ट</item>
+        <item quantity="other">रीपोस्ट</item>
+    </plurals>
+    <plurals name="reach_replies_count" tools:ignore="ImpliedQuantity">
+        <item quantity="one">जवाब</item>
+        <item quantity="other">जवाब</item>
+    </plurals>
+    <plurals name="reach_likes" tools:ignore="ImpliedQuantity">
+        <item quantity="one">पसंद</item>
+        <item quantity="other">पसंद</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s व्यक्ति</item>
+        <item quantity="other">%1$s लोग</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s सर्वर</item>
+        <item quantity="other">%1$s सर्वर</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">इसे %1$s व्यक्ति तक देख सकता था</item>
+        <item quantity="other">इसे %1$s लोग तक देख सकते थे</item>
+    </plurals>
 </resources>

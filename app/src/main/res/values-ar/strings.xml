@@ -714,4 +714,88 @@
         <item quantity="many">شاركه %1$d شخصًا</item>
         <item quantity="other">شاركه %1$d شخص</item>
     </plurals>
+    <string name="action_post_quote">انشر هذا الاقتباس</string>
+    <string name="action_remind_share_again">ذكّرني بالمشاركة مرة أخرى</string>
+    <string name="share_again_tomorrow">غدًا</string>
+    <string name="share_again_three_days">بعد 3 أيام</string>
+    <string name="share_again_week">بعد أسبوع</string>
+    <string name="share_again_set">سنذكّرك يوم %1$s.</string>
+    <string name="share_again_set_muted">تم ضبط التذكير ليوم %1$s، لكن الإشعارات متوقفة. فعّلها من الإعدادات لتصلك.</string>
+    <string name="share_again_notification_title">هل تريد مشاركة «%1$s» مرة أخرى؟</string>
+    <string name="share_again_notification_text">الخطوط الزمنية تتحرك بسرعة. النشر مرة أخرى يساعد المزيد من متابعيك على رؤيته.</string>
+    <string name="reach_title">الوصول</string>
+    <string name="reach_entry">اعرف إلى أي مدى وصلت منشوراتك</string>
+    <string name="reach_people_on_servers">%1$s على %2$s</string>
+    <string name="reach_partial">موقعك فيه نشاط كبير لدرجة أن جزءًا فقط من آخر 30 يومًا محسوب.</string>
+    <string name="reach_top">الأبعد وصولًا مؤخرًا</string>
+    <string name="reach_recent">منشوراتك الأخيرة</string>
+    <string name="reach_nothing">لا شيء بعد. عندما يعيد الناس نشر منشوراتك أو يردون عليها أو يعجبون بها، سيظهر ذلك هنا.</string>
+    <string name="reach_post_title">إلى أي مدى وصل</string>
+    <string name="reach_open_post">فتح المنشور</string>
+    <string name="reach_potential_explained">متابعوك مع متابعي كل من أعاد نشره. بعض الناس يتابعون أكثر من واحد منكم، لذا العدد الحقيقي أقل.</string>
+    <string name="reach_potential_counting">ما زلنا نجمع متابعي كل من أعاد نشره.</string>
+    <string name="reach_timeline">النشاط حسب اليوم</string>
+    <string name="reach_day_count">اليوم %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d%% منه حدث في اليوم الأول</string>
+    <string name="reach_reposted_by">أعاد نشره</string>
+    <string name="reach_replies">الردود</string>
+    <string name="reach_liked_by">أعجب به</string>
+    <string name="reach_listed_since">القائمة مأخوذة من إشعاراتك منذ %1$s.</string>
+    <string name="reach_see">اعرف إلى أي مدى وصل</string>
+    <plurals name="reach_last_days" tools:ignore="ImpliedQuantity">
+        <item quantity="zero">آخر %1$d يوم</item>
+        <item quantity="one">آخر يوم</item>
+        <item quantity="two">آخر يومين</item>
+        <item quantity="few">آخر %1$d أيام</item>
+        <item quantity="many">آخر %1$d يومًا</item>
+        <item quantity="other">آخر %1$d يوم</item>
+    </plurals>
+    <plurals name="reach_reposts" tools:ignore="ImpliedQuantity">
+        <item quantity="zero">إعادة نشر</item>
+        <item quantity="one">إعادة نشر</item>
+        <item quantity="two">إعادتا نشر</item>
+        <item quantity="few">إعادات نشر</item>
+        <item quantity="many">إعادة نشر</item>
+        <item quantity="other">إعادة نشر</item>
+    </plurals>
+    <plurals name="reach_replies_count" tools:ignore="ImpliedQuantity">
+        <item quantity="zero">رد</item>
+        <item quantity="one">رد</item>
+        <item quantity="two">ردان</item>
+        <item quantity="few">ردود</item>
+        <item quantity="many">ردًا</item>
+        <item quantity="other">رد</item>
+    </plurals>
+    <plurals name="reach_likes" tools:ignore="ImpliedQuantity">
+        <item quantity="zero">إعجاب</item>
+        <item quantity="one">إعجاب</item>
+        <item quantity="two">إعجابان</item>
+        <item quantity="few">إعجابات</item>
+        <item quantity="many">إعجابًا</item>
+        <item quantity="other">إعجاب</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="zero">%1$s شخص</item>
+        <item quantity="one">%1$s شخص</item>
+        <item quantity="two">%1$s شخصان</item>
+        <item quantity="few">%1$s أشخاص</item>
+        <item quantity="many">%1$s شخصًا</item>
+        <item quantity="other">%1$s شخص</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="zero">%1$s خادم</item>
+        <item quantity="one">%1$s خادم</item>
+        <item quantity="two">%1$s خادمان</item>
+        <item quantity="few">%1$s خوادم</item>
+        <item quantity="many">%1$s خادمًا</item>
+        <item quantity="other">%1$s خادم</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="zero">كان يمكن أن يراه حتى %1$s شخص</item>
+        <item quantity="one">كان يمكن أن يراه حتى %1$s شخص</item>
+        <item quantity="two">كان يمكن أن يراه حتى %1$s شخصين</item>
+        <item quantity="few">كان يمكن أن يراه حتى %1$s أشخاص</item>
+        <item quantity="many">كان يمكن أن يراه حتى %1$s شخصًا</item>
+        <item quantity="other">كان يمكن أن يراه حتى %1$s شخص</item>
+    </plurals>
 </resources>

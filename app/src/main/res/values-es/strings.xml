@@ -666,4 +666,67 @@
         <item quantity="many">%1$d personas compartieron esto</item>
         <item quantity="other">%1$d personas compartieron esto</item>
     </plurals>
+    <string name="action_post_quote">Publicar esta cita</string>
+    <string name="action_remind_share_again">Recuérdame compartirlo de nuevo</string>
+    <string name="share_again_tomorrow">Mañana</string>
+    <string name="share_again_three_days">En 3 días</string>
+    <string name="share_again_week">En una semana</string>
+    <string name="share_again_set">Te lo recordaremos el %1$s.</string>
+    <string name="share_again_set_muted">Recordatorio programado para el %1$s, pero las notificaciones están desactivadas. Actívalas en los ajustes para recibirlo.</string>
+    <string name="share_again_notification_title">¿Compartir «%1$s» de nuevo?</string>
+    <string name="share_again_notification_text">Las cronologías avanzan rápido. Volver a publicar ayuda a que más seguidores lo vean.</string>
+    <string name="reach_title">Alcance</string>
+    <string name="reach_entry">Mira hasta dónde han llegado tus publicaciones</string>
+    <string name="reach_people_on_servers">%1$s en %2$s</string>
+    <string name="reach_partial">Tu sitio tiene tanta actividad que solo se cuenta una parte de los últimos 30 días.</string>
+    <string name="reach_top">Las que más lejos llegaron últimamente</string>
+    <string name="reach_recent">Tus publicaciones recientes</string>
+    <string name="reach_nothing">Nada todavía. Cuando la gente comparta, responda o le guste lo que publicas, aparecerá aquí.</string>
+    <string name="reach_post_title">Hasta dónde llegó</string>
+    <string name="reach_open_post">Abrir publicación</string>
+    <string name="reach_potential_explained">Tus seguidores más los seguidores de todos los que la compartieron. Algunas personas siguen a más de uno de vosotros, así que el número real es menor.</string>
+    <string name="reach_potential_counting">Todavía sumando los seguidores de todos los que la compartieron.</string>
+    <string name="reach_timeline">Actividad por día</string>
+    <string name="reach_day_count">Día %1$d: %2$d</string>
+    <string name="reach_first_day">El %1$d %% ocurrió el primer día</string>
+    <string name="reach_reposted_by">Compartida por</string>
+    <string name="reach_replies">Respuestas</string>
+    <string name="reach_liked_by">Le gusta a</string>
+    <string name="reach_listed_since">La lista sale de tus notificaciones desde el %1$s.</string>
+    <string name="reach_see">Mira hasta dónde llegó</string>
+    <plurals name="reach_last_days" tools:ignore="ImpliedQuantity">
+        <item quantity="one">Último día</item>
+        <item quantity="many">Últimos %1$d días</item>
+        <item quantity="other">Últimos %1$d días</item>
+    </plurals>
+    <plurals name="reach_reposts" tools:ignore="ImpliedQuantity">
+        <item quantity="one">veces compartida</item>
+        <item quantity="many">veces compartida</item>
+        <item quantity="other">veces compartida</item>
+    </plurals>
+    <plurals name="reach_replies_count" tools:ignore="ImpliedQuantity">
+        <item quantity="one">respuesta</item>
+        <item quantity="many">respuestas</item>
+        <item quantity="other">respuestas</item>
+    </plurals>
+    <plurals name="reach_likes" tools:ignore="ImpliedQuantity">
+        <item quantity="one">me gusta</item>
+        <item quantity="many">me gusta</item>
+        <item quantity="other">me gusta</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s persona</item>
+        <item quantity="many">%1$s personas</item>
+        <item quantity="other">%1$s personas</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s servidor</item>
+        <item quantity="many">%1$s servidores</item>
+        <item quantity="other">%1$s servidores</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">Hasta %1$s persona podría haberla visto</item>
+        <item quantity="many">Hasta %1$s personas podrían haberla visto</item>
+        <item quantity="other">Hasta %1$s personas podrían haberla visto</item>
+    </plurals>
 </resources>

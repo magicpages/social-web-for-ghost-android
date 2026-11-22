@@ -650,4 +650,60 @@
         <item quantity="one">%1$d henkilö jakoi tämän</item>
         <item quantity="other">%1$d henkilöä jakoi tämän</item>
     </plurals>
+    <string name="action_post_quote">Julkaise tämä lainaus</string>
+    <string name="action_remind_share_again">Muistuta minua jakamaan uudelleen</string>
+    <string name="share_again_tomorrow">Huomenna</string>
+    <string name="share_again_three_days">3 päivän päästä</string>
+    <string name="share_again_week">Viikon päästä</string>
+    <string name="share_again_set">Muistutamme sinua %1$s.</string>
+    <string name="share_again_set_muted">Muistutus on asetettu ajalle %1$s, mutta ilmoitukset ovat pois päältä. Ota ne käyttöön asetuksissa, niin saat sen.</string>
+    <string name="share_again_notification_title">Jaetaanko “%1$s” uudelleen?</string>
+    <string name="share_again_notification_text">Aikajanat liikkuvat nopeasti. Uudelleen julkaiseminen auttaa useampaa seuraajaasi näkemään sen.</string>
+    <string name="reach_title">Kattavuus</string>
+    <string name="reach_entry">Katso, kuinka pitkälle julkaisusi ovat kulkeneet</string>
+    <string name="reach_people_on_servers">%1$s, %2$s</string>
+    <string name="reach_partial">Sivustollasi on niin paljon toimintaa, että vain osa viimeisistä 30 päivästä lasketaan.</string>
+    <string name="reach_top">Kulkeneet viime aikoina pisimmälle</string>
+    <string name="reach_recent">Viimeisimmät julkaisusi</string>
+    <string name="reach_nothing">Ei vielä mitään. Kun joku jakaa julkaisusi, vastaa siihen tai tykkää siitä, se näkyy täällä.</string>
+    <string name="reach_post_title">Kuinka pitkälle se kulki</string>
+    <string name="reach_open_post">Avaa julkaisu</string>
+    <string name="reach_potential_explained">Seuraajasi sekä kaikkien sen jakaneiden seuraajat. Jotkut seuraavat useampaa teistä, joten todellinen määrä on pienempi.</string>
+    <string name="reach_potential_counting">Lasketaan vielä yhteen kaikkien sen jakaneiden seuraajia.</string>
+    <string name="reach_timeline">Toiminta päivittäin</string>
+    <string name="reach_day_count">Päivä %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d %% siitä tapahtui ensimmäisenä päivänä</string>
+    <string name="reach_reposted_by">Jakaneet</string>
+    <string name="reach_replies">Vastaukset</string>
+    <string name="reach_liked_by">Tykänneet</string>
+    <string name="reach_listed_since">Luettelo perustuu ilmoituksiisi alkaen %1$s.</string>
+    <string name="reach_see">Katso, kuinka pitkälle se kulki</string>
+    <plurals name="reach_last_days">
+        <item quantity="one">Viimeinen %1$d päivä</item>
+        <item quantity="other">Viimeiset %1$d päivää</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="one">jako</item>
+        <item quantity="other">jakoa</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="one">vastaus</item>
+        <item quantity="other">vastausta</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="one">tykkäys</item>
+        <item quantity="other">tykkäystä</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s henkilö</item>
+        <item quantity="other">%1$s henkilöä</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s palvelimelta</item>
+        <item quantity="other">%1$s palvelimelta</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">Jopa %1$s henkilö olisi voinut nähdä sen</item>
+        <item quantity="other">Jopa %1$s henkilöä olisi voinut nähdä sen</item>
+    </plurals>
 </resources>

@@ -682,4 +682,74 @@
         <item quantity="many">Udostępniło %1$d osób</item>
         <item quantity="other">Udostępniło %1$d osoby</item>
     </plurals>
+    <string name="action_post_quote">Opublikuj ten cytat</string>
+    <string name="action_remind_share_again">Przypomnij mi o ponownym udostępnieniu</string>
+    <string name="share_again_tomorrow">Jutro</string>
+    <string name="share_again_three_days">Za 3 dni</string>
+    <string name="share_again_week">Za tydzień</string>
+    <string name="share_again_set">Przypomnimy Ci %1$s.</string>
+    <string name="share_again_set_muted">Przypomnienie ustawiono na %1$s, ale powiadomienia są wyłączone. Włącz je w ustawieniach, aby je dostać.</string>
+    <string name="share_again_notification_title">Udostępnić „%1$s” ponownie?</string>
+    <string name="share_again_notification_text">Osie czasu płyną szybko. Ponowna publikacja pozwala zobaczyć wpis większej liczbie obserwujących.</string>
+    <string name="reach_title">Zasięg</string>
+    <string name="reach_entry">Zobacz, jak daleko dotarły Twoje wpisy</string>
+    <string name="reach_people_on_servers">%1$s na %2$s</string>
+    <string name="reach_partial">Na Twojej stronie dzieje się tak dużo, że liczona jest tylko część ostatnich 30 dni.</string>
+    <string name="reach_top">Najdalej w ostatnim czasie</string>
+    <string name="reach_recent">Twoje ostatnie wpisy</string>
+    <string name="reach_nothing">Jeszcze nic. Gdy ktoś udostępni Twoje wpisy, odpowie na nie albo je polubi, zobaczysz to tutaj.</string>
+    <string name="reach_post_title">Jak daleko dotarł</string>
+    <string name="reach_open_post">Otwórz wpis</string>
+    <string name="reach_potential_explained">Twoi obserwujący plus obserwujący wszystkich, którzy go udostępnili. Niektórzy obserwują więcej niż jedno z was, więc prawdziwa liczba jest niższa.</string>
+    <string name="reach_potential_counting">Wciąż sumujemy obserwujących wszystkich, którzy go udostępnili.</string>
+    <string name="reach_timeline">Aktywność dzień po dniu</string>
+    <string name="reach_day_count">Dzień %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d%% wydarzyło się pierwszego dnia</string>
+    <string name="reach_reposted_by">Udostępnili</string>
+    <string name="reach_replies">Odpowiedzi</string>
+    <string name="reach_liked_by">Polubili</string>
+    <string name="reach_listed_since">Lista pochodzi z Twoich powiadomień od %1$s.</string>
+    <string name="reach_see">Zobacz, jak daleko dotarł</string>
+    <plurals name="reach_last_days">
+        <item quantity="one">Ostatni %1$d dzień</item>
+        <item quantity="few">Ostatnie %1$d dni</item>
+        <item quantity="many">Ostatnie %1$d dni</item>
+        <item quantity="other">Ostatnie %1$d dnia</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="one">udostępnienie</item>
+        <item quantity="few">udostępnienia</item>
+        <item quantity="many">udostępnień</item>
+        <item quantity="other">udostępnienia</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="one">odpowiedź</item>
+        <item quantity="few">odpowiedzi</item>
+        <item quantity="many">odpowiedzi</item>
+        <item quantity="other">odpowiedzi</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="one">polubienie</item>
+        <item quantity="few">polubienia</item>
+        <item quantity="many">polubień</item>
+        <item quantity="other">polubienia</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s osoba</item>
+        <item quantity="few">%1$s osoby</item>
+        <item quantity="many">%1$s osób</item>
+        <item quantity="other">%1$s osoby</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s serwerze</item>
+        <item quantity="few">%1$s serwerach</item>
+        <item quantity="many">%1$s serwerach</item>
+        <item quantity="other">%1$s serwerach</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">Mogła go zobaczyć maksymalnie %1$s osoba</item>
+        <item quantity="few">Mogły go zobaczyć maksymalnie %1$s osoby</item>
+        <item quantity="many">Mogło go zobaczyć maksymalnie %1$s osób</item>
+        <item quantity="other">Mogło go zobaczyć maksymalnie %1$s osoby</item>
+    </plurals>
 </resources>

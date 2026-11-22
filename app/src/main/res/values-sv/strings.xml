@@ -650,4 +650,60 @@
         <item quantity="one">%1$d person har delat detta</item>
         <item quantity="other">%1$d personer har delat detta</item>
     </plurals>
+    <string name="action_post_quote">Publicera det här citatet</string>
+    <string name="action_remind_share_again">Påminn mig om att dela igen</string>
+    <string name="share_again_tomorrow">I morgon</string>
+    <string name="share_again_three_days">Om 3 dagar</string>
+    <string name="share_again_week">Om en vecka</string>
+    <string name="share_again_set">Vi påminner dig %1$s.</string>
+    <string name="share_again_set_muted">Påminnelsen är satt till %1$s, men aviseringar är avstängda. Slå på dem i inställningarna för att få den.</string>
+    <string name="share_again_notification_title">Dela ”%1$s” igen?</string>
+    <string name="share_again_notification_text">Tidslinjer rör sig snabbt. Publicerar du igen ser fler av dina följare det.</string>
+    <string name="reach_title">Räckvidd</string>
+    <string name="reach_entry">Se hur långt dina inlägg har nått</string>
+    <string name="reach_people_on_servers">%1$s på %2$s</string>
+    <string name="reach_partial">Din webbplats har så mycket aktivitet att bara en del av de senaste 30 dagarna räknas.</string>
+    <string name="reach_top">Nått längst på sistone</string>
+    <string name="reach_recent">Dina senaste inlägg</string>
+    <string name="reach_nothing">Inget ännu. När folk delar, svarar på eller gillar dina inlägg syns det här.</string>
+    <string name="reach_post_title">Hur långt det nådde</string>
+    <string name="reach_open_post">Öppna inlägg</string>
+    <string name="reach_potential_explained">Dina följare plus följarna till alla som delade det. Vissa följer flera av er, så det verkliga antalet är lägre.</string>
+    <string name="reach_potential_counting">Räknar fortfarande ihop följarna till alla som delade det.</string>
+    <string name="reach_timeline">Aktivitet per dag</string>
+    <string name="reach_day_count">Dag %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d %% av det hände första dagen</string>
+    <string name="reach_reposted_by">Delat av</string>
+    <string name="reach_replies">Svar</string>
+    <string name="reach_liked_by">Gillat av</string>
+    <string name="reach_listed_since">Listan kommer från dina aviseringar sedan %1$s.</string>
+    <string name="reach_see">Se hur långt det nådde</string>
+    <plurals name="reach_last_days">
+        <item quantity="one">Senaste %1$d dagen</item>
+        <item quantity="other">Senaste %1$d dagarna</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="one">delning</item>
+        <item quantity="other">delningar</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="one">svar</item>
+        <item quantity="other">svar</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="one">gillning</item>
+        <item quantity="other">gillningar</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s person</item>
+        <item quantity="other">%1$s personer</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s server</item>
+        <item quantity="other">%1$s servrar</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">Upp till %1$s person kan ha sett det</item>
+        <item quantity="other">Upp till %1$s personer kan ha sett det</item>
+    </plurals>
 </resources>

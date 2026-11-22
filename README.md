@@ -14,6 +14,7 @@ The app is built by [Magic Pages](https://www.magicpages.co). It's an independen
 - **Reader:** long-form articles from the publications you follow, in a reading view with audio and video. Pick the page colour (auto, sepia, light or dark), a sans or serif typeface and the text size, as in Ghost Admin's reader.
 - **Explore:** find people and publications, or browse topics like News or Photography as posts or as people to follow.
 - **Posting:** notes and replies with photos and alt text, from your site's own profile. Take a photo with the camera right in the composer. GIFs from KLIPY when your Ghost site has a KLIPY key, like its editor's GIF card. Share a link, text or a photo from any other app to start one.
+- **Promoting your articles:** select words in your own article and post them as a quote card with the link. "Remind me to share again" in an article's menu (tomorrow, in 3 days or in a week at 9:00) sends a notification that opens a new note about it, since fediverse timelines are chronological and one post at publish time is missed by most followers.
 - **Your profile:** edit your name, username, bio, picture and cover image. Share any profile as a QR code, a link or a picture card.
 - **Notifications:** likes, reposts, replies, mentions and new followers, grouped. The app checks for new ones in the background with WorkManager about every 15 minutes; there is no push server.
 - **Translation** of notes and articles on the device, with Firefox's translation engine and language models.

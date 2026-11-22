@@ -682,4 +682,74 @@
         <item quantity="many">Sdílelo %1$d člověka</item>
         <item quantity="other">Sdílelo %1$d lidí</item>
     </plurals>
+    <string name="action_post_quote">Publikovat tuto citaci</string>
+    <string name="action_remind_share_again">Připomenout sdílení znovu</string>
+    <string name="share_again_tomorrow">Zítra</string>
+    <string name="share_again_three_days">Za 3 dny</string>
+    <string name="share_again_week">Za týden</string>
+    <string name="share_again_set">Připomeneme vám to %1$s.</string>
+    <string name="share_again_set_muted">Připomínka je nastavená na %1$s, ale oznámení jsou vypnutá. Zapněte je v nastavení, ať vám dorazí.</string>
+    <string name="share_again_notification_title">Sdílet „%1$s“ znovu?</string>
+    <string name="share_again_notification_text">Časové osy ubíhají rychle. Když příspěvek zveřejníte znovu, uvidí ho víc vašich sledujících.</string>
+    <string name="reach_title">Dosah</string>
+    <string name="reach_entry">Podívejte se, kam až se vaše příspěvky dostaly</string>
+    <string name="reach_people_on_servers">%1$s na %2$s</string>
+    <string name="reach_partial">Na vašem webu je tolik aktivity, že se počítá jen část posledních 30 dní.</string>
+    <string name="reach_top">Nejdál v poslední době</string>
+    <string name="reach_recent">Vaše nedávné příspěvky</string>
+    <string name="reach_nothing">Zatím nic. Až lidé vaše příspěvky sdílejí, odpoví na ně nebo je olajkují, uvidíte to tady.</string>
+    <string name="reach_post_title">Kam až se dostal</string>
+    <string name="reach_open_post">Otevřít příspěvek</string>
+    <string name="reach_potential_explained">Vaši sledující plus sledující všech, kdo ho sdíleli. Někteří sledují víc z vás, takže skutečné číslo je nižší.</string>
+    <string name="reach_potential_counting">Ještě sčítáme sledující všech, kdo ho sdíleli.</string>
+    <string name="reach_timeline">Aktivita po dnech</string>
+    <string name="reach_day_count">Den %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d %% z toho připadá na první den</string>
+    <string name="reach_reposted_by">Sdíleli</string>
+    <string name="reach_replies">Odpovědi</string>
+    <string name="reach_liked_by">Líbí se</string>
+    <string name="reach_listed_since">Seznam pochází z vašich oznámení od %1$s.</string>
+    <string name="reach_see">Podívejte se, kam až se dostal</string>
+    <plurals name="reach_last_days">
+        <item quantity="one">Poslední %1$d den</item>
+        <item quantity="few">Poslední %1$d dny</item>
+        <item quantity="many">Posledních %1$d dne</item>
+        <item quantity="other">Posledních %1$d dní</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="one">sdílení</item>
+        <item quantity="few">sdílení</item>
+        <item quantity="many">sdílení</item>
+        <item quantity="other">sdílení</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="one">odpověď</item>
+        <item quantity="few">odpovědi</item>
+        <item quantity="many">odpovědi</item>
+        <item quantity="other">odpovědí</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="one">lajk</item>
+        <item quantity="few">lajky</item>
+        <item quantity="many">lajku</item>
+        <item quantity="other">lajků</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s člověk</item>
+        <item quantity="few">%1$s lidé</item>
+        <item quantity="many">%1$s člověka</item>
+        <item quantity="other">%1$s lidí</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s serveru</item>
+        <item quantity="few">%1$s serverech</item>
+        <item quantity="many">%1$s serveru</item>
+        <item quantity="other">%1$s serverech</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">Mohl ho vidět až %1$s člověk</item>
+        <item quantity="few">Mohli ho vidět až %1$s lidé</item>
+        <item quantity="many">Mohlo ho vidět až %1$s člověka</item>
+        <item quantity="other">Mohlo ho vidět až %1$s lidí</item>
+    </plurals>
 </resources>

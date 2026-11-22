@@ -634,4 +634,53 @@
     <plurals name="explore_story_people">
         <item quantity="other">%1$d orang membagikan ini</item>
     </plurals>
+    <string name="action_post_quote">Posting kutipan ini</string>
+    <string name="action_remind_share_again">Ingatkan saya untuk membagikan lagi</string>
+    <string name="share_again_tomorrow">Besok</string>
+    <string name="share_again_three_days">Dalam 3 hari</string>
+    <string name="share_again_week">Dalam seminggu</string>
+    <string name="share_again_set">Kami akan mengingatkan Anda pada %1$s.</string>
+    <string name="share_again_set_muted">Pengingat diatur untuk %1$s, tetapi notifikasi dimatikan. Aktifkan di pengaturan agar Anda menerimanya.</string>
+    <string name="share_again_notification_title">Bagikan “%1$s” lagi?</string>
+    <string name="share_again_notification_text">Linimasa bergerak cepat. Memposting lagi membantu lebih banyak pengikut Anda melihatnya.</string>
+    <string name="reach_title">Jangkauan</string>
+    <string name="reach_entry">Lihat seberapa jauh postingan Anda menyebar</string>
+    <string name="reach_people_on_servers">%1$s di %2$s</string>
+    <string name="reach_partial">Situs Anda punya begitu banyak aktivitas sehingga hanya sebagian dari 30 hari terakhir yang dihitung.</string>
+    <string name="reach_top">Menyebar paling jauh akhir-akhir ini</string>
+    <string name="reach_recent">Postingan terbaru Anda</string>
+    <string name="reach_nothing">Belum ada. Saat orang membagikan ulang, membalas, atau menyukai postingan Anda, itu akan muncul di sini.</string>
+    <string name="reach_post_title">Seberapa jauh menyebar</string>
+    <string name="reach_open_post">Buka postingan</string>
+    <string name="reach_potential_explained">Pengikut Anda ditambah pengikut semua orang yang membagikannya ulang. Sebagian orang mengikuti lebih dari satu di antara kalian, jadi angka sebenarnya lebih kecil.</string>
+    <string name="reach_potential_counting">Masih menjumlahkan pengikut semua orang yang membagikannya ulang.</string>
+    <string name="reach_timeline">Aktivitas per hari</string>
+    <string name="reach_day_count">Hari %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d%% terjadi pada hari pertama</string>
+    <string name="reach_reposted_by">Dibagikan ulang oleh</string>
+    <string name="reach_replies">Balasan</string>
+    <string name="reach_liked_by">Disukai oleh</string>
+    <string name="reach_listed_since">Daftar ini berasal dari notifikasi Anda sejak %1$s.</string>
+    <string name="reach_see">Lihat seberapa jauh menyebar</string>
+    <plurals name="reach_last_days">
+        <item quantity="other">%1$d hari terakhir</item>
+    </plurals>
+    <plurals name="reach_reposts">
+        <item quantity="other">bagikan ulang</item>
+    </plurals>
+    <plurals name="reach_replies_count">
+        <item quantity="other">balasan</item>
+    </plurals>
+    <plurals name="reach_likes">
+        <item quantity="other">suka</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="other">%1$s orang</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="other">%1$s server</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="other">Hingga %1$s orang mungkin melihatnya</item>
+    </plurals>
 </resources>

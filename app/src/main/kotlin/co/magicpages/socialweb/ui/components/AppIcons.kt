@@ -415,6 +415,14 @@ object AppIcons {
         symbol("Remove", "M200-440v-80h560v80H200Z")
     }
 
+    val TrendingUp: ImageVector by lazy {
+        symbol("TrendingUp", "m136-240-56-56 296-298 160 160 208-206H640v-80h240v240h-80v-104L536-320 376-480 136-240Z", autoMirror = true)
+    }
+
+    val ChevronRight: ImageVector by lazy {
+        symbol("ChevronRight", "M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z", autoMirror = true)
+    }
+
     // Symbols are drawn on a 960-unit grid whose y axis runs from -960 to 0.
     private fun symbol(name: String, pathData: String, autoMirror: Boolean = false) =
         ImageVector.Builder(name, 24.dp, 24.dp, 960f, 960f, autoMirror = autoMirror)

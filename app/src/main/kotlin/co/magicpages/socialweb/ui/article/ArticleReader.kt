@@ -111,13 +111,15 @@ import java.time.ZoneId
 /**
  * Emits an article as list items: the header (feature image, title, dek, byline), then one item
  * per block of [document]. One item per block keeps long articles lazy; each is capped to the
- * app's content width, so the text column stays readable on tablets.
+ * app's content width, so the text column stays readable on tablets. With [onQuotePassage], the
+ * words of the blocks can be selected and posted as a quote.
  */
 fun LazyListScope.articleItems(
     post: Post,
     document: ArticleDocument,
     onOpenProfile: (Author) -> Unit,
     access: ArticleAccess? = null,
+    onQuotePassage: ((String) -> Unit)? = null,
 ) {
     val dek = document.dek(post.summary)
     item(key = "article:header", contentType = "article:header") {
@@ -129,7 +131,8 @@ fun LazyListScope.articleItems(
         contentType = { _, block -> block.contentType },
     ) { _, block ->
         CompositionLocalProvider(LocalArticleAccess provides access) {
-            ReaderText { BlockItem(block) }
+            // A container for each block, not one for the list: a selection can't leave the article for the replies below it.
+            ReaderText { QuotePassageSelection(onQuotePassage) { BlockItem(block) } }
         }
     }
 }

@@ -23,6 +23,7 @@ import androidx.core.content.IntentCompat
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import co.magicpages.socialweb.background.ShareAgainReminder
 import co.magicpages.socialweb.data.account.AccountStore
 import co.magicpages.socialweb.data.activitypub.ActivityPubClient
 import co.magicpages.socialweb.data.media.LocalImages
@@ -61,6 +62,7 @@ class MainActivity : ComponentActivity() {
             handleTabRequest(intent)
             handleShare(intent)
             handleNewNote(intent)
+            handleShareAgain(intent)
         }
         setContent {
             val uriHandler = remember { CustomTabsUriHandler(this) }
@@ -112,6 +114,7 @@ class MainActivity : ComponentActivity() {
         handleTabRequest(intent)
         handleShare(intent)
         handleNewNote(intent)
+        handleShareAgain(intent)
     }
 
     private fun handleTabRequest(intent: Intent?) {
@@ -128,6 +131,18 @@ class MainActivity : ComponentActivity() {
             // Switch first, so the request is taken by the screens of that account. An account that
             // was signed out meanwhile has nothing to show: the app just opens.
             if (accounts.switchTo(accountId)) tabRequests.request(tab, accountId)
+        }
+    }
+
+    /**
+     * A tapped "share again" reminder: a new note quoting the article, for the account it was set on.
+     * That account comes first, so the screens that take the request are its own; one that was signed
+     * out meanwhile has nothing to share from, and the app just opens.
+     */
+    private fun handleShareAgain(intent: Intent?) {
+        val reminder = ShareAgainReminder.fromIntent(intent) ?: return
+        lifecycleScope.launch {
+            if (accounts.switchTo(reminder.accountId)) sharedContent.submit(reminder.toPost())
         }
     }
 

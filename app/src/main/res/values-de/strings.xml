@@ -650,4 +650,60 @@
         <item quantity="one">%1$d Person hat das geteilt</item>
         <item quantity="other">%1$d Personen haben das geteilt</item>
     </plurals>
+    <string name="action_post_quote">Dieses Zitat posten</string>
+    <string name="action_remind_share_again">Erinnere mich, es erneut zu teilen</string>
+    <string name="share_again_tomorrow">Morgen</string>
+    <string name="share_again_three_days">In 3 Tagen</string>
+    <string name="share_again_week">In einer Woche</string>
+    <string name="share_again_set">Wir erinnern dich am %1$s.</string>
+    <string name="share_again_set_muted">Erinnerung für %1$s gesetzt, aber Benachrichtigungen sind aus. Schalte sie in den Einstellungen ein, um sie zu erhalten.</string>
+    <string name="share_again_notification_title">„%1$s“ erneut teilen?</string>
+    <string name="share_again_notification_text">Timelines bewegen sich schnell. Wenn du erneut postest, sehen es mehr deiner Follower.</string>
+    <string name="reach_title">Reichweite</string>
+    <string name="reach_entry">Sieh, wie weit deine Beiträge gekommen sind</string>
+    <string name="reach_people_on_servers">%1$s auf %2$s</string>
+    <string name="reach_partial">Auf deiner Seite ist so viel los, dass nur ein Teil der letzten 30 Tage gezählt wird.</string>
+    <string name="reach_top">Zuletzt am weitesten gekommen</string>
+    <string name="reach_recent">Deine neuesten Beiträge</string>
+    <string name="reach_nothing">Noch nichts. Wenn Leute deine Beiträge teilen, darauf antworten oder sie liken, siehst du es hier.</string>
+    <string name="reach_post_title">Wie weit er gekommen ist</string>
+    <string name="reach_open_post">Beitrag öffnen</string>
+    <string name="reach_potential_explained">Deine Follower plus die Follower aller, die ihn geteilt haben. Manche folgen mehreren von euch, die echte Zahl ist also kleiner.</string>
+    <string name="reach_potential_counting">Die Follower aller, die ihn geteilt haben, werden noch zusammengezählt.</string>
+    <string name="reach_timeline">Aktivität pro Tag</string>
+    <string name="reach_day_count">Tag %1$d: %2$d</string>
+    <string name="reach_first_day">%1$d %% davon am ersten Tag</string>
+    <string name="reach_reposted_by">Geteilt von</string>
+    <string name="reach_replies">Antworten</string>
+    <string name="reach_liked_by">Geliked von</string>
+    <string name="reach_listed_since">Wer hier steht, stammt aus deinen Benachrichtigungen seit %1$s.</string>
+    <string name="reach_see">Sieh, wie weit er gekommen ist</string>
+    <plurals name="reach_last_days" tools:ignore="ImpliedQuantity">
+        <item quantity="one">Letzter %1$d Tag</item>
+        <item quantity="other">Letzte %1$d Tage</item>
+    </plurals>
+    <plurals name="reach_reposts" tools:ignore="ImpliedQuantity">
+        <item quantity="one">Repost</item>
+        <item quantity="other">Reposts</item>
+    </plurals>
+    <plurals name="reach_replies_count" tools:ignore="ImpliedQuantity">
+        <item quantity="one">Antwort</item>
+        <item quantity="other">Antworten</item>
+    </plurals>
+    <plurals name="reach_likes" tools:ignore="ImpliedQuantity">
+        <item quantity="one">Like</item>
+        <item quantity="other">Likes</item>
+    </plurals>
+    <plurals name="reach_people">
+        <item quantity="one">%1$s Person</item>
+        <item quantity="other">%1$s Personen</item>
+    </plurals>
+    <plurals name="reach_servers">
+        <item quantity="one">%1$s Server</item>
+        <item quantity="other">%1$s Servern</item>
+    </plurals>
+    <plurals name="reach_potential">
+        <item quantity="one">Bis zu %1$s Person hätte ihn sehen können</item>
+        <item quantity="other">Bis zu %1$s Personen hätten ihn sehen können</item>
+    </plurals>
 </resources>
