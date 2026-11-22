@@ -326,7 +326,7 @@
     <string name="translation_settings_automatic_title">Traduzione automatica</string>
     <string name="translation_settings_automatic">Traduci quando apro un post</string>
     <string name="translation_settings_automatic_summary">Il post e le sue risposte, dalle lingue su questo dispositivo. Non viene scaricato nulla da solo.</string>
-    <string name="translation_settings_skipped">Lingue che leggo</string>
+    <string name="translation_settings_skipped">Non tradurre queste lingue</string>
     <string name="translation_settings_skipped_none">Nessuna</string>
     <string name="translation_settings_skipped_explainer">I post in queste lingue non vengono tradotti da soli.</string>
     <string name="translation_settings_done">Fine</string>

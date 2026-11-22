@@ -312,7 +312,7 @@
     <string name="translation_settings_automatic_title">自動翻譯</string>
     <string name="translation_settings_automatic">開啟貼文時翻譯</string>
     <string name="translation_settings_automatic_summary">翻譯貼文及其回覆，僅限此裝置上已有的語言。不會自動下載任何內容。</string>
-    <string name="translation_settings_skipped">我看得懂的語言</string>
+    <string name="translation_settings_skipped">不翻譯這些語言</string>
     <string name="translation_settings_skipped_none">無</string>
     <string name="translation_settings_skipped_explainer">這些語言的貼文不會自動翻譯。</string>
     <string name="translation_settings_done">完成</string>

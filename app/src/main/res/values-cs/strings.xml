@@ -333,7 +333,7 @@
     <string name="translation_settings_automatic_title">Automatický překlad</string>
     <string name="translation_settings_automatic">Překládat při otevření příspěvku</string>
     <string name="translation_settings_automatic_summary">Příspěvek a odpovědi, z jazyků v tomto zařízení. Nic se nestahuje samo.</string>
-    <string name="translation_settings_skipped">Jazyky, které čtu</string>
+    <string name="translation_settings_skipped">Tyto jazyky nepřekládat</string>
     <string name="translation_settings_skipped_none">Žádné</string>
     <string name="translation_settings_skipped_explainer">Příspěvky v těchto jazycích se automaticky nepřekládají.</string>
     <string name="translation_settings_done">Hotovo</string>

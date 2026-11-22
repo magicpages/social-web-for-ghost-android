@@ -319,7 +319,7 @@
     <string name="translation_settings_automatic_title">Automatische Übersetzung</string>
     <string name="translation_settings_automatic">Beim Öffnen eines Beitrags übersetzen</string>
     <string name="translation_settings_automatic_summary">Der Beitrag und seine Antworten, aus Sprachen auf diesem Gerät. Ohne Nachfrage wird nichts geladen.</string>
-    <string name="translation_settings_skipped">Sprachen, die ich lese</string>
+    <string name="translation_settings_skipped">Diese Sprachen nicht übersetzen</string>
     <string name="translation_settings_skipped_none">Keine</string>
     <string name="translation_settings_skipped_explainer">Beiträge in diesen Sprachen werden nicht automatisch übersetzt.</string>
     <string name="translation_settings_done">Fertig</string>

@@ -312,7 +312,7 @@
     <string name="translation_settings_automatic_title">자동 번역</string>
     <string name="translation_settings_automatic">글을 열면 번역하기</string>
     <string name="translation_settings_automatic_summary">글과 답글을 이 기기에 있는 언어에서 번역해요. 저절로 다운로드되는 것은 없어요.</string>
-    <string name="translation_settings_skipped">내가 읽는 언어</string>
+    <string name="translation_settings_skipped">번역하지 않을 언어</string>
     <string name="translation_settings_skipped_none">없음</string>
     <string name="translation_settings_skipped_explainer">이 언어로 된 글은 자동으로 번역되지 않아요.</string>
     <string name="translation_settings_done">완료</string>

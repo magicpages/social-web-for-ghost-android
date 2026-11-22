@@ -319,7 +319,7 @@
     <string name="translation_settings_automatic_title">Automatisch vertalen</string>
     <string name="translation_settings_automatic">Vertalen als ik een bericht open</string>
     <string name="translation_settings_automatic_summary">Het bericht en de reacties, vanuit talen op dit apparaat. Er wordt niets vanzelf gedownload.</string>
-    <string name="translation_settings_skipped">Talen die ik lees</string>
+    <string name="translation_settings_skipped">Deze talen niet vertalen</string>
     <string name="translation_settings_skipped_none">Geen</string>
     <string name="translation_settings_skipped_explainer">Berichten in deze talen worden niet vanzelf vertaald.</string>
     <string name="translation_settings_done">Klaar</string>

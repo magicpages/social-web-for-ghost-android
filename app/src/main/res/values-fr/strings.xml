@@ -326,7 +326,7 @@
     <string name="translation_settings_automatic_title">Traduction automatique</string>
     <string name="translation_settings_automatic">Traduire à l\'ouverture d\'une publication</string>
     <string name="translation_settings_automatic_summary">La publication et ses réponses, depuis les langues présentes sur l\'appareil. Rien n\'est téléchargé sans demande.</string>
-    <string name="translation_settings_skipped">Langues que je lis</string>
+    <string name="translation_settings_skipped">Ne pas traduire ces langues</string>
     <string name="translation_settings_skipped_none">Aucune</string>
     <string name="translation_settings_skipped_explainer">Les publications dans ces langues ne sont pas traduites automatiquement.</string>
     <string name="translation_settings_done">OK</string>

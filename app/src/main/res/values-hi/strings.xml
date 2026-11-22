@@ -319,7 +319,7 @@
     <string name="translation_settings_automatic_title">अपने-आप अनुवाद</string>
     <string name="translation_settings_automatic">पोस्ट खोलने पर अनुवाद करें</string>
     <string name="translation_settings_automatic_summary">पोस्ट और उसके जवाब, इस डिवाइस पर मौजूद भाषाओं से। कुछ भी अपने-आप डाउनलोड नहीं होता।</string>
-    <string name="translation_settings_skipped">भाषाएँ जो मैं पढ़ता/पढ़ती हूँ</string>
+    <string name="translation_settings_skipped">इन भाषाओं का अनुवाद न करें</string>
     <string name="translation_settings_skipped_none">कोई नहीं</string>
     <string name="translation_settings_skipped_explainer">इन भाषाओं की पोस्ट अपने-आप अनुवादित नहीं होतीं।</string>
     <string name="translation_settings_done">हो गया</string>

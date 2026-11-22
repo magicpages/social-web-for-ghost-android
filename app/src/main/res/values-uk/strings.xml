@@ -333,7 +333,7 @@
     <string name="translation_settings_automatic_title">Автоматичний переклад</string>
     <string name="translation_settings_automatic">Перекладати, коли я відкриваю допис</string>
     <string name="translation_settings_automatic_summary">Допис і відповіді на нього, з мов на цьому пристрої. Нічого не завантажується саме.</string>
-    <string name="translation_settings_skipped">Мови, якими я читаю</string>
+    <string name="translation_settings_skipped">Не перекладати ці мови</string>
     <string name="translation_settings_skipped_none">Немає</string>
     <string name="translation_settings_skipped_explainer">Дописи цими мовами не перекладаються автоматично.</string>
     <string name="translation_settings_done">Готово</string>

@@ -319,7 +319,7 @@
     <string name="translation_settings_automatic_title">Automaattinen käännös</string>
     <string name="translation_settings_automatic">Käännä, kun avaan julkaisun</string>
     <string name="translation_settings_automatic_summary">Julkaisu ja sen vastaukset laitteella olevista kielistä. Mitään ei ladata kysymättä.</string>
-    <string name="translation_settings_skipped">Kielet, joita luen</string>
+    <string name="translation_settings_skipped">Älä käännä näitä kieliä</string>
     <string name="translation_settings_skipped_none">Ei mitään</string>
     <string name="translation_settings_skipped_explainer">Näillä kielillä kirjoitettuja julkaisuja ei käännetä automaattisesti.</string>
     <string name="translation_settings_done">Valmis</string>

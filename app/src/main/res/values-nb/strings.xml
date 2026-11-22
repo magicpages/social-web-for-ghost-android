@@ -319,7 +319,7 @@
     <string name="translation_settings_automatic_title">Automatisk oversettelse</string>
     <string name="translation_settings_automatic">Oversett når jeg åpner et innlegg</string>
     <string name="translation_settings_automatic_summary">Innlegget og svarene, fra språk på denne enheten. Ingenting lastes ned av seg selv.</string>
-    <string name="translation_settings_skipped">Språk jeg leser</string>
+    <string name="translation_settings_skipped">Ikke oversett disse språkene</string>
     <string name="translation_settings_skipped_none">Ingen</string>
     <string name="translation_settings_skipped_explainer">Innlegg på disse språkene oversettes ikke av seg selv.</string>
     <string name="translation_settings_done">Ferdig</string>

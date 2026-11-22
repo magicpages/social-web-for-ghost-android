@@ -319,7 +319,7 @@
     <string name="translation_settings_automatic_title">Otomatik çeviri</string>
     <string name="translation_settings_automatic">Bir gönderiyi açtığımda çevir</string>
     <string name="translation_settings_automatic_summary">Gönderi ve yanıtları, bu cihazdaki dillerden. Hiçbir şey kendiliğinden indirilmez.</string>
-    <string name="translation_settings_skipped">Okuduğum diller</string>
+    <string name="translation_settings_skipped">Bu dilleri çevirme</string>
     <string name="translation_settings_skipped_none">Yok</string>
     <string name="translation_settings_skipped_explainer">Bu dillerdeki gönderiler otomatik olarak çevrilmez.</string>
     <string name="translation_settings_done">Bitti</string>

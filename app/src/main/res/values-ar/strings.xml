@@ -347,7 +347,7 @@
     <string name="translation_settings_automatic_title">الترجمة التلقائية</string>
     <string name="translation_settings_automatic">الترجمة عند فتح منشور</string>
     <string name="translation_settings_automatic_summary">المنشور وردوده، من اللغات الموجودة على هذا الجهاز. لا يُنزَّل أي شيء تلقائيًا.</string>
-    <string name="translation_settings_skipped">لغات أقرؤها</string>
+    <string name="translation_settings_skipped">عدم ترجمة هذه اللغات</string>
     <string name="translation_settings_skipped_none">لا شيء</string>
     <string name="translation_settings_skipped_explainer">لا تُترجم المنشورات بهذه اللغات تلقائيًا.</string>
     <string name="translation_settings_done">تم</string>

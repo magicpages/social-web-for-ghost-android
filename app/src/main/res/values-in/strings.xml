@@ -312,7 +312,7 @@
     <string name="translation_settings_automatic_title">Terjemahan otomatis</string>
     <string name="translation_settings_automatic">Terjemahkan saat saya membuka postingan</string>
     <string name="translation_settings_automatic_summary">Postingan dan balasannya, dari bahasa yang ada di perangkat ini. Tidak ada yang diunduh dengan sendirinya.</string>
-    <string name="translation_settings_skipped">Bahasa yang saya baca</string>
+    <string name="translation_settings_skipped">Jangan terjemahkan bahasa ini</string>
     <string name="translation_settings_skipped_none">Tidak ada</string>
     <string name="translation_settings_skipped_explainer">Postingan dalam bahasa ini tidak diterjemahkan secara otomatis.</string>
     <string name="translation_settings_done">Selesai</string>

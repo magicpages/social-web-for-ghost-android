@@ -419,7 +419,7 @@
     <string name="translation_settings_automatic_title">Automatic translation</string>
     <string name="translation_settings_automatic">Translate when I open a post</string>
     <string name="translation_settings_automatic_summary">The post and its replies, from languages on this device. Nothing is downloaded on its own.</string>
-    <string name="translation_settings_skipped">Languages I read</string>
+    <string name="translation_settings_skipped">Don\'t translate these languages</string>
     <string name="translation_settings_skipped_none">None</string>
     <string name="translation_settings_skipped_explainer">Posts in these languages aren\'t translated on their own.</string>
     <string name="translation_settings_done">Done</string>

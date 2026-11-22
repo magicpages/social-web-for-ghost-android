@@ -312,7 +312,7 @@
     <string name="translation_settings_automatic_title">自動翻訳</string>
     <string name="translation_settings_automatic">投稿を開いたときに翻訳する</string>
     <string name="translation_settings_automatic_summary">投稿とその返信を、このデバイスにある言語から翻訳します。勝手にダウンロードされることはありません。</string>
-    <string name="translation_settings_skipped">読める言語</string>
+    <string name="translation_settings_skipped">翻訳しない言語</string>
     <string name="translation_settings_skipped_none">なし</string>
     <string name="translation_settings_skipped_explainer">これらの言語の投稿は自動で翻訳されません。</string>
     <string name="translation_settings_done">完了</string>

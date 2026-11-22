@@ -319,7 +319,7 @@
     <string name="translation_settings_automatic_title">Automatisk oversættelse</string>
     <string name="translation_settings_automatic">Oversæt, når jeg åbner et opslag</string>
     <string name="translation_settings_automatic_summary">Opslaget og svarene, fra sprog på denne enhed. Intet hentes af sig selv.</string>
-    <string name="translation_settings_skipped">Sprog, jeg læser</string>
+    <string name="translation_settings_skipped">Oversæt ikke disse sprog</string>
     <string name="translation_settings_skipped_none">Ingen</string>
     <string name="translation_settings_skipped_explainer">Opslag på disse sprog oversættes ikke af sig selv.</string>
     <string name="translation_settings_done">Færdig</string>

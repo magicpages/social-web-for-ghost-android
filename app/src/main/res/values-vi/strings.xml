@@ -312,7 +312,7 @@
     <string name="translation_settings_automatic_title">Dịch tự động</string>
     <string name="translation_settings_automatic">Dịch khi tôi mở một bài đăng</string>
     <string name="translation_settings_automatic_summary">Bài đăng và các trả lời, từ những ngôn ngữ có trên thiết bị này. Không có gì tự tải xuống.</string>
-    <string name="translation_settings_skipped">Ngôn ngữ tôi đọc</string>
+    <string name="translation_settings_skipped">Không dịch các ngôn ngữ này</string>
     <string name="translation_settings_skipped_none">Không có</string>
     <string name="translation_settings_skipped_explainer">Bài đăng bằng những ngôn ngữ này không được dịch tự động.</string>
     <string name="translation_settings_done">Xong</string>

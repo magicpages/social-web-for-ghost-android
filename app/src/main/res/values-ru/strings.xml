@@ -333,7 +333,7 @@
     <string name="translation_settings_automatic_title">Автоматический перевод</string>
     <string name="translation_settings_automatic">Переводить при открытии поста</string>
     <string name="translation_settings_automatic_summary">Пост и ответы на него, с языков на этом устройстве. Ничего не скачивается само.</string>
-    <string name="translation_settings_skipped">Языки, которые я читаю</string>
+    <string name="translation_settings_skipped">Не переводить эти языки</string>
     <string name="translation_settings_skipped_none">Нет</string>
     <string name="translation_settings_skipped_explainer">Посты на этих языках не переводятся автоматически.</string>
     <string name="translation_settings_done">Готово</string>

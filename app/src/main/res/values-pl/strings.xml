@@ -333,7 +333,7 @@
     <string name="translation_settings_automatic_title">Automatyczne tłumaczenie</string>
     <string name="translation_settings_automatic">Tłumacz po otwarciu posta</string>
     <string name="translation_settings_automatic_summary">Post i odpowiedzi, z języków na tym urządzeniu. Nic nie jest pobierane samo.</string>
-    <string name="translation_settings_skipped">Języki, które czytam</string>
+    <string name="translation_settings_skipped">Nie tłumacz tych języków</string>
     <string name="translation_settings_skipped_none">Brak</string>
     <string name="translation_settings_skipped_explainer">Posty w tych językach nie są tłumaczone automatycznie.</string>
     <string name="translation_settings_done">Gotowe</string>
