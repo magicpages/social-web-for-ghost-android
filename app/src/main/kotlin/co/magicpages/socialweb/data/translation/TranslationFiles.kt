@@ -106,6 +106,51 @@ class TranslationFiles @Inject constructor(
         }
     }
 
+    /** The pairs of languages ([from] to [to]) whose models are on the device. */
+    suspend fun installedPairs(): List<Pair<String, String>> = withContext(Dispatchers.IO) {
+        File(root, "models").listFiles().orEmpty().mapNotNull { dir ->
+            val from = dir.name.substringBefore('-')
+            val to = dir.name.removePrefix("$from-")
+            // "zh-Hans-en": the script belongs to the first language.
+            val pair = if (to.startsWith("Hans-") || to.startsWith("Hant-")) {
+                "$from-${to.substringBefore('-')}" to to.substringAfter('-')
+            } else {
+                from to to
+            }
+            pair.takeIf { installed(it.first, it.second) != null }
+        }
+    }
+
+    /**
+     * Every pair of languages Mozilla has a model for.
+     *
+     * @throws IOException when the catalog can't be loaded
+     */
+    internal suspend fun availablePairs(): Set<Pair<String, String>> = loadCatalog().keys
+
+    /** Deletes the models for [pairs]; the engine goes too once no model is left. */
+    suspend fun delete(pairs: Collection<Pair<String, String>>) = mutex.withLock {
+        withContext(Dispatchers.IO) {
+            for ((from, to) in pairs) modelDir(from, to).deleteRecursively()
+            if (File(root, "models").listFiles().isNullOrEmpty()) engine.delete()
+        }
+    }
+
+    /** Deletes everything translation downloaded. */
+    suspend fun deleteAll() = mutex.withLock {
+        withContext(Dispatchers.IO) { root.deleteRecursively() }
+    }
+
+    /** How many bytes the downloads take on the device. */
+    suspend fun usedBytes(): Long = withContext(Dispatchers.IO) {
+        root.walkTopDown().filter { it.isFile }.sumOf { it.length() }
+    }
+
+    /** How many bytes the model for [from] → [to] takes on the device. */
+    suspend fun modelBytes(from: String, to: String): Long = withContext(Dispatchers.IO) {
+        modelDir(from, to).walkTopDown().filter { it.isFile }.sumOf { it.length() }
+    }
+
     private suspend fun loadCatalog(): Map<Pair<String, String>, LanguageModel> = mutex.withLock {
         catalog ?: run {
             val response = http.get(CatalogUrl)

@@ -6,6 +6,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import co.magicpages.socialweb.data.translation.TextTranslator
 import co.magicpages.socialweb.data.translation.TranslationException
 import co.magicpages.socialweb.data.translation.TranslationProblem
+import co.magicpages.socialweb.data.translation.TranslationSettings
 import co.magicpages.socialweb.di.ApplicationScope
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 @Singleton
 class PostTranslations @Inject constructor(
     private val translator: TextTranslator,
+    private val settings: TranslationSettings,
     @ApplicationScope private val scope: CoroutineScope,
 ) {
     @Immutable
@@ -42,6 +44,9 @@ class PostTranslations @Inject constructor(
     // Compose state, so cards recompose when their post's state changes.
     private val states = mutableStateMapOf<String, State>()
     private val order = ArrayDeque<String>()
+
+    // Notes already looked at for translating automatically, so scrolling back doesn't look again.
+    private val checked = mutableSetOf<String>()
 
     fun stateOf(postId: String): State? = key(postId)?.let { states[it] }
 
@@ -74,6 +79,29 @@ class PostTranslations @Inject constructor(
                 delay(FailureShownMillis)
                 if (states[key] === result) forget(key)
             }
+        }
+    }
+
+    /**
+     * Translates the note [postId] on its own when Settings says to and its language's files are on
+     * the device, and the reader hasn't had it translated or shown in the original already. Quiet:
+     * a note that isn't translated shows nothing about it.
+     */
+    fun translateAutomatically(postId: String, text: String) {
+        val key = key(postId) ?: return
+        if (!settings.automatic.value || key in states || key in checked) return
+        if (checked.size >= MaxEntries * 5) checked.clear()
+        checked += key
+        scope.launch {
+            if (!translator.translatesAutomatically(listOf(text)) || key in states) return@launch
+            put(key, State.Translating)
+            val result = try {
+                val translated = translator.translate(listOf(text))
+                State.Translated(translated.texts.single(), translator.languageName(translated.sourceLanguage), showing = true)
+            } catch (_: TranslationException) {
+                null
+            }
+            if (result != null) put(key, result) else forget(key)
         }
     }
 
@@ -113,3 +141,6 @@ class PostTranslations @Inject constructor(
 
 /** Provided once signed in; null in previews, where posts offer no translation. */
 val LocalPostTranslations = staticCompositionLocalOf<PostTranslations?> { null }
+
+/** Whether notes shown here are translated on their own when Settings says so: true in an opened post's thread. */
+val LocalTranslatesAutomatically = staticCompositionLocalOf { false }

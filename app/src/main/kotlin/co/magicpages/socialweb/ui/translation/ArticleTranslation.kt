@@ -60,8 +60,9 @@ sealed interface ArticleTranslation {
 /**
  * The translation of the article a screen shows. Whether a site's articles are read translated is
  * remembered ([TranslationSites]): the last choice made on a site applies to its next article,
- * without a message when it doesn't work out. The translation is kept, so switching it on again
- * after "Show original" is instant.
+ * without a message when it doesn't work out. On a site without a choice, the article is translated
+ * on its own when Settings says so. The translation is kept, so switching it on again after "Show
+ * original" is instant.
  */
 @HiltViewModel
 class ArticleTranslationViewModel @Inject constructor(
@@ -87,12 +88,16 @@ class ArticleTranslationViewModel @Inject constructor(
     /** Translating is on: for the article on show, and for the new text if its body changes (a members-only post unlocking). */
     private var wanted = false
     private var quiet = false
+
+    /** The translation on show came about on its own, so it says nothing about the site's choice. */
+    private var automatic = false
     private var job: Job? = null
     private var cached: Pair<Source, ArticleTranslation.Translated>? = null
 
     /**
      * The article on show. The first one is translated straight away when the site's articles were
-     * last read translated; after that, a changed [document] is translated again if translation is on.
+     * last read translated, or when Settings says to translate on its own; after that, a changed
+     * [document] is translated again if translation is on.
      */
     fun show(post: Post, document: ArticleDocument) {
         val previous = source
@@ -100,12 +105,27 @@ class ArticleTranslationViewModel @Inject constructor(
         source = Source(post, document)
         if (firstArticle) {
             firstArticle = false
-            if (isAvailable && sites.isOn(post.url)) {
+            if (!isAvailable) return
+            if (sites.isOn(post.url)) {
                 wanted = true
                 translate(quiet = true)
+            } else if (!sites.isOff(post.url)) {
+                translateIfAutomatic()
             }
         } else if (wanted) {
             translate(quiet = quiet)
+        }
+    }
+
+    private fun translateIfAutomatic() {
+        val shown = source ?: return
+        job = viewModelScope.launch {
+            val texts = listOf(shown.post.title) + shown.document.translatableTexts()
+            if (!translator.translatesAutomatically(texts) || source !== shown || _state.value != ArticleTranslation.Off) return@launch
+            job = null
+            wanted = true
+            automatic = true
+            translate(quiet = true)
         }
     }
 
@@ -114,6 +134,7 @@ class ArticleTranslationViewModel @Inject constructor(
         when (_state.value) {
             ArticleTranslation.Off -> {
                 wanted = true
+                automatic = false
                 translate(quiet = false)
             }
 
@@ -126,6 +147,7 @@ class ArticleTranslationViewModel @Inject constructor(
     fun download() {
         if (_state.value != ArticleTranslation.Off) return
         wanted = true
+        automatic = false
         translate(quiet = false, download = true)
     }
 
@@ -142,7 +164,7 @@ class ArticleTranslationViewModel @Inject constructor(
         job?.cancel()
         cached?.takeIf { it.first.post.id == shown.post.id && it.first.document == shown.document }?.let { (_, translated) ->
             _state.value = translated
-            sites.set(shown.post.url, true)
+            if (!automatic) sites.set(shown.post.url, true)
             return
         }
         _state.value = ArticleTranslation.Translating
@@ -159,7 +181,7 @@ class ArticleTranslationViewModel @Inject constructor(
                 )
                 cached = shown to translated
                 _state.value = translated
-                sites.set(shown.post.url, true)
+                if (!automatic) sites.set(shown.post.url, true)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: TranslationException) {

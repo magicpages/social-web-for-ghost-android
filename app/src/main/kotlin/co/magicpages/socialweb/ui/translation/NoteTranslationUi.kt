@@ -8,6 +8,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -46,6 +47,9 @@ fun TranslatableText(
 ) {
     val post = item.post
     val translations = LocalPostTranslations.current
+    if (translations != null && LocalTranslatesAutomatically.current && translations.canTranslate(item)) {
+        LaunchedEffect(post.id) { translations.translateAutomatically(post.id, item.content.text) }
+    }
     val state = translations?.stateOf(post.id)
     if (translations == null || state == null) {
         HtmlText(item.content, modifier, style, emojiSourceId = post.id)

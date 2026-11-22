@@ -150,12 +150,13 @@ private val AnnouncedTypeLabels: List<Pair<Notification.Type, Int>> = listOf(
 fun SettingsScreen(
     onBack: () -> Unit,
     onOpenBlocked: () -> Unit,
+    onOpenTranslation: () -> Unit,
     onOpenAbout: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     var showFeedFilters by rememberSaveable { mutableStateOf(false) }
     Box(Modifier.fillMaxSize()) {
-        SettingsContent(onBack, onOpenBlocked, onOpenAbout, onOpenFeedFilters = { showFeedFilters = true }, viewModel = viewModel)
+        SettingsContent(onBack, onOpenBlocked, onOpenTranslation, onOpenAbout, onOpenFeedFilters = { showFeedFilters = true }, viewModel = viewModel)
         if (showFeedFilters) FeedFiltersScreen(onBack = { showFeedFilters = false })
     }
 }
@@ -165,6 +166,7 @@ fun SettingsScreen(
 private fun SettingsContent(
     onBack: () -> Unit,
     onOpenBlocked: () -> Unit,
+    onOpenTranslation: () -> Unit,
     onOpenAbout: () -> Unit,
     onOpenFeedFilters: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel(),
@@ -262,6 +264,18 @@ private fun SettingsContent(
                         SwitchRow(R.string.settings_autoplay_videos, R.string.settings_autoplay_videos_summary, autoplay, viewModel::setAutoplayVideos),
                     ),
                 )
+
+                Column(Modifier.padding(top = 16.dp)) {
+                    SegmentedListItem(
+                        onClick = onOpenTranslation,
+                        shapes = ListItemDefaults.segmentedShapes(0, 1),
+                        colors = ListItemDefaults.segmentedColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+                        leadingContent = { Icon(AppIcons.Translate, contentDescription = null) },
+                        supportingContent = { Text(stringResource(R.string.settings_translation_summary)) },
+                    ) {
+                        Text(stringResource(R.string.settings_translation))
+                    }
+                }
 
                 Column(Modifier.padding(top = 16.dp)) {
                     SegmentedListItem(

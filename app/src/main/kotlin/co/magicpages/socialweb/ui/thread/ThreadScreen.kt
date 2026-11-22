@@ -101,6 +101,7 @@ import co.magicpages.socialweb.ui.translation.ArticleTranslation
 import co.magicpages.socialweb.ui.translation.ArticleTranslationBanner
 import co.magicpages.socialweb.ui.translation.ArticleTranslateAction
 import co.magicpages.socialweb.ui.translation.ArticleTranslationViewModel
+import co.magicpages.socialweb.ui.translation.LocalTranslatesAutomatically
 import co.magicpages.socialweb.ui.translation.message
 import kotlinx.coroutines.flow.first
 
@@ -256,8 +257,13 @@ fun ThreadScreen(
                             if (hasParent && !scrolled) listState.requestScrollToItem(0)
                         }
                         KeepAncestorsInView(listState, current.content)
-                        // Audio belongs to the screen, so it keeps playing while its player scrolls away.
-                        CompositionLocalProvider(LocalArticleAudio provides articleAudio, LocalReaderSettings provides readerSettings) {
+                        // Audio belongs to the screen, so it keeps playing while its player scrolls away. An opened
+                        // post and its replies are translated on their own when Settings says so.
+                        CompositionLocalProvider(
+                            LocalArticleAudio provides articleAudio,
+                            LocalReaderSettings provides readerSettings,
+                            LocalTranslatesAutomatically provides true,
+                        ) {
                             LazyColumn(
                                 Modifier.fillMaxSize(),
                                 state = listState,

@@ -19,20 +19,29 @@ class TranslationSites @Inject constructor(@ApplicationContext context: Context)
     /** Whether the articles of the site [articleUrl] is on are read translated, going by the last choice made there. */
     fun isOn(articleUrl: String?): Boolean {
         val site = siteOf(articleUrl) ?: return false
-        return site in sites()
+        return site in sites(KeySites)
+    }
+
+    /** Whether the last choice on the site [articleUrl] is on was "Show original": automatic translation leaves its articles. */
+    fun isOff(articleUrl: String?): Boolean {
+        val site = siteOf(articleUrl) ?: return false
+        return site in sites(KeyOffSites)
     }
 
     fun set(articleUrl: String?, on: Boolean) {
         val site = siteOf(articleUrl) ?: return
-        val next = if (on) sites() + site else sites() - site
-        prefs.edit { putStringSet(KeySites, next) }
+        prefs.edit {
+            putStringSet(KeySites, if (on) sites(KeySites) + site else sites(KeySites) - site)
+            putStringSet(KeyOffSites, if (on) sites(KeyOffSites) - site else sites(KeyOffSites) + site)
+        }
     }
 
     // A copy: the set `getStringSet` returns must not be modified.
-    private fun sites(): Set<String> = prefs.getStringSet(KeySites, null)?.toSet() ?: emptySet()
+    private fun sites(key: String): Set<String> = prefs.getStringSet(key, null)?.toSet() ?: emptySet()
 
     private companion object {
         const val KeySites = "translated_sites"
+        const val KeyOffSites = "original_sites"
     }
 }
 

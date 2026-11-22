@@ -93,6 +93,7 @@ import co.magicpages.socialweb.ui.profile.FollowsScreen
 import co.magicpages.socialweb.ui.profile.ProfileScreen
 import co.magicpages.socialweb.ui.settings.BlockedScreen
 import co.magicpages.socialweb.ui.settings.SettingsScreen
+import co.magicpages.socialweb.ui.settings.TranslationSettingsScreen
 import co.magicpages.socialweb.ui.thread.ThreadScreen
 import co.magicpages.socialweb.ui.translation.LocalPostTranslations
 import co.magicpages.socialweb.ui.translation.PostTranslations
@@ -152,6 +153,10 @@ data object LicensesKey : NavKey
 /** How translation works and why it's private. */
 @Serializable
 data object TranslationInfoKey : NavKey
+
+/** Translation settings: the language to translate into, translating on its own, downloads. */
+@Serializable
+data object TranslationSettingsKey : NavKey
 
 /** The welcome pages, as a tour from About. */
 @Serializable
@@ -465,7 +470,15 @@ private fun SignedInNavigation(
                     }
                 }
                 entry<SettingsKey>(clazzContentKey = contentKey) {
-                    SettingsScreen(onBack = back, onOpenBlocked = { push(BlockedKey) }, onOpenAbout = { push(AboutKey) })
+                    SettingsScreen(
+                        onBack = back,
+                        onOpenBlocked = { push(BlockedKey) },
+                        onOpenTranslation = { push(TranslationSettingsKey) },
+                        onOpenAbout = { push(AboutKey) },
+                    )
+                }
+                entry<TranslationSettingsKey>(clazzContentKey = contentKey) {
+                    TranslationSettingsScreen(onBack = back, onOpenInfo = { push(TranslationInfoKey) })
                 }
                 entry<AboutKey>(clazzContentKey = contentKey) {
                     AboutScreen(
