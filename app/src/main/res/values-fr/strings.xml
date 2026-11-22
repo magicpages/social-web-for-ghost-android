@@ -237,7 +237,6 @@
     <string name="settings_notifications_blocked_title">Les notifications système sont désactivées</string>
     <string name="settings_notifications_blocked_body">Android bloque les notifications de cette appli, donc rien n\'est signalé, quel que soit votre choix ci-dessous.</string>
     <string name="settings_open_notification_settings">Ouvrir les paramètres de notification</string>
-    <string name="settings_video">Vidéo</string>
     <string name="settings_autoplay_videos">Lecture automatique des vidéos</string>
     <string name="settings_autoplay_videos_summary">Lire les vidéos sans le son lorsqu\'elles sont à l\'écran.</string>
     <string name="settings_colors">Couleurs</string>
@@ -319,7 +318,6 @@
     <string name="translation_info_open_source_title">Open source</string>
     <string name="translation_info_open_source">Le moteur est Bergamot, le traducteur open source intégré à Firefox, avec les modèles de langue de Firefox. Sa licence figure dans Licences open source.</string>
     <string name="settings_translation">Traduction</string>
-    <string name="settings_translation_summary">Langue, traduction automatique et téléchargements</string>
     <string name="translation_settings_target">Traduire en</string>
     <string name="translation_settings_target_app">Comme l\'app (%1$s)</string>
     <string name="translation_settings_unsupported">L\'appareil ne peut pas encore traduire en %1$s. Choisissez une autre langue.</string>
@@ -581,7 +579,6 @@
     <string name="share_profile_image_failed">Impossible de créer l’image. Réessayez.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtres du fil</string>
-    <string name="feed_filters_summary">Masquer les republications et les mots masqués dans Notes et Lecteur</string>
     <string name="feed_filters_explainer">Les filtres ne changent que ce que vous voyez dans cette appli. Rien n\'est envoyé à votre site ni à personne d\'autre.</string>
     <string name="feed_filters_hide_reposts">Masquer les republications</string>
     <string name="feed_filters_hide_reposts_summary">Ne montrer que les publications des comptes suivis, pas ce qu\'ils partagent</string>
@@ -598,4 +595,19 @@
         <item quantity="many">%1$d nouvelles publications</item>
     </plurals>
     <string name="feed_caught_up">Vous êtes à jour</string>
+    <string name="settings_site_summary">Couleurs, blocage, médias sensibles et Bluesky</string>
+    <string name="settings_all_sites">Tous les sites</string>
+    <string name="settings_notifications_all_on">Toutes activées</string>
+    <string name="settings_notifications_some_on">%1$d sur %2$d activées</string>
+    <string name="settings_notifications_off">Désactivées</string>
+    <string name="settings_notifications_android_off">Désactivées dans Android</string>
+    <string name="feed_filters_status_none">Rien n’est masqué</string>
+    <string name="feed_filters_status_reposts">Republications masquées</string>
+    <string name="settings_translation_status">Traduire en : %1$s</string>
+    <string name="settings_translation_status_automatic">Traduire en : %1$s · automatiquement</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d mot masqué</item>
+        <item quantity="many">%1$d mots masqués</item>
+        <item quantity="other">%1$d mots masqués</item>
+    </plurals>
 </resources>

@@ -223,7 +223,6 @@
     <string name="settings_notifications_blocked_title">システム通知がオフです</string>
     <string name="settings_notifications_blocked_body">Android がこのアプリの通知をブロックしているため、以下の設定に関係なく通知は表示されません。</string>
     <string name="settings_open_notification_settings">通知設定を開く</string>
-    <string name="settings_video">動画</string>
     <string name="settings_autoplay_videos">動画を自動再生</string>
     <string name="settings_autoplay_videos_summary">画面に表示されている間、音を出さずに動画を再生します。</string>
     <string name="settings_colors">カラー</string>
@@ -305,7 +304,6 @@
     <string name="translation_info_open_source_title">オープンソース</string>
     <string name="translation_info_open_source">エンジンは Firefox に組み込まれているオープンソースの翻訳ソフト Bergamot で、Firefox の言語モデルを使います。ライセンスは「オープンソースライセンス」で確認できます。</string>
     <string name="settings_translation">翻訳</string>
-    <string name="settings_translation_summary">言語、自動翻訳、ダウンロード</string>
     <string name="translation_settings_target">翻訳先の言語</string>
     <string name="translation_settings_target_app">アプリと同じ（%1$s）</string>
     <string name="translation_settings_unsupported">このデバイスはまだ%1$sに翻訳できません。別の言語を選んでください。</string>
@@ -557,7 +555,6 @@
     <string name="share_profile_image_failed">画像を作成できませんでした。もう一度お試しください。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">フィードのフィルター</string>
-    <string name="feed_filters_summary">ノートとリーダーでリポストとミュートした語句を非表示にします</string>
     <string name="feed_filters_explainer">このフィルターはこのアプリでの表示だけを変えます。サイトや他の人には何も送信されません。</string>
     <string name="feed_filters_hide_reposts">リポストを非表示</string>
     <string name="feed_filters_hide_reposts_summary">フォロー中のアカウント自身の投稿だけを表示し、共有されたものは表示しません</string>
@@ -572,4 +569,17 @@
         <item quantity="other">新しい投稿 %1$d 件</item>
     </plurals>
     <string name="feed_caught_up">すべて読み終えました</string>
+    <string name="settings_site_summary">カラー、ブロック、センシティブなメディア、Bluesky</string>
+    <string name="settings_all_sites">すべてのサイト</string>
+    <string name="settings_notifications_all_on">すべてオン</string>
+    <string name="settings_notifications_some_on">%2$d 件中 %1$d 件がオン</string>
+    <string name="settings_notifications_off">オフ</string>
+    <string name="settings_notifications_android_off">Android でオフ</string>
+    <string name="feed_filters_status_none">非表示なし</string>
+    <string name="feed_filters_status_reposts">リポストを非表示</string>
+    <string name="settings_translation_status">翻訳先の言語：%1$s</string>
+    <string name="settings_translation_status_automatic">翻訳先の言語：%1$s · 自動</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="other">ミュートした語句 %1$d 件</item>
+    </plurals>
 </resources>

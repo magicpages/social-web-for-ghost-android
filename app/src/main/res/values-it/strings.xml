@@ -237,7 +237,6 @@
     <string name="settings_notifications_blocked_title">Le notifiche di sistema sono disattivate</string>
     <string name="settings_notifications_blocked_body">Android sta bloccando le notifiche di questa app, quindi non viene segnalato nulla, qualunque cosa tu scelga qui sotto.</string>
     <string name="settings_open_notification_settings">Apri le impostazioni delle notifiche</string>
-    <string name="settings_video">Video</string>
     <string name="settings_autoplay_videos">Riproduzione automatica dei video</string>
     <string name="settings_autoplay_videos_summary">Riproduci i video senza audio mentre sono sullo schermo.</string>
     <string name="settings_colors">Colori</string>
@@ -319,7 +318,6 @@
     <string name="translation_info_open_source_title">Open source</string>
     <string name="translation_info_open_source">Il motore è Bergamot, il traduttore open source integrato in Firefox, con i modelli linguistici di Firefox. La sua licenza è in Licenze open source.</string>
     <string name="settings_translation">Traduzione</string>
-    <string name="settings_translation_summary">Lingua, traduzione automatica e download</string>
     <string name="translation_settings_target">Traduci in</string>
     <string name="translation_settings_target_app">Come l\'app (%1$s)</string>
     <string name="translation_settings_unsupported">Il dispositivo non può ancora tradurre in %1$s. Scegli un\'altra lingua.</string>
@@ -581,7 +579,6 @@
     <string name="share_profile_image_failed">Impossibile creare l’immagine. Riprova.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtri del feed</string>
-    <string name="feed_filters_summary">Nascondi ripubblicazioni e parole silenziate in Note e Lettore</string>
     <string name="feed_filters_explainer">I filtri cambiano solo ciò che vedi in questa app. Non viene inviato nulla al tuo sito né ad altri.</string>
     <string name="feed_filters_hide_reposts">Nascondi ripubblicazioni</string>
     <string name="feed_filters_hide_reposts_summary">Mostra solo i post degli account che segui, non ciò che condividono</string>
@@ -598,4 +595,19 @@
         <item quantity="many">%1$d nuovi post</item>
     </plurals>
     <string name="feed_caught_up">Sei in pari</string>
+    <string name="settings_site_summary">Colori, blocchi, contenuti sensibili e Bluesky</string>
+    <string name="settings_all_sites">Tutti i siti</string>
+    <string name="settings_notifications_all_on">Tutte attive</string>
+    <string name="settings_notifications_some_on">%1$d di %2$d attive</string>
+    <string name="settings_notifications_off">Disattivate</string>
+    <string name="settings_notifications_android_off">Disattivate in Android</string>
+    <string name="feed_filters_status_none">Nulla di nascosto</string>
+    <string name="feed_filters_status_reposts">Ripubblicazioni nascoste</string>
+    <string name="settings_translation_status">Traduci in: %1$s</string>
+    <string name="settings_translation_status_automatic">Traduci in: %1$s · automaticamente</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d parola silenziata</item>
+        <item quantity="many">%1$d parole silenziate</item>
+        <item quantity="other">%1$d parole silenziate</item>
+    </plurals>
 </resources>

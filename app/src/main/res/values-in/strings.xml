@@ -223,7 +223,6 @@
     <string name="settings_notifications_blocked_title">Notifikasi sistem nonaktif</string>
     <string name="settings_notifications_blocked_body">Android memblokir notifikasi aplikasi ini, sehingga tidak ada yang diumumkan apa pun pilihan Anda di bawah.</string>
     <string name="settings_open_notification_settings">Buka setelan notifikasi</string>
-    <string name="settings_video">Video</string>
     <string name="settings_autoplay_videos">Putar video otomatis</string>
     <string name="settings_autoplay_videos_summary">Putar video tanpa suara saat tampil di layar.</string>
     <string name="settings_colors">Warna</string>
@@ -305,7 +304,6 @@
     <string name="translation_info_open_source_title">Sumber terbuka</string>
     <string name="translation_info_open_source">Mesinnya adalah Bergamot, penerjemah sumber terbuka yang ada di Firefox, dengan model bahasa Firefox. Lisensinya ada di Lisensi sumber terbuka.</string>
     <string name="settings_translation">Terjemahan</string>
-    <string name="settings_translation_summary">Bahasa, terjemahan otomatis, dan unduhan</string>
     <string name="translation_settings_target">Terjemahkan ke</string>
     <string name="translation_settings_target_app">Sama seperti aplikasi (%1$s)</string>
     <string name="translation_settings_unsupported">Perangkat belum bisa menerjemahkan ke %1$s. Pilih bahasa lain.</string>
@@ -557,7 +555,6 @@
     <string name="share_profile_image_failed">Gambar tidak bisa dibuat. Coba lagi.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filter feed</string>
-    <string name="feed_filters_summary">Sembunyikan posting ulang dan kata yang dibisukan di Catatan dan Pembaca</string>
     <string name="feed_filters_explainer">Filter ini hanya mengubah tampilan di aplikasi ini. Tidak ada yang dikirim ke situs atau ke orang lain.</string>
     <string name="feed_filters_hide_reposts">Sembunyikan posting ulang</string>
     <string name="feed_filters_hide_reposts_summary">Hanya tampilkan kiriman dari akun yang diikuti, bukan yang mereka bagikan</string>
@@ -572,4 +569,17 @@
         <item quantity="other">%1$d kiriman baru</item>
     </plurals>
     <string name="feed_caught_up">Semua sudah terbaca</string>
+    <string name="settings_site_summary">Warna, pemblokiran, media sensitif, dan Bluesky</string>
+    <string name="settings_all_sites">Semua situs</string>
+    <string name="settings_notifications_all_on">Semua aktif</string>
+    <string name="settings_notifications_some_on">%1$d dari %2$d aktif</string>
+    <string name="settings_notifications_off">Nonaktif</string>
+    <string name="settings_notifications_android_off">Dinonaktifkan di Android</string>
+    <string name="feed_filters_status_none">Tidak ada yang disembunyikan</string>
+    <string name="feed_filters_status_reposts">Posting ulang disembunyikan</string>
+    <string name="settings_translation_status">Terjemahkan ke: %1$s</string>
+    <string name="settings_translation_status_automatic">Terjemahkan ke: %1$s · otomatis</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="other">%1$d kata dibisukan</item>
+    </plurals>
 </resources>

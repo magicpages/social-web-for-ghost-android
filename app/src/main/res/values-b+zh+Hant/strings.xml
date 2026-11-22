@@ -223,7 +223,6 @@
     <string name="settings_notifications_blocked_title">系統通知已關閉</string>
     <string name="settings_notifications_blocked_body">Android 正在封鎖此應用程式的通知，因此無論你在下方如何選擇，都不會收到提醒。</string>
     <string name="settings_open_notification_settings">開啟通知設定</string>
-    <string name="settings_video">影片</string>
     <string name="settings_autoplay_videos">自動播放影片</string>
     <string name="settings_autoplay_videos_summary">影片顯示在畫面上時，以靜音方式播放。</string>
     <string name="settings_colors">顏色</string>
@@ -305,7 +304,6 @@
     <string name="translation_info_open_source_title">開放原始碼</string>
     <string name="translation_info_open_source">引擎是 Bergamot，也就是 Firefox 內建的開放原始碼翻譯器，使用 Firefox 的語言模型。授權資訊請見「開放原始碼授權」。</string>
     <string name="settings_translation">翻譯</string>
-    <string name="settings_translation_summary">語言、自動翻譯和下載</string>
     <string name="translation_settings_target">翻譯成</string>
     <string name="translation_settings_target_app">與應用程式相同（%1$s）</string>
     <string name="translation_settings_unsupported">裝置暫時無法翻譯成%1$s。請選擇其他語言。</string>
@@ -557,7 +555,6 @@
     <string name="share_profile_image_failed">圖片產生失敗，請再試一次。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">動態過濾</string>
-    <string name="feed_filters_summary">在筆記和閱讀器中隱藏轉發與靜音字詞</string>
     <string name="feed_filters_explainer">這些過濾只會改變你在本應用程式中看到的內容，不會傳送到你的網站或任何其他人。</string>
     <string name="feed_filters_hide_reposts">隱藏轉發</string>
     <string name="feed_filters_hide_reposts_summary">只顯示你追蹤的帳號自己發的貼文，不顯示它們轉發的內容</string>
@@ -572,4 +569,17 @@
         <item quantity="other">%1$d 則新貼文</item>
     </plurals>
     <string name="feed_caught_up">你已看完所有內容</string>
+    <string name="settings_site_summary">顏色、封鎖、敏感媒體和 Bluesky</string>
+    <string name="settings_all_sites">所有網站</string>
+    <string name="settings_notifications_all_on">全部開啟</string>
+    <string name="settings_notifications_some_on">已開啟 %1$d/%2$d 項</string>
+    <string name="settings_notifications_off">關閉</string>
+    <string name="settings_notifications_android_off">已在 Android 中關閉</string>
+    <string name="feed_filters_status_none">未隱藏任何內容</string>
+    <string name="feed_filters_status_reposts">已隱藏轉發</string>
+    <string name="settings_translation_status">翻譯成：%1$s</string>
+    <string name="settings_translation_status_automatic">翻譯成：%1$s · 自動</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="other">%1$d 個隱藏字詞</item>
+    </plurals>
 </resources>

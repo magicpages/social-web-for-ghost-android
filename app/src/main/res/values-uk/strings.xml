@@ -244,7 +244,6 @@
     <string name="settings_notifications_blocked_title">Системні сповіщення вимкнено</string>
     <string name="settings_notifications_blocked_body">Android блокує сповіщення цього застосунку, тож жодних повідомлень не буде, що б ви не вибрали нижче.</string>
     <string name="settings_open_notification_settings">Відкрити налаштування сповіщень</string>
-    <string name="settings_video">Відео</string>
     <string name="settings_autoplay_videos">Автовідтворення відео</string>
     <string name="settings_autoplay_videos_summary">Відтворювати відео без звуку, поки вони на екрані.</string>
     <string name="settings_colors">Кольори</string>
@@ -326,7 +325,6 @@
     <string name="translation_info_open_source_title">Відкритий код</string>
     <string name="translation_info_open_source">Рушій — Bergamot, перекладач із відкритим кодом, вбудований у Firefox, з мовними моделями Firefox. Його ліцензія є в розділі «Ліцензії відкритого коду».</string>
     <string name="settings_translation">Переклад</string>
-    <string name="settings_translation_summary">Мова, автоматичний переклад і завантаження</string>
     <string name="translation_settings_target">Перекладати на</string>
     <string name="translation_settings_target_app">Як у застосунку (%1$s)</string>
     <string name="translation_settings_unsupported">Пристрій поки не вміє перекладати на цю мову: %1$s. Виберіть іншу.</string>
@@ -593,7 +591,6 @@
     <string name="share_profile_image_failed">Не вдалося створити зображення. Спробуйте ще раз.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Фільтри стрічки</string>
-    <string name="feed_filters_summary">Ховати репости й заглушені слова в Нотатках і Читанні</string>
     <string name="feed_filters_explainer">Фільтри змінюють лише те, що ви бачите в цьому застосунку. Нічого не надсилається на ваш сайт чи комусь іще.</string>
     <string name="feed_filters_hide_reposts">Ховати репости</string>
     <string name="feed_filters_hide_reposts_summary">Показувати лише дописи самих акаунтів, на які ви підписані, без того, чим вони діляться</string>
@@ -611,4 +608,20 @@
         <item quantity="other">%1$d нового допису</item>
     </plurals>
     <string name="feed_caught_up">Ви все переглянули</string>
+    <string name="settings_site_summary">Кольори, блокування, чутливі медіа та Bluesky</string>
+    <string name="settings_all_sites">Усі сайти</string>
+    <string name="settings_notifications_all_on">Усі ввімкнено</string>
+    <string name="settings_notifications_some_on">Увімкнено %1$d з %2$d</string>
+    <string name="settings_notifications_off">Вимкнено</string>
+    <string name="settings_notifications_android_off">Вимкнено в Android</string>
+    <string name="feed_filters_status_none">Нічого не приховано</string>
+    <string name="feed_filters_status_reposts">Репости приховано</string>
+    <string name="settings_translation_status">Перекладати на: %1$s</string>
+    <string name="settings_translation_status_automatic">Перекладати на: %1$s · автоматично</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d приховане слово</item>
+        <item quantity="few">%1$d приховані слова</item>
+        <item quantity="many">%1$d прихованих слів</item>
+        <item quantity="other">%1$d прихованого слова</item>
+    </plurals>
 </resources>

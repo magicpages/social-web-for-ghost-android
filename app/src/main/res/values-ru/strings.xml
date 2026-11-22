@@ -244,7 +244,6 @@
     <string name="settings_notifications_blocked_title">Системные уведомления отключены</string>
     <string name="settings_notifications_blocked_body">Android блокирует уведомления этого приложения, поэтому ничего не будет показано, что бы вы ни выбрали ниже.</string>
     <string name="settings_open_notification_settings">Открыть настройки уведомлений</string>
-    <string name="settings_video">Видео</string>
     <string name="settings_autoplay_videos">Автовоспроизведение видео</string>
     <string name="settings_autoplay_videos_summary">Воспроизводить видео без звука, пока они на экране.</string>
     <string name="settings_colors">Цвета</string>
@@ -326,7 +325,6 @@
     <string name="translation_info_open_source_title">Открытый исходный код</string>
     <string name="translation_info_open_source">Движок — Bergamot, переводчик с открытым исходным кодом, встроенный в Firefox, с языковыми моделями Firefox. Его лицензия есть в разделе «Лицензии открытого ПО».</string>
     <string name="settings_translation">Перевод</string>
-    <string name="settings_translation_summary">Язык, автоматический перевод и загрузки</string>
     <string name="translation_settings_target">Переводить на</string>
     <string name="translation_settings_target_app">Как в приложении (%1$s)</string>
     <string name="translation_settings_unsupported">Устройство пока не умеет переводить на этот язык: %1$s. Выберите другой.</string>
@@ -593,7 +591,6 @@
     <string name="share_profile_image_failed">Не удалось создать изображение. Повторите попытку.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Фильтры ленты</string>
-    <string name="feed_filters_summary">Скрывать репосты и заглушённые слова в Заметках и Чтении</string>
     <string name="feed_filters_explainer">Фильтры меняют только то, что вы видите в этом приложении. Ничего не отправляется на ваш сайт или кому-либо ещё.</string>
     <string name="feed_filters_hide_reposts">Скрывать репосты</string>
     <string name="feed_filters_hide_reposts_summary">Показывать только посты самих аккаунтов, на которые вы подписаны, без того, чем они делятся</string>
@@ -611,4 +608,20 @@
         <item quantity="other">%1$d нового поста</item>
     </plurals>
     <string name="feed_caught_up">Вы всё прочитали</string>
+    <string name="settings_site_summary">Цвета, блокировка, чувствительные медиа и Bluesky</string>
+    <string name="settings_all_sites">Все сайты</string>
+    <string name="settings_notifications_all_on">Все включены</string>
+    <string name="settings_notifications_some_on">Включено %1$d из %2$d</string>
+    <string name="settings_notifications_off">Выключены</string>
+    <string name="settings_notifications_android_off">Выключены в Android</string>
+    <string name="feed_filters_status_none">Ничего не скрыто</string>
+    <string name="feed_filters_status_reposts">Репосты скрыты</string>
+    <string name="settings_translation_status">Переводить на: %1$s</string>
+    <string name="settings_translation_status_automatic">Переводить на: %1$s · автоматически</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d скрытое слово</item>
+        <item quantity="few">%1$d скрытых слова</item>
+        <item quantity="many">%1$d скрытых слов</item>
+        <item quantity="other">%1$d скрытого слова</item>
+    </plurals>
 </resources>

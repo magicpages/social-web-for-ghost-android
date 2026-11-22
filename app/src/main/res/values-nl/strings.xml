@@ -230,7 +230,6 @@
     <string name="settings_notifications_blocked_title">Systeemmeldingen staan uit</string>
     <string name="settings_notifications_blocked_body">Android blokkeert de meldingen van deze app, dus er wordt niets getoond, wat je hieronder ook kiest.</string>
     <string name="settings_open_notification_settings">Meldingsinstellingen openen</string>
-    <string name="settings_video">Video</string>
     <string name="settings_autoplay_videos">Video\'s automatisch afspelen</string>
     <string name="settings_autoplay_videos_summary">Speel video\'s zonder geluid af terwijl ze in beeld zijn.</string>
     <string name="settings_colors">Kleuren</string>
@@ -312,7 +311,6 @@
     <string name="translation_info_open_source_title">Open source</string>
     <string name="translation_info_open_source">De engine is Bergamot, de opensourcevertaler die in Firefox zit, met de taalmodellen van Firefox. De licentie staat bij Open-sourcelicenties.</string>
     <string name="settings_translation">Vertalen</string>
-    <string name="settings_translation_summary">Taal, automatisch vertalen en downloads</string>
     <string name="translation_settings_target">Vertalen naar</string>
     <string name="translation_settings_target_app">Zoals de app (%1$s)</string>
     <string name="translation_settings_unsupported">Het apparaat kan nog niet naar het %1$s vertalen. Kies een andere taal.</string>
@@ -569,7 +567,6 @@
     <string name="share_profile_image_failed">De afbeelding kon niet worden gemaakt. Probeer het opnieuw.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feedfilters</string>
-    <string name="feed_filters_summary">Verberg reposts en gedempte woorden in Notities en Lezer</string>
     <string name="feed_filters_explainer">De filters veranderen alleen wat je in deze app ziet. Er wordt niets naar je site of naar anderen gestuurd.</string>
     <string name="feed_filters_hide_reposts">Reposts verbergen</string>
     <string name="feed_filters_hide_reposts_summary">Toon alleen berichten van accounts die je volgt, niet wat zij delen</string>
@@ -585,4 +582,18 @@
         <item quantity="other">%1$d nieuwe berichten</item>
     </plurals>
     <string name="feed_caught_up">Je bent helemaal bij</string>
+    <string name="settings_site_summary">Kleuren, blokkeren, gevoelige media en Bluesky</string>
+    <string name="settings_all_sites">Alle sites</string>
+    <string name="settings_notifications_all_on">Alles aan</string>
+    <string name="settings_notifications_some_on">%1$d van %2$d aan</string>
+    <string name="settings_notifications_off">Uit</string>
+    <string name="settings_notifications_android_off">Uitgeschakeld in Android</string>
+    <string name="feed_filters_status_none">Niets verborgen</string>
+    <string name="feed_filters_status_reposts">Reposts verborgen</string>
+    <string name="settings_translation_status">Vertalen naar: %1$s</string>
+    <string name="settings_translation_status_automatic">Vertalen naar: %1$s · automatisch</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d gedempt woord</item>
+        <item quantity="other">%1$d gedempte woorden</item>
+    </plurals>
 </resources>

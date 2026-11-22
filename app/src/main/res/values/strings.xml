@@ -307,7 +307,6 @@
     <string name="settings_notifications_blocked_title">System notifications are off</string>
     <string name="settings_notifications_blocked_body">Android is blocking this app\'s notifications, so nothing is announced whatever you pick below.</string>
     <string name="settings_open_notification_settings">Open notification settings</string>
-    <string name="settings_video">Video</string>
     <string name="settings_autoplay_videos">Autoplay videos</string>
     <string name="settings_autoplay_videos_summary">Play videos without sound while they\'re on screen.</string>
     <string name="settings_colors">Colors</string>
@@ -412,7 +411,6 @@
     <string name="translation_info_open_source_title">Open source</string>
     <string name="translation_info_open_source">The engine is Bergamot, the open-source translator built into Firefox, with Firefox\'s language models. Its license is under Open-source licenses.</string>
     <string name="settings_translation">Translation</string>
-    <string name="settings_translation_summary">Language, automatic translation and downloads</string>
     <string name="translation_settings_target">Translate into</string>
     <string name="translation_settings_target_app">Same as the app (%1$s)</string>
     <string name="translation_settings_unsupported">The device can\'t translate into %1$s yet. Pick another language.</string>
@@ -577,7 +575,6 @@
     <string name="share_profile_image_failed">Couldn\'t create the image. Try again.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feed filters</string>
-    <string name="feed_filters_summary">Hide reposts and muted words in Notes and Reader</string>
     <string name="feed_filters_explainer">These filters only change what you see in this app. Nothing is sent to your site or to anyone else.</string>
     <string name="feed_filters_hide_reposts">Hide reposts</string>
     <string name="feed_filters_hide_reposts_summary">Only show posts from the accounts you follow, not what they share</string>
@@ -593,4 +590,18 @@
         <item quantity="other">%1$d new posts</item>
     </plurals>
     <string name="feed_caught_up">You\'re all caught up</string>
+    <string name="settings_site_summary">Colors, blocking, sensitive media and Bluesky</string>
+    <string name="settings_all_sites">All sites</string>
+    <string name="settings_notifications_all_on">All on</string>
+    <string name="settings_notifications_some_on">%1$d of %2$d on</string>
+    <string name="settings_notifications_off">Off</string>
+    <string name="settings_notifications_android_off">Turned off in Android</string>
+    <string name="feed_filters_status_none">Nothing hidden</string>
+    <string name="feed_filters_status_reposts">Reposts hidden</string>
+    <string name="settings_translation_status">Into %1$s</string>
+    <string name="settings_translation_status_automatic">Into %1$s, automatically</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d muted word</item>
+        <item quantity="other">%1$d muted words</item>
+    </plurals>
 </resources>

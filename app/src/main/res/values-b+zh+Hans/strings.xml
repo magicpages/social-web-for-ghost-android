@@ -223,7 +223,6 @@
     <string name="settings_notifications_blocked_title">系统通知已关闭</string>
     <string name="settings_notifications_blocked_body">Android 正在屏蔽此应用的通知，因此无论你在下方如何选择，都不会收到提醒。</string>
     <string name="settings_open_notification_settings">打开通知设置</string>
-    <string name="settings_video">视频</string>
     <string name="settings_autoplay_videos">自动播放视频</string>
     <string name="settings_autoplay_videos_summary">视频显示在屏幕上时，静音播放。</string>
     <string name="settings_colors">颜色</string>
@@ -305,7 +304,6 @@
     <string name="translation_info_open_source_title">开源</string>
     <string name="translation_info_open_source">引擎是 Bergamot，即 Firefox 内置的开源翻译器，使用 Firefox 的语言模型。其许可证见“开源许可证”。</string>
     <string name="settings_translation">翻译</string>
-    <string name="settings_translation_summary">语言、自动翻译和下载</string>
     <string name="translation_settings_target">翻译成</string>
     <string name="translation_settings_target_app">与应用相同（%1$s）</string>
     <string name="translation_settings_unsupported">设备暂时无法翻译成%1$s。请选择其他语言。</string>
@@ -557,7 +555,6 @@
     <string name="share_profile_image_failed">图片生成失败，请重试。</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">信息流过滤</string>
-    <string name="feed_filters_summary">在笔记和阅读器中隐藏转发和屏蔽词</string>
     <string name="feed_filters_explainer">这些过滤只影响你在本应用中看到的内容，不会发送到你的站点或其他任何人。</string>
     <string name="feed_filters_hide_reposts">隐藏转发</string>
     <string name="feed_filters_hide_reposts_summary">只显示你关注的账号自己发的帖子，不显示它们转发的内容</string>
@@ -572,4 +569,17 @@
         <item quantity="other">%1$d 篇新帖子</item>
     </plurals>
     <string name="feed_caught_up">你已看完所有内容</string>
+    <string name="settings_site_summary">颜色、屏蔽、敏感媒体和 Bluesky</string>
+    <string name="settings_all_sites">所有网站</string>
+    <string name="settings_notifications_all_on">全部开启</string>
+    <string name="settings_notifications_some_on">已开启 %1$d/%2$d 项</string>
+    <string name="settings_notifications_off">关闭</string>
+    <string name="settings_notifications_android_off">已在 Android 中关闭</string>
+    <string name="feed_filters_status_none">未隐藏任何内容</string>
+    <string name="feed_filters_status_reposts">已隐藏转发</string>
+    <string name="settings_translation_status">翻译成：%1$s</string>
+    <string name="settings_translation_status_automatic">翻译成：%1$s · 自动</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="other">%1$d 个隐藏词</item>
+    </plurals>
 </resources>

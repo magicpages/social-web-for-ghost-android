@@ -452,26 +452,6 @@ private fun ConnectedCard(name: String, avatarUrl: String?, handle: String) {
 }
 
 @Composable
-private fun SectionTitle(@StringRes title: Int, modifier: Modifier = Modifier) {
-    Text(
-        stringResource(title),
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.primary,
-        modifier = modifier.padding(vertical = 4.dp),
-    )
-}
-
-@Composable
-private fun Explainer(text: String) {
-    Text(
-        text,
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(vertical = 4.dp),
-    )
-}
-
-@Composable
 private fun ErrorText(error: Throwable) {
     Text(
         // Too many requests: Ghost's own client says the same.

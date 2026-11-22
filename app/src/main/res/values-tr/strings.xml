@@ -230,7 +230,6 @@
     <string name="settings_notifications_blocked_title">Sistem bildirimleri kapalı</string>
     <string name="settings_notifications_blocked_body">Android bu uygulamanın bildirimlerini engelliyor; bu yüzden aşağıda ne seçerseniz seçin hiçbir şey gösterilmez.</string>
     <string name="settings_open_notification_settings">Bildirim ayarlarını aç</string>
-    <string name="settings_video">Video</string>
     <string name="settings_autoplay_videos">Videoları otomatik oynat</string>
     <string name="settings_autoplay_videos_summary">Videolar ekrandayken sessiz oynatılır.</string>
     <string name="settings_colors">Renkler</string>
@@ -312,7 +311,6 @@
     <string name="translation_info_open_source_title">Açık kaynak</string>
     <string name="translation_info_open_source">Motor, Firefox\'ta yerleşik olan açık kaynaklı çevirmen Bergamot\'tur ve Firefox\'un dil modellerini kullanır. Lisansı Açık kaynak lisansları bölümündedir.</string>
     <string name="settings_translation">Çeviri</string>
-    <string name="settings_translation_summary">Dil, otomatik çeviri ve indirmeler</string>
     <string name="translation_settings_target">Çevrilecek dil</string>
     <string name="translation_settings_target_app">Uygulamayla aynı (%1$s)</string>
     <string name="translation_settings_unsupported">Cihaz henüz %1$s diline çeviri yapamıyor. Başka bir dil seçin.</string>
@@ -569,7 +567,6 @@
     <string name="share_profile_image_failed">Görsel oluşturulamadı. Tekrar dene.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Akış filtreleri</string>
-    <string name="feed_filters_summary">Notlar ve Okuyucu\'da yeniden paylaşımları ve sessize alınan sözcükleri gizle</string>
     <string name="feed_filters_explainer">Bu filtreler yalnızca bu uygulamada gördüklerinizi değiştirir. Sitenize ya da başkasına hiçbir şey gönderilmez.</string>
     <string name="feed_filters_hide_reposts">Yeniden paylaşımları gizle</string>
     <string name="feed_filters_hide_reposts_summary">Yalnızca takip ettiğiniz hesapların kendi gönderilerini göster, paylaştıklarını değil</string>
@@ -585,4 +582,18 @@
         <item quantity="other">%1$d yeni gönderi</item>
     </plurals>
     <string name="feed_caught_up">Hepsini gördünüz</string>
+    <string name="settings_site_summary">Renkler, engelleme, hassas medya ve Bluesky</string>
+    <string name="settings_all_sites">Tüm siteler</string>
+    <string name="settings_notifications_all_on">Tümü açık</string>
+    <string name="settings_notifications_some_on">%2$d bildirimden %1$d tanesi açık</string>
+    <string name="settings_notifications_off">Kapalı</string>
+    <string name="settings_notifications_android_off">Android’de kapalı</string>
+    <string name="feed_filters_status_none">Hiçbir şey gizlenmiyor</string>
+    <string name="feed_filters_status_reposts">Yeniden paylaşımlar gizli</string>
+    <string name="settings_translation_status">Çevrilecek dil: %1$s</string>
+    <string name="settings_translation_status_automatic">Çevrilecek dil: %1$s · otomatik</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d sessize alınan kelime</item>
+        <item quantity="other">%1$d sessize alınan kelime</item>
+    </plurals>
 </resources>

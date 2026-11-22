@@ -230,7 +230,6 @@
     <string name="settings_notifications_blocked_title">Systemnotifikationer er slået fra</string>
     <string name="settings_notifications_blocked_body">Android blokerer denne apps notifikationer, så der vises ikke noget, uanset hvad du vælger nedenfor.</string>
     <string name="settings_open_notification_settings">Åbn notifikationsindstillinger</string>
-    <string name="settings_video">Video</string>
     <string name="settings_autoplay_videos">Afspil videoer automatisk</string>
     <string name="settings_autoplay_videos_summary">Afspil videoer uden lyd, mens de er på skærmen.</string>
     <string name="settings_colors">Farver</string>
@@ -312,7 +311,6 @@
     <string name="translation_info_open_source_title">Open source</string>
     <string name="translation_info_open_source">Motoren er Bergamot, den open source-oversætter, der er indbygget i Firefox, med Firefox\' sprogmodeller. Dens licens står under Open source-licenser.</string>
     <string name="settings_translation">Oversættelse</string>
-    <string name="settings_translation_summary">Sprog, automatisk oversættelse og downloads</string>
     <string name="translation_settings_target">Oversæt til</string>
     <string name="translation_settings_target_app">Som appen (%1$s)</string>
     <string name="translation_settings_unsupported">Enheden kan endnu ikke oversætte til %1$s. Vælg et andet sprog.</string>
@@ -569,7 +567,6 @@
     <string name="share_profile_image_failed">Billedet kunne ikke oprettes. Prøv igen.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Feedfiltre</string>
-    <string name="feed_filters_summary">Skjul videredelinger og dæmpede ord i Noter og Læser</string>
     <string name="feed_filters_explainer">Filtrene ændrer kun, hvad du ser i denne app. Der sendes intet til dit websted eller til nogen andre.</string>
     <string name="feed_filters_hide_reposts">Skjul videredelinger</string>
     <string name="feed_filters_hide_reposts_summary">Vis kun opslag fra de konti, du følger, ikke det, de deler videre</string>
@@ -585,4 +582,18 @@
         <item quantity="other">%1$d nye opslag</item>
     </plurals>
     <string name="feed_caught_up">Du er helt med</string>
+    <string name="settings_site_summary">Farver, blokering, følsomme medier og Bluesky</string>
+    <string name="settings_all_sites">Alle websites</string>
+    <string name="settings_notifications_all_on">Alle til</string>
+    <string name="settings_notifications_some_on">%1$d af %2$d til</string>
+    <string name="settings_notifications_off">Fra</string>
+    <string name="settings_notifications_android_off">Slået fra i Android</string>
+    <string name="feed_filters_status_none">Intet skjult</string>
+    <string name="feed_filters_status_reposts">Videredelinger skjult</string>
+    <string name="settings_translation_status">Oversæt til: %1$s</string>
+    <string name="settings_translation_status_automatic">Oversæt til: %1$s · automatisk</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d skjult ord</item>
+        <item quantity="other">%1$d skjulte ord</item>
+    </plurals>
 </resources>

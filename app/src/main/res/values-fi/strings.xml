@@ -230,7 +230,6 @@
     <string name="settings_notifications_blocked_title">Järjestelmäilmoitukset ovat pois päältä</string>
     <string name="settings_notifications_blocked_body">Android estää tämän sovelluksen ilmoitukset, joten mitään ei näytetä riippumatta alla tekemistäsi valinnoista.</string>
     <string name="settings_open_notification_settings">Avaa ilmoitusasetukset</string>
-    <string name="settings_video">Video</string>
     <string name="settings_autoplay_videos">Toista videot automaattisesti</string>
     <string name="settings_autoplay_videos_summary">Toista videot ilman ääntä, kun ne ovat näytöllä.</string>
     <string name="settings_colors">Värit</string>
@@ -312,7 +311,6 @@
     <string name="translation_info_open_source_title">Avoin lähdekoodi</string>
     <string name="translation_info_open_source">Moottori on Bergamot, Firefoxiin sisäänrakennettu avoimen lähdekoodin kääntäjä, ja mallit ovat Firefoxin kielimalleja. Sen lisenssi löytyy kohdasta Avoimen lähdekoodin lisenssit.</string>
     <string name="settings_translation">Käännös</string>
-    <string name="settings_translation_summary">Kieli, automaattinen käännös ja lataukset</string>
     <string name="translation_settings_target">Käännä kielelle</string>
     <string name="translation_settings_target_app">Sama kuin sovelluksessa (%1$s)</string>
     <string name="translation_settings_unsupported">Laite ei vielä osaa kääntää kielelle %1$s. Valitse toinen kieli.</string>
@@ -569,7 +567,6 @@
     <string name="share_profile_image_failed">Kuvan luonti epäonnistui. Yritä uudelleen.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Syötteen suodattimet</string>
-    <string name="feed_filters_summary">Piilota uudelleenjaot ja mykistetyt sanat Muistiinpanoissa ja Lukijassa</string>
     <string name="feed_filters_explainer">Suodattimet muuttavat vain sitä, mitä näet tässä sovelluksessa. Mitään ei lähetetä sivustollesi tai muille.</string>
     <string name="feed_filters_hide_reposts">Piilota uudelleenjaot</string>
     <string name="feed_filters_hide_reposts_summary">Näytä vain seuraamiesi tilien omat julkaisut, ei niiden jakamia</string>
@@ -585,4 +582,18 @@
         <item quantity="other">%1$d uutta julkaisua</item>
     </plurals>
     <string name="feed_caught_up">Olet ajan tasalla</string>
+    <string name="settings_site_summary">Värit, estäminen, arkaluonteinen media ja Bluesky</string>
+    <string name="settings_all_sites">Kaikki sivustot</string>
+    <string name="settings_notifications_all_on">Kaikki päällä</string>
+    <string name="settings_notifications_some_on">%1$d/%2$d päällä</string>
+    <string name="settings_notifications_off">Pois päältä</string>
+    <string name="settings_notifications_android_off">Pois päältä Androidissa</string>
+    <string name="feed_filters_status_none">Mitään ei piiloteta</string>
+    <string name="feed_filters_status_reposts">Uudelleenjaot piilotettu</string>
+    <string name="settings_translation_status">Käännä kielelle: %1$s</string>
+    <string name="settings_translation_status_automatic">Käännä kielelle: %1$s · automaattisesti</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d mykistetty sana</item>
+        <item quantity="other">%1$d mykistettyä sanaa</item>
+    </plurals>
 </resources>

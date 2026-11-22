@@ -230,7 +230,6 @@
     <string name="settings_notifications_blocked_title">Systemaviseringar är avstängda</string>
     <string name="settings_notifications_blocked_body">Android blockerar den här appens aviseringar, så inget visas oavsett vad du väljer nedan.</string>
     <string name="settings_open_notification_settings">Öppna aviseringsinställningar</string>
-    <string name="settings_video">Video</string>
     <string name="settings_autoplay_videos">Spela upp videor automatiskt</string>
     <string name="settings_autoplay_videos_summary">Spela upp videor utan ljud medan de syns på skärmen.</string>
     <string name="settings_colors">Färger</string>
@@ -312,7 +311,6 @@
     <string name="translation_info_open_source_title">Öppen källkod</string>
     <string name="translation_info_open_source">Motorn är Bergamot, översättaren med öppen källkod som finns i Firefox, med Firefox språkmodeller. Licensen finns under Licenser för öppen källkod.</string>
     <string name="settings_translation">Översättning</string>
-    <string name="settings_translation_summary">Språk, automatisk översättning och nedladdningar</string>
     <string name="translation_settings_target">Översätt till</string>
     <string name="translation_settings_target_app">Samma som appen (%1$s)</string>
     <string name="translation_settings_unsupported">Enheten kan inte översätta till %1$s än. Välj ett annat språk.</string>
@@ -569,7 +567,6 @@
     <string name="share_profile_image_failed">Det gick inte att skapa bilden. Försök igen.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Flödesfilter</string>
-    <string name="feed_filters_summary">Dölj delningar och tystade ord i Anteckningar och Läsare</string>
     <string name="feed_filters_explainer">Filtren ändrar bara vad du ser i den här appen. Inget skickas till din webbplats eller till någon annan.</string>
     <string name="feed_filters_hide_reposts">Dölj delningar</string>
     <string name="feed_filters_hide_reposts_summary">Visa bara inlägg från konton du följer, inte det de delar vidare</string>
@@ -585,4 +582,18 @@
         <item quantity="other">%1$d nya inlägg</item>
     </plurals>
     <string name="feed_caught_up">Du är ikapp</string>
+    <string name="settings_site_summary">Färger, blockering, känsligt innehåll och Bluesky</string>
+    <string name="settings_all_sites">Alla webbplatser</string>
+    <string name="settings_notifications_all_on">Alla på</string>
+    <string name="settings_notifications_some_on">%1$d av %2$d på</string>
+    <string name="settings_notifications_off">Av</string>
+    <string name="settings_notifications_android_off">Avstängt i Android</string>
+    <string name="feed_filters_status_none">Inget dolt</string>
+    <string name="feed_filters_status_reposts">Delningar dolda</string>
+    <string name="settings_translation_status">Översätt till: %1$s</string>
+    <string name="settings_translation_status_automatic">Översätt till: %1$s · automatiskt</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d dolt ord</item>
+        <item quantity="other">%1$d dolda ord</item>
+    </plurals>
 </resources>

@@ -230,7 +230,6 @@
     <string name="settings_notifications_blocked_title">सिस्टम सूचनाएँ बंद हैं</string>
     <string name="settings_notifications_blocked_body">Android इस ऐप की सूचनाएँ रोक रहा है, इसलिए नीचे आप कुछ भी चुनें, कोई सूचना नहीं आएगी।</string>
     <string name="settings_open_notification_settings">सूचना सेटिंग खोलें</string>
-    <string name="settings_video">वीडियो</string>
     <string name="settings_autoplay_videos">वीडियो अपने आप चलाएँ</string>
     <string name="settings_autoplay_videos_summary">वीडियो स्क्रीन पर दिखते समय बिना आवाज़ के चलाएँ।</string>
     <string name="settings_colors">रंग</string>
@@ -312,7 +311,6 @@
     <string name="translation_info_open_source_title">ओपन सोर्स</string>
     <string name="translation_info_open_source">इंजन Bergamot है, Firefox में शामिल ओपन-सोर्स अनुवादक, Firefox के भाषा मॉडल के साथ। इसका लाइसेंस ओपन-सोर्स लाइसेंस में है।</string>
     <string name="settings_translation">अनुवाद</string>
-    <string name="settings_translation_summary">भाषा, अपने-आप अनुवाद और डाउनलोड</string>
     <string name="translation_settings_target">इसमें अनुवाद करें</string>
     <string name="translation_settings_target_app">ऐप जैसी (%1$s)</string>
     <string name="translation_settings_unsupported">डिवाइस अभी %1$s में अनुवाद नहीं कर सकता। कोई दूसरी भाषा चुनें।</string>
@@ -569,7 +567,6 @@
     <string name="share_profile_image_failed">इमेज बनाई नहीं जा सकी। फिर से कोशिश करें।</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">फ़ीड फ़िल्टर</string>
-    <string name="feed_filters_summary">नोट्स और रीडर में रीपोस्ट और म्यूट किए गए शब्द छिपाएँ</string>
     <string name="feed_filters_explainer">ये फ़िल्टर सिर्फ़ इस ऐप में दिखने वाली चीज़ें बदलते हैं। आपकी साइट या किसी और को कुछ नहीं भेजा जाता।</string>
     <string name="feed_filters_hide_reposts">रीपोस्ट छिपाएँ</string>
     <string name="feed_filters_hide_reposts_summary">सिर्फ़ फ़ॉलो किए गए खातों की अपनी पोस्ट दिखाएँ, उनके शेयर किए हुए नहीं</string>
@@ -585,4 +582,18 @@
         <item quantity="other">%1$d नई पोस्ट</item>
     </plurals>
     <string name="feed_caught_up">आप पूरी तरह अप टू डेट हैं</string>
+    <string name="settings_site_summary">रंग, ब्लॉक करना, संवेदनशील मीडिया और Bluesky</string>
+    <string name="settings_all_sites">सभी साइटें</string>
+    <string name="settings_notifications_all_on">सभी चालू</string>
+    <string name="settings_notifications_some_on">%2$d में से %1$d चालू</string>
+    <string name="settings_notifications_off">बंद</string>
+    <string name="settings_notifications_android_off">Android में बंद</string>
+    <string name="feed_filters_status_none">कुछ भी छिपा नहीं</string>
+    <string name="feed_filters_status_reposts">रीपोस्ट छिपे हैं</string>
+    <string name="settings_translation_status">इसमें अनुवाद करें: %1$s</string>
+    <string name="settings_translation_status_automatic">इसमें अनुवाद करें: %1$s · अपने-आप</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d म्यूट किया गया शब्द</item>
+        <item quantity="other">%1$d म्यूट किए गए शब्द</item>
+    </plurals>
 </resources>

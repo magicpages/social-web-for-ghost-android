@@ -92,7 +92,9 @@ import co.magicpages.socialweb.ui.posts.LocalShowSensitiveMedia
 import co.magicpages.socialweb.ui.profile.FollowsScreen
 import co.magicpages.socialweb.ui.profile.ProfileScreen
 import co.magicpages.socialweb.ui.settings.BlockedScreen
+import co.magicpages.socialweb.ui.settings.NotificationSettingsScreen
 import co.magicpages.socialweb.ui.settings.SettingsScreen
+import co.magicpages.socialweb.ui.settings.SiteSettingsScreen
 import co.magicpages.socialweb.ui.settings.TranslationSettingsScreen
 import co.magicpages.socialweb.ui.thread.ThreadScreen
 import co.magicpages.socialweb.ui.translation.LocalPostTranslations
@@ -134,9 +136,17 @@ data class ProfileKey(val handle: String, val url: String? = null) : NavKey
 @Serializable
 data class FollowsKey(val handle: String, val name: String, val list: FollowList) : NavKey
 
-/** Settings: the active account's colors, and the device-wide notifications and video. */
+/** Settings: a row for the active site's own settings, then what applies to every site. */
 @Serializable
 data object SettingsKey : NavKey
+
+/** What the active site keeps for itself: colors, blocks, sensitive media, Bluesky. */
+@Serializable
+data object SiteSettingsKey : NavKey
+
+/** Which kinds of activity become system notifications, for every site. */
+@Serializable
+data object NotificationSettingsKey : NavKey
 
 /** The accounts and servers the active account has blocked, with a way to unblock each. */
 @Serializable
@@ -472,11 +482,16 @@ private fun SignedInNavigation(
                 entry<SettingsKey>(clazzContentKey = contentKey) {
                     SettingsScreen(
                         onBack = back,
-                        onOpenBlocked = { push(BlockedKey) },
+                        onOpenSite = { push(SiteSettingsKey) },
+                        onOpenNotifications = { push(NotificationSettingsKey) },
                         onOpenTranslation = { push(TranslationSettingsKey) },
                         onOpenAbout = { push(AboutKey) },
                     )
                 }
+                entry<SiteSettingsKey>(clazzContentKey = contentKey) {
+                    SiteSettingsScreen(onBack = back, onOpenBlocked = { push(BlockedKey) })
+                }
+                entry<NotificationSettingsKey>(clazzContentKey = contentKey) { NotificationSettingsScreen(onBack = back) }
                 entry<TranslationSettingsKey>(clazzContentKey = contentKey) {
                     TranslationSettingsScreen(onBack = back, onOpenInfo = { push(TranslationInfoKey) })
                 }

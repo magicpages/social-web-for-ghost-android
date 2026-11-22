@@ -223,7 +223,6 @@
     <string name="settings_notifications_blocked_title">시스템 알림이 꺼져 있어요</string>
     <string name="settings_notifications_blocked_body">Android에서 이 앱의 알림을 차단하고 있어서, 아래에서 무엇을 선택해도 알림이 표시되지 않아요.</string>
     <string name="settings_open_notification_settings">알림 설정 열기</string>
-    <string name="settings_video">동영상</string>
     <string name="settings_autoplay_videos">동영상 자동 재생</string>
     <string name="settings_autoplay_videos_summary">화면에 보이는 동안 소리 없이 동영상을 재생해요.</string>
     <string name="settings_colors">색상</string>
@@ -305,7 +304,6 @@
     <string name="translation_info_open_source_title">오픈소스</string>
     <string name="translation_info_open_source">엔진은 Firefox에 들어 있는 오픈소스 번역기 Bergamot이고, Firefox의 언어 모델을 사용해요. 라이선스는 오픈소스 라이선스에서 볼 수 있어요.</string>
     <string name="settings_translation">번역</string>
-    <string name="settings_translation_summary">언어, 자동 번역, 다운로드</string>
     <string name="translation_settings_target">번역할 언어</string>
     <string name="translation_settings_target_app">앱과 같게 (%1$s)</string>
     <string name="translation_settings_unsupported">이 기기는 아직 %1$s(으)로 번역할 수 없어요. 다른 언어를 고르세요.</string>
@@ -557,7 +555,6 @@
     <string name="share_profile_image_failed">이미지를 만들지 못했어요. 다시 시도해 주세요.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">피드 필터</string>
-    <string name="feed_filters_summary">노트와 리더에서 리포스트와 뮤트한 단어를 숨깁니다</string>
     <string name="feed_filters_explainer">이 필터는 이 앱에서 보이는 내용만 바꿉니다. 사이트나 다른 사람에게는 아무것도 전송되지 않습니다.</string>
     <string name="feed_filters_hide_reposts">리포스트 숨기기</string>
     <string name="feed_filters_hide_reposts_summary">팔로우하는 계정이 직접 쓴 게시물만 보여 주고, 공유한 게시물은 보여 주지 않습니다</string>
@@ -572,4 +569,17 @@
         <item quantity="other">새 게시물 %1$d개</item>
     </plurals>
     <string name="feed_caught_up">모두 확인했습니다</string>
+    <string name="settings_site_summary">색상, 차단, 민감한 미디어, Bluesky</string>
+    <string name="settings_all_sites">모든 사이트</string>
+    <string name="settings_notifications_all_on">모두 켜짐</string>
+    <string name="settings_notifications_some_on">%2$d개 중 %1$d개 켜짐</string>
+    <string name="settings_notifications_off">꺼짐</string>
+    <string name="settings_notifications_android_off">Android에서 꺼짐</string>
+    <string name="feed_filters_status_none">숨긴 항목 없음</string>
+    <string name="feed_filters_status_reposts">리포스트 숨김</string>
+    <string name="settings_translation_status">번역할 언어: %1$s</string>
+    <string name="settings_translation_status_automatic">번역할 언어: %1$s · 자동</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="other">뮤트한 단어 %1$d개</item>
+    </plurals>
 </resources>

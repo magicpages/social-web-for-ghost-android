@@ -223,7 +223,6 @@
     <string name="settings_notifications_blocked_title">Thông báo hệ thống đang tắt</string>
     <string name="settings_notifications_blocked_body">Android đang chặn thông báo của ứng dụng này, nên sẽ không có thông báo nào dù bạn chọn gì bên dưới.</string>
     <string name="settings_open_notification_settings">Mở cài đặt thông báo</string>
-    <string name="settings_video">Video</string>
     <string name="settings_autoplay_videos">Tự động phát video</string>
     <string name="settings_autoplay_videos_summary">Phát video không có âm thanh khi video hiện trên màn hình.</string>
     <string name="settings_colors">Màu sắc</string>
@@ -305,7 +304,6 @@
     <string name="translation_info_open_source_title">Mã nguồn mở</string>
     <string name="translation_info_open_source">Công cụ dịch là Bergamot, trình dịch mã nguồn mở được tích hợp trong Firefox, cùng các mô hình ngôn ngữ của Firefox. Giấy phép của nó nằm trong mục Giấy phép mã nguồn mở.</string>
     <string name="settings_translation">Dịch</string>
-    <string name="settings_translation_summary">Ngôn ngữ, dịch tự động và tệp đã tải</string>
     <string name="translation_settings_target">Dịch sang</string>
     <string name="translation_settings_target_app">Giống ứng dụng (%1$s)</string>
     <string name="translation_settings_unsupported">Thiết bị chưa thể dịch sang %1$s. Hãy chọn ngôn ngữ khác.</string>
@@ -557,7 +555,6 @@
     <string name="share_profile_image_failed">Không thể tạo ảnh. Hãy thử lại.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Bộ lọc bảng tin</string>
-    <string name="feed_filters_summary">Ẩn bài đăng lại và từ đã tắt tiếng trong Ghi chú và Trình đọc</string>
     <string name="feed_filters_explainer">Các bộ lọc chỉ thay đổi những gì bạn thấy trong ứng dụng này. Không có gì được gửi đến trang web của bạn hay bất kỳ ai khác.</string>
     <string name="feed_filters_hide_reposts">Ẩn bài đăng lại</string>
     <string name="feed_filters_hide_reposts_summary">Chỉ hiện bài của các tài khoản bạn theo dõi, không hiện những gì họ chia sẻ lại</string>
@@ -572,4 +569,17 @@
         <item quantity="other">%1$d bài mới</item>
     </plurals>
     <string name="feed_caught_up">Bạn đã xem hết rồi</string>
+    <string name="settings_site_summary">Màu sắc, chặn, nội dung nhạy cảm và Bluesky</string>
+    <string name="settings_all_sites">Tất cả trang</string>
+    <string name="settings_notifications_all_on">Bật tất cả</string>
+    <string name="settings_notifications_some_on">Đã bật %1$d/%2$d</string>
+    <string name="settings_notifications_off">Tắt</string>
+    <string name="settings_notifications_android_off">Đã tắt trong Android</string>
+    <string name="feed_filters_status_none">Không ẩn gì</string>
+    <string name="feed_filters_status_reposts">Đã ẩn bài đăng lại</string>
+    <string name="settings_translation_status">Dịch sang: %1$s</string>
+    <string name="settings_translation_status_automatic">Dịch sang: %1$s · tự động</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="other">%1$d từ bị ẩn</item>
+    </plurals>
 </resources>

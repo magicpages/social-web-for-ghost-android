@@ -244,7 +244,6 @@
     <string name="settings_notifications_blocked_title">Systémová oznámení jsou vypnutá</string>
     <string name="settings_notifications_blocked_body">Android blokuje oznámení této aplikace, takže se nic nezobrazí, ať vyberete cokoli níže.</string>
     <string name="settings_open_notification_settings">Otevřít nastavení oznámení</string>
-    <string name="settings_video">Video</string>
     <string name="settings_autoplay_videos">Automatické přehrávání videí</string>
     <string name="settings_autoplay_videos_summary">Přehrávat videa bez zvuku, když jsou na obrazovce.</string>
     <string name="settings_colors">Barvy</string>
@@ -326,7 +325,6 @@
     <string name="translation_info_open_source_title">Otevřený zdrojový kód</string>
     <string name="translation_info_open_source">Engine je Bergamot, open-source překladač zabudovaný ve Firefoxu, s jazykovými modely Firefoxu. Jeho licence je v části Open-source licence.</string>
     <string name="settings_translation">Překlad</string>
-    <string name="settings_translation_summary">Jazyk, automatický překlad a stažené soubory</string>
     <string name="translation_settings_target">Překládat do</string>
     <string name="translation_settings_target_app">Stejně jako aplikace (%1$s)</string>
     <string name="translation_settings_unsupported">Zařízení zatím neumí překládat do jazyka %1$s. Vyber jiný jazyk.</string>
@@ -593,7 +591,6 @@
     <string name="share_profile_image_failed">Obrázek se nepodařilo vytvořit. Zkuste to znovu.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">Filtry kanálu</string>
-    <string name="feed_filters_summary">Skrýt sdílení a ztlumená slova v Poznámkách a Čtečce</string>
     <string name="feed_filters_explainer">Filtry mění jen to, co vidíte v této aplikaci. Nic se neposílá na váš web ani nikomu jinému.</string>
     <string name="feed_filters_hide_reposts">Skrýt sdílení</string>
     <string name="feed_filters_hide_reposts_summary">Zobrazovat jen příspěvky sledovaných účtů, ne to, co sdílejí</string>
@@ -611,4 +608,20 @@
         <item quantity="other">%1$d nových příspěvků</item>
     </plurals>
     <string name="feed_caught_up">Máte vše přečteno</string>
+    <string name="settings_site_summary">Barvy, blokování, citlivá média a Bluesky</string>
+    <string name="settings_all_sites">Všechny weby</string>
+    <string name="settings_notifications_all_on">Vše zapnuto</string>
+    <string name="settings_notifications_some_on">Zapnuto %1$d z %2$d</string>
+    <string name="settings_notifications_off">Vypnuto</string>
+    <string name="settings_notifications_android_off">Vypnuto v Androidu</string>
+    <string name="feed_filters_status_none">Nic není skryto</string>
+    <string name="feed_filters_status_reposts">Sdílení skryta</string>
+    <string name="settings_translation_status">Překládat do: %1$s</string>
+    <string name="settings_translation_status_automatic">Překládat do: %1$s · automaticky</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="one">%1$d ztlumené slovo</item>
+        <item quantity="few">%1$d ztlumená slova</item>
+        <item quantity="many">%1$d ztlumeného slova</item>
+        <item quantity="other">%1$d ztlumených slov</item>
+    </plurals>
 </resources>

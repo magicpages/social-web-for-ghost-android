@@ -132,8 +132,7 @@ class TranslationSettingsViewModel @Inject constructor(
     val canTranslate: Boolean get() = translator.targetLanguage != null
 
     /** The app's own language, by name, for "Same as the app". */
-    val appLanguageName: String
-        get() = Locale.getDefault().let { name(Locale.Builder().setLanguage(it.language).setScript(it.script).build().toLanguageTag()) }
+    val appLanguageName: String get() = languageName(appLanguageTag())
 
     /** Every language Firefox's models translate into, Chinese once per script, sorted by name. */
     val targetChoices: List<TargetChoice> by lazy {
@@ -143,7 +142,7 @@ class TranslationSettingsViewModel @Inject constructor(
                 "no" -> listOf("nb")
                 else -> listOf(code)
             }
-        }.map { TargetChoice(it, name(it)) }.sortedBy { it.name }
+        }.map { TargetChoice(it, languageName(it)) }.sortedBy { it.name }
     }
 
     /** The languages that can be marked as read, by [translationLanguage] code, without the target. */
@@ -152,7 +151,7 @@ class TranslationSettingsViewModel @Inject constructor(
             .map { TargetChoice(it, capitalized(translator.languageName(it))) }
             .sortedBy { it.name }
 
-    fun targetName(tag: String?): String = if (tag == null) appLanguageName else name(tag)
+    fun targetName(tag: String?): String = if (tag == null) appLanguageName else languageName(tag)
 
     fun readableName(code: String): String = capitalized(translator.languageName(code))
 
@@ -218,12 +217,17 @@ class TranslationSettingsViewModel @Inject constructor(
         }
     }
 
-    private fun name(tag: String): String {
-        val locale = Locale.getDefault()
-        return capitalized(Locale.forLanguageTag(tag).getDisplayName(locale).ifBlank { tag })
-    }
-
     private fun capitalized(name: String): String = name.replaceFirstChar { it.titlecase(Locale.getDefault()) }
+}
+
+/** The app's own language as a BCP 47 tag, with its script ("zh-Hant"). */
+internal fun appLanguageTag(): String =
+    Locale.getDefault().let { Locale.Builder().setLanguage(it.language).setScript(it.script).build().toLanguageTag() }
+
+/** The language [tag] names, in the app's language, starting with a capital as a list item does. */
+internal fun languageName(tag: String): String {
+    val locale = Locale.getDefault()
+    return Locale.forLanguageTag(tag).getDisplayName(locale).ifBlank { tag }.replaceFirstChar { it.titlecase(locale) }
 }
 
 /**
@@ -613,26 +617,6 @@ private fun ChoiceRow(label: String, selected: Boolean, radio: Boolean, onClick:
                 if (radio) this.selected = selected else toggleableState = ToggleableState(selected)
             }
             .clickable(onClick = onClick),
-    )
-}
-
-@Composable
-private fun SectionTitle(@StringRes title: Int, modifier: Modifier = Modifier) {
-    Text(
-        stringResource(title),
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.primary,
-        modifier = modifier.padding(vertical = 4.dp),
-    )
-}
-
-@Composable
-private fun Explainer(text: String) {
-    Text(
-        text,
-        style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier.padding(vertical = 4.dp),
     )
 }
 

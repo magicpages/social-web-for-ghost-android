@@ -258,7 +258,6 @@
     <string name="settings_notifications_blocked_title">إشعارات النظام متوقفة</string>
     <string name="settings_notifications_blocked_body">يحظر Android إشعارات هذا التطبيق، لذا لن يظهر أي إشعار مهما اخترت أدناه.</string>
     <string name="settings_open_notification_settings">فتح إعدادات الإشعارات</string>
-    <string name="settings_video">الفيديو</string>
     <string name="settings_autoplay_videos">تشغيل الفيديو تلقائيًا</string>
     <string name="settings_autoplay_videos_summary">تشغيل الفيديوهات بدون صوت أثناء ظهورها على الشاشة.</string>
     <string name="settings_colors">الألوان</string>
@@ -340,7 +339,6 @@
     <string name="translation_info_open_source_title">مفتوح المصدر</string>
     <string name="translation_info_open_source">المحرك هو Bergamot، المترجم مفتوح المصدر المدمج في Firefox، مع نماذج اللغة الخاصة بـ Firefox. تجد ترخيصه في تراخيص المصادر المفتوحة.</string>
     <string name="settings_translation">الترجمة</string>
-    <string name="settings_translation_summary">اللغة والترجمة التلقائية والتنزيلات</string>
     <string name="translation_settings_target">الترجمة إلى</string>
     <string name="translation_settings_target_app">مثل التطبيق (%1$s)</string>
     <string name="translation_settings_unsupported">لا يستطيع الجهاز الترجمة إلى %1$s بعد. اختر لغة أخرى.</string>
@@ -617,7 +615,6 @@
     <string name="share_profile_image_failed">تعذّر إنشاء الصورة. حاول مرة أخرى.</string>
     <!-- feed filters and new posts -->
     <string name="feed_filters_title">عوامل تصفية الخلاصة</string>
-    <string name="feed_filters_summary">إخفاء إعادات النشر والكلمات المكتومة في الملاحظات والقارئ</string>
     <string name="feed_filters_explainer">تغيّر هذه العوامل ما تراه في هذا التطبيق فقط. لا يُرسل شيء إلى موقعك أو إلى أي شخص آخر.</string>
     <string name="feed_filters_hide_reposts">إخفاء إعادات النشر</string>
     <string name="feed_filters_hide_reposts_summary">اعرض منشورات الحسابات التي تتابعها فقط، دون ما تعيد نشره</string>
@@ -637,4 +634,22 @@
         <item quantity="other">%1$d منشور جديد</item>
     </plurals>
     <string name="feed_caught_up">لقد لحقت بكل شيء</string>
+    <string name="settings_site_summary">الألوان والحظر والوسائط الحساسة وBluesky</string>
+    <string name="settings_all_sites">كل المواقع</string>
+    <string name="settings_notifications_all_on">كلها مفعّلة</string>
+    <string name="settings_notifications_some_on">%1$d من %2$d مفعّلة</string>
+    <string name="settings_notifications_off">متوقفة</string>
+    <string name="settings_notifications_android_off">متوقفة في Android</string>
+    <string name="feed_filters_status_none">لا شيء مخفي</string>
+    <string name="feed_filters_status_reposts">إعادات النشر مخفية</string>
+    <string name="settings_translation_status">الترجمة إلى: %1$s</string>
+    <string name="settings_translation_status_automatic">الترجمة إلى: %1$s · تلقائيًا</string>
+    <plurals name="feed_filters_status_words">
+        <item quantity="zero">لا كلمات مكتومة</item>
+        <item quantity="one">كلمة مكتومة واحدة</item>
+        <item quantity="two">كلمتان مكتومتان</item>
+        <item quantity="few">%1$d كلمات مكتومة</item>
+        <item quantity="many">%1$d كلمة مكتومة</item>
+        <item quantity="other">%1$d كلمة مكتومة</item>
+    </plurals>
 </resources>
