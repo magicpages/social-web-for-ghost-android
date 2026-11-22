@@ -41,6 +41,7 @@ import co.magicpages.socialweb.data.account.AccountStore
 import co.magicpages.socialweb.data.account.StoredAccount
 import co.magicpages.socialweb.data.activitypub.Notification
 import co.magicpages.socialweb.data.feed.FeedFilter
+import co.magicpages.socialweb.data.fediverse.FediverseExplore
 import co.magicpages.socialweb.data.settings.AppSettings
 import co.magicpages.socialweb.data.translation.TranslationSettings
 import co.magicpages.socialweb.ui.components.AppIcons
@@ -69,6 +70,7 @@ class SettingsViewModel @Inject constructor(
     val autoplayVideos: StateFlow<Boolean> = settings.autoplayVideos
     val announcedTypes: StateFlow<Set<Notification.Type>> = settings.announcedTypes
     val feedFilter: StateFlow<FeedFilter> = settings.feedFilter
+    val fediverseExplore: StateFlow<FediverseExplore> = settings.fediverseExplore
 
     /** The language posts are translated into, as a BCP 47 tag; null for the app's language. */
     val translationTarget: StateFlow<String?> = translation.target
@@ -95,19 +97,30 @@ fun SettingsScreen(
     onAddSite: () -> Unit,
     onOpenNotifications: () -> Unit,
     onOpenTranslation: () -> Unit,
+    onOpenFediverse: () -> Unit,
     onOpenAbout: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     var showFeedFilters by rememberSaveable { mutableStateOf(false) }
     Box(Modifier.fillMaxSize()) {
-        SettingsContent(onBack, onOpenSite, onAddSite, onOpenNotifications, onOpenTranslation, onOpenAbout, onOpenFeedFilters = { showFeedFilters = true }, viewModel = viewModel)
+        SettingsContent(
+            onBack,
+            onOpenSite,
+            onAddSite,
+            onOpenNotifications,
+            onOpenTranslation,
+            onOpenFediverse,
+            onOpenAbout,
+            onOpenFeedFilters = { showFeedFilters = true },
+            viewModel = viewModel,
+        )
         if (showFeedFilters) FeedFiltersScreen(onBack = { showFeedFilters = false })
     }
 }
 
 /**
  * A row for each signed-in site, which opens what that site keeps for itself, then what applies to
- * every site, each row saying how it's set, then About.
+ * every site, each row saying how it's set, then experiments and About.
  */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -117,6 +130,7 @@ private fun SettingsContent(
     onAddSite: () -> Unit,
     onOpenNotifications: () -> Unit,
     onOpenTranslation: () -> Unit,
+    onOpenFediverse: () -> Unit,
     onOpenAbout: () -> Unit,
     onOpenFeedFilters: () -> Unit,
     viewModel: SettingsViewModel,
@@ -128,6 +142,7 @@ private fun SettingsContent(
     val feedFilter by viewModel.feedFilter.collectAsStateWithLifecycle()
     val target by viewModel.translationTarget.collectAsStateWithLifecycle()
     val automatic by viewModel.translatesAutomatically.collectAsStateWithLifecycle()
+    val fediverse by viewModel.fediverseExplore.collectAsStateWithLifecycle()
     LifecycleResumeEffect(viewModel) {
         viewModel.refreshNotificationsAllowed()
         onPauseOrDispose {}
@@ -221,6 +236,21 @@ private fun SettingsContent(
                     )
                 }
                 Explainer(stringResource(R.string.settings_all_sites_footer))
+
+                SectionTitle(R.string.settings_experimental, Modifier.padding(top = 16.dp))
+                LinkRow(
+                    title = stringResource(R.string.settings_fediverse_explore),
+                    status = if (fediverse.enabled) {
+                        stringResource(R.string.explore_fediverse_trending, fediverse.server)
+                    } else {
+                        stringResource(R.string.settings_fediverse_explore_off)
+                    },
+                    onClick = onOpenFediverse,
+                    index = 0,
+                    count = 1,
+                    icon = AppIcons.Public,
+                )
+                Explainer(stringResource(R.string.settings_experimental_footer))
 
                 LinkRow(
                     title = stringResource(R.string.settings_about),

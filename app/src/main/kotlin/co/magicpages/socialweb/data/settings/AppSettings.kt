@@ -5,6 +5,8 @@ import androidx.core.content.edit
 import co.magicpages.socialweb.data.activitypub.Notification
 import co.magicpages.socialweb.data.feed.FeedFilter
 import co.magicpages.socialweb.data.feed.SavedFeedPosition
+import co.magicpages.socialweb.data.fediverse.FediverseExplore
+import co.magicpages.socialweb.data.fediverse.normalizeServer
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -127,6 +129,27 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         _reader.value = settings
     }
 
+    private val _fediverseExplore = MutableStateFlow(
+        FediverseExplore(
+            enabled = prefs.getBoolean(KeyFediverseEnabled, false),
+            server = prefs.getString(KeyFediverseServer, null)?.let(::normalizeServer) ?: FediverseExplore.DefaultServer,
+        ),
+    )
+
+    /** The experimental Explore source: trending posts from a public server. Device-wide: it applies to every account. */
+    val fediverseExplore: StateFlow<FediverseExplore> = _fediverseExplore.asStateFlow()
+
+    fun setFediverseExploreEnabled(enabled: Boolean) {
+        prefs.edit { putBoolean(KeyFediverseEnabled, enabled) }
+        _fediverseExplore.value = _fediverseExplore.value.copy(enabled = enabled)
+    }
+
+    /** [server] is a bare host, as [normalizeServer] gives it. */
+    fun setFediverseServer(server: String) {
+        prefs.edit { putString(KeyFediverseServer, server) }
+        _fediverseExplore.value = _fediverseExplore.value.copy(server = server)
+    }
+
     private fun readAccountColors(): Map<String, AccountColors> =
         prefs.all.keys.filter { it.startsWith(KeyColorSource) }.associate { key ->
             val id = key.removePrefix(KeyColorSource)
@@ -149,5 +172,7 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         private const val KeyReaderBackground = "reader_background"
         private const val KeyReaderFont = "reader_font"
         private const val KeyReaderTextSize = "reader_text_size"
+        private const val KeyFediverseEnabled = "fediverse_explore"
+        private const val KeyFediverseServer = "fediverse_explore_server"
     }
 }

@@ -93,6 +93,7 @@ import co.magicpages.socialweb.ui.posts.LocalShowSensitiveMedia
 import co.magicpages.socialweb.ui.profile.FollowsScreen
 import co.magicpages.socialweb.ui.profile.ProfileScreen
 import co.magicpages.socialweb.ui.settings.BlockedScreen
+import co.magicpages.socialweb.ui.settings.FediverseSettingsScreen
 import co.magicpages.socialweb.ui.settings.NotificationSettingsScreen
 import co.magicpages.socialweb.ui.settings.SettingsScreen
 import co.magicpages.socialweb.ui.settings.SiteSettingsScreen
@@ -168,6 +169,10 @@ data object TranslationInfoKey : NavKey
 /** Translation settings: the language to translate into, translating on its own, downloads. */
 @Serializable
 data object TranslationSettingsKey : NavKey
+
+/** The experimental Fediverse source of Explore: on or off, and which server's trends it shows. */
+@Serializable
+data object FediverseSettingsKey : NavKey
 
 /** The welcome pages, as a tour from About. */
 @Serializable
@@ -444,6 +449,7 @@ private fun SignedInNavigation(
                             onOpenProfile = { openFromList(ProfileKey(it.handle, it.url)) },
                             onOpenOwnProfile = { openFromList(ProfileKey("me")) },
                             onOpenSettings = { push(SettingsKey) },
+                            onOpenFediverseSettings = { push(FediverseSettingsKey) },
                             onAddSite = { push(AddSiteKey()) },
                             onSwitchAccount = onSwitchAccount,
                             onSignOut = onSignOut,
@@ -500,6 +506,7 @@ private fun SignedInNavigation(
                         onAddSite = { push(AddSiteKey()) },
                         onOpenNotifications = { push(NotificationSettingsKey) },
                         onOpenTranslation = { push(TranslationSettingsKey) },
+                        onOpenFediverse = { push(FediverseSettingsKey) },
                         onOpenAbout = { push(AboutKey) },
                     )
                 }
@@ -519,6 +526,7 @@ private fun SignedInNavigation(
                 entry<TranslationSettingsKey>(clazzContentKey = contentKey) {
                     TranslationSettingsScreen(onBack = back, onOpenInfo = { push(TranslationInfoKey) })
                 }
+                entry<FediverseSettingsKey>(clazzContentKey = contentKey) { FediverseSettingsScreen(onBack = back) }
                 entry<AboutKey>(clazzContentKey = contentKey) {
                     AboutScreen(
                         onBack = back,

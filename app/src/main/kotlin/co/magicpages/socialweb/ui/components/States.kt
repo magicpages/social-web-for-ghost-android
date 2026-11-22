@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import co.magicpages.socialweb.R
 import co.magicpages.socialweb.data.activitypub.SocialWebException
+import co.magicpages.socialweb.data.fediverse.PublicServerException
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.ui.theme.Gutter
 
@@ -36,6 +37,11 @@ fun errorMessage(error: Throwable): String = when (error) {
         stringResource(R.string.error_unexpected, error.status)
     }
     is GhostException.Unexpected -> stringResource(R.string.error_unexpected, error.status)
+    is PublicServerException -> when {
+        error.notPublic -> stringResource(R.string.fediverse_not_public, error.server)
+        error.status in 200..299 -> stringResource(R.string.error_unreadable)
+        else -> stringResource(R.string.error_unexpected, error.status)
+    }
     else -> error.message.orEmpty()
 }
 

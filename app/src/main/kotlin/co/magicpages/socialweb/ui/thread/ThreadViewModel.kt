@@ -423,9 +423,21 @@ class ThreadViewModel @AssistedInject constructor(
 
     private suspend fun fetch(id: String, next: String?): ReplyChain {
         val account = accounts.account.first() ?: throw GhostException.Unauthorized(null)
-        return activityPub.replies(account.site, account.credential, id, next).also { chain ->
-            interactions.reconcile(chain.allPosts())
+        val chain = try {
+            activityPub.replies(account.site, account.credential, id, next)
+        } catch (e: SocialWebException) {
+            // Threads are only served for posts the service has stored. One from elsewhere (Fediverse explore)
+            // is stored by looking it up; a post that's gone fails that too and stays "no longer available".
+            if (e.status != 404 || next != null) throw e
+            val stored = try {
+                activityPub.post(account.site, account.credential, id)
+            } catch (_: SocialWebException) {
+                throw e
+            }
+            postId = stored.id
+            activityPub.replies(account.site, account.credential, stored.id, next = null)
         }
+        return chain.also { interactions.reconcile(it.allPosts()) }
     }
 
     private suspend fun ReplyChain.toContent(withArticle: Boolean) = withContext(Dispatchers.Default) {

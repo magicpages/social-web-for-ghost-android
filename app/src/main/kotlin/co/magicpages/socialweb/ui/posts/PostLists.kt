@@ -10,6 +10,7 @@ import co.magicpages.socialweb.data.activitypub.Moderation
 import co.magicpages.socialweb.data.activitypub.PostInteractions
 import co.magicpages.socialweb.data.activitypub.PostsPage
 import co.magicpages.socialweb.data.activitypub.SocialWebException
+import co.magicpages.socialweb.data.fediverse.PublicServerException
 import co.magicpages.socialweb.data.ghost.GhostException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,6 +54,8 @@ class PostsPagingSource(
     } catch (e: GhostException) {
         LoadResult.Error(e)
     } catch (e: SocialWebException) {
+        LoadResult.Error(e)
+    } catch (e: PublicServerException) {
         LoadResult.Error(e)
     }
 

@@ -106,6 +106,7 @@ fun HomeScreen(
     onOpenProfile: (Author) -> Unit,
     onOpenOwnProfile: () -> Unit,
     onOpenSettings: () -> Unit,
+    onOpenFediverseSettings: () -> Unit,
     onAddSite: () -> Unit,
     onSwitchAccount: (accountId: String) -> Unit,
     onSignOut: () -> Unit,
@@ -205,6 +206,7 @@ fun HomeScreen(
                         onSignOut = onSignOut,
                         accountMenu = accountMenu,
                         onCover = { cover = it },
+                        onChangeFediverseSource = onOpenFediverseSettings,
                     )
                     HomeTab.Notifications -> NotificationsScreen(
                         account = account,

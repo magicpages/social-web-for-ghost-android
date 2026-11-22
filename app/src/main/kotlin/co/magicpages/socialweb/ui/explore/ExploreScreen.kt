@@ -1,6 +1,7 @@
 package co.magicpages.socialweb.ui.explore
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.ToggleButton
 import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.material3.ToggleButtonShapes
@@ -67,6 +69,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -129,6 +132,7 @@ fun ExploreScreen(
     onSignOut: () -> Unit,
     accountMenu: @Composable () -> Unit,
     onCover: (cover: (@Composable () -> Unit)?) -> Unit,
+    onChangeFediverseSource: () -> Unit,
 ) {
     val viewModel = hiltViewModel<ExploreViewModel>()
     val suggestions = viewModel.suggestions.collectAsLazyPagingItems()
@@ -138,7 +142,17 @@ fun ExploreScreen(
     val following by followingState
     val topicPosts = viewModel.topicPosts.collectAsLazyPagingItems()
     val topicView by viewModel.topicView.collectAsStateWithLifecycle()
-    val showPosts = selected != null && topicView == TopicView.Posts
+    val fediverse by viewModel.fediverse.collectAsStateWithLifecycle()
+    val fediverseSelected by viewModel.fediverseSelected.collectAsStateWithLifecycle()
+    val fediverseView by viewModel.fediverseView.collectAsStateWithLifecycle()
+    val fediverseTag by viewModel.fediverseTag.collectAsStateWithLifecycle()
+    val fediversePosts = viewModel.fediversePosts.collectAsLazyPagingItems()
+    val trendingTags by viewModel.trendingTags.collectAsStateWithLifecycle()
+    val showTags = fediverseSelected && fediverseView == FediverseView.Hashtags
+    val showFediversePosts = fediverseSelected && !showTags
+    val showPosts = !fediverseSelected && selected != null && topicView == TopicView.Posts
+    // The list on screen: a topic's or the server's posts, or else the suggested accounts. The hashtags aren't paged.
+    val posts = if (showFediversePosts) fediversePosts else topicPosts
     val callbacks = remember(viewModel) {
         PostCallbacks(
             open = onOpenPost,
@@ -169,7 +183,7 @@ fun ExploreScreen(
         if (listState.canScrollBackward) listState.scrollToTop() else searchBarState.animateToExpanded()
     }
     // Each list starts at its own top, not at the offset the other one was left at.
-    LaunchedEffect(selected, showPosts) { listState.scrollToItem(0) }
+    LaunchedEffect(selected, showPosts, fediverseSelected, fediverseView, fediverseTag) { listState.scrollToItem(0) }
 
     // Beside the tabs the profile opens in the detail pane, which a back gesture closes without ever hiding
     // this tab, so there is nothing to cover and the search simply closes.
@@ -264,14 +278,39 @@ fun ExploreScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 item(key = "for-you") {
-                    TopicChip(stringResource(R.string.explore_for_you), selected = selected == null, onClick = { viewModel.select(null) })
+                    TopicChip(stringResource(R.string.explore_for_you), selected = selected == null && !fediverseSelected, onClick = { viewModel.select(null) })
+                }
+                if (fediverse.enabled) {
+                    item(key = "fediverse") {
+                        TopicChip(fediverse.server, selected = fediverseSelected, onClick = viewModel::selectFediverse)
+                    }
                 }
                 items(topics, key = { it.slug }) { topic ->
-                    TopicChip(topic.name, selected = selected == topic.slug, onClick = { viewModel.select(topic.slug) })
+                    TopicChip(topic.name, selected = !fediverseSelected && selected == topic.slug, onClick = { viewModel.select(topic.slug) })
                 }
             }
 
-            if (selected != null) {
+            if (fediverseSelected) {
+                SingleChoiceSegmentedButtonRow(
+                    Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(horizontal = Gutter).padding(bottom = 8.dp),
+                ) {
+                    FediverseView.entries.forEachIndexed { index, view ->
+                        SegmentedButton(
+                            selected = fediverseView == view,
+                            onClick = { viewModel.setFediverseView(view) },
+                            shape = SegmentedButtonDefaults.itemShape(index, FediverseView.entries.size),
+                        ) {
+                            Text(stringResource(if (view == FediverseView.Posts) R.string.explore_topic_posts else R.string.explore_hashtags))
+                        }
+                    }
+                }
+                FediverseSourceBar(
+                    server = fediverse.server,
+                    tag = fediverseTag.takeIf { !showTags },
+                    onClearTag = { viewModel.openTag(null) },
+                    onChange = onChangeFediverseSource,
+                )
+            } else if (selected != null) {
                 SingleChoiceSegmentedButtonRow(
                     Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(horizontal = Gutter).padding(bottom = 8.dp),
                 ) {
@@ -287,18 +326,22 @@ fun ExploreScreen(
                 }
             }
 
-            val refresh = if (showPosts) topicPosts.loadState.refresh else suggestions.loadState.refresh
-            val itemCount = if (showPosts) topicPosts.itemCount else suggestions.itemCount
-            val refreshing = refresh is LoadState.Loading && itemCount > 0
+            val listsPosts = showPosts || showFediversePosts
+            val refresh = if (listsPosts) posts.loadState.refresh else suggestions.loadState.refresh
+            val itemCount = if (listsPosts) posts.itemCount else suggestions.itemCount
+            // The hashtags have nothing to keep on screen while they load again: their loading state replaces them.
+            val refreshing = !showTags && refresh is LoadState.Loading && itemCount > 0
             val pullState = rememberPullToRefreshState()
             PullToRefreshBox(
                 isRefreshing = refreshing,
                 onRefresh = {
-                    if (showPosts) {
-                        topicPosts.refresh()
-                    } else {
-                        viewModel.refresh()
-                        suggestions.refresh()
+                    when {
+                        showTags -> viewModel.refreshTags()
+                        listsPosts -> posts.refresh()
+                        else -> {
+                            viewModel.refresh()
+                            suggestions.refresh()
+                        }
                     }
                 },
                 state = pullState,
@@ -308,22 +351,36 @@ fun ExploreScreen(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 when {
+                    showTags -> TrendingTags(
+                        state = trendingTags,
+                        server = fediverse.server,
+                        listState = listState,
+                        onOpenTag = viewModel::openTag,
+                        onRetry = viewModel::refreshTags,
+                    )
                     refresh is LoadState.Error && itemCount == 0 -> FullScreenError(
                         errorMessage(refresh.error),
-                        onRetry = if (showPosts) topicPosts::retry else suggestions::retry,
+                        onRetry = if (listsPosts) posts::retry else suggestions::retry,
                         sessionEnded = refresh.error is GhostException.Unauthorized,
                         onSignOut = onSignOut,
                     )
                     refresh is LoadState.Loading && itemCount == 0 -> CenteredLoading()
-                    refresh is LoadState.NotLoading && itemCount == 0 ->
-                        ScrollableMessage(stringResource(if (showPosts) R.string.explore_topic_posts_empty else R.string.explore_empty))
-                    showPosts -> LazyColumn(
+                    refresh is LoadState.NotLoading && itemCount == 0 -> ScrollableMessage(
+                        when {
+                            showFediversePosts && fediverseTag != null ->
+                                stringResource(R.string.explore_fediverse_tag_empty, fediverseTag.orEmpty(), fediverse.server)
+                            showFediversePosts -> stringResource(R.string.explore_fediverse_posts_empty, fediverse.server)
+                            showPosts -> stringResource(R.string.explore_topic_posts_empty)
+                            else -> stringResource(R.string.explore_empty)
+                        },
+                    )
+                    listsPosts -> LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         state = listState,
                         contentPadding = PaddingValues(vertical = 8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        feedItems(topicPosts, callbacks)
+                        feedItems(posts, callbacks)
                     }
                     else -> LazyColumn(
                         modifier = Modifier.fillMaxSize(),
@@ -510,6 +567,66 @@ private fun TopicChip(label: String, selected: Boolean, onClick: () -> Unit) {
             null
         },
     )
+}
+
+/** Where the Fediverse source's posts come from, with a way back from a hashtag and a way to pick another server. */
+@Composable
+private fun FediverseSourceBar(server: String, tag: String?, onClearTag: () -> Unit, onChange: () -> Unit) {
+    Row(
+        Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(start = Gutter, end = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            if (tag != null) stringResource(R.string.explore_fediverse_tag, tag, server) else stringResource(R.string.explore_fediverse_trending, server),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f),
+        )
+        if (tag != null) {
+            IconButton(onClick = onClearTag) {
+                Icon(AppIcons.Close, contentDescription = stringResource(R.string.explore_fediverse_back))
+            }
+        }
+        TextButton(onClick = onChange) { Text(stringResource(R.string.explore_fediverse_change)) }
+    }
+}
+
+/** The server's trending hashtags; each opens the posts under it. */
+@Composable
+private fun TrendingTags(
+    state: TagsUiState,
+    server: String,
+    listState: LazyListState,
+    onOpenTag: (String) -> Unit,
+    onRetry: () -> Unit,
+) {
+    when (state) {
+        TagsUiState.Loading -> CenteredLoading()
+        is TagsUiState.Failed -> FullScreenError(errorMessage(state.error), onRetry = onRetry)
+        is TagsUiState.Loaded -> if (state.tags.isEmpty()) {
+            ScrollableMessage(stringResource(R.string.explore_fediverse_tags_empty, server))
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                state = listState,
+                contentPadding = PaddingValues(bottom = 8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                items(state.tags, key = { it.name.lowercase() }, contentType = { "tag" }) { tag ->
+                    ListItem(
+                        headlineContent = { Text("#${tag.name}", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                        supportingContent = { Text(pluralStringResource(R.plurals.explore_hashtag_people, tag.people, tag.people)) },
+                        modifier = Modifier
+                            .widthIn(max = MaxContentWidth)
+                            .fillMaxWidth()
+                            .clickable { onOpenTag(tag.name) },
+                    )
+                }
+            }
+        }
+    }
 }
 
 /** A post found by its web address: who wrote it and how it starts. Opens its thread. */
