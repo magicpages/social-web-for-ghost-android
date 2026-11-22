@@ -73,6 +73,9 @@ class HomeViewModel @Inject constructor(
 
     val unreadCount: StateFlow<Int> = unread.count
 
+    /** The other accounts' unread counts, for the account menu. */
+    val otherUnreadCounts: StateFlow<Map<String, Int>> = unread.others
+
     /** The tab a tapped system notification asks for; null once [HomeScreen] has switched to it. */
     val requestedTab: StateFlow<HomeTabRequest?> = tabRequests.pending
 
@@ -80,6 +83,11 @@ class HomeViewModel @Inject constructor(
 
     fun refreshUnread() {
         viewModelScope.launch { unread.refresh() }
+        refreshOtherUnread()
+    }
+
+    fun refreshOtherUnread() {
+        viewModelScope.launch { unread.refreshOthers() }
     }
 }
 
@@ -106,6 +114,7 @@ fun HomeScreen(
     val account by viewModel.account.collectAsStateWithLifecycle()
     val accounts by viewModel.accounts.collectAsStateWithLifecycle()
     val unread by viewModel.unreadCount.collectAsStateWithLifecycle()
+    val otherUnread by viewModel.otherUnreadCounts.collectAsStateWithLifecycle()
     var tab by rememberSaveable { mutableStateOf(HomeTab.Notes) }
     val requestedTab by viewModel.requestedTab.collectAsStateWithLifecycle()
     LaunchedEffect(requestedTab, accountId) {
@@ -133,6 +142,8 @@ fun HomeScreen(
             AccountMenu(
                 active = it,
                 accounts = accounts,
+                otherUnread = otherUnread,
+                onOpen = viewModel::refreshOtherUnread,
                 onSwitch = onSwitchAccount,
                 onAddSite = onAddSite,
                 onOpenProfile = onOpenOwnProfile,
