@@ -634,12 +634,10 @@
     <string name="fediverse_not_public">%1$s pokazuje to tylko swoim członkom.</string>
     <string name="explore_hashtags">Hashtagi</string>
     <string name="explore_fediverse_trending">Popularne na %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s na %2$s</string>
     <string name="explore_fediverse_change">Zmień</string>
     <string name="explore_fediverse_back">Wróć do popularnych wpisów</string>
     <string name="explore_fediverse_posts_empty">Na %1$s nic nie jest teraz popularne.</string>
     <string name="explore_fediverse_tag_empty">Na %2$s nie ma jeszcze publicznych wpisów z #%1$s.</string>
-    <string name="explore_fediverse_tags_empty">Na %1$s żadne hashtagi nie są teraz popularne.</string>
     <string name="settings_experimental">Eksperymentalne</string>
     <string name="settings_experimental_footer">Mogą się zmienić lub zniknąć. Tylko na tym telefonie.</string>
     <string name="settings_fediverse_explore">Odkrywaj fediwersum</string>
@@ -669,5 +667,19 @@
         <item quantity="few">%1$d osoby o tym mówią</item>
         <item quantity="many">%1$d osób o tym mówi</item>
         <item quantity="other">%1$d osoby o tym mówi</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Teraz popularne na tym serwerze. Polubienia, odpowiedzi i obserwowanie nadal idą przez twoją witrynę.</string>
+    <string name="explore_fediverse_stories">Artykuły, które udostępniają ludzie</string>
+    <string name="explore_fediverse_tag_note">Najnowsze wpisy najpierw, z %1$s</string>
+    <string name="explore_fediverse_sheet_title">Odkrywaj inny serwer</string>
+    <string name="explore_fediverse_sheet_note">Każdy serwer pokazuje, co udostępniają jego ludzie. Wybierz według tematu lub języka albo wpisz dowolny inny.</string>
+    <string name="explore_fediverse_settings">Ustawienia Odkrywaj fediwersum</string>
+    <string name="explore_fediverse_pick_server">Wybierz inny serwer</string>
+    <string name="fediverse_rate_limited">%1$s dostaje teraz za dużo zapytań. Spróbuj ponownie za minutę.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">Udostępniła %1$d osoba</item>
+        <item quantity="few">Udostępniły %1$d osoby</item>
+        <item quantity="many">Udostępniło %1$d osób</item>
+        <item quantity="other">Udostępniło %1$d osoby</item>
     </plurals>
 </resources>

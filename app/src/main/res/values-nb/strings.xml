@@ -606,12 +606,10 @@
     <string name="fediverse_not_public">%1$s viser dette bare til sine egne medlemmer.</string>
     <string name="explore_hashtags">Emneknagger</string>
     <string name="explore_fediverse_trending">Populært på %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s på %2$s</string>
     <string name="explore_fediverse_change">Bytt</string>
     <string name="explore_fediverse_back">Tilbake til populære innlegg</string>
     <string name="explore_fediverse_posts_empty">Ingenting er populært på %1$s akkurat nå.</string>
     <string name="explore_fediverse_tag_empty">Ingen offentlige innlegg med #%1$s på %2$s ennå.</string>
-    <string name="explore_fediverse_tags_empty">Ingen emneknagger er populære på %1$s akkurat nå.</string>
     <string name="settings_experimental">Eksperimentelt</string>
     <string name="settings_experimental_footer">Kan endres eller forsvinne. Gjelder bare på denne telefonen.</string>
     <string name="settings_fediverse_explore">Utforsk fediverset</string>
@@ -639,5 +637,17 @@
     <plurals name="explore_hashtag_people">
         <item quantity="one">%1$d person snakker om det</item>
         <item quantity="other">%1$d personer snakker om det</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Populært der akkurat nå. Liker, svar og følging går fortsatt gjennom nettstedet ditt.</string>
+    <string name="explore_fediverse_stories">Saker folk deler</string>
+    <string name="explore_fediverse_tag_note">Nyeste innlegg først, fra %1$s</string>
+    <string name="explore_fediverse_sheet_title">Utforsk en annen server</string>
+    <string name="explore_fediverse_sheet_note">Hver server viser hva dens egne folk deler. Velg en etter tema eller språk, eller skriv inn en annen.</string>
+    <string name="explore_fediverse_settings">Innstillinger for Utforsk fediverset</string>
+    <string name="explore_fediverse_pick_server">Velg en annen server</string>
+    <string name="fediverse_rate_limited">%1$s får for mange forespørsler akkurat nå. Prøv igjen om et minutt.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">%1$d person har delt dette</item>
+        <item quantity="other">%1$d personer har delt dette</item>
     </plurals>
 </resources>

@@ -592,12 +592,10 @@
     <string name="fediverse_not_public">%1$s 只向自己的成員顯示這些內容。</string>
     <string name="explore_hashtags">主題標籤</string>
     <string name="explore_fediverse_trending">%1$s 上的熱門</string>
-    <string name="explore_fediverse_tag">%2$s 上的 #%1$s</string>
     <string name="explore_fediverse_change">變更</string>
     <string name="explore_fediverse_back">返回熱門嘟文</string>
     <string name="explore_fediverse_posts_empty">%1$s 上目前沒有熱門內容。</string>
     <string name="explore_fediverse_tag_empty">%2$s 上還沒有帶 #%1$s 的公開嘟文。</string>
-    <string name="explore_fediverse_tags_empty">%1$s 上目前沒有熱門主題標籤。</string>
     <string name="settings_experimental">實驗性功能</string>
     <string name="settings_experimental_footer">這些功能可能會變更或移除，只在這支手機上生效。</string>
     <string name="settings_fediverse_explore">探索聯邦宇宙</string>
@@ -624,5 +622,16 @@
     <string name="fediverse_topic_indie_web">獨立網路</string>
     <plurals name="explore_hashtag_people">
         <item quantity="other">%1$d 人在討論</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">那裡目前的熱門內容。按讚、回覆和追蹤仍然透過你的網站進行。</string>
+    <string name="explore_fediverse_stories">大家在分享的報導</string>
+    <string name="explore_fediverse_tag_note">最新嘟文在前，來自 %1$s</string>
+    <string name="explore_fediverse_sheet_title">探索其他伺服器</string>
+    <string name="explore_fediverse_sheet_note">每個伺服器顯示的是它自己的使用者在分享的內容。依主題或語言選擇一個，或輸入任何其他伺服器。</string>
+    <string name="explore_fediverse_settings">探索聯邦宇宙設定</string>
+    <string name="explore_fediverse_pick_server">選擇其他伺服器</string>
+    <string name="fediverse_rate_limited">%1$s 目前收到的要求過多。請一分鐘後再試。</string>
+    <plurals name="explore_story_people">
+        <item quantity="other">%1$d 人分享了</item>
     </plurals>
 </resources>

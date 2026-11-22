@@ -592,12 +592,10 @@
     <string name="fediverse_not_public">%1$s 只向自己的成员显示这些内容。</string>
     <string name="explore_hashtags">话题标签</string>
     <string name="explore_fediverse_trending">%1$s 上的热门</string>
-    <string name="explore_fediverse_tag">%2$s 上的 #%1$s</string>
     <string name="explore_fediverse_change">更改</string>
     <string name="explore_fediverse_back">返回热门嘟文</string>
     <string name="explore_fediverse_posts_empty">%1$s 上目前没有热门内容。</string>
     <string name="explore_fediverse_tag_empty">%2$s 上还没有带 #%1$s 的公开嘟文。</string>
-    <string name="explore_fediverse_tags_empty">%1$s 上目前没有热门话题标签。</string>
     <string name="settings_experimental">实验性功能</string>
     <string name="settings_experimental_footer">这些功能可能会改变或移除，仅在这部手机上生效。</string>
     <string name="settings_fediverse_explore">探索联邦宇宙</string>
@@ -624,5 +622,16 @@
     <string name="fediverse_topic_indie_web">独立网络</string>
     <plurals name="explore_hashtag_people">
         <item quantity="other">%1$d 人在讨论</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">那里当前的热门内容。点赞、回复和关注仍然通过你的网站进行。</string>
+    <string name="explore_fediverse_stories">大家在分享的报道</string>
+    <string name="explore_fediverse_tag_note">最新嘟文在前，来自 %1$s</string>
+    <string name="explore_fediverse_sheet_title">探索其他服务器</string>
+    <string name="explore_fediverse_sheet_note">每个服务器显示的是它自己的用户在分享的内容。按主题或语言选择一个，或输入任意其他服务器。</string>
+    <string name="explore_fediverse_settings">探索联邦宇宙设置</string>
+    <string name="explore_fediverse_pick_server">选择其他服务器</string>
+    <string name="fediverse_rate_limited">%1$s 目前收到的请求过多。请一分钟后再试。</string>
+    <plurals name="explore_story_people">
+        <item quantity="other">%1$d 人分享了</item>
     </plurals>
 </resources>

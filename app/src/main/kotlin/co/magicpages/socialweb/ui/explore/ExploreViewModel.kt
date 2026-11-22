@@ -24,7 +24,7 @@ import androidx.paging.map
 import co.magicpages.socialweb.data.fediverse.FediverseClient
 import co.magicpages.socialweb.data.fediverse.FediverseExplore
 import co.magicpages.socialweb.data.fediverse.PublicServerException
-import co.magicpages.socialweb.data.fediverse.TrendingTag
+import co.magicpages.socialweb.data.fediverse.FediverseTrends
 import co.magicpages.socialweb.data.settings.AppSettings
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.merge
@@ -52,7 +52,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
@@ -83,19 +86,6 @@ sealed interface SearchUiState {
 
 /** What a selected topic lists. */
 enum class TopicView { Posts, People }
-
-/** What the Fediverse source lists: the server's trending posts (or a hashtag's), or its trending hashtags. */
-enum class FediverseView { Posts, Hashtags }
-
-/** The trending hashtags of the Fediverse source. */
-@Immutable
-sealed interface TagsUiState {
-    data object Loading : TagsUiState
-
-    data class Loaded(val tags: List<TrendingTag>) : TagsUiState
-
-    data class Failed(val error: Throwable) : TagsUiState
-}
 
 /**
  * The Explore tab: searching for accounts, and the accounts the service suggests, either for the
@@ -141,15 +131,16 @@ class ExploreViewModel @Inject constructor(
     val fediverseSelected: StateFlow<Boolean> = combine(_fediverseSelected, fediverse) { selected, source -> selected && source.enabled }
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
-    private val _fediverseView = MutableStateFlow(FediverseView.Posts)
-    val fediverseView: StateFlow<FediverseView> = _fediverseView.asStateFlow()
+    // Set the first time the chip is picked: nothing is asked of the server before then, and its lists
+    // are kept from then on, so coming back from another chip doesn't load them again.
+    private val fediverseVisited = MutableStateFlow(false)
 
     private val _fediverseTag = MutableStateFlow<String?>(null)
 
     /** The hashtag whose posts the Fediverse source lists instead of its trending posts. */
     val fediverseTag: StateFlow<String?> = _fediverseTag.asStateFlow()
 
-    private val tagRefreshes = MutableStateFlow(0)
+    private val trendRefreshes = MutableStateFlow(0)
 
     private val _following = MutableStateFlow<Map<String, Boolean>>(emptyMap())
 
@@ -176,6 +167,20 @@ class ExploreViewModel @Inject constructor(
                 _selected.value = null
                 _topicView.value = TopicView.Posts
                 _following.value = emptyMap()
+                _fediverseSelected.value = false
+                _fediverseTag.value = null
+            }
+            .launchIn(viewModelScope)
+        // A hashtag belongs to the server it was opened on; switching the source off leaves no chip to come back to.
+        fediverse
+            .map { it.server }
+            .distinctUntilChanged()
+            .drop(1)
+            .onEach { _fediverseTag.value = null }
+            .launchIn(viewModelScope)
+        fediverse
+            .filter { !it.enabled }
+            .onEach {
                 _fediverseSelected.value = false
                 _fediverseTag.value = null
             }
@@ -295,11 +300,12 @@ class ExploreViewModel @Inject constructor(
 
     // Posts from a public server, as its own API gives them. Whether the user liked or reposted one isn't known
     // there, so its pages leave the site's overrides alone; a like made here still shows through them.
-    val fediversePosts: Flow<PagingData<FeedItem>> = combine(active, fediverseSelected, fediverse, _fediverseTag) { _, selected, source, tag ->
-        Triple(selected, source.server, tag)
+    val fediversePosts: Flow<PagingData<FeedItem>> = combine(active, fediverseVisited, fediverse, _fediverseTag) { _, visited, source, tag ->
+        Triple(visited && source.enabled, source.server, tag)
     }
-        .flatMapLatest { (selected, server, tag) ->
-            if (!selected) {
+        .distinctUntilChanged()
+        .flatMapLatest { (visited, server, tag) ->
+            if (!visited) {
                 flowOf(PagingData.empty<FeedItem>())
             } else {
                 Pager(PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false)) {
@@ -321,26 +327,36 @@ class ExploreViewModel @Inject constructor(
             if (hidden.isEmpty) data else data.filter { !it.isHiddenBy(hidden) }
         }
 
-    /** The server's trending hashtags, asked for once the Hashtags view is open. */
-    val trendingTags: StateFlow<TagsUiState> = combine(fediverseSelected, _fediverseView, fediverse, tagRefreshes) { selected, view, source, _ ->
-        source.server.takeIf { selected && view == FediverseView.Hashtags }
+    /**
+     * The server's trending hashtags and stories, shown above its posts; null while they load. Each
+     * list on its own is a nice-to-have: one the server won't give is left empty, and only the posts
+     * say why when the server can't be read at all.
+     */
+    val fediverseTrends: StateFlow<FediverseTrends?> = combine(fediverseVisited, fediverse, trendRefreshes) { visited, source, _ ->
+        source.server.takeIf { visited && source.enabled }
     }
         .flatMapLatest { server ->
             flow {
                 if (server == null) return@flow
-                emit(TagsUiState.Loading)
+                emit(null)
                 emit(
-                    try {
-                        TagsUiState.Loaded(fediverseClient.trendingTags(server))
-                    } catch (e: GhostException) {
-                        TagsUiState.Failed(e)
-                    } catch (e: PublicServerException) {
-                        TagsUiState.Failed(e)
+                    coroutineScope {
+                        val tags = async { readOrEmpty { fediverseClient.trendingTags(server) } }
+                        val links = async { readOrEmpty { fediverseClient.trendingLinks(server) } }
+                        FediverseTrends(tags.await(), links.await())
                     },
                 )
             }
         }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), TagsUiState.Loading)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    private suspend fun <T> readOrEmpty(read: suspend () -> List<T>): List<T> = try {
+        read()
+    } catch (_: GhostException) {
+        emptyList()
+    } catch (_: PublicServerException) {
+        emptyList()
+    }
 
     /** Sets what the search field holds; the service is asked once typing pauses. */
     fun setQuery(text: String) {
@@ -381,6 +397,7 @@ class ExploreViewModel @Inject constructor(
     /** Picks the topic to list, or "For you" for null. */
     fun select(slug: String?) {
         _fediverseSelected.value = false
+        _fediverseTag.value = null
         if (_selected.value == slug) return
         // The list that loads next is the service's current word on who is followed.
         _following.value = emptyMap()
@@ -390,19 +407,16 @@ class ExploreViewModel @Inject constructor(
     /** Picks the Fediverse source, on its trending posts. */
     fun selectFediverse() {
         _fediverseSelected.value = true
-    }
-
-    fun setFediverseView(view: FediverseView) {
-        _fediverseView.value = view
+        fediverseVisited.value = true
     }
 
     /** Lists the posts under #[tag], or the trending posts again for null. */
     fun openTag(tag: String?) {
-        _fediverseTag.value = tag
-        if (tag != null) _fediverseView.value = FediverseView.Posts
+        _fediverseTag.value = tag?.removePrefix("#")
     }
 
-    fun refreshTags() = tagRefreshes.update { it + 1 }
+    /** Asks the server for its hashtags and stories again; its posts reload through their own refresh. */
+    fun refreshTrends() = trendRefreshes.update { it + 1 }
 
     /** Switches a selected topic between its posts and its people. */
     fun setTopicView(view: TopicView) {

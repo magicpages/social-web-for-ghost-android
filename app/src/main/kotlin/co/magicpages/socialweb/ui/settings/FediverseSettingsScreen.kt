@@ -1,6 +1,7 @@
 package co.magicpages.socialweb.ui.settings
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -137,19 +138,8 @@ class FediverseSettingsViewModel @Inject constructor(
 @Composable
 fun FediverseSettingsScreen(onBack: () -> Unit, viewModel: FediverseSettingsViewModel = hiltViewModel()) {
     val fediverse by viewModel.fediverse.collectAsStateWithLifecycle()
-    val check by viewModel.check.collectAsStateWithLifecycle()
-    var draft by rememberSaveable { mutableStateOf("") }
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    val useDraft = { if (draft.isNotBlank() && check !is ServerCheck.Checking) viewModel.useTyped(draft) }
-    // The typed server answered and is the one in use now: the field is done with it.
-    LaunchedEffect(fediverse.server) {
-        if (normalizeServer(draft) == fediverse.server) draft = ""
-    }
     val scroll = rememberScrollState()
-    // Only the field itself scrolls into view above the keyboard; the reason it was refused is under it.
-    LaunchedEffect(check) {
-        if (check is ServerCheck.Failed) scroll.animateScrollTo(scroll.maxValue)
-    }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -187,59 +177,111 @@ fun FediverseSettingsScreen(onBack: () -> Unit, viewModel: FediverseSettingsView
                 )
                 if (!fediverse.enabled) return@Column
 
-                SectionTitle(R.string.fediverse_settings_topics, Modifier.padding(top = 16.dp))
-                SegmentedGroup {
-                    TopicServers.forEachIndexed { index, server ->
-                        ServerRow(server.host, stringResource(server.topic.label), fediverse.server == server.host, { viewModel.choose(server.host) }, index, TopicServers.size)
-                    }
-                }
-
-                SectionTitle(R.string.fediverse_settings_languages, Modifier.padding(top = 16.dp))
-                SegmentedGroup {
-                    LanguageServers.forEachIndexed { index, server ->
-                        ServerRow(server.host, languageName(server.language), fediverse.server == server.host, { viewModel.choose(server.host) }, index, LanguageServers.size)
-                    }
-                }
-
-                SectionTitle(R.string.fediverse_settings_other, Modifier.padding(top = 16.dp))
-                val typedIn = TopicServers.none { it.host == fediverse.server } && LanguageServers.none { it.host == fediverse.server }
-                if (typedIn) {
-                    ServerRow(fediverse.server, stringResource(R.string.fediverse_settings_custom), selected = true, onClick = {}, index = 0, count = 1)
-                }
-                Row(
-                    Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    OutlinedTextField(
-                        value = draft,
-                        onValueChange = { draft = it },
-                        label = { Text(stringResource(R.string.fediverse_settings_other_label)) },
-                        placeholder = { Text("example.social") },
-                        singleLine = true,
-                        isError = check is ServerCheck.Failed,
-                        supportingText = (check as? ServerCheck.Failed)?.let { failed -> { Text(failureMessage(failed)) } },
-                        keyboardOptions = KeyboardOptions(
-                            capitalization = KeyboardCapitalization.None,
-                            autoCorrectEnabled = false,
-                            keyboardType = KeyboardType.Uri,
-                            imeAction = ImeAction.Done,
-                        ),
-                        keyboardActions = KeyboardActions(onDone = { useDraft() }),
-                        modifier = Modifier.weight(1f),
-                    )
-                    Button(onClick = { useDraft() }, enabled = draft.isNotBlank() && check !is ServerCheck.Checking) {
-                        if (check is ServerCheck.Checking) {
-                            CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-                        } else {
-                            Text(stringResource(R.string.fediverse_settings_use))
-                        }
-                    }
-                }
+                FediverseServerPicker(scroll, viewModel = viewModel)
                 Explainer(stringResource(R.string.fediverse_settings_privacy, fediverse.server))
             }
         }
     }
+}
+
+/**
+ * The servers Explore can show, by topic and by language, and a field for any other; picking one
+ * switches to it. Settings and Explore's server sheet both show it, inside a column that scrolls
+ * with [scroll], so a refused address scrolls into view with its reason. [onChosen] runs once the
+ * pick is the server in use.
+ */
+@Composable
+fun FediverseServerPicker(scroll: ScrollState, onChosen: () -> Unit = {}, viewModel: FediverseSettingsViewModel = hiltViewModel()) {
+    val fediverse by viewModel.fediverse.collectAsStateWithLifecycle()
+    val check by viewModel.check.collectAsStateWithLifecycle()
+    var draft by rememberSaveable { mutableStateOf("") }
+    // Set while a typed server is checked, so the end of that check, and only that, finishes the pick.
+    var awaitingTyped by rememberSaveable { mutableStateOf(false) }
+    val useDraft = {
+        if (draft.isNotBlank() && check !is ServerCheck.Checking) {
+            awaitingTyped = true
+            viewModel.useTyped(draft)
+        }
+    }
+    val choose = { host: String ->
+        awaitingTyped = false
+        viewModel.choose(host)
+        onChosen()
+    }
+    LaunchedEffect(check) {
+        when (check) {
+            is ServerCheck.Failed -> {
+                awaitingTyped = false
+                // Only the field itself scrolls into view above the keyboard; the reason it was refused is under it.
+                scroll.animateScrollTo(scroll.maxValue)
+            }
+            // The typed server answered and is the one in use now, even when it already was: the field is done with it.
+            ServerCheck.Idle -> if (awaitingTyped) {
+                awaitingTyped = false
+                draft = ""
+                onChosen()
+            }
+            is ServerCheck.Checking -> Unit
+        }
+    }
+
+    SectionTitle(R.string.fediverse_settings_topics, Modifier.padding(top = 16.dp))
+    SegmentedGroup {
+        TopicServers.forEachIndexed { index, server ->
+            ServerRow(server.host, stringResource(server.topic.label), fediverse.server == server.host, { choose(server.host) }, index, TopicServers.size)
+        }
+    }
+
+    SectionTitle(R.string.fediverse_settings_languages, Modifier.padding(top = 16.dp))
+    SegmentedGroup {
+        LanguageServers.forEachIndexed { index, server ->
+            ServerRow(server.host, languageName(server.language), fediverse.server == server.host, { choose(server.host) }, index, LanguageServers.size)
+        }
+    }
+
+    SectionTitle(R.string.fediverse_settings_other, Modifier.padding(top = 16.dp))
+    val typedIn = TopicServers.none { it.host == fediverse.server } && LanguageServers.none { it.host == fediverse.server }
+    if (typedIn) {
+        ServerRow(fediverse.server, stringResource(R.string.fediverse_settings_custom), selected = true, onClick = {}, index = 0, count = 1)
+    }
+    Row(
+        Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        OutlinedTextField(
+            value = draft,
+            onValueChange = { draft = it },
+            label = { Text(stringResource(R.string.fediverse_settings_other_label)) },
+            placeholder = { Text("example.social") },
+            singleLine = true,
+            isError = check is ServerCheck.Failed,
+            supportingText = (check as? ServerCheck.Failed)?.let { failed -> { Text(failureMessage(failed)) } },
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.None,
+                autoCorrectEnabled = false,
+                keyboardType = KeyboardType.Uri,
+                imeAction = ImeAction.Done,
+            ),
+            keyboardActions = KeyboardActions(onDone = { useDraft() }),
+            modifier = Modifier.weight(1f),
+        )
+        Button(onClick = { useDraft() }, enabled = draft.isNotBlank() && check !is ServerCheck.Checking) {
+            if (check is ServerCheck.Checking) {
+                CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
+            } else {
+                Text(stringResource(R.string.fediverse_settings_use))
+            }
+        }
+    }
+}
+
+/** What Explore calls [server]: its topic or language when it's one the app suggests, else the host itself. */
+@Composable
+fun fediverseServerLabel(server: String): String {
+    TopicServers.firstOrNull { it.host == server }?.let { return stringResource(it.topic.label) }
+    LanguageServers.firstOrNull { it.host == server }?.let { return languageName(it.language) }
+    return server
 }
 
 @Composable

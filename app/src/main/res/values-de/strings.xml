@@ -606,12 +606,10 @@
     <string name="fediverse_not_public">%1$s zeigt das nur den eigenen Mitgliedern.</string>
     <string name="explore_hashtags">Hashtags</string>
     <string name="explore_fediverse_trending">Im Trend auf %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s auf %2$s</string>
     <string name="explore_fediverse_change">Ändern</string>
     <string name="explore_fediverse_back">Zurück zu den Trends</string>
     <string name="explore_fediverse_posts_empty">Auf %1$s ist gerade nichts im Trend.</string>
     <string name="explore_fediverse_tag_empty">Noch keine öffentlichen Beiträge mit #%1$s auf %2$s.</string>
-    <string name="explore_fediverse_tags_empty">Auf %1$s sind gerade keine Hashtags im Trend.</string>
     <string name="settings_experimental">Experimentell</string>
     <string name="settings_experimental_footer">Kann sich ändern oder wieder verschwinden. Gilt nur auf diesem Handy.</string>
     <string name="settings_fediverse_explore">Fediverse entdecken</string>
@@ -639,5 +637,17 @@
     <plurals name="explore_hashtag_people">
         <item quantity="one">%1$d Person spricht darüber</item>
         <item quantity="other">%1$d Personen sprechen darüber</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Dort gerade beliebt. Likes, Antworten und Folgen laufen weiterhin über deine Website.</string>
+    <string name="explore_fediverse_stories">Geschichten, die gerade geteilt werden</string>
+    <string name="explore_fediverse_tag_note">Neueste Beiträge zuerst, von %1$s</string>
+    <string name="explore_fediverse_sheet_title">Einen anderen Server entdecken</string>
+    <string name="explore_fediverse_sheet_note">Jeder Server zeigt, was seine eigenen Leute teilen. Wähle einen nach Thema oder Sprache oder gib einen anderen ein.</string>
+    <string name="explore_fediverse_settings">Einstellungen für „Fediverse entdecken“</string>
+    <string name="explore_fediverse_pick_server">Anderen Server wählen</string>
+    <string name="fediverse_rate_limited">%1$s bekommt gerade zu viele Anfragen. Versuch es in einer Minute noch mal.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">%1$d Person hat das geteilt</item>
+        <item quantity="other">%1$d Personen haben das geteilt</item>
     </plurals>
 </resources>

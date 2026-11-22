@@ -592,12 +592,10 @@
     <string name="fediverse_not_public">%1$s에서는 회원에게만 보여 줘요.</string>
     <string name="explore_hashtags">해시태그</string>
     <string name="explore_fediverse_trending">%1$s의 트렌드</string>
-    <string name="explore_fediverse_tag">%2$s의 #%1$s</string>
     <string name="explore_fediverse_change">변경</string>
     <string name="explore_fediverse_back">트렌드 게시물로 돌아가기</string>
     <string name="explore_fediverse_posts_empty">지금 %1$s에는 트렌드가 없어요.</string>
     <string name="explore_fediverse_tag_empty">%2$s에 #%1$s 공개 게시물이 아직 없어요.</string>
-    <string name="explore_fediverse_tags_empty">지금 %1$s에는 트렌드 해시태그가 없어요.</string>
     <string name="settings_experimental">실험실</string>
     <string name="settings_experimental_footer">바뀌거나 사라질 수 있어요. 이 휴대폰에만 적용돼요.</string>
     <string name="settings_fediverse_explore">연합우주 탐색</string>
@@ -624,5 +622,16 @@
     <string name="fediverse_topic_indie_web">독립 웹</string>
     <plurals name="explore_hashtag_people">
         <item quantity="other">%1$d명이 이야기하는 중</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">지금 그곳에서 인기 있는 것들이에요. 좋아요, 답글, 팔로우는 여전히 내 사이트를 통해 이루어져요.</string>
+    <string name="explore_fediverse_stories">사람들이 공유하는 이야기</string>
+    <string name="explore_fediverse_tag_note">최신 게시물 먼저, %1$s에서</string>
+    <string name="explore_fediverse_sheet_title">다른 서버 탐색</string>
+    <string name="explore_fediverse_sheet_note">각 서버는 그 서버 사람들이 공유하는 것을 보여 줘요. 주제나 언어로 고르거나 다른 서버를 입력하세요.</string>
+    <string name="explore_fediverse_settings">연합우주 탐색 설정</string>
+    <string name="explore_fediverse_pick_server">다른 서버 고르기</string>
+    <string name="fediverse_rate_limited">%1$s에 지금 요청이 너무 많아요. 1분 뒤에 다시 시도하세요.</string>
+    <plurals name="explore_story_people">
+        <item quantity="other">%1$d명이 공유함</item>
     </plurals>
 </resources>

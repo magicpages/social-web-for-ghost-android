@@ -634,12 +634,10 @@
     <string name="fediverse_not_public">%1$s to ukazuje jen svým členům.</string>
     <string name="explore_hashtags">Hashtagy</string>
     <string name="explore_fediverse_trending">Populární na %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s na %2$s</string>
     <string name="explore_fediverse_change">Změnit</string>
     <string name="explore_fediverse_back">Zpět na populární příspěvky</string>
     <string name="explore_fediverse_posts_empty">Na %1$s teď nic populárního není.</string>
     <string name="explore_fediverse_tag_empty">Na %2$s zatím nejsou veřejné příspěvky s #%1$s.</string>
-    <string name="explore_fediverse_tags_empty">Na %1$s teď nejsou populární žádné hashtagy.</string>
     <string name="settings_experimental">Experimentální</string>
     <string name="settings_experimental_footer">Může se změnit nebo zmizet. Platí jen v tomto telefonu.</string>
     <string name="settings_fediverse_explore">Objevovat fediverse</string>
@@ -669,5 +667,19 @@
         <item quantity="few">Mluví o tom %1$d lidé</item>
         <item quantity="many">Mluví o tom %1$d člověka</item>
         <item quantity="other">Mluví o tom %1$d lidí</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Tam teď populární. Lajky, odpovědi a sledování dál jdou přes tvůj web.</string>
+    <string name="explore_fediverse_stories">Články, které lidé sdílejí</string>
+    <string name="explore_fediverse_tag_note">Nejnovější příspěvky první, z %1$s</string>
+    <string name="explore_fediverse_sheet_title">Objevovat jiný server</string>
+    <string name="explore_fediverse_sheet_note">Každý server ukazuje, co sdílejí jeho vlastní lidé. Vyber si podle tématu nebo jazyka, nebo napiš jakýkoli jiný.</string>
+    <string name="explore_fediverse_settings">Nastavení Objevovat fediverse</string>
+    <string name="explore_fediverse_pick_server">Vybrat jiný server</string>
+    <string name="fediverse_rate_limited">%1$s teď dostává příliš mnoho požadavků. Zkus to znovu za minutu.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">Sdílel %1$d člověk</item>
+        <item quantity="few">Sdíleli %1$d lidé</item>
+        <item quantity="many">Sdílelo %1$d člověka</item>
+        <item quantity="other">Sdílelo %1$d lidí</item>
     </plurals>
 </resources>

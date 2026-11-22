@@ -15,6 +15,8 @@ import co.magicpages.socialweb.data.activitypub.PostMetadata
 import co.magicpages.socialweb.data.activitypub.ReplyChain
 import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.article.ArticleWriters
+import co.magicpages.socialweb.data.fediverse.ExploredPosts
+import co.magicpages.socialweb.data.fediverse.OriginThreads
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.data.ghost.ghostSiteUrl
 import co.magicpages.socialweb.data.member.FullArticle
@@ -71,6 +73,8 @@ data class ThreadContent(
     val articleAccess: ArticleAccess? = null,
     /** Set while the posts above the topmost ancestor load. */
     val loadingEarlier: Boolean = false,
+    /** The ids of the direct replies in [replies] that only the post's home server reported; they come after the site's own. */
+    val fromOrigin: Set<String> = emptySet(),
 ) {
     fun with(overrides: Map<String, Interactions>) = copy(
         ancestors = ancestors.map { it.with(overrides) },
@@ -121,6 +125,47 @@ data class ThreadContent(
         if (kept.isEmpty() || kept.size == previous.ancestors.size) return this
         return copy(ancestors = kept + ancestors, hasEarlier = previous.hasEarlier)
     }
+
+    /** The content with the reply, like and repost counts [source] reports where they're higher than the ones here. */
+    fun withCounts(source: Post): ThreadContent {
+        val counted = post.post.withCountsOf(source)
+        return if (counted == post.post) this else copy(post = post.copy(post = counted))
+    }
+
+    /**
+     * The content with the replies [origin] (the post's home server) reported put after the ones the user's site
+     * has, replacing whatever it added before. The site's win: a reply it already has, in its replies or
+     * anywhere in their follow-ups, isn't added again, and the follow-ups it doesn't have of a reply it does are left out.
+     */
+    fun withOrigin(origin: List<ReplyGroup>): ThreadContent {
+        val own = replies.filter { it.reply.post.id !in fromOrigin }
+        val known = HashSet<String>()
+        known += post.post.id
+        ancestors.mapTo(known) { it.post.id }
+        for (group in own) {
+            known += group.reply.post.id
+            group.followUps.mapTo(known) { it.post.id }
+        }
+        val added = origin
+            .filter { it.reply.post.id !in known }
+            .map { group -> group.copy(followUps = group.followUps.filter { it.post.id !in known }) }
+        return copy(replies = own + added, fromOrigin = added.mapTo(HashSet()) { it.reply.post.id })
+    }
+
+    /**
+     * The content with the page of replies [page], which the user's site sent, after the ones it has sent so far
+     * and in front of the home server's. Those need [withOrigin] again, which also takes out the ones the page now has.
+     */
+    fun withPage(page: ThreadContent): ThreadContent {
+        val own = replies.filter { it.reply.post.id !in fromOrigin }
+        val known = own.mapTo(HashSet()) { it.reply.post.id }
+        return copy(
+            replies = own + page.replies.filter { it.reply.post.id !in known },
+            fromOrigin = emptySet(),
+            next = page.next,
+            appending = false,
+        )
+    }
 }
 
 sealed interface ThreadUiState {
@@ -141,6 +186,8 @@ class ThreadViewModel @AssistedInject constructor(
     private val articleWriters: ArticleWriters,
     private val memberSessions: MemberSessions,
     private val moderation: Moderation,
+    private val explored: ExploredPosts,
+    private val originThreads: OriginThreads,
 ) : ViewModel() {
     @AssistedFactory
     interface Factory {
@@ -190,6 +237,12 @@ class ThreadViewModel @AssistedInject constructor(
     private var parentJob: Job? = null
     private var earlierJob: Job? = null
     private var unlockJob: Job? = null
+    private var originJob: Job? = null
+
+    /** What the post's home server last said about the thread, kept so a refresh and the next pages show it before it answers again. */
+    private var origin: Origin? = null
+
+    private class Origin(val post: Post?, val replies: List<ReplyGroup>)
 
     /** The writers of the article, once looked up ([loadWriters]). */
     private var writers: PostMetadata? = null
@@ -221,14 +274,18 @@ class ThreadViewModel @AssistedInject constructor(
     private fun load(keepContent: Boolean = false) {
         loadJob?.cancel()
         earlierJob?.cancel()
+        originJob?.cancel()
         if (!keepContent) loaded.value = ThreadUiState.Loading
         loadJob = viewModelScope.launch {
             if (!resolveAddress()) return@launch
+            // Only a post Explore listed may be asked about on its own server; the user opted into that, not into the rest.
+            val originId = postId.takeIf { explored[it] != null }
             loaded.value = try {
                 val fresh = fetch(postId, next = null).toContent(withArticle = true)
                 // A refresh keeps the earlier posts the reader loaded; the fresh response alone holds only the last ten.
                 val previous = if (keepContent) (loaded.value as? ThreadUiState.Loaded)?.content else null
-                ThreadUiState.Loaded(withWriters(withUnlocked(withKnownParent(if (previous != null) fresh.keepingEarlier(previous) else fresh))))
+                val content = withWriters(withUnlocked(withKnownParent(if (previous != null) fresh.keepingEarlier(previous) else fresh)))
+                ThreadUiState.Loaded(withKnownOrigin(content))
             } catch (e: GhostException) {
                 if (keepContent) (loaded.value as? ThreadUiState.Loaded)?.copy(refreshing = false) ?: ThreadUiState.Failed(e)
                 else ThreadUiState.Failed(e)
@@ -237,6 +294,7 @@ class ThreadViewModel @AssistedInject constructor(
                 else ThreadUiState.Failed(e)
             }
             (loaded.value as? ThreadUiState.Loaded)?.content?.takeIf { it.mayMissParent }?.let { findParent(it.post.post.id) }
+            if (originId != null && loaded.value is ThreadUiState.Loaded) findOrigin(originId)
             unlockArticle()
             loadWriters()
         }
@@ -265,6 +323,29 @@ class ThreadViewModel @AssistedInject constructor(
     /** Applies a parent found earlier this session, so a refresh doesn't drop and re-add it. */
     private fun withKnownParent(content: ThreadContent): ThreadContent =
         if (content.mayMissParent) replyParents.cached(content.post.post.id)?.let(content::withParent) ?: content else content
+
+    /** Applies what the post's home server said earlier this session, so a refresh doesn't drop its replies until it answers again. */
+    private fun withKnownOrigin(content: ThreadContent): ThreadContent {
+        val known = origin ?: return content
+        return (known.post?.let(content::withCounts) ?: content).withOrigin(known.replies)
+    }
+
+    /** Asks the post's home server for its counts and replies alongside the thread, so showing the thread isn't held up by it. */
+    private fun findOrigin(id: String) {
+        originJob?.cancel()
+        originJob = viewModelScope.launch {
+            val found = originThreads.load(id) ?: return@launch
+            val replies = withContext(Dispatchers.Default) {
+                found.replies.map { child ->
+                    ReplyGroup(child.post.toFeedItem(), child.chain.map { it.toFeedItem() }, child.hasMore)
+                }
+            }
+            origin = Origin(found.post, replies)
+            loaded.update { state ->
+                if (state is ThreadUiState.Loaded) state.copy(content = withKnownOrigin(state.content)) else state
+            }
+        }
+    }
 
     /** Looks for the parent alongside the thread, so paging replies isn't held up by it. */
     private fun findParent(id: String) {
@@ -376,14 +457,7 @@ class ThreadViewModel @AssistedInject constructor(
                 if (page == null) {
                     state.copy(content = content.copy(appending = false, appendFailed = true))
                 } else {
-                    val known = content.replies.mapTo(HashSet()) { it.reply.post.id }
-                    state.copy(
-                        content = content.copy(
-                            replies = content.replies + page.replies.filter { it.reply.post.id !in known },
-                            next = page.next,
-                            appending = false,
-                        ),
-                    )
+                    state.copy(content = withKnownOrigin(content.withPage(page)))
                 }
             }
         }
@@ -437,7 +511,9 @@ class ThreadViewModel @AssistedInject constructor(
             postId = stored.id
             activityPub.replies(account.site, account.credential, stored.id, next = null)
         }
-        return chain.also { interactions.reconcile(it.allPosts()) }
+        // Explore's own count of the post, so the thread doesn't open on zeros where the list showed numbers.
+        val counted = (explored[id] ?: explored[chain.post.id])?.let { chain.copy(post = chain.post.withCountsOf(it)) } ?: chain
+        return counted.also { interactions.reconcile(it.allPosts()) }
     }
 
     private suspend fun ReplyChain.toContent(withArticle: Boolean) = withContext(Dispatchers.Default) {
@@ -460,3 +536,13 @@ class ThreadViewModel @AssistedInject constructor(
 
 private fun ReplyChain.allPosts(): List<Post> =
     ancestors.chain + post + children.flatMap { listOf(it.post) + it.chain }
+
+/**
+ * The post with the counts of [source] where those are higher, for a post the user's site knows by its likes and
+ * reposts of its own: another server's count includes them. The flags of whether the user liked or reposted stay.
+ */
+private fun Post.withCountsOf(source: Post) = copy(
+    likeCount = maxOf(likeCount, source.likeCount),
+    replyCount = maxOf(replyCount, source.replyCount),
+    repostCount = maxOf(repostCount, source.repostCount),
+)

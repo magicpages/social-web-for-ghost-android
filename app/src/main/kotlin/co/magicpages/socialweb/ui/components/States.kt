@@ -39,6 +39,7 @@ fun errorMessage(error: Throwable): String = when (error) {
     is GhostException.Unexpected -> stringResource(R.string.error_unexpected, error.status)
     is PublicServerException -> when {
         error.notPublic -> stringResource(R.string.fediverse_not_public, error.server)
+        error.status == 429 -> stringResource(R.string.fediverse_rate_limited, error.server)
         error.status in 200..299 -> stringResource(R.string.error_unreadable)
         else -> stringResource(R.string.error_unexpected, error.status)
     }

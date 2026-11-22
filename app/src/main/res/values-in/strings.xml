@@ -592,12 +592,10 @@
     <string name="fediverse_not_public">%1$s hanya menampilkan ini untuk anggotanya sendiri.</string>
     <string name="explore_hashtags">Tagar</string>
     <string name="explore_fediverse_trending">Tren di %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s di %2$s</string>
     <string name="explore_fediverse_change">Ubah</string>
     <string name="explore_fediverse_back">Kembali ke postingan tren</string>
     <string name="explore_fediverse_posts_empty">Tidak ada yang sedang tren di %1$s saat ini.</string>
     <string name="explore_fediverse_tag_empty">Belum ada postingan publik dengan #%1$s di %2$s.</string>
-    <string name="explore_fediverse_tags_empty">Tidak ada tagar yang sedang tren di %1$s saat ini.</string>
     <string name="settings_experimental">Eksperimental</string>
     <string name="settings_experimental_footer">Fitur ini bisa berubah atau hilang. Hanya di ponsel ini.</string>
     <string name="settings_fediverse_explore">Jelajahi fediverse</string>
@@ -624,5 +622,16 @@
     <string name="fediverse_topic_indie_web">Web independen</string>
     <plurals name="explore_hashtag_people">
         <item quantity="other">%1$d orang membicarakannya</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Sedang populer di sana. Suka, balasan, dan ikuti tetap lewat situsmu.</string>
+    <string name="explore_fediverse_stories">Cerita yang dibagikan orang</string>
+    <string name="explore_fediverse_tag_note">Postingan terbaru dulu, dari %1$s</string>
+    <string name="explore_fediverse_sheet_title">Jelajahi server lain</string>
+    <string name="explore_fediverse_sheet_note">Setiap server menampilkan apa yang dibagikan orang-orangnya sendiri. Pilih berdasarkan topik atau bahasa, atau ketik server lain.</string>
+    <string name="explore_fediverse_settings">Setelan Jelajahi fediverse</string>
+    <string name="explore_fediverse_pick_server">Pilih server lain</string>
+    <string name="fediverse_rate_limited">%1$s sedang menerima terlalu banyak permintaan. Coba lagi dalam semenit.</string>
+    <plurals name="explore_story_people">
+        <item quantity="other">%1$d orang membagikan ini</item>
     </plurals>
 </resources>

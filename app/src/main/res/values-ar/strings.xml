@@ -662,12 +662,10 @@
     <string name="fediverse_not_public">لا يعرض %1$s هذا إلا لأعضائه.</string>
     <string name="explore_hashtags">الوسوم</string>
     <string name="explore_fediverse_trending">الرائج على %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s على %2$s</string>
     <string name="explore_fediverse_change">تغيير</string>
     <string name="explore_fediverse_back">العودة إلى المنشورات الرائجة</string>
     <string name="explore_fediverse_posts_empty">لا شيء رائج على %1$s الآن.</string>
     <string name="explore_fediverse_tag_empty">لا توجد منشورات عامة بالوسم #%1$s على %2$s بعد.</string>
-    <string name="explore_fediverse_tags_empty">لا توجد وسوم رائجة على %1$s الآن.</string>
     <string name="settings_experimental">تجريبي</string>
     <string name="settings_experimental_footer">قد تتغير هذه الميزات أو تختفي. وهي على هذا الهاتف فقط.</string>
     <string name="settings_fediverse_explore">استكشاف الفديفرس</string>
@@ -699,5 +697,21 @@
         <item quantity="few">%1$d أشخاص يتحدثون</item>
         <item quantity="many">%1$d شخصًا يتحدثون</item>
         <item quantity="other">%1$d شخص يتحدثون</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">الرائج هناك الآن. الإعجابات والردود والمتابعات لا تزال تمر عبر موقعك.</string>
+    <string name="explore_fediverse_stories">قصص يشاركها الناس</string>
+    <string name="explore_fediverse_tag_note">الأحدث أولًا، من %1$s</string>
+    <string name="explore_fediverse_sheet_title">استكشاف خادم آخر</string>
+    <string name="explore_fediverse_sheet_note">يعرض كل خادم ما يشاركه أهله. اختر واحدًا حسب الموضوع أو اللغة، أو اكتب أي خادم آخر.</string>
+    <string name="explore_fediverse_settings">إعدادات استكشاف الفديفرس</string>
+    <string name="explore_fediverse_pick_server">اختيار خادم آخر</string>
+    <string name="fediverse_rate_limited">يتلقى %1$s طلبات كثيرة جدًا الآن. حاول مرة أخرى بعد دقيقة.</string>
+    <plurals name="explore_story_people">
+        <item quantity="zero">لم يشاركه أحد</item>
+        <item quantity="one">شاركه شخص واحد</item>
+        <item quantity="two">شاركه شخصان</item>
+        <item quantity="few">شاركه %1$d أشخاص</item>
+        <item quantity="many">شاركه %1$d شخصًا</item>
+        <item quantity="other">شاركه %1$d شخص</item>
     </plurals>
 </resources>

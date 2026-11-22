@@ -620,12 +620,10 @@
     <string name="fediverse_not_public">%1$s mostra questo solo ai suoi membri.</string>
     <string name="explore_hashtags">Hashtag</string>
     <string name="explore_fediverse_trending">Di tendenza su %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s su %2$s</string>
     <string name="explore_fediverse_change">Cambia</string>
     <string name="explore_fediverse_back">Torna ai post di tendenza</string>
     <string name="explore_fediverse_posts_empty">Niente di tendenza su %1$s in questo momento.</string>
     <string name="explore_fediverse_tag_empty">Ancora nessun post pubblico con #%1$s su %2$s.</string>
-    <string name="explore_fediverse_tags_empty">Nessun hashtag di tendenza su %1$s in questo momento.</string>
     <string name="settings_experimental">Sperimentale</string>
     <string name="settings_experimental_footer">Potrebbero cambiare o sparire. Solo su questo telefono.</string>
     <string name="settings_fediverse_explore">Esplora il fediverso</string>
@@ -654,5 +652,18 @@
         <item quantity="one">%1$d persona ne parla</item>
         <item quantity="many">%1$d persone ne parlano</item>
         <item quantity="other">%1$d persone ne parlano</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Popolare lì in questo momento. Mi piace, risposte e follow passano sempre dal tuo sito.</string>
+    <string name="explore_fediverse_stories">Storie che le persone condividono</string>
+    <string name="explore_fediverse_tag_note">Prima i post più recenti, da %1$s</string>
+    <string name="explore_fediverse_sheet_title">Esplora un altro server</string>
+    <string name="explore_fediverse_sheet_note">Ogni server mostra ciò che condividono le sue persone. Scegline uno per argomento o lingua, oppure scrivine un altro.</string>
+    <string name="explore_fediverse_settings">Impostazioni di Esplora il fediverso</string>
+    <string name="explore_fediverse_pick_server">Scegli un altro server</string>
+    <string name="fediverse_rate_limited">%1$s sta ricevendo troppe richieste in questo momento. Riprova tra un minuto.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">%1$d persona l\'ha condiviso</item>
+        <item quantity="many">%1$d persone l\'hanno condiviso</item>
+        <item quantity="other">%1$d persone l\'hanno condiviso</item>
     </plurals>
 </resources>

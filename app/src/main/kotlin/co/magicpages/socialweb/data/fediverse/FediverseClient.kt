@@ -35,6 +35,12 @@ data class FediverseExplore(val enabled: Boolean, val server: String) {
 /** A hashtag a server sees trending; [people] is how many accounts used it today and yesterday. */
 data class TrendingTag(val name: String, val people: Int)
 
+/** A web page a server sees shared a lot: [people] is how many accounts shared it today and yesterday. */
+data class TrendingLink(val url: String, val title: String, val provider: String?, val imageUrl: String?, val people: Int)
+
+/** What else a server sees trending besides posts. Either list is empty when it has none or won't say. */
+data class FediverseTrends(val tags: List<TrendingTag>, val links: List<TrendingLink>)
+
 /** A public server refused a request (or isn't one); 401, 403 and 422 mean it keeps that list to signed-in users. */
 class PublicServerException(val server: String, val status: Int) : Exception("HTTP $status from $server") {
     val notPublic: Boolean get() = status == 401 || status == 403 || status == 422
@@ -49,11 +55,13 @@ class PublicServerException(val server: String, val status: Int) : Exception("HT
 class FediverseClient @Inject constructor(
     private val http: HttpClient,
     private val json: Json,
+    private val explored: ExploredPosts,
 ) {
     /** A page of the server's trending posts, from [offset]; the next page's offset is in [PostsPage.next]. */
     suspend fun trendingPosts(server: String, offset: Int): PostsPage {
         val statuses = get<List<MastodonStatus>>(server, listOf("trends", "statuses"), "limit" to "$PageSize", "offset" to "$offset")
-        return PostsPage(statuses.map { it.toPost(server) }, next = if (statuses.size < PageSize) null else "${offset + statuses.size}")
+        val posts = statuses.map { it.toPost(server) }.also(explored::remember)
+        return PostsPage(posts, next = if (statuses.size < PageSize) null else "${offset + statuses.size}")
     }
 
     suspend fun trendingTags(server: String): List<TrendingTag> =
@@ -61,11 +69,24 @@ class FediverseClient @Inject constructor(
             TrendingTag(tag.name, tag.history.take(2).sumOf { it.accounts.toIntOrNull() ?: 0 })
         }
 
+    suspend fun trendingLinks(server: String): List<TrendingLink> =
+        get<List<MastodonLink>>(server, listOf("trends", "links"), "limit" to "$LinkLimit").mapNotNull { link ->
+            val title = link.title.trim().takeIf { it.isNotEmpty() } ?: return@mapNotNull null
+            TrendingLink(
+                url = link.url,
+                title = title,
+                provider = link.providerName?.trim()?.takeIf { it.isNotEmpty() },
+                imageUrl = link.image?.takeIf { it.startsWith("https://") },
+                people = link.history.take(2).sumOf { it.accounts.toIntOrNull() ?: 0 },
+            )
+        }
+
     /** The newest public posts under #[tag], older than [maxId] when it's given; the next page's id is in [PostsPage.next]. */
     suspend fun tagPosts(server: String, tag: String, maxId: String?): PostsPage {
         val query = listOfNotNull("limit" to "$PageSize", maxId?.let { "max_id" to it })
         val statuses = get<List<MastodonStatus>>(server, listOf("timelines", "tag", tag), *query.toTypedArray())
-        return PostsPage(statuses.map { it.toPost(server) }, next = if (statuses.size < PageSize) null else statuses.last().id)
+        val posts = statuses.map { it.toPost(server) }.also(explored::remember)
+        return PostsPage(posts, next = if (statuses.size < PageSize) null else statuses.last().id)
     }
 
     /** Throws unless [server] answers for its trending posts, which is all Explore needs from it. */
@@ -101,6 +122,7 @@ class FediverseClient @Inject constructor(
     private companion object {
         const val PageSize = 20
         const val TagLimit = 20
+        const val LinkLimit = 10
     }
 }
 
@@ -174,6 +196,15 @@ internal data class MastodonTag(val name: String, val history: List<MastodonTagD
 /** Mastodon sends the counts as text. */
 @Serializable
 internal data class MastodonTagDay(val accounts: String = "0")
+
+@Serializable
+internal data class MastodonLink(
+    val url: String,
+    val title: String = "",
+    @SerialName("provider_name") val providerName: String? = null,
+    val image: String? = null,
+    val history: List<MastodonTagDay> = emptyList(),
+)
 
 /** The post as the app shows it; [server] completes the handles of its own accounts. Whether the user liked or reposted it isn't known here. */
 internal fun MastodonStatus.toPost(server: String): Post {

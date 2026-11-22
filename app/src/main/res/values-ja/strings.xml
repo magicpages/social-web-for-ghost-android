@@ -592,12 +592,10 @@
     <string name="fediverse_not_public">%1$s はこれをメンバーにしか公開していません。</string>
     <string name="explore_hashtags">ハッシュタグ</string>
     <string name="explore_fediverse_trending">%1$s のトレンド</string>
-    <string name="explore_fediverse_tag">%2$s の #%1$s</string>
     <string name="explore_fediverse_change">変更</string>
     <string name="explore_fediverse_back">トレンドの投稿に戻る</string>
     <string name="explore_fediverse_posts_empty">%1$s では今トレンドがありません。</string>
     <string name="explore_fediverse_tag_empty">%2$s には #%1$s の公開投稿がまだありません。</string>
-    <string name="explore_fediverse_tags_empty">%1$s では今トレンドのハッシュタグがありません。</string>
     <string name="settings_experimental">試験運用</string>
     <string name="settings_experimental_footer">変更または廃止される可能性があります。この端末のみに適用されます。</string>
     <string name="settings_fediverse_explore">Fediverse を探索</string>
@@ -624,5 +622,16 @@
     <string name="fediverse_topic_indie_web">インディーウェブ</string>
     <plurals name="explore_hashtag_people">
         <item quantity="other">%1$d 人が話題にしています</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">いまそこで人気の投稿です。いいね、返信、フォローはこれまでどおりあなたのサイトから行われます。</string>
+    <string name="explore_fediverse_stories">みんながシェアしている記事</string>
+    <string name="explore_fediverse_tag_note">新しい投稿から順に、%1$s より</string>
+    <string name="explore_fediverse_sheet_title">別のサーバーを探索</string>
+    <string name="explore_fediverse_sheet_note">各サーバーには、そのサーバーの人たちがシェアしているものが表示されます。トピックや言語で選ぶか、ほかのサーバーを入力してください。</string>
+    <string name="explore_fediverse_settings">Fediverse 探索の設定</string>
+    <string name="explore_fediverse_pick_server">別のサーバーを選ぶ</string>
+    <string name="fediverse_rate_limited">%1$s はいまリクエストが多すぎます。1 分後にもう一度お試しください。</string>
+    <plurals name="explore_story_people">
+        <item quantity="other">%1$d 人がシェア</item>
     </plurals>
 </resources>

@@ -606,12 +606,10 @@
     <string name="fediverse_not_public">%1$s visar det här bara för sina egna medlemmar.</string>
     <string name="explore_hashtags">Hashtaggar</string>
     <string name="explore_fediverse_trending">Populärt på %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s på %2$s</string>
     <string name="explore_fediverse_change">Byt</string>
     <string name="explore_fediverse_back">Tillbaka till populära inlägg</string>
     <string name="explore_fediverse_posts_empty">Inget är populärt på %1$s just nu.</string>
     <string name="explore_fediverse_tag_empty">Inga offentliga inlägg med #%1$s på %2$s än.</string>
-    <string name="explore_fediverse_tags_empty">Inga hashtaggar är populära på %1$s just nu.</string>
     <string name="settings_experimental">Experimentellt</string>
     <string name="settings_experimental_footer">Kan ändras eller försvinna. Gäller bara på den här telefonen.</string>
     <string name="settings_fediverse_explore">Utforska fediversum</string>
@@ -639,5 +637,17 @@
     <plurals name="explore_hashtag_people">
         <item quantity="one">%1$d person pratar om det</item>
         <item quantity="other">%1$d personer pratar om det</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Populärt där just nu. Gillanden, svar och följningar går fortfarande via din webbplats.</string>
+    <string name="explore_fediverse_stories">Artiklar som folk delar</string>
+    <string name="explore_fediverse_tag_note">Nyaste inläggen först, från %1$s</string>
+    <string name="explore_fediverse_sheet_title">Utforska en annan server</string>
+    <string name="explore_fediverse_sheet_note">Varje server visar vad dess egna användare delar. Välj en efter ämne eller språk, eller skriv in en annan.</string>
+    <string name="explore_fediverse_settings">Inställningar för Utforska fediversum</string>
+    <string name="explore_fediverse_pick_server">Välj en annan server</string>
+    <string name="fediverse_rate_limited">%1$s får för många förfrågningar just nu. Försök igen om en minut.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">%1$d person har delat detta</item>
+        <item quantity="other">%1$d personer har delat detta</item>
     </plurals>
 </resources>

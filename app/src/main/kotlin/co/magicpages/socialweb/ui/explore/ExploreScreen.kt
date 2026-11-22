@@ -1,5 +1,6 @@
 package co.magicpages.socialweb.ui.explore
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement
@@ -111,6 +112,34 @@ import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.ui.posts.PostCallbacks
 import co.magicpages.socialweb.ui.posts.ReplyEditorHost
 import co.magicpages.socialweb.ui.posts.feedItems
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.SuggestionChip
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.UriHandler
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.text.style.TextAlign
+import androidx.paging.compose.LazyPagingItems
+import co.magicpages.socialweb.data.fediverse.FediverseTrends
+import co.magicpages.socialweb.data.fediverse.TrendingLink
+import co.magicpages.socialweb.data.fediverse.TrendingTag
+import co.magicpages.socialweb.ui.posts.FeedItem
+import co.magicpages.socialweb.ui.settings.FediverseServerPicker
+import co.magicpages.socialweb.ui.settings.fediverseServerLabel
+import coil3.compose.AsyncImage
+import java.net.URI
+import java.net.URISyntaxException
+import java.net.URLDecoder
+import java.text.NumberFormat
 
 /**
  * The Explore tab: the search for accounts, which sits where the other tabs have their title and
@@ -144,15 +173,15 @@ fun ExploreScreen(
     val topicView by viewModel.topicView.collectAsStateWithLifecycle()
     val fediverse by viewModel.fediverse.collectAsStateWithLifecycle()
     val fediverseSelected by viewModel.fediverseSelected.collectAsStateWithLifecycle()
-    val fediverseView by viewModel.fediverseView.collectAsStateWithLifecycle()
     val fediverseTag by viewModel.fediverseTag.collectAsStateWithLifecycle()
     val fediversePosts = viewModel.fediversePosts.collectAsLazyPagingItems()
-    val trendingTags by viewModel.trendingTags.collectAsStateWithLifecycle()
-    val showTags = fediverseSelected && fediverseView == FediverseView.Hashtags
-    val showFediversePosts = fediverseSelected && !showTags
+    val fediverseTrends by viewModel.fediverseTrends.collectAsStateWithLifecycle()
+    var serverSheet by rememberSaveable { mutableStateOf(false) }
+    // Back steps out of a hashtag to the trending posts before it leaves Explore.
+    BackHandler(enabled = fediverseSelected && fediverseTag != null) { viewModel.openTag(null) }
     val showPosts = !fediverseSelected && selected != null && topicView == TopicView.Posts
-    // The list on screen: a topic's or the server's posts, or else the suggested accounts. The hashtags aren't paged.
-    val posts = if (showFediversePosts) fediversePosts else topicPosts
+    // The list on screen: a topic's or the server's posts, or else the suggested accounts.
+    val posts = if (fediverseSelected) fediversePosts else topicPosts
     val callbacks = remember(viewModel) {
         PostCallbacks(
             open = onOpenPost,
@@ -183,7 +212,7 @@ fun ExploreScreen(
         if (listState.canScrollBackward) listState.scrollToTop() else searchBarState.animateToExpanded()
     }
     // Each list starts at its own top, not at the offset the other one was left at.
-    LaunchedEffect(selected, showPosts, fediverseSelected, fediverseView, fediverseTag) { listState.scrollToItem(0) }
+    LaunchedEffect(selected, showPosts, fediverseSelected, fediverseTag, fediverse.server) { listState.scrollToItem(0) }
 
     // Beside the tabs the profile opens in the detail pane, which a back gesture closes without ever hiding
     // this tab, so there is nothing to cover and the search simply closes.
@@ -282,7 +311,12 @@ fun ExploreScreen(
                 }
                 if (fediverse.enabled) {
                     item(key = "fediverse") {
-                        TopicChip(fediverse.server, selected = fediverseSelected, onClick = viewModel::selectFediverse)
+                        FediverseChip(
+                            label = fediverseServerLabel(fediverse.server),
+                            selected = fediverseSelected,
+                            // Picked already, the chip is where another server is picked.
+                            onClick = { if (fediverseSelected) serverSheet = true else viewModel.selectFediverse() },
+                        )
                     }
                 }
                 items(topics, key = { it.slug }) { topic ->
@@ -290,27 +324,7 @@ fun ExploreScreen(
                 }
             }
 
-            if (fediverseSelected) {
-                SingleChoiceSegmentedButtonRow(
-                    Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(horizontal = Gutter).padding(bottom = 8.dp),
-                ) {
-                    FediverseView.entries.forEachIndexed { index, view ->
-                        SegmentedButton(
-                            selected = fediverseView == view,
-                            onClick = { viewModel.setFediverseView(view) },
-                            shape = SegmentedButtonDefaults.itemShape(index, FediverseView.entries.size),
-                        ) {
-                            Text(stringResource(if (view == FediverseView.Posts) R.string.explore_topic_posts else R.string.explore_hashtags))
-                        }
-                    }
-                }
-                FediverseSourceBar(
-                    server = fediverse.server,
-                    tag = fediverseTag.takeIf { !showTags },
-                    onClearTag = { viewModel.openTag(null) },
-                    onChange = onChangeFediverseSource,
-                )
-            } else if (selected != null) {
+            if (!fediverseSelected && selected != null) {
                 SingleChoiceSegmentedButtonRow(
                     Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(horizontal = Gutter).padding(bottom = 8.dp),
                 ) {
@@ -326,17 +340,19 @@ fun ExploreScreen(
                 }
             }
 
-            val listsPosts = showPosts || showFediversePosts
+            val listsPosts = showPosts || fediverseSelected
             val refresh = if (listsPosts) posts.loadState.refresh else suggestions.loadState.refresh
             val itemCount = if (listsPosts) posts.itemCount else suggestions.itemCount
-            // The hashtags have nothing to keep on screen while they load again: their loading state replaces them.
-            val refreshing = !showTags && refresh is LoadState.Loading && itemCount > 0
+            val refreshing = refresh is LoadState.Loading && itemCount > 0
             val pullState = rememberPullToRefreshState()
             PullToRefreshBox(
                 isRefreshing = refreshing,
                 onRefresh = {
                     when {
-                        showTags -> viewModel.refreshTags()
+                        fediverseSelected -> {
+                            posts.refresh()
+                            viewModel.refreshTrends()
+                        }
                         listsPosts -> posts.refresh()
                         else -> {
                             viewModel.refresh()
@@ -351,12 +367,16 @@ fun ExploreScreen(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 when {
-                    showTags -> TrendingTags(
-                        state = trendingTags,
+                    fediverseSelected -> FediverseList(
                         server = fediverse.server,
+                        tag = fediverseTag,
+                        trends = fediverseTrends,
+                        posts = posts,
+                        callbacks = callbacks,
                         listState = listState,
                         onOpenTag = viewModel::openTag,
-                        onRetry = viewModel::refreshTags,
+                        onChangeServer = { serverSheet = true },
+                        onSignOut = onSignOut,
                     )
                     refresh is LoadState.Error && itemCount == 0 -> FullScreenError(
                         errorMessage(refresh.error),
@@ -366,13 +386,7 @@ fun ExploreScreen(
                     )
                     refresh is LoadState.Loading && itemCount == 0 -> CenteredLoading()
                     refresh is LoadState.NotLoading && itemCount == 0 -> ScrollableMessage(
-                        when {
-                            showFediversePosts && fediverseTag != null ->
-                                stringResource(R.string.explore_fediverse_tag_empty, fediverseTag.orEmpty(), fediverse.server)
-                            showFediversePosts -> stringResource(R.string.explore_fediverse_posts_empty, fediverse.server)
-                            showPosts -> stringResource(R.string.explore_topic_posts_empty)
-                            else -> stringResource(R.string.explore_empty)
-                        },
+                        stringResource(if (showPosts) R.string.explore_topic_posts_empty else R.string.explore_empty),
                     )
                     listsPosts -> LazyColumn(
                         modifier = Modifier.fillMaxSize(),
@@ -408,6 +422,9 @@ fun ExploreScreen(
         }
     }
     ReplyEditorHost(viewModel.composer)
+    if (serverSheet) {
+        FediverseServerSheet(onDismiss = { serverSheet = false }, onOpenSettings = onChangeFediverseSource)
+    }
 }
 
 /** Frames given to the cover or the search to be drawn before the other one goes. */
@@ -569,64 +586,323 @@ private fun TopicChip(label: String, selected: Boolean, onClick: () -> Unit) {
     )
 }
 
-/** Where the Fediverse source's posts come from, with a way back from a hashtag and a way to pick another server. */
+/**
+ * The Fediverse source's chip, named for what its server is about. Once picked, it shows that it
+ * opens a choice of servers, which a second tap does.
+ */
 @Composable
-private fun FediverseSourceBar(server: String, tag: String?, onClearTag: () -> Unit, onChange: () -> Unit) {
-    Row(
-        Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(start = Gutter, end = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            if (tag != null) stringResource(R.string.explore_fediverse_tag, tag, server) else stringResource(R.string.explore_fediverse_trending, server),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f),
-        )
-        if (tag != null) {
-            IconButton(onClick = onClearTag) {
-                Icon(AppIcons.Close, contentDescription = stringResource(R.string.explore_fediverse_back))
+private fun FediverseChip(label: String, selected: Boolean, onClick: () -> Unit) {
+    val changeLabel = stringResource(R.string.explore_fediverse_pick_server)
+    FilterChip(
+        selected = selected,
+        onClick = onClick,
+        label = { Text(label, maxLines = 1) },
+        leadingIcon = { Icon(AppIcons.Public, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) },
+        trailingIcon = if (selected) {
+            { Icon(AppIcons.ExpandMore, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
+        } else {
+            null
+        },
+        modifier = if (selected) Modifier.semantics { onClick(label = changeLabel) { onClick(); true } } else Modifier,
+    )
+}
+
+/**
+ * The Fediverse source in one scroll: which server it is, its trending hashtags and the stories its
+ * people share, then its trending posts; or, with [tag] open, that hashtag's newest posts. A hashtag
+ * link in a post opens here as well, rather than on the server's website.
+ */
+@Composable
+private fun FediverseList(
+    server: String,
+    tag: String?,
+    trends: FediverseTrends?,
+    posts: LazyPagingItems<FeedItem>,
+    callbacks: PostCallbacks,
+    listState: LazyListState,
+    onOpenTag: (String?) -> Unit,
+    onChangeServer: () -> Unit,
+    onSignOut: () -> Unit,
+) {
+    val outer = LocalUriHandler.current
+    val uriHandler = remember(outer, onOpenTag) {
+        object : UriHandler {
+            override fun openUri(uri: String) {
+                val name = hashtagIn(uri)
+                if (name != null) onOpenTag(name) else outer.openUri(uri)
             }
         }
-        TextButton(onClick = onChange) { Text(stringResource(R.string.explore_fediverse_change)) }
+    }
+    val refresh = posts.loadState.refresh
+    CompositionLocalProvider(LocalUriHandler provides uriHandler) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = listState,
+            contentPadding = PaddingValues(bottom = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            if (tag == null) {
+                item(key = "fediverse-header", contentType = "header") { TrendingHeader(server, onChangeServer) }
+                val tags = trends?.tags.orEmpty()
+                if (tags.isNotEmpty()) {
+                    item(key = "fediverse-tags", contentType = "tags") {
+                        SectionLabel(stringResource(R.string.explore_hashtags))
+                        TagStrip(tags, onOpenTag = onOpenTag)
+                    }
+                }
+                val links = trends?.links.orEmpty()
+                if (links.isNotEmpty()) {
+                    item(key = "fediverse-stories", contentType = "stories") {
+                        SectionLabel(stringResource(R.string.explore_fediverse_stories))
+                        StoryCarousel(links)
+                    }
+                }
+                if (tags.isNotEmpty() || links.isNotEmpty()) {
+                    item(key = "fediverse-posts", contentType = "label") { SectionLabel(stringResource(R.string.explore_topic_posts)) }
+                }
+            } else {
+                item(key = "fediverse-tag-header", contentType = "header") {
+                    val people = trends?.tags?.firstOrNull { it.name.equals(tag, ignoreCase = true) }?.people
+                    TagHeader(tag, server, people, onBack = { onOpenTag(null) })
+                }
+            }
+            when {
+                refresh is LoadState.Error && posts.itemCount == 0 -> item(key = "fediverse-state", contentType = "state") {
+                    FullScreenError(
+                        errorMessage(refresh.error),
+                        onRetry = posts::retry,
+                        modifier = Modifier.fillParentMaxHeight(0.5f),
+                        sessionEnded = refresh.error is GhostException.Unauthorized,
+                        onSignOut = onSignOut,
+                    )
+                }
+                refresh is LoadState.Loading && posts.itemCount == 0 -> item(key = "fediverse-state", contentType = "state") {
+                    CenteredLoading(Modifier.fillParentMaxHeight(0.4f))
+                }
+                refresh is LoadState.NotLoading && posts.itemCount == 0 -> item(key = "fediverse-state", contentType = "state") {
+                    Text(
+                        if (tag != null) {
+                            stringResource(R.string.explore_fediverse_tag_empty, tag, server)
+                        } else {
+                            stringResource(R.string.explore_fediverse_posts_empty, server)
+                        },
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(horizontal = Gutter, vertical = 48.dp),
+                    )
+                }
+                else -> feedItems(posts, callbacks)
+            }
+        }
     }
 }
 
-/** The server's trending hashtags; each opens the posts under it. */
+/** Where the trends come from, and the way to another server. */
 @Composable
-private fun TrendingTags(
-    state: TagsUiState,
-    server: String,
-    listState: LazyListState,
-    onOpenTag: (String) -> Unit,
-    onRetry: () -> Unit,
-) {
-    when (state) {
-        TagsUiState.Loading -> CenteredLoading()
-        is TagsUiState.Failed -> FullScreenError(errorMessage(state.error), onRetry = onRetry)
-        is TagsUiState.Loaded -> if (state.tags.isEmpty()) {
-            ScrollableMessage(stringResource(R.string.explore_fediverse_tags_empty, server))
-        } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                state = listState,
-                contentPadding = PaddingValues(bottom = 8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                items(state.tags, key = { it.name.lowercase() }, contentType = { "tag" }) { tag ->
-                    ListItem(
-                        headlineContent = { Text("#${tag.name}", maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                        supportingContent = { Text(pluralStringResource(R.plurals.explore_hashtag_people, tag.people, tag.people)) },
-                        modifier = Modifier
-                            .widthIn(max = MaxContentWidth)
-                            .fillMaxWidth()
-                            .clickable { onOpenTag(tag.name) },
-                    )
-                }
+private fun TrendingHeader(server: String, onChangeServer: () -> Unit) {
+    Row(
+        Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(start = Gutter, end = 8.dp, top = 4.dp, bottom = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(
+                stringResource(R.string.explore_fediverse_trending, server),
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.semantics { heading() },
+            )
+            Text(
+                stringResource(R.string.explore_fediverse_header_note),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        TextButton(onClick = onChangeServer) { Text(stringResource(R.string.explore_fediverse_change)) }
+    }
+}
+
+/** The hashtag whose newest posts are listed, how many talk about it when the server says, and the way back to the trends. */
+@Composable
+private fun TagHeader(tag: String, server: String, people: Int?, onBack: () -> Unit) {
+    Row(
+        Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(start = 4.dp, end = Gutter, top = 4.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(onClick = onBack) {
+            Icon(AppIcons.ArrowBack, contentDescription = stringResource(R.string.explore_fediverse_back))
+        }
+        Column(Modifier.weight(1f).padding(start = 4.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(
+                "#$tag",
+                style = MaterialTheme.typography.headlineSmall,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.semantics { heading() },
+            )
+            if (people != null) {
+                Text(pluralStringResource(R.plurals.explore_hashtag_people, people, people), style = MaterialTheme.typography.bodyMedium)
+            }
+            Text(
+                stringResource(R.string.explore_fediverse_tag_note, server),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+@Composable
+private fun SectionLabel(text: String) {
+    Text(
+        text,
+        style = MaterialTheme.typography.titleSmall,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier
+            .widthIn(max = MaxContentWidth)
+            .fillMaxWidth()
+            .padding(start = Gutter, end = Gutter, top = 16.dp, bottom = 8.dp)
+            .semantics { heading() },
+    )
+}
+
+/** The server's trending hashtags, each with how many people use it; one opens its posts. */
+@Composable
+private fun TagStrip(tags: List<TrendingTag>, onOpenTag: (String) -> Unit) {
+    val numbers = remember { NumberFormat.getIntegerInstance() }
+    LazyRow(
+        modifier = Modifier.widthIn(max = MaxContentWidth).fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = Gutter),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        items(tags, key = { it.name.lowercase() }) { tag ->
+            val people = pluralStringResource(R.plurals.explore_hashtag_people, tag.people, tag.people)
+            SuggestionChip(
+                onClick = { onOpenTag(tag.name) },
+                label = {
+                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Text("#${tag.name}", maxLines = 1)
+                        if (tag.people > 0) {
+                            Text(numbers.format(tag.people), color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+                        }
+                    }
+                },
+                modifier = Modifier.semantics(mergeDescendants = true) { contentDescription = "#${tag.name}, $people" },
+            )
+        }
+    }
+}
+
+/** The web pages the server's people share most, as cards that open them. */
+@Composable
+private fun StoryCarousel(links: List<TrendingLink>) {
+    LazyRow(
+        modifier = Modifier.widthIn(max = MaxContentWidth).fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = Gutter),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        items(links, key = { it.url }) { link -> StoryCard(link) }
+    }
+}
+
+@Composable
+private fun StoryCard(link: TrendingLink) {
+    val uriHandler = LocalUriHandler.current
+    // A picture that can't be loaded leaves a blank block: the card goes without, like one that has none.
+    var imageFailed by remember(link.imageUrl) { mutableStateOf(false) }
+    OutlinedCard(onClick = { uriHandler.openUri(link.url) }, modifier = Modifier.width(StoryCardWidth)) {
+        if (link.imageUrl != null && !imageFailed) {
+            AsyncImage(
+                model = link.imageUrl,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                onError = { imageFailed = true },
+                modifier = Modifier.fillMaxWidth().aspectRatio(16f / 9f).background(MaterialTheme.colorScheme.surfaceContainerHighest),
+            )
+        }
+        Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            link.provider?.let { provider ->
+                Text(
+                    provider,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            Text(link.title, style = MaterialTheme.typography.titleSmall, minLines = 3, maxLines = 3, overflow = TextOverflow.Ellipsis)
+            if (link.people > 0) {
+                Text(
+                    pluralStringResource(R.plurals.explore_story_people, link.people, link.people),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         }
     }
+}
+
+private val StoryCardWidth = 260.dp
+
+/** Picking another server for the Fediverse source, over Explore; it closes once the pick is in use. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun FediverseServerSheet(onDismiss: () -> Unit, onOpenSettings: () -> Unit) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val scope = rememberCoroutineScope()
+    val close: () -> Unit = { scope.launch { sheetState.hide() }.invokeOnCompletion { onDismiss() } }
+    ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
+        val scroll = rememberScrollState()
+        Column(
+            Modifier
+                .fillMaxWidth()
+                // The server field is at the bottom: the keyboard shrinks the sheet so it scrolls into view above it.
+                .imePadding()
+                .verticalScroll(scroll)
+                .padding(horizontal = Gutter)
+                .padding(bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(
+                stringResource(R.string.explore_fediverse_sheet_title),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.semantics { heading() },
+            )
+            Text(
+                stringResource(R.string.explore_fediverse_sheet_note),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            FediverseServerPicker(scroll, onChosen = close)
+            TextButton(
+                onClick = {
+                    onDismiss()
+                    onOpenSettings()
+                },
+            ) {
+                Icon(AppIcons.Settings, contentDescription = null, modifier = Modifier.size(18.dp))
+                Text(stringResource(R.string.explore_fediverse_settings), modifier = Modifier.padding(start = 8.dp))
+            }
+        }
+    }
+}
+
+private val HashtagPath = Regex("""/(?:discover/)?tags/([^/?#]+)/?""")
+
+/**
+ * The hashtag a link points to, for links to a hashtag's page as Mastodon, Pixelfed and the like
+ * write them (`/tags/name`, `/discover/tags/name`), or null for any other link. A blog's `/tag/`
+ * pages aren't hashtags and stay links.
+ */
+internal fun hashtagIn(uri: String): String? {
+    val parsed = try {
+        URI(uri)
+    } catch (_: URISyntaxException) {
+        return null
+    }
+    if (parsed.scheme?.lowercase() !in setOf("https", "http") || parsed.host.isNullOrEmpty()) return null
+    val name = HashtagPath.matchEntire(parsed.rawPath.orEmpty())?.groupValues?.get(1) ?: return null
+    return URLDecoder.decode(name, Charsets.UTF_8.name()).removePrefix("#").takeIf { it.isNotBlank() }
 }
 
 /** A post found by its web address: who wrote it and how it starts. Opens its thread. */

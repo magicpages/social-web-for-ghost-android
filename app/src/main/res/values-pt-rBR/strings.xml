@@ -620,12 +620,10 @@
     <string name="fediverse_not_public">%1$s só mostra isso para os próprios membros.</string>
     <string name="explore_hashtags">Hashtags</string>
     <string name="explore_fediverse_trending">Em alta em %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s em %2$s</string>
     <string name="explore_fediverse_change">Alterar</string>
     <string name="explore_fediverse_back">Voltar aos posts em alta</string>
     <string name="explore_fediverse_posts_empty">Nada em alta em %1$s agora.</string>
     <string name="explore_fediverse_tag_empty">Ainda não há posts públicos com #%1$s em %2$s.</string>
-    <string name="explore_fediverse_tags_empty">Nenhuma hashtag em alta em %1$s agora.</string>
     <string name="settings_experimental">Experimental</string>
     <string name="settings_experimental_footer">Podem mudar ou sumir. Só neste celular.</string>
     <string name="settings_fediverse_explore">Explorar o fediverso</string>
@@ -654,5 +652,18 @@
         <item quantity="one">%1$d pessoa falando disso</item>
         <item quantity="many">%1$d pessoas falando disso</item>
         <item quantity="other">%1$d pessoas falando disso</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Em alta lá agora. Curtidas, respostas e seguidas continuam passando pelo seu site.</string>
+    <string name="explore_fediverse_stories">Histórias que as pessoas estão compartilhando</string>
+    <string name="explore_fediverse_tag_note">Posts mais recentes primeiro, de %1$s</string>
+    <string name="explore_fediverse_sheet_title">Explorar outro servidor</string>
+    <string name="explore_fediverse_sheet_note">Cada servidor mostra o que as próprias pessoas dele compartilham. Escolha um por tema ou idioma, ou digite qualquer outro.</string>
+    <string name="explore_fediverse_settings">Configurações de Explorar o fediverso</string>
+    <string name="explore_fediverse_pick_server">Escolher outro servidor</string>
+    <string name="fediverse_rate_limited">%1$s está recebendo pedidos demais agora. Tente de novo em um minuto.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">%1$d pessoa compartilhou isso</item>
+        <item quantity="many">%1$d pessoas compartilharam isso</item>
+        <item quantity="other">%1$d pessoas compartilharam isso</item>
     </plurals>
 </resources>

@@ -118,4 +118,93 @@ class ThreadContentTest {
         val fresh = thread(emptyList(), hasEarlier = false)
         assertSame(fresh, fresh.keepingEarlier(thread(listOf("a", "b"), hasEarlier = true)))
     }
+
+    // Replies from the post's home server
+
+    private fun group(id: String, vararg followUps: String, hasMore: Boolean = false) =
+        ReplyGroup(item(id), followUps.map(::item), hasMore)
+
+    private fun threadWith(vararg replies: ReplyGroup, next: String? = null) =
+        thread(emptyList(), hasEarlier = false).copy(replies = replies.toList(), next = next)
+
+    /** Each direct reply with its follow-ups, as "id:follow,up". */
+    private fun ThreadContent.layout() = replies.map { (it.reply.post.id + ":" + it.followUps.joinToString(",") { f -> f.post.id }) }
+
+    @Test
+    fun `the home server's replies come after the site's own`() {
+        val merged = threadWith(group("a", "a1"), group("b")).withOrigin(listOf(group("x", "x1"), group("y")))
+
+        assertEquals(listOf("a:a1", "b:", "x:x1", "y:"), merged.layout())
+        assertEquals(setOf("x", "y"), merged.fromOrigin)
+    }
+
+    @Test
+    fun `a reply both have is the site's, with the site's follow-ups`() {
+        val merged = threadWith(group("a", "a1")).withOrigin(listOf(group("a", "other"), group("x")))
+
+        assertEquals(listOf("a:a1", "x:"), merged.layout())
+    }
+
+    @Test
+    fun `follow-ups the site already shows anywhere aren't repeated`() {
+        val merged = threadWith(group("a", "a1"), group("b")).withOrigin(listOf(group("x", "a1", "x1", "b"), group("a1")))
+
+        assertEquals(listOf("a:a1", "b:", "x:x1"), merged.layout())
+    }
+
+    @Test
+    fun `the focused post and its ancestors aren't added as replies`() {
+        val content = thread(listOf("up"), hasEarlier = false, focused = "focus")
+
+        assertEquals(listOf("x:"), content.withOrigin(listOf(group("focus"), group("up"), group("x"))).layout())
+    }
+
+    @Test
+    fun `merging again replaces what the last merge added`() {
+        val once = threadWith(group("a")).withOrigin(listOf(group("x"), group("y")))
+        val twice = once.withOrigin(listOf(group("y"), group("z")))
+
+        assertEquals(listOf("a:", "y:", "z:"), twice.layout())
+        assertEquals(setOf("y", "z"), twice.fromOrigin)
+    }
+
+    @Test
+    fun `no replies from the home server leave the thread as it was`() {
+        val content = threadWith(group("a"))
+
+        assertEquals(content.layout(), content.withOrigin(emptyList()).layout())
+    }
+
+    @Test
+    fun `a page from the site goes before the home server's replies and wins over its copy of a reply`() {
+        val merged = threadWith(group("a"), next = "p2").withOrigin(listOf(group("x"), group("b", "origin-follow-up")))
+        val paged = merged.copy(appending = true).withPage(threadWith(group("b", "b1"), group("c"), group("a"), next = null))
+
+        assertEquals(listOf("a:", "b:b1", "c:"), paged.layout())
+        assertEquals(null, paged.next)
+        assertFalse(paged.appending)
+        // The home server's replies are put back after the page, minus the ones the page has.
+        assertEquals(listOf("a:", "b:b1", "c:", "x:"), paged.withOrigin(listOf(group("x"), group("b"))).layout())
+    }
+
+    @Test
+    fun `counts are raised to the home server's and the site's flags stay`() {
+        val own = Post(id = "focus", author = writer, likeCount = 1, likedByMe = true, replyCount = 0)
+        val content = thread(emptyList(), hasEarlier = false).copy(post = FeedItem(own, AnnotatedString(""), null))
+
+        val counted = content.withCounts(Post(id = "focus", author = writer, likeCount = 111, replyCount = 9, repostCount = 4, likedByMe = false))
+
+        assertEquals(111, counted.post.post.likeCount)
+        assertEquals(9, counted.post.post.replyCount)
+        assertEquals(4, counted.post.post.repostCount)
+        assertTrue(counted.post.post.likedByMe)
+    }
+
+    @Test
+    fun `counts the site has higher are kept`() {
+        val own = Post(id = "focus", author = writer, likeCount = 7)
+        val content = thread(emptyList(), hasEarlier = false).copy(post = FeedItem(own, AnnotatedString(""), null))
+
+        assertSame(content, content.withCounts(Post(id = "focus", author = writer, likeCount = 3)))
+    }
 }

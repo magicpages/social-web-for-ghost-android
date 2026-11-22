@@ -620,12 +620,10 @@
     <string name="fediverse_not_public">%1$s ne montre ça qu\'à ses membres.</string>
     <string name="explore_hashtags">Hashtags</string>
     <string name="explore_fediverse_trending">Tendances sur %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s sur %2$s</string>
     <string name="explore_fediverse_change">Changer</string>
     <string name="explore_fediverse_back">Retour aux tendances</string>
     <string name="explore_fediverse_posts_empty">Rien n\'est en tendance sur %1$s pour le moment.</string>
     <string name="explore_fediverse_tag_empty">Pas encore de publications publiques avec #%1$s sur %2$s.</string>
-    <string name="explore_fediverse_tags_empty">Aucun hashtag en tendance sur %1$s pour le moment.</string>
     <string name="settings_experimental">Expérimental</string>
     <string name="settings_experimental_footer">Ces fonctions peuvent changer ou disparaître. Uniquement sur ce téléphone.</string>
     <string name="settings_fediverse_explore">Explorer le fédivers</string>
@@ -654,5 +652,18 @@
         <item quantity="one">%1$d personne en parle</item>
         <item quantity="many">%1$d personnes en parlent</item>
         <item quantity="other">%1$d personnes en parlent</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Populaire là-bas en ce moment. Les j\'aime, réponses et abonnements passent toujours par ton site.</string>
+    <string name="explore_fediverse_stories">Articles que les gens partagent</string>
+    <string name="explore_fediverse_tag_note">Publications les plus récentes d\'abord, depuis %1$s</string>
+    <string name="explore_fediverse_sheet_title">Explorer un autre serveur</string>
+    <string name="explore_fediverse_sheet_note">Chaque serveur montre ce que ses propres membres partagent. Choisis-en un par thème ou par langue, ou saisis-en un autre.</string>
+    <string name="explore_fediverse_settings">Réglages d\'Explorer le fédivers</string>
+    <string name="explore_fediverse_pick_server">Choisir un autre serveur</string>
+    <string name="fediverse_rate_limited">%1$s reçoit trop de requêtes en ce moment. Réessaie dans une minute.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">%1$d personne a partagé ceci</item>
+        <item quantity="many">%1$d personnes ont partagé ceci</item>
+        <item quantity="other">%1$d personnes ont partagé ceci</item>
     </plurals>
 </resources>

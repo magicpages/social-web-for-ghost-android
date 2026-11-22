@@ -634,12 +634,10 @@
     <string name="fediverse_not_public">%1$s показывает это только своим участникам.</string>
     <string name="explore_hashtags">Хештеги</string>
     <string name="explore_fediverse_trending">Популярное на %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s на %2$s</string>
     <string name="explore_fediverse_change">Изменить</string>
     <string name="explore_fediverse_back">Назад к популярным постам</string>
     <string name="explore_fediverse_posts_empty">Сейчас на %1$s ничего не популярно.</string>
     <string name="explore_fediverse_tag_empty">На %2$s пока нет публичных постов с #%1$s.</string>
-    <string name="explore_fediverse_tags_empty">Сейчас на %1$s нет популярных хештегов.</string>
     <string name="settings_experimental">Экспериментальное</string>
     <string name="settings_experimental_footer">Может измениться или исчезнуть. Только на этом телефоне.</string>
     <string name="settings_fediverse_explore">Обзор федиверса</string>
@@ -669,5 +667,19 @@
         <item quantity="few">Обсуждают %1$d человека</item>
         <item quantity="many">Обсуждают %1$d человек</item>
         <item quantity="other">Обсуждают %1$d человека</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Сейчас популярно там. Лайки, ответы и подписки по-прежнему идут через ваш сайт.</string>
+    <string name="explore_fediverse_stories">Чем делятся люди</string>
+    <string name="explore_fediverse_tag_note">Сначала новые посты, с %1$s</string>
+    <string name="explore_fediverse_sheet_title">Обзор другого сервера</string>
+    <string name="explore_fediverse_sheet_note">Каждый сервер показывает, чем делятся его люди. Выберите сервер по теме или языку или введите любой другой.</string>
+    <string name="explore_fediverse_settings">Настройки обзора федиверса</string>
+    <string name="explore_fediverse_pick_server">Выбрать другой сервер</string>
+    <string name="fediverse_rate_limited">%1$s сейчас получает слишком много запросов. Попробуйте через минуту.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">Поделился %1$d человек</item>
+        <item quantity="few">Поделились %1$d человека</item>
+        <item quantity="many">Поделились %1$d человек</item>
+        <item quantity="other">Поделились %1$d человека</item>
     </plurals>
 </resources>

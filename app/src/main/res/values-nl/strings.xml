@@ -606,12 +606,10 @@
     <string name="fediverse_not_public">%1$s laat dit alleen aan de eigen leden zien.</string>
     <string name="explore_hashtags">Hashtags</string>
     <string name="explore_fediverse_trending">Populair op %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s op %2$s</string>
     <string name="explore_fediverse_change">Wijzigen</string>
     <string name="explore_fediverse_back">Terug naar populaire berichten</string>
     <string name="explore_fediverse_posts_empty">Er is nu niets populair op %1$s.</string>
     <string name="explore_fediverse_tag_empty">Nog geen openbare berichten met #%1$s op %2$s.</string>
-    <string name="explore_fediverse_tags_empty">Er zijn nu geen populaire hashtags op %1$s.</string>
     <string name="settings_experimental">Experimenteel</string>
     <string name="settings_experimental_footer">Dit kan veranderen of verdwijnen. Alleen op deze telefoon.</string>
     <string name="settings_fediverse_explore">Fediverse verkennen</string>
@@ -639,5 +637,17 @@
     <plurals name="explore_hashtag_people">
         <item quantity="one">%1$d persoon praat erover</item>
         <item quantity="other">%1$d mensen praten erover</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Nu populair daar. Likes, reacties en volgen lopen nog steeds via je site.</string>
+    <string name="explore_fediverse_stories">Verhalen die mensen delen</string>
+    <string name="explore_fediverse_tag_note">Nieuwste berichten eerst, van %1$s</string>
+    <string name="explore_fediverse_sheet_title">Een andere server verkennen</string>
+    <string name="explore_fediverse_sheet_note">Elke server laat zien wat zijn eigen mensen delen. Kies er een op onderwerp of taal, of typ een andere in.</string>
+    <string name="explore_fediverse_settings">Instellingen voor Fediverse verkennen</string>
+    <string name="explore_fediverse_pick_server">Andere server kiezen</string>
+    <string name="fediverse_rate_limited">%1$s krijgt nu te veel verzoeken. Probeer het over een minuut opnieuw.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">%1$d persoon heeft dit gedeeld</item>
+        <item quantity="other">%1$d mensen hebben dit gedeeld</item>
     </plurals>
 </resources>

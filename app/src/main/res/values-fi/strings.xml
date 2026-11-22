@@ -606,12 +606,10 @@
     <string name="fediverse_not_public">%1$s näyttää tämän vain omille jäsenilleen.</string>
     <string name="explore_hashtags">Aihetunnisteet</string>
     <string name="explore_fediverse_trending">Suosittua palvelimella %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s palvelimella %2$s</string>
     <string name="explore_fediverse_change">Vaihda</string>
     <string name="explore_fediverse_back">Takaisin suosittuihin julkaisuihin</string>
     <string name="explore_fediverse_posts_empty">Palvelimella %1$s ei ole juuri nyt mitään suosittua.</string>
     <string name="explore_fediverse_tag_empty">Palvelimella %2$s ei ole vielä julkisia julkaisuja tunnisteella #%1$s.</string>
-    <string name="explore_fediverse_tags_empty">Palvelimella %1$s ei ole juuri nyt suosittuja aihetunnisteita.</string>
     <string name="settings_experimental">Kokeelliset</string>
     <string name="settings_experimental_footer">Nämä voivat muuttua tai poistua. Vain tässä puhelimessa.</string>
     <string name="settings_fediverse_explore">Tutki fediversumia</string>
@@ -639,5 +637,17 @@
     <plurals name="explore_hashtag_people">
         <item quantity="one">%1$d henkilö puhuu tästä</item>
         <item quantity="other">%1$d henkilöä puhuu tästä</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Suosittua siellä juuri nyt. Tykkäykset, vastaukset ja seuraamiset kulkevat yhä sivustosi kautta.</string>
+    <string name="explore_fediverse_stories">Juttuja, joita jaetaan</string>
+    <string name="explore_fediverse_tag_note">Uusimmat julkaisut ensin, palvelimelta %1$s</string>
+    <string name="explore_fediverse_sheet_title">Tutki toista palvelinta</string>
+    <string name="explore_fediverse_sheet_note">Jokainen palvelin näyttää, mitä sen omat käyttäjät jakavat. Valitse aiheen tai kielen mukaan tai kirjoita jokin muu.</string>
+    <string name="explore_fediverse_settings">Tutki fediversumia -asetukset</string>
+    <string name="explore_fediverse_pick_server">Valitse toinen palvelin</string>
+    <string name="fediverse_rate_limited">%1$s saa juuri nyt liikaa pyyntöjä. Yritä uudelleen minuutin päästä.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">%1$d henkilö jakoi tämän</item>
+        <item quantity="other">%1$d henkilöä jakoi tämän</item>
     </plurals>
 </resources>

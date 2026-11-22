@@ -606,12 +606,10 @@
     <string name="fediverse_not_public">%1$s इसे सिर्फ़ अपने सदस्यों को दिखाता है।</string>
     <string name="explore_hashtags">हैशटैग</string>
     <string name="explore_fediverse_trending">%1$s पर ट्रेंडिंग</string>
-    <string name="explore_fediverse_tag">%2$s पर #%1$s</string>
     <string name="explore_fediverse_change">बदलें</string>
     <string name="explore_fediverse_back">ट्रेंडिंग पोस्ट पर वापस जाएँ</string>
     <string name="explore_fediverse_posts_empty">%1$s पर अभी कुछ भी ट्रेंड नहीं कर रहा।</string>
     <string name="explore_fediverse_tag_empty">%2$s पर #%1$s वाली कोई सार्वजनिक पोस्ट अभी नहीं है।</string>
-    <string name="explore_fediverse_tags_empty">%1$s पर अभी कोई हैशटैग ट्रेंड नहीं कर रहा।</string>
     <string name="settings_experimental">प्रायोगिक</string>
     <string name="settings_experimental_footer">ये बदल सकते हैं या हट सकते हैं। सिर्फ़ इस फ़ोन पर।</string>
     <string name="settings_fediverse_explore">फ़ेडिवर्स एक्सप्लोर</string>
@@ -639,5 +637,17 @@
     <plurals name="explore_hashtag_people">
         <item quantity="one">%1$d व्यक्ति चर्चा कर रहा है</item>
         <item quantity="other">%1$d लोग चर्चा कर रहे हैं</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">अभी वहाँ लोकप्रिय। लाइक, जवाब और फ़ॉलो अब भी आपकी साइट से होते हैं।</string>
+    <string name="explore_fediverse_stories">लोग जो कहानियाँ शेयर कर रहे हैं</string>
+    <string name="explore_fediverse_tag_note">सबसे नई पोस्ट पहले, %1$s से</string>
+    <string name="explore_fediverse_sheet_title">कोई दूसरा सर्वर एक्सप्लोर करें</string>
+    <string name="explore_fediverse_sheet_note">हर सर्वर दिखाता है कि उसके अपने लोग क्या शेयर कर रहे हैं। विषय या भाषा से कोई चुनें, या कोई और लिखें।</string>
+    <string name="explore_fediverse_settings">फ़ेडिवर्स एक्सप्लोर सेटिंग</string>
+    <string name="explore_fediverse_pick_server">दूसरा सर्वर चुनें</string>
+    <string name="fediverse_rate_limited">%1$s को अभी बहुत ज़्यादा अनुरोध मिल रहे हैं। एक मिनट बाद फिर कोशिश करें।</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">%1$d व्यक्ति ने इसे शेयर किया</item>
+        <item quantity="other">%1$d लोगों ने इसे शेयर किया</item>
     </plurals>
 </resources>

@@ -592,12 +592,10 @@
     <string name="fediverse_not_public">%1$s chỉ hiển thị nội dung này cho thành viên của mình.</string>
     <string name="explore_hashtags">Hashtag</string>
     <string name="explore_fediverse_trending">Thịnh hành trên %1$s</string>
-    <string name="explore_fediverse_tag">#%1$s trên %2$s</string>
     <string name="explore_fediverse_change">Thay đổi</string>
     <string name="explore_fediverse_back">Quay lại bài viết thịnh hành</string>
     <string name="explore_fediverse_posts_empty">Hiện không có gì thịnh hành trên %1$s.</string>
     <string name="explore_fediverse_tag_empty">Chưa có bài viết công khai nào với #%1$s trên %2$s.</string>
-    <string name="explore_fediverse_tags_empty">Hiện không có hashtag nào thịnh hành trên %1$s.</string>
     <string name="settings_experimental">Thử nghiệm</string>
     <string name="settings_experimental_footer">Có thể thay đổi hoặc bị gỡ bỏ. Chỉ trên điện thoại này.</string>
     <string name="settings_fediverse_explore">Khám phá Fediverse</string>
@@ -624,5 +622,16 @@
     <string name="fediverse_topic_indie_web">Web độc lập</string>
     <plurals name="explore_hashtag_people">
         <item quantity="other">%1$d người đang bàn luận</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Đang phổ biến ở đó. Thích, trả lời và theo dõi vẫn đi qua trang của bạn.</string>
+    <string name="explore_fediverse_stories">Câu chuyện mọi người đang chia sẻ</string>
+    <string name="explore_fediverse_tag_note">Bài mới nhất trước, từ %1$s</string>
+    <string name="explore_fediverse_sheet_title">Khám phá máy chủ khác</string>
+    <string name="explore_fediverse_sheet_note">Mỗi máy chủ cho thấy những gì người của chính nó đang chia sẻ. Chọn theo chủ đề hoặc ngôn ngữ, hoặc nhập máy chủ khác.</string>
+    <string name="explore_fediverse_settings">Cài đặt Khám phá Fediverse</string>
+    <string name="explore_fediverse_pick_server">Chọn máy chủ khác</string>
+    <string name="fediverse_rate_limited">%1$s đang nhận quá nhiều yêu cầu. Hãy thử lại sau một phút.</string>
+    <plurals name="explore_story_people">
+        <item quantity="other">%1$d người đã chia sẻ</item>
     </plurals>
 </resources>

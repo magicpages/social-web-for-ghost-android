@@ -606,12 +606,10 @@
     <string name="fediverse_not_public">%1$s bunu yalnızca kendi üyelerine gösteriyor.</string>
     <string name="explore_hashtags">Etiketler</string>
     <string name="explore_fediverse_trending">%1$s gündemi</string>
-    <string name="explore_fediverse_tag">%2$s üzerinde #%1$s</string>
     <string name="explore_fediverse_change">Değiştir</string>
     <string name="explore_fediverse_back">Gündemdeki gönderilere dön</string>
     <string name="explore_fediverse_posts_empty">Şu anda %1$s gündeminde bir şey yok.</string>
     <string name="explore_fediverse_tag_empty">%2$s üzerinde henüz #%1$s etiketli herkese açık gönderi yok.</string>
-    <string name="explore_fediverse_tags_empty">Şu anda %1$s gündeminde etiket yok.</string>
     <string name="settings_experimental">Deneysel</string>
     <string name="settings_experimental_footer">Değişebilir veya kaldırılabilir. Yalnızca bu telefonda.</string>
     <string name="settings_fediverse_explore">Fediverse keşfi</string>
@@ -639,5 +637,17 @@
     <plurals name="explore_hashtag_people">
         <item quantity="one">%1$d kişi konuşuyor</item>
         <item quantity="other">%1$d kişi konuşuyor</item>
+    </plurals>
+    <string name="explore_fediverse_header_note">Şu anda orada popüler. Beğeniler, yanıtlar ve takipler yine sitenizden geçer.</string>
+    <string name="explore_fediverse_stories">İnsanların paylaştığı haberler</string>
+    <string name="explore_fediverse_tag_note">Önce en yeni gönderiler, %1$s kaynağından</string>
+    <string name="explore_fediverse_sheet_title">Başka bir sunucuyu keşfedin</string>
+    <string name="explore_fediverse_sheet_note">Her sunucu kendi insanlarının paylaştıklarını gösterir. Konuya veya dile göre birini seçin ya da başka birini yazın.</string>
+    <string name="explore_fediverse_settings">Fediverse keşfi ayarları</string>
+    <string name="explore_fediverse_pick_server">Başka sunucu seçin</string>
+    <string name="fediverse_rate_limited">%1$s şu anda çok fazla istek alıyor. Bir dakika sonra yeniden deneyin.</string>
+    <plurals name="explore_story_people">
+        <item quantity="one">%1$d kişi paylaştı</item>
+        <item quantity="other">%1$d kişi paylaştı</item>
     </plurals>
 </resources>
