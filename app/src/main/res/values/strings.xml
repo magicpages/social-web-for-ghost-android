@@ -402,8 +402,8 @@
     <string name="translation_error_unknown_language">Couldn\'t tell which language this post is in.</string>
     <string name="translation_error_already">This post is already in %1$s.</string>
     <string name="translation_error_unsupported">Translating from %1$s isn\'t available on this device.</string>
-    <string name="translation_error_no_translator">Translating needs the free Offline Translator app.</string>
-    <string name="translation_get_translator">Get it on F-Droid</string>
+    <string name="translation_needs_download">Translating from %1$s needs a one-time download of %2$d MB from Mozilla.</string>
+    <string name="translation_download">Download</string>
     <string name="translation_failed_note">Couldn\'t translate this note. Check your connection and try again.</string>
     <string name="translation_failed_article">Couldn\'t translate this article. Check your connection and try again.</string>
 

@@ -48,8 +48,9 @@ class PostTranslations @Inject constructor(
     /**
      * Starts translating the note [postId], whose text is [text] (paragraphs and lines separated by line
      * breaks), or shows its translation again when it has one. Does nothing while it is being translated.
+     * [download] is the user's go-ahead to download the language files it takes.
      */
-    fun translate(postId: String, text: String) {
+    fun translate(postId: String, text: String, download: Boolean = false) {
         val key = key(postId) ?: return
         when (val current = states[key]) {
             is State.Translating -> return
@@ -62,14 +63,14 @@ class PostTranslations @Inject constructor(
         put(key, State.Translating)
         scope.launch {
             val result = try {
-                val translated = translator.translate(listOf(text))
+                val translated = translator.translate(listOf(text), download)
                 State.Translated(translated.texts.single(), translator.languageName(translated.sourceLanguage), showing = true)
             } catch (e: TranslationException) {
                 State.Failed(e.toFailure(translator))
             }
             put(key, result)
-            // A missing translator stays said, with its link, until the next try; the rest fade.
-            if (result is State.Failed && result.failure.problem != TranslationProblem.NoTranslator) {
+            // Asking to download stays, with its link, until the next try; the rest fade.
+            if (result is State.Failed && result.failure.problem != TranslationProblem.NeedsDownload) {
                 delay(FailureShownMillis)
                 if (states[key] === result) forget(key)
             }

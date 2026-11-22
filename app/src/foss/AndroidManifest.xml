@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Translation binds Offline Translator's service, which the app has to be able to see. -->
-    <queries>
-        <package android:name="dev.davidv.translator" />
-    </queries>
-</manifest>

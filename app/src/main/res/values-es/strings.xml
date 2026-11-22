@@ -309,8 +309,8 @@
     <string name="translation_error_unknown_language">No se pudo determinar el idioma de esta publicación.</string>
     <string name="translation_error_already">Esta publicación ya está en %1$s.</string>
     <string name="translation_error_unsupported">La traducción del %1$s no está disponible en este dispositivo.</string>
-    <string name="translation_error_no_translator">Para traducir necesitas la app gratuita Offline Translator.</string>
-    <string name="translation_get_translator">Descárgala en F-Droid</string>
+    <string name="translation_needs_download">Para traducir del %1$s hay que descargar una sola vez %2$d MB de Mozilla.</string>
+    <string name="translation_download">Descargar</string>
     <string name="translation_failed_note">No se pudo traducir esta nota. Comprueba tu conexión e inténtalo de nuevo.</string>
     <string name="translation_failed_article">No se pudo traducir este artículo. Comprueba tu conexión e inténtalo de nuevo.</string>
     <string name="explore_search_placeholder">Buscar personas o @usuario@dominio</string>

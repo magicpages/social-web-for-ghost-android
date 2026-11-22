@@ -316,8 +316,8 @@
     <string name="translation_error_unknown_language">Nepodařilo se rozpoznat jazyk tohoto příspěvku.</string>
     <string name="translation_error_already">Tento příspěvek už je v tomto jazyce (%1$s).</string>
     <string name="translation_error_unsupported">Překlad z tohoto jazyka (%1$s) není na tomto zařízení k dispozici.</string>
-    <string name="translation_error_no_translator">K překladu potřebuješ bezplatnou aplikaci Offline Translator.</string>
-    <string name="translation_get_translator">Stáhnout z F-Droid</string>
+    <string name="translation_needs_download">Překlad z tohoto jazyka (%1$s) vyžaduje jednorázové stažení %2$d MB od Mozilly.</string>
+    <string name="translation_download">Stáhnout</string>
     <string name="translation_failed_note">Tuto poznámku se nepodařilo přeložit. Zkontrolujte připojení a zkuste to znovu.</string>
     <string name="translation_failed_article">Tento článek se nepodařilo přeložit. Zkontrolujte připojení a zkuste to znovu.</string>
     <string name="explore_search_placeholder">Hledejte lidi nebo @user@domain</string>

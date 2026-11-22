@@ -122,6 +122,13 @@ class ArticleTranslationViewModel @Inject constructor(
         }
     }
 
+    /** The reader agreed to download the language files the translation needs: downloads them, then translates. */
+    fun download() {
+        if (_state.value != ArticleTranslation.Off) return
+        wanted = true
+        translate(quiet = false, download = true)
+    }
+
     fun showOriginal() {
         job?.cancel()
         wanted = false
@@ -129,7 +136,7 @@ class ArticleTranslationViewModel @Inject constructor(
         sites.set(source?.post?.url, false)
     }
 
-    private fun translate(quiet: Boolean) {
+    private fun translate(quiet: Boolean, download: Boolean = false) {
         val shown = source ?: return
         this.quiet = quiet
         job?.cancel()
@@ -143,7 +150,7 @@ class ArticleTranslationViewModel @Inject constructor(
             try {
                 val dek = shown.document.dek(shown.post.summary)
                 // The header's title and summary first, then the body's texts in reading order.
-                val result = translator.translate(listOf(shown.post.title, dek.orEmpty()) + shown.document.translatableTexts())
+                val result = translator.translate(listOf(shown.post.title, dek.orEmpty()) + shown.document.translatableTexts(), download)
                 val translated = ArticleTranslation.Translated(
                     sourceName = translator.languageName(result.sourceLanguage),
                     title = result.texts[0].ifBlank { shown.post.title },

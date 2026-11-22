@@ -302,8 +302,8 @@
     <string name="translation_error_unknown_language">Kunne ikke afgøre, hvilket sprog dette opslag er på.</string>
     <string name="translation_error_already">Dette opslag er allerede på %1$s.</string>
     <string name="translation_error_unsupported">Oversættelse fra %1$s er ikke tilgængelig på denne enhed.</string>
-    <string name="translation_error_no_translator">Oversættelse kræver den gratis app Offline Translator.</string>
-    <string name="translation_get_translator">Hent den på F-Droid</string>
+    <string name="translation_needs_download">Oversættelse fra %1$s kræver en engangsdownload på %2$d MB fra Mozilla.</string>
+    <string name="translation_download">Download</string>
     <string name="translation_failed_note">Kunne ikke oversætte denne note. Tjek din forbindelse, og prøv igen.</string>
     <string name="translation_failed_article">Kunne ikke oversætte denne artikel. Tjek din forbindelse, og prøv igen.</string>
     <string name="explore_search_placeholder">Søg efter personer eller @user@domain</string>

@@ -295,8 +295,8 @@
     <string name="translation_error_unknown_language">無法辨識此貼文使用的語言。</string>
     <string name="translation_error_already">此貼文已經是%1$s了。</string>
     <string name="translation_error_unsupported">此裝置不支援從%1$s翻譯。</string>
-    <string name="translation_error_no_translator">翻譯需要免費的 Offline Translator 應用程式。</string>
-    <string name="translation_get_translator">在 F-Droid 取得</string>
+    <string name="translation_needs_download">從%1$s翻譯需要從 Mozilla 一次性下載 %2$d MB。</string>
+    <string name="translation_download">下載</string>
     <string name="translation_failed_note">無法翻譯這則筆記。請檢查網路連線後再試一次。</string>
     <string name="translation_failed_article">無法翻譯這篇文章。請檢查網路連線後再試一次。</string>
     <string name="explore_search_placeholder">搜尋使用者或 @user@domain</string>

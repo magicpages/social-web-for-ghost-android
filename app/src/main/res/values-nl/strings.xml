@@ -302,8 +302,8 @@
     <string name="translation_error_unknown_language">Kan niet bepalen in welke taal dit bericht is geschreven.</string>
     <string name="translation_error_already">Dit bericht is al in het %1$s.</string>
     <string name="translation_error_unsupported">Vertalen vanuit het %1$s is niet beschikbaar op dit apparaat.</string>
-    <string name="translation_error_no_translator">Voor vertalen heb je de gratis app Offline Translator nodig.</string>
-    <string name="translation_get_translator">Download via F-Droid</string>
+    <string name="translation_needs_download">Vertalen vanuit het %1$s vraagt een eenmalige download van %2$d MB van Mozilla.</string>
+    <string name="translation_download">Downloaden</string>
     <string name="translation_failed_note">Deze notitie kan niet worden vertaald. Controleer je verbinding en probeer het opnieuw.</string>
     <string name="translation_failed_article">Dit artikel kan niet worden vertaald. Controleer je verbinding en probeer het opnieuw.</string>
     <string name="explore_search_placeholder">Zoek mensen of @user@domain</string>

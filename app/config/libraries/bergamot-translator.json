@@ -1,0 +1,23 @@
+{
+  "uniqueId": "org.mozilla:bergamot-translator",
+  "artifactVersion": "0.6.0",
+  "name": "Bergamot Translator",
+  "description": "Firefox's on-device translation engine, which translates notes and articles. The app ships its JavaScript loader and downloads the engine and Firefox's language models from Mozilla when a language is first translated.",
+  "website": "https://github.com/mozilla/translations",
+  "developers": [
+    {
+      "name": "Mozilla",
+      "organisationUrl": "https://www.mozilla.org"
+    }
+  ],
+  "organization": {
+    "name": "Mozilla",
+    "url": "https://www.mozilla.org"
+  },
+  "scm": {
+    "url": "https://github.com/mozilla/translations"
+  },
+  "licenses": [
+    "MPL-2.0"
+  ]
+}

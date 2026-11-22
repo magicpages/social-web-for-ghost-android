@@ -78,8 +78,8 @@ android {
         }
     }
 
-    // Where the app is distributed. Play translates with Google's ML Kit; F-Droid only builds free
-    // software, so `foss` translates through the Offline Translator app instead (src/foss).
+    // Where the app is distributed. Both stores get the same code: translation runs on Firefox's
+    // engine in the system WebView (data/translation), with nothing from Google.
     flavorDimensions += "store"
     productFlavors {
         create("play") { dimension = "store" }
@@ -92,7 +92,6 @@ android {
     }
 
     buildFeatures {
-        aidl = true
         buildConfig = true
         compose = true
     }
@@ -180,9 +179,6 @@ dependencies {
     implementation(libs.media3.exoplayer.hls)
     implementation(libs.media3.ui.compose)
 
-    "playImplementation"(libs.mlkit.translate)
-    "playImplementation"(libs.mlkit.language.id)
-    "playImplementation"(libs.kotlinx.coroutines.play.services)
     implementation(libs.aboutlibraries.compose.m3)
 
     testImplementation(libs.junit)
@@ -190,4 +186,12 @@ dependencies {
     testImplementation(libs.ktor.client.mock)
 
     baselineProfile(project(":baselineprofile"))
+}
+
+aboutLibraries {
+    // Open-source code the app ships that no dependency brings: Firefox's translation engine loader
+    // (assets/translator), listed from config/libraries.
+    collect {
+        configPath = file("config")
+    }
 }

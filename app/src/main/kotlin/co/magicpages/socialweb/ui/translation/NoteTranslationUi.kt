@@ -8,7 +8,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalResources
@@ -57,7 +59,7 @@ fun TranslatableText(
             }
 
             is PostTranslations.State.Failed -> {
-                TranslationFailureText(state.failure)
+                TranslationFailureText(state.failure, onDownload = { translations.translate(post.id, item.content.text, download = true) })
                 HtmlText(item.content, style = style, emojiSourceId = post.id)
             }
 
@@ -81,22 +83,27 @@ private fun TranslationStatus(text: String) {
     }
 }
 
-/** Why a note wasn't translated; with a link to get Offline Translator when that is why. */
+/** Why a note wasn't translated; with Download when the language files are missing. */
 @Composable
-private fun TranslationFailureText(failure: TranslationFailure) {
+private fun TranslationFailureText(failure: TranslationFailure, onDownload: () -> Unit) {
     val message = failure.message(LocalResources.current, article = false)
-    val getIt = stringResource(R.string.translation_get_translator)
+    val download = stringResource(R.string.translation_download)
     val linkColor = MaterialTheme.colorScheme.primary
-    val text = remember(message, getIt, linkColor, failure.problem) {
+    val currentOnDownload by rememberUpdatedState(onDownload)
+    val text = remember(message, download, linkColor, failure.problem) {
         buildAnnotatedString {
             append(message)
-            if (failure.problem == TranslationProblem.NoTranslator) {
+            if (failure.problem == TranslationProblem.NeedsDownload) {
                 append(' ')
-                withLink(LinkAnnotation.Url(OfflineTranslatorUrl, TextLinkStyles(SpanStyle(color = linkColor)))) { append(getIt) }
+                withLink(LinkAnnotation.Clickable("download", TextLinkStyles(SpanStyle(color = linkColor))) { currentOnDownload() }) {
+                    append(download)
+                }
             }
         }
     }
-    Text(text, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.error)
+    // Asking to download isn't an error.
+    val color = if (failure.problem == TranslationProblem.NeedsDownload) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.error
+    Text(text, style = MaterialTheme.typography.labelMedium, color = color)
 }
 
 /** "Translated from Turkish · Show original". */

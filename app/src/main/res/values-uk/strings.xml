@@ -316,8 +316,8 @@
     <string name="translation_error_unknown_language">Не вдалося визначити мову цього допису.</string>
     <string name="translation_error_already">Цей допис уже цією мовою (%1$s).</string>
     <string name="translation_error_unsupported">Переклад із цієї мови (%1$s) недоступний на цьому пристрої.</string>
-    <string name="translation_error_no_translator">Для перекладу потрібен безкоштовний застосунок Offline Translator.</string>
-    <string name="translation_get_translator">Завантажити з F-Droid</string>
+    <string name="translation_needs_download">Для перекладу з цієї мови (%1$s) потрібно один раз завантажити %2$d МБ від Mozilla.</string>
+    <string name="translation_download">Завантажити</string>
     <string name="translation_failed_note">Не вдалося перекласти нотатку. Перевірте підключення й спробуйте ще раз.</string>
     <string name="translation_failed_article">Не вдалося перекласти статтю. Перевірте підключення й спробуйте ще раз.</string>
     <string name="explore_search_placeholder">Пошук людей або @user@domain</string>

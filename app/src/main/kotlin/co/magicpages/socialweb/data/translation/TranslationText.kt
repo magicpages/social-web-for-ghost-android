@@ -14,18 +14,23 @@ enum class TranslationProblem {
     /** The text's language can't be translated on device. */
     UnsupportedLanguage,
 
-    /** The F-Droid build translates through the Offline Translator app, which isn't installed. */
-    NoTranslator,
+    /** The language files for the translation aren't on the device yet: downloading them takes the user's go-ahead. */
+    NeedsDownload,
 
     /** Anything else: the language files couldn't be downloaded, the translator failed. */
     Failed,
 }
 
-/** [language] is the language code the problem is about, for [TranslationProblem.AlreadyInTargetLanguage] and [TranslationProblem.UnsupportedLanguage]. */
+/**
+ * [language] is the language code the problem is about, for [TranslationProblem.AlreadyInTargetLanguage],
+ * [TranslationProblem.UnsupportedLanguage] and [TranslationProblem.NeedsDownload]; [downloadBytes] is the
+ * size of that download.
+ */
 class TranslationException(
     val problem: TranslationProblem,
     val language: String? = null,
     cause: Throwable? = null,
+    val downloadBytes: Long = 0,
 ) : Exception(problem.name, cause)
 
 /** A text cut into the pieces that are translated one by one, and what stays as it is around them. */

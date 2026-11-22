@@ -302,8 +302,8 @@
     <string name="translation_error_unknown_language">Die Sprache dieses Beitrags konnte nicht erkannt werden.</string>
     <string name="translation_error_already">Dieser Beitrag ist bereits auf %1$s.</string>
     <string name="translation_error_unsupported">Das Übersetzen von %1$s ist auf diesem Gerät nicht verfügbar.</string>
-    <string name="translation_error_no_translator">Zum Übersetzen brauchst du die kostenlose App Offline Translator.</string>
-    <string name="translation_get_translator">Bei F-Droid holen</string>
+    <string name="translation_needs_download">Zum Übersetzen von %1$s müssen einmalig %2$d MB von Mozilla geladen werden.</string>
+    <string name="translation_download">Herunterladen</string>
     <string name="translation_failed_note">Diese Notiz konnte nicht übersetzt werden. Prüfe deine Verbindung und versuche es erneut.</string>
     <string name="translation_failed_article">Dieser Artikel konnte nicht übersetzt werden. Prüfe deine Verbindung und versuche es erneut.</string>
     <string name="explore_search_placeholder">Personen oder @user@domain suchen</string>

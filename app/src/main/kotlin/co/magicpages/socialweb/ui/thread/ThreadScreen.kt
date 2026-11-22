@@ -56,7 +56,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalResources
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -102,7 +101,6 @@ import co.magicpages.socialweb.ui.translation.ArticleTranslation
 import co.magicpages.socialweb.ui.translation.ArticleTranslationBanner
 import co.magicpages.socialweb.ui.translation.ArticleTranslateAction
 import co.magicpages.socialweb.ui.translation.ArticleTranslationViewModel
-import co.magicpages.socialweb.ui.translation.OfflineTranslatorUrl
 import co.magicpages.socialweb.ui.translation.message
 import kotlinx.coroutines.flow.first
 
@@ -165,16 +163,15 @@ fun ThreadScreen(
         if (articleOpen && loadedArticle != null && focused != null) translation.show(focused.post, loadedArticle)
     }
     val resources = LocalResources.current
-    val uriHandler = LocalUriHandler.current
     LaunchedEffect(translation) {
         translation.failures.collect { failure ->
-            val noTranslator = failure.problem == TranslationProblem.NoTranslator
+            val needsDownload = failure.problem == TranslationProblem.NeedsDownload
             val result = snackbar.showSnackbar(
                 failure.message(resources, article = true),
-                actionLabel = if (noTranslator) resources.getString(R.string.translation_get_translator) else null,
-                duration = if (noTranslator) SnackbarDuration.Long else SnackbarDuration.Short,
+                actionLabel = if (needsDownload) resources.getString(R.string.translation_download) else null,
+                duration = if (needsDownload) SnackbarDuration.Long else SnackbarDuration.Short,
             )
-            if (result == SnackbarResult.ActionPerformed) uriHandler.openUri(OfflineTranslatorUrl)
+            if (result == SnackbarResult.ActionPerformed) translation.download()
         }
     }
 

@@ -16,7 +16,7 @@ The app is built by [Magic Pages](https://www.magicpages.co). It's an independen
 - **Posting:** notes and replies with photos and alt text, from your site's own profile. Take a photo with the camera right in the composer. GIFs from KLIPY when your Ghost site has a KLIPY key, like its editor's GIF card. Share a link, text or a photo from any other app to start one.
 - **Your profile:** edit your name, username, bio, picture and cover image. Share any profile as a QR code, a link or a picture card.
 - **Notifications:** likes, reposts, replies, mentions and new followers, grouped. The app checks for new ones in the background with WorkManager about every 15 minutes; there is no push server.
-- **Translation** of notes and articles with ML Kit, on the device.
+- **Translation** of notes and articles on the device, with Firefox's translation engine and language models.
 - **Bluesky:** share your site on Bluesky through Bridgy Fed, like Ghost's own setting. Choose whether media marked as sensitive shows without a tap.
 - **Several sites** in one app, plus member sign-in to read a site's members-only posts.
 - **Moderation:** block accounts or whole servers, report posts and people.
@@ -41,7 +41,7 @@ Or build it yourself, see below.
 
 You need JDK 17 or newer and the Android SDK with platform 37. Android Studio brings both.
 
-There are two flavors. `play` is the Google Play app: it translates with Google's ML Kit. `foss` is the F-Droid app, free software only: it identifies languages with Android's own text classifier and translates through the [Offline Translator](https://f-droid.org/packages/dev.davidv.translator/) app, which the user installs from F-Droid. Everything else is the same code.
+There are two flavors, `play` for Google Play and `foss` for F-Droid, built from the same code. Neither has Google code: translation identifies the language with Android's own text classifier and translates with Bergamot, Firefox's translation engine, compiled to WebAssembly and run in a hidden system WebView (`data/translation/`). The app ships Firefox's JavaScript loader (`app/src/main/assets/translator/`, MPL-2.0); the engine (5 MB, pinned by its SHA-256) and the language models (about 20 to 40 MB a language) are downloaded from Mozilla, the same files Firefox uses, once the user taps Download on the first translation from or into a language.
 
 ```sh
 ./gradlew :app:assemblePlayDebug    # app/build/outputs/apk/play/debug/app-play-debug.apk
@@ -82,12 +82,12 @@ Kotlin, Jetpack Compose with Material 3, Navigation 3, Hilt, Ktor, kotlinx.seria
 | `app/src/main/kotlin/co/magicpages/socialweb/ui/` | One package per screen (`feed`, `thread`, `profile`, `notifications`, `article`, …) plus shared `components` and `theme` |
 | `app/src/main/kotlin/co/magicpages/socialweb/background/` | Background notification checks and notification actions |
 | `app/src/debug/` | Demo mode: made-up content and placeholder pictures |
-| `app/src/play/`, `app/src/foss/` | The two translators: ML Kit for Play, Offline Translator for F-Droid (with its AIDL interface) |
+| `app/src/main/assets/translator/` | The translation engine's page: Firefox's Bergamot loader and the app's bridge to it |
 | `app/src/test/` | Unit tests |
 | `baselineprofile/` | Records the baseline profile by driving demo mode |
 | `fastlane/metadata/android/` | Store listing text, icon, feature graphic and screenshots |
 
-Your account data goes to your Ghost site only: the social web API under `/.ghost/activitypub/` and the Admin API, with your session. Besides that, the app loads pictures and media from where they're hosted, fetches the pages behind links to show previews, sends what you type in the GIF search to KLIPY with your site's KLIPY key, and (Play app only) downloads ML Kit's language models from Google the first time you translate into a language. The F-Droid app hands the text to Offline Translator on the device instead. Sign-in sessions and tokens are encrypted with Tink, using a key held in the Android Keystore, and are excluded from backups. There's no analytics, crash reporting service or tracking.
+Your account data goes to your Ghost site only: the social web API under `/.ghost/activitypub/` and the Admin API, with your session. Besides that, the app loads pictures and media from where they're hosted, fetches the pages behind links to show previews, sends what you type in the GIF search to KLIPY with your site's KLIPY key, and downloads the translation engine and language models from Mozilla when you agree to it on your first translation. The text you translate stays on the device. Sign-in sessions and tokens are encrypted with Tink, using a key held in the Android Keystore, and are excluded from backups. There's no analytics, crash reporting service or tracking.
 
 ## Contributing
 

@@ -295,8 +295,8 @@
     <string name="translation_error_unknown_language">이 게시물의 언어를 알 수 없어요.</string>
     <string name="translation_error_already">이 게시물은 이미 %1$s예요.</string>
     <string name="translation_error_unsupported">%1$s에서 번역하는 기능은 이 기기에서 지원되지 않아요.</string>
-    <string name="translation_error_no_translator">번역하려면 무료 앱 Offline Translator가 필요해요.</string>
-    <string name="translation_get_translator">F-Droid에서 받기</string>
+    <string name="translation_needs_download">%1$s에서 번역하려면 Mozilla에서 %2$d MB를 한 번 다운로드해야 해요.</string>
+    <string name="translation_download">다운로드</string>
     <string name="translation_failed_note">이 노트를 번역하지 못했어요. 연결 상태를 확인하고 다시 시도하세요.</string>
     <string name="translation_failed_article">이 글을 번역하지 못했어요. 연결 상태를 확인하고 다시 시도하세요.</string>
     <string name="explore_search_placeholder">사람 또는 @user@domain 검색</string>

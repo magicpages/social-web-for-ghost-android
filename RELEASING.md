@@ -168,7 +168,7 @@ What the app really does (checked in code):
 
 - **Network:** only HTTPS (`cleartextTrafficPermitted="false"`). It talks to the Ghost site the user signs in to (Admin API, ActivityPub endpoints, members Portal in a web view) and to fediverse servers the user's site federates with (profiles, posts, images, videos, server rules). There is no developer backend.
 - **Credentials:** email and password go only to the user's own Ghost site, to open a session; the password is not stored. The session cookie or Staff Access Token is stored encrypted (Tink AES-GCM, key in the Android Keystore) in app-private storage. Backup and device transfer are excluded (`allowBackup=false`, `data_extraction_rules.xml`).
-- **No analytics of our own, no crash reporting, ads or advertising ID.** Translation and language detection use Google ML Kit, only when the user taps Translate: the text stays on the device, but the SDK itself then sends Google diagnostics (device model and OS, app package and version, a per-installation ID, performance metrics, error codes, the languages involved) and uses Firebase installations and Remote Config for that ([ML Kit's data disclosure](https://developers.google.com/ml-kit/android-data-disclosure)). No other SDK sends app data anywhere.
+- **No analytics, crash reporting, ads or advertising ID.** Translation runs on the device with Firefox's engine and language models, which are downloaded from Mozilla's CDN (`firefox-settings-attachments.cdn.mozilla.net`, catalog from `firefox.settings.services.mozilla.com`) once the user taps Download; the text never leaves the device. No SDK sends app data anywhere.
 - **Permissions:** `INTERNET`, `POST_NOTIFICATIONS` (background checks for new notifications, user-controlled). Photos are picked with the system photo picker, so there is no media permission.
 - **User reports** are written as an email to `reports@magicpages.co` (and, if the user opts in, the server's moderators) that the user sends from their own mail app; nothing is sent in the background.
 
@@ -187,9 +187,7 @@ Answers:
 | **App activity → In-app search history** (Explore search) | Collected, not shared. Purpose: App functionality. Optional: yes. |
 | **App activity → Other user-generated content** (profile bio) | Collected, not shared. Purpose: App functionality. Optional: yes. |
 | **App activity → Other actions** (likes, reposts, follows, blocks, reports) | Collected, not shared. Purpose: App functionality. |
-| **App info and performance → Diagnostics** (ML Kit) | Collected, not shared. Purpose: Analytics. Optional: yes (only sent when the user taps Translate). |
-| **Device or other IDs** (ML Kit's per-installation ID) | Collected, not shared. Purpose: Analytics. |
-| Location, contacts, financial info, health, web history | Not collected |
+| Location, contacts, financial info, health, web history, app info and performance, device or other IDs | Not collected |
 | Account creation | "My app does not allow users to create an account", then **Yes** to logging in with accounts from outside the app, type "Out of app identification". |
 
 "Not shared": data goes to servers the user chose, for actions the user took, and never to third parties on the developer's behalf. Re-check the answers if an SDK that talks to the network is added.
@@ -209,7 +207,7 @@ Answers:
 
 ## F-Droid
 
-F-Droid builds the `foss` flavor from source and signs it with its own key, so the F-Droid and Play apps can't update each other: switching means uninstalling first. `foss` has no Google code: it identifies a text's language with Android's text classifier (`TextClassificationManager`) and translates through the [Offline Translator](https://f-droid.org/packages/dev.davidv.translator/) app over its AIDL service (`app/src/foss/aidl/`, copied from that app under its `GPL-3.0-or-later OR MIT` licence, which allows exactly this). Without Offline Translator, Translate says the app is needed and links its F-Droid page. A language the user hasn't downloaded in Offline Translator gets its "isn't available" or general error.
+F-Droid builds the `foss` flavor from source and signs it with its own key, so the F-Droid and Play apps can't update each other: switching means uninstalling first. Both flavors are the same code, with no Google code. Translation identifies a text's language with Android's text classifier (`TextClassificationManager`) and translates with Bergamot, Firefox's WebAssembly translation engine, in a hidden system WebView. The repo holds only Firefox's JavaScript loader for it (`app/src/main/assets/translator/bergamot-translator.js`, MPL-2.0, glue release v0.6.0); the engine binary and the language models are downloaded from Mozilla at runtime, and only after the user taps Download, which is F-Droid's rule for downloading executable code.
 
 F-Droid reads the listing (`fastlane/metadata/android/`), including `changelogs/<versionCode>.txt`, from this repo.
 

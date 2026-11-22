@@ -302,8 +302,8 @@
     <string name="translation_error_unknown_language">Det gick inte att avgöra vilket språk det här inlägget är på.</string>
     <string name="translation_error_already">Det här inlägget är redan på %1$s.</string>
     <string name="translation_error_unsupported">Det går inte att översätta från %1$s på den här enheten.</string>
-    <string name="translation_error_no_translator">Översättning kräver den kostnadsfria appen Offline Translator.</string>
-    <string name="translation_get_translator">Hämta den på F-Droid</string>
+    <string name="translation_needs_download">Översättning från %1$s kräver en engångsnedladdning på %2$d MB från Mozilla.</string>
+    <string name="translation_download">Ladda ned</string>
     <string name="translation_failed_note">Det gick inte att översätta den här anteckningen. Kontrollera anslutningen och försök igen.</string>
     <string name="translation_failed_article">Det gick inte att översätta den här artikeln. Kontrollera anslutningen och försök igen.</string>
     <string name="explore_search_placeholder">Sök efter personer eller @user@domain</string>

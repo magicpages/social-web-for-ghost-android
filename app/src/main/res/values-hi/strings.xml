@@ -302,8 +302,8 @@
     <string name="translation_error_unknown_language">यह पता नहीं चल सका कि यह पोस्ट किस भाषा में है।</string>
     <string name="translation_error_already">यह पोस्ट पहले से %1$s में है।</string>
     <string name="translation_error_unsupported">%1$s से अनुवाद इस डिवाइस पर उपलब्ध नहीं है।</string>
-    <string name="translation_error_no_translator">अनुवाद के लिए मुफ़्त Offline Translator ऐप चाहिए।</string>
-    <string name="translation_get_translator">F-Droid से पाएं</string>
+    <string name="translation_needs_download">%1$s से अनुवाद के लिए Mozilla से एक बार %2$d MB डाउनलोड करना होगा।</string>
+    <string name="translation_download">डाउनलोड करें</string>
     <string name="translation_failed_note">यह नोट अनुवाद नहीं हो सका। अपना कनेक्शन जाँचें और दोबारा कोशिश करें।</string>
     <string name="translation_failed_article">यह लेख अनुवाद नहीं हो सका। अपना कनेक्शन जाँचें और दोबारा कोशिश करें।</string>
     <string name="explore_search_placeholder">लोगों को खोजें या @user@domain</string>

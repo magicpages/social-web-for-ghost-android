@@ -295,8 +295,8 @@
     <string name="translation_error_unknown_language">Tidak dapat mengetahui bahasa postingan ini.</string>
     <string name="translation_error_already">Postingan ini sudah dalam %1$s.</string>
     <string name="translation_error_unsupported">Menerjemahkan dari %1$s tidak tersedia di perangkat ini.</string>
-    <string name="translation_error_no_translator">Untuk menerjemahkan, perlu aplikasi gratis Offline Translator.</string>
-    <string name="translation_get_translator">Dapatkan di F-Droid</string>
+    <string name="translation_needs_download">Menerjemahkan dari %1$s memerlukan unduhan satu kali sebesar %2$d MB dari Mozilla.</string>
+    <string name="translation_download">Unduh</string>
     <string name="translation_failed_note">Gagal menerjemahkan catatan ini. Periksa koneksi Anda lalu coba lagi.</string>
     <string name="translation_failed_article">Gagal menerjemahkan artikel ini. Periksa koneksi Anda lalu coba lagi.</string>
     <string name="explore_search_placeholder">Cari orang atau @user@domain</string>
