@@ -78,14 +78,6 @@ android {
         }
     }
 
-    // Where the app is distributed. Both stores get the same code: translation runs on Firefox's
-    // engine in the system WebView (data/translation), with nothing from Google.
-    flavorDimensions += "store"
-    productFlavors {
-        create("play") { dimension = "store" }
-        create("foss") { dimension = "store" }
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -128,7 +120,7 @@ baselineProfile {
     // `filter { exclude(...) }` left them in, 1.5.0); ART and R8 skip rules for classes the release doesn't have.
     // Uses startup-prof.txt to lay out the primary dex with the classes startup needs.
     dexLayoutOptimization = true
-    // Both store flavors run the same code: one profile, in src/main, recorded against `play`.
+    // One profile, in src/main, for every build type.
     mergeIntoMain = true
 }
 

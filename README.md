@@ -41,13 +41,12 @@ Or build it yourself, see below.
 
 You need JDK 17 or newer and the Android SDK with platform 37. Android Studio brings both.
 
-There are two flavors, `play` for Google Play and `foss` for F-Droid, built from the same code. Neither has Google code: translation identifies the language with Android's own text classifier and translates with Bergamot, Firefox's translation engine, compiled to WebAssembly and run in a hidden system WebView (`data/translation/`). The app ships Firefox's JavaScript loader (`app/src/main/assets/translator/`, MPL-2.0); the engine (5 MB, pinned by its SHA-256) and the language models (about 20 to 40 MB a language) are downloaded from Mozilla, the same files Firefox uses, once the user taps Download on the first translation from or into a language.
+There is one build for Google Play and F-Droid, with no Google code. Translation identifies the language with Android's own text classifier and translates with Bergamot, Firefox's translation engine, compiled to WebAssembly and run in a hidden system WebView (`data/translation/`). The app ships Firefox's JavaScript loader (`app/src/main/assets/translator/`, MPL-2.0); the engine (5 MB, pinned by its SHA-256) and the language models (about 20 to 40 MB a language) are downloaded from Mozilla, the same files Firefox uses, once the user taps Download on the first translation from or into a language.
 
 ```sh
-./gradlew :app:assemblePlayDebug    # app/build/outputs/apk/play/debug/app-play-debug.apk
-./gradlew :app:installPlayDebug     # build and install on the connected device
-./gradlew :app:installFossDebug     # the F-Droid flavor
-./gradlew :app:installPlayDev       # the store build's speed: R8, not debuggable, no demo mode
+./gradlew :app:assembleDebug    # app/build/outputs/apk/debug/app-debug.apk
+./gradlew :app:installDebug     # build and install on the connected device
+./gradlew :app:installDev       # the store build's speed: R8, not debuggable, no demo mode
 ```
 
 Debug and dev builds install as `co.magicpages.socialweb.debug`, "Social Web (dev)", next to the store app: Play signs the store app with its own key, so a local build can't replace it. Both use the debug key, so either installs over the other and keeps its sign-ins. Debug builds are much slower than the store app; try performance on a dev build.
@@ -55,8 +54,8 @@ Debug and dev builds install as `co.magicpages.socialweb.debug`, "Social Web (de
 Checks:
 
 ```sh
-./gradlew :app:testPlayDebugUnitTest :app:testFossDebugUnitTest   # unit tests
-./gradlew :app:lintPlayDebug :app:lintFossDebug                   # Android lint
+./gradlew :app:testDebugUnitTest   # unit tests
+./gradlew :app:lintDebug           # Android lint
 ```
 
 A release bundle needs an upload key. [RELEASING.md](RELEASING.md) covers signing, versioning, the store listing and the baseline profile.

@@ -90,7 +90,7 @@ Without them the workflow stops at its first step and names the missing ones.
 
 ## Baseline profile
 
-A baseline profile tells ART which classes and methods to compile ahead of time, so the app starts and scrolls faster right after installation. The `:baselineprofile` module records it (`BaselineProfileGenerator`) by driving the app's demo mode: cold start, scroll Notes, open a thread and a profile, Reader with an article, Explore, Notifications. Because it runs on made-up content it needs no account and no network. The result is committed in `src/main`, so both flavors get it: `:app:bundlePlayRelease` packs it into the bundle, F-Droid's `foss` build into the APK.
+A baseline profile tells ART which classes and methods to compile ahead of time, so the app starts and scrolls faster right after installation. The `:baselineprofile` module records it (`BaselineProfileGenerator`) by driving the app's demo mode: cold start, scroll Notes, open a thread and a profile, Reader with an article, Explore, Notifications. Because it runs on made-up content it needs no account and no network. The result is committed in `src/main`: `:app:bundleRelease` packs it into the Play bundle, F-Droid's build into the APK.
 
 Regenerate it when the start-up path or the main screens change a lot, and before a release if it hasn't been done for a while:
 
@@ -101,7 +101,7 @@ Regenerate it when the start-up path or the main screens change a lot, and befor
    ./gradlew :app:generateBaselineProfile
    ```
 
-   It builds `nonMinifiedRelease` of both flavors, runs the generator on the connected device for each (several cold starts until the profile stops changing) and merges the result into the app.
+   It builds `nonMinifiedRelease`, runs the generator on the connected device (several cold starts until the profile stops changing) and merges the result into the app.
 3. Commit `app/src/main/generated/baselineProfiles/baseline-prof.txt` and `startup-prof.txt`. `startup-prof.txt` is the part for the first launch only; R8 uses it to put the start-up classes together in the primary dex.
 
 Compare cold start with and without the profile (the profile must be generated first):
@@ -112,7 +112,7 @@ Compare cold start with and without the profile (the profile must be generated f
 
 `StartupBenchmarks` runs 10 cold starts each with `CompilationMode.None()` and with the profile compiled in, on the `benchmarkRelease` variant (R8, profileable, signed with the debug key). Read `timeToInitialDisplayMs` of the two tests in the console output or in the JSON files under `baselineprofile/build/outputs/connected_android_test_additional_output/`. Emulator numbers are only good for comparing the two runs with each other; the build suppresses Macrobenchmark's emulator error for that reason.
 
-Why the profiled variants contain demo code: `nonMinifiedRelease` and `benchmarkRelease` are created by the Baseline Profile plugin as copies of `release`, so without it they would start at the login screen. `app/build.gradle.kts` therefore adds `src/debug`'s Kotlin, assets and manifest to those two variants. The real `release`, and so the bundle, is untouched. Rules for `co.magicpages.socialweb.demo` classes do end up in `baseline-prof.txt` and `startup-prof.txt` (the plugin's `filter { exclude(...) }` didn't remove them with 1.5.0); ART and R8 ignore rules for classes the build doesn't have. To check a release build is clean, build it and search for the package: `grep -c 'socialweb.demo' app/build/outputs/mapping/playRelease/mapping.txt` must print `0`.
+Why the profiled variants contain demo code: `nonMinifiedRelease` and `benchmarkRelease` are created by the Baseline Profile plugin as copies of `release`, so without it they would start at the login screen. `app/build.gradle.kts` therefore adds `src/debug`'s Kotlin, assets and manifest to those two variants. The real `release`, and so the bundle, is untouched. Rules for `co.magicpages.socialweb.demo` classes do end up in `baseline-prof.txt` and `startup-prof.txt` (the plugin's `filter { exclude(...) }` didn't remove them with 1.5.0); ART and R8 ignore rules for classes the build doesn't have. To check a release build is clean, build it and search for the package: `grep -c 'socialweb.demo' app/build/outputs/mapping/release/mapping.txt` must print `0`.
 
 ## Each release
 
@@ -126,17 +126,17 @@ Internal testing needs nothing: [CI](#4-automatic-internal-releases) uploads eve
 To upload by hand instead (no CI), set `SOCIALWEB_VERSION_CODE` above Play's latest versionCode and build the signed bundle:
 
 ```bash
-SOCIALWEB_VERSION_CODE=… ./gradlew :app:bundlePlayRelease
+SOCIALWEB_VERSION_CODE=… ./gradlew :app:bundleRelease
 ```
 
-Output: `app/build/outputs/bundle/playRelease/app-play-release.aab`. If it says it is unsigned, `keystore.properties` or the environment variables weren't found. Upload it, either way:
+Output: `app/build/outputs/bundle/release/app-release.aab`. If it says it is unsigned, `keystore.properties` or the environment variables weren't found. Upload it, either way:
 
 - **Console:** Testing → Internal testing → Create new release → upload the `.aab` → Save → Review → Start rollout.
 - **fastlane supply** (install with `gem install fastlane`):
 
   ```bash
   fastlane supply --json_key play-key.json --package_name co.magicpages.socialweb \
-    --aab app/build/outputs/bundle/playRelease/app-play-release.aab --track internal \
+    --aab app/build/outputs/bundle/release/app-release.aab --track internal \
     --metadata_path fastlane/metadata/android
   ```
 
@@ -207,10 +207,10 @@ Answers:
 
 ## F-Droid
 
-F-Droid builds the `foss` flavor from source and signs it with its own key, so the F-Droid and Play apps can't update each other: switching means uninstalling first. Both flavors are the same code, with no Google code. Translation identifies a text's language with Android's text classifier (`TextClassificationManager`) and translates with Bergamot, Firefox's WebAssembly translation engine, in a hidden system WebView. The repo holds only Firefox's JavaScript loader for it (`app/src/main/assets/translator/bergamot-translator.js`, MPL-2.0, glue release v0.6.0); the engine binary and the language models are downloaded from Mozilla at runtime, and only after the user taps Download, which is F-Droid's rule for downloading executable code.
+F-Droid builds the same `release` build as Play from source and signs it with its own key, so the F-Droid and Play apps can't update each other: switching means uninstalling first. There is one build for both stores, with no Google code. Translation identifies a text's language with Android's text classifier (`TextClassificationManager`) and translates with Bergamot, Firefox's WebAssembly translation engine, in a hidden system WebView. The repo holds only Firefox's JavaScript loader for it (`app/src/main/assets/translator/bergamot-translator.js`, MPL-2.0, glue release v0.6.0); the engine binary and the language models are downloaded from Mozilla at runtime, and only after the user taps Download, which is F-Droid's rule for downloading executable code.
 
 F-Droid reads the listing (`fastlane/metadata/android/`), including `changelogs/<versionCode>.txt`, from this repo.
 
-The recipe is `metadata/co.magicpages.socialweb.yml` in [fdroiddata](https://gitlab.com/fdroid/fdroiddata), submitted in [merge request !58352](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/58352) from the fork `betschki/fdroiddata` (branch `co.magicpages.socialweb`). It builds `gradle: [foss]` in `subdir: app` at a full commit hash, with the `NonFreeNet` anti-feature for KLIPY's GIF search. The fork's pipeline needs GitLab identity verification, which F-Droid asks contributors not to do; their maintainers run it on the merge request.
+The recipe is `metadata/co.magicpages.socialweb.yml` in [fdroiddata](https://gitlab.com/fdroid/fdroiddata), submitted in [merge request !58352](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/58352) from the fork `betschki/fdroiddata` (branch `co.magicpages.socialweb`). It builds in `subdir: app` at a full commit hash, with the `NonFreeNet` anti-feature for KLIPY's GIF search. Its first build, `v1.0.0+24`, predates the single build and still names the old F-Droid flavor (`gradle: [foss]`); builds from the commit "Build one app for every store" on need `gradle: [yes]`. The daily update check copies the last build entry, so change `gradle:` to `[yes]` in the recipe (a follow-up merge request) before the first release tag after that commit. The fork's pipeline needs GitLab identity verification, which F-Droid asks contributors not to do; their maintainers run it on the merge request.
 
 The versionCode isn't written in the source (it's the commit count), so release tags carry it: `scripts/tag-release.sh [commit]` tags a commit as `v<versionName>+<versionCode>` (versionName from `app/build.gradle.kts`, versionCode = `git rev-list --count`), then `git push origin <tag>`. F-Droid's recipe reads those tags (`UpdateCheckMode: Tags ^v[\d.]+\+\d+$`, `UpdateCheckData: '|\+(\d+)||v([\d.]+)\+'`, `AutoUpdateMode: Version`), and its daily update check adds the build entry and builds the tag on its own. A tag whose number doesn't match the commit count fails F-Droid's versionCode check, so always tag with the script. Only Play-released commits need a tag; the first is `v1.0.0+24` (`d2a9317`). To check a recipe change locally: put the recipe in `metadata/` of an empty git repo with an empty `config.yml` and run `fdroid checkupdates --auto --allow-dirty co.magicpages.socialweb` (`nix shell nixpkgs#fdroidserver`).

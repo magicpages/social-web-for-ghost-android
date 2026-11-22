@@ -21,13 +21,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    // The same store flavors as :app, so each of its release variants has a producer to run against.
-    flavorDimensions += "store"
-    productFlavors {
-        create("play") { dimension = "store" }
-        create("foss") { dimension = "store" }
-    }
-
     targetProjectPath = ":app"
 }
 
