@@ -183,11 +183,9 @@ internal object DemoContent {
     ): Post {
         val url = "https://${by.domain}/$slug/"
         ages[url] = minutesAgo
-        // About 275 words a minute, like the app's own estimate.
-        val minutes = (body.replace(Regex("<[^>]+>"), " ").split(Regex("\\s+")).size / 275).coerceAtLeast(1)
         return Post(
             id = url, type = Post.TYPE_ARTICLE, title = title, excerpt = excerpt, summary = excerpt, content = body, url = url,
-            featureImageUrl = image(cover), likeCount = likes, likedByMe = liked, replyCount = replies, readingTimeMinutes = minutes,
+            featureImageUrl = image(cover), likeCount = likes, likedByMe = liked, replyCount = replies,
             author = by.author(), authoredByMe = by === me, repostCount = reposts,
         ).also { all[url] = it }
     }

@@ -5,6 +5,7 @@ import co.magicpages.socialweb.data.ghost.isGhostActivityPubUrl
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.nullable
@@ -167,7 +168,8 @@ data class Post(
     val likeCount: Int = 0,
     val likedByMe: Boolean = false,
     val replyCount: Int = 0,
-    val readingTimeMinutes: Int = 0,
+    /** The service's count is a placeholder (always 1, it never counts); [readingTimeMinutes] is the one to show. */
+    @SerialName("readingTimeMinutes") val serviceReadingTimeMinutes: Int = 0,
     @Serializable(with = AttachmentListSerializer::class) val attachments: List<Attachment> = emptyList(),
     val author: Author,
     val authoredByMe: Boolean = false,
@@ -181,6 +183,14 @@ data class Post(
     val ghostAuthors: List<GhostAuthor> get() = metadata?.ghostAuthors.orEmpty()
     val isDeleted: Boolean get() = type == TYPE_TOMBSTONE
     val images: List<Attachment> get() = attachments.filter { it.mediaType?.startsWith("image/") == true || it.type == "Image" }
+
+    /**
+     * Minutes an article takes to read: the service's count when it has a real one, else counted from [content] at
+     * 275 words a minute, as Ghost does. Worked out once per post, so a feed doesn't count words on every frame.
+     */
+    @Transient
+    val readingTimeMinutes: Int =
+        if (serviceReadingTimeMinutes > 1 || !isArticle) serviceReadingTimeMinutes else estimatedReadingMinutes(content) ?: serviceReadingTimeMinutes
 
     /**
      * A page a browser can show, or null. A Ghost note's [url] is its ActivityPub ID, which serves
@@ -197,6 +207,25 @@ data class Post(
         const val TYPE_TOMBSTONE = 2
     }
 }
+
+/** Minutes to read [html] at 275 words a minute, rounded up; null when it has no words. Tags don't count. */
+internal fun estimatedReadingMinutes(html: String): Int? {
+    var words = 0
+    var inTag = false
+    var inWord = false
+    for (char in html) {
+        when {
+            char == '<' -> { inTag = true; inWord = false }
+            char == '>' && inTag -> inTag = false
+            inTag -> Unit
+            char.isWhitespace() -> inWord = false
+            !inWord -> { inWord = true; words++ }
+        }
+    }
+    return if (words == 0) null else (words + WordsPerMinute - 1) / WordsPerMinute
+}
+
+private const val WordsPerMinute = 275
 
 /** Only filled for articles published by the signed-in user's own Ghost site; extra keys are ignored. */
 @Serializable
