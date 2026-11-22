@@ -318,6 +318,13 @@
     <string name="translation_error_unsupported">Tłumaczenie z tego języka (%1$s) nie jest dostępne na tym urządzeniu.</string>
     <string name="translation_needs_download">Tłumaczenie z tego języka (%1$s) wymaga jednorazowego pobrania %2$d MB od Mozilli.</string>
     <string name="translation_download">Pobierz</string>
+    <string name="translation_info_title">Jak działa tłumaczenie</string>
+    <string name="translation_info_device_title">Na Twoim urządzeniu</string>
+    <string name="translation_info_device">Notatki i artykuły są tłumaczone na Twoim telefonie, a Android rozpoznaje tam ich język. To, co tłumaczysz, nigdy nie opuszcza urządzenia: nie widzi tego żadna usługa tłumaczeniowa ani my.</string>
+    <string name="translation_info_download_title">Jedno pobranie na język</string>
+    <string name="translation_info_download">Gdy pierwszy raz tłumaczysz z danego języka, aplikacja pyta, zanim pobierze od Mozilli silnik tłumaczenia i modele tego języka, zwykle 30–60 MB. Mozilla widzi, jakie pliki są pobierane, a nie to, co tłumaczysz. Potem tłumaczenie działa offline.</string>
+    <string name="translation_info_open_source_title">Otwarte oprogramowanie</string>
+    <string name="translation_info_open_source">Silnik to Bergamot, otwartoźródłowy tłumacz wbudowany w Firefoksa, z modelami językowymi Firefoksa. Jego licencja jest w sekcji Licencje open source.</string>
     <string name="translation_failed_note">Nie udało się przetłumaczyć tej notatki. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="translation_failed_article">Nie udało się przetłumaczyć tego artykułu. Sprawdź połączenie i spróbuj ponownie.</string>
     <string name="explore_search_placeholder">Szukaj osób lub @user@domain</string>

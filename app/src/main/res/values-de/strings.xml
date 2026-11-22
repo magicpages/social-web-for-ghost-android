@@ -304,6 +304,13 @@
     <string name="translation_error_unsupported">Das Übersetzen von %1$s ist auf diesem Gerät nicht verfügbar.</string>
     <string name="translation_needs_download">Zum Übersetzen von %1$s müssen einmalig %2$d MB von Mozilla geladen werden.</string>
     <string name="translation_download">Herunterladen</string>
+    <string name="translation_info_title">So funktioniert die Übersetzung</string>
+    <string name="translation_info_device_title">Auf deinem Gerät</string>
+    <string name="translation_info_device">Notizen und Artikel werden auf deinem Handy übersetzt, und Android erkennt dort, in welcher Sprache sie sind. Was du übersetzt, verlässt nie dein Gerät: Kein Übersetzungsdienst sieht es, und wir auch nicht.</string>
+    <string name="translation_info_download_title">Ein Download pro Sprache</string>
+    <string name="translation_info_download">Wenn du zum ersten Mal aus einer Sprache übersetzt, fragt die App, bevor sie die Übersetzungs-Engine und die Sprachmodelle von Mozilla lädt, meist 30 bis 60 MB. Mozilla sieht nur, welche Dateien geladen werden, nicht was du übersetzt. Danach funktioniert die Übersetzung offline.</string>
+    <string name="translation_info_open_source_title">Open Source</string>
+    <string name="translation_info_open_source">Die Engine ist Bergamot, der Open-Source-Übersetzer, der auch in Firefox steckt, mit den Sprachmodellen von Firefox. Die Lizenz findest du unter Open-Source-Lizenzen.</string>
     <string name="translation_failed_note">Diese Notiz konnte nicht übersetzt werden. Prüfe deine Verbindung und versuche es erneut.</string>
     <string name="translation_failed_article">Dieser Artikel konnte nicht übersetzt werden. Prüfe deine Verbindung und versuche es erneut.</string>
     <string name="explore_search_placeholder">Personen oder @user@domain suchen</string>

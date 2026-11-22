@@ -311,6 +311,13 @@
     <string name="translation_error_unsupported">La traduction depuis cette langue (%1$s) n\'est pas disponible sur cet appareil.</string>
     <string name="translation_needs_download">La traduction depuis cette langue (%1$s) nécessite un téléchargement unique de %2$d Mo depuis Mozilla.</string>
     <string name="translation_download">Télécharger</string>
+    <string name="translation_info_title">Comment fonctionne la traduction</string>
+    <string name="translation_info_device_title">Sur votre appareil</string>
+    <string name="translation_info_device">Les notes et les articles sont traduits sur votre téléphone, et Android y détecte leur langue. Ce que vous traduisez ne quitte jamais l\'appareil : aucun service de traduction ne le voit, et nous non plus.</string>
+    <string name="translation_info_download_title">Un téléchargement par langue</string>
+    <string name="translation_info_download">La première fois que vous traduisez depuis une langue, l\'app vous demande avant de télécharger depuis Mozilla le moteur de traduction et les modèles de cette langue, généralement 30 à 60 Mo. Mozilla voit quels fichiers sont téléchargés, pas ce que vous traduisez. Ensuite, la traduction fonctionne hors ligne.</string>
+    <string name="translation_info_open_source_title">Open source</string>
+    <string name="translation_info_open_source">Le moteur est Bergamot, le traducteur open source intégré à Firefox, avec les modèles de langue de Firefox. Sa licence figure dans Licences open source.</string>
     <string name="translation_failed_note">Impossible de traduire cette note. Vérifiez votre connexion et réessayez.</string>
     <string name="translation_failed_article">Impossible de traduire cet article. Vérifiez votre connexion et réessayez.</string>
     <string name="explore_search_placeholder">Rechercher des personnes ou @utilisateur@domaine</string>

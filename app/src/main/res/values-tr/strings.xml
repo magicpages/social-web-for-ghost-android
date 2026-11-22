@@ -304,6 +304,13 @@
     <string name="translation_error_unsupported">%1$s dilinden çeviri bu cihazda kullanılamıyor.</string>
     <string name="translation_needs_download">%1$s dilinden çeviri için Mozilla\'dan bir kerelik %2$d MB indirmek gerekiyor.</string>
     <string name="translation_download">İndir</string>
+    <string name="translation_info_title">Çeviri nasıl çalışır</string>
+    <string name="translation_info_device_title">Cihazınızda</string>
+    <string name="translation_info_device">Notlar ve makaleler telefonunuzda çevrilir, hangi dilde oldukları da orada Android tarafından belirlenir. Çevirdiğiniz metin cihazdan hiç çıkmaz: hiçbir çeviri hizmeti onu görmez, biz de görmeyiz.</string>
+    <string name="translation_info_download_title">Dil başına bir indirme</string>
+    <string name="translation_info_download">Bir dilden ilk kez çeviri yaptığınızda uygulama, çeviri motorunu ve o dilin modellerini Mozilla\'dan indirmeden önce size sorar; genellikle 30 ile 60 MB arası. Mozilla neyi çevirdiğinizi değil, yalnızca hangi dosyaların indirildiğini görür. Sonrasında çeviri çevrimdışı çalışır.</string>
+    <string name="translation_info_open_source_title">Açık kaynak</string>
+    <string name="translation_info_open_source">Motor, Firefox\'ta yerleşik olan açık kaynaklı çevirmen Bergamot\'tur ve Firefox\'un dil modellerini kullanır. Lisansı Açık kaynak lisansları bölümündedir.</string>
     <string name="translation_failed_note">Bu not çevrilemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
     <string name="translation_failed_article">Bu makale çevrilemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
     <string name="explore_search_placeholder">Kişi veya @user@domain ara</string>

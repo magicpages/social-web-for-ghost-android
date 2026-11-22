@@ -297,6 +297,13 @@
     <string name="translation_error_unsupported">此设备不支持从%1$s翻译。</string>
     <string name="translation_needs_download">从%1$s翻译需要从 Mozilla 一次性下载 %2$d MB。</string>
     <string name="translation_download">下载</string>
+    <string name="translation_info_title">翻译的工作方式</string>
+    <string name="translation_info_device_title">在你的设备上</string>
+    <string name="translation_info_device">笔记和文章在你的手机上翻译，语言也由 Android 在设备上识别。你翻译的内容永远不会离开设备：任何翻译服务都看不到，我们也看不到。</string>
+    <string name="translation_info_download_title">每种语言下载一次</string>
+    <string name="translation_info_download">首次从某种语言翻译时，应用会先征得你的同意，再从 Mozilla 下载翻译引擎和该语言的模型，通常为 30 到 60 MB。Mozilla 只能看到下载了哪些文件，看不到你翻译的内容。之后即可离线翻译。</string>
+    <string name="translation_info_open_source_title">开源</string>
+    <string name="translation_info_open_source">引擎是 Bergamot，即 Firefox 内置的开源翻译器，使用 Firefox 的语言模型。其许可证见“开源许可证”。</string>
     <string name="translation_failed_note">无法翻译这条笔记。请检查网络连接后重试。</string>
     <string name="translation_failed_article">无法翻译这篇文章。请检查网络连接后重试。</string>
     <string name="explore_search_placeholder">搜索用户或 @user@domain</string>

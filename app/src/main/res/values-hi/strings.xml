@@ -304,6 +304,13 @@
     <string name="translation_error_unsupported">%1$s से अनुवाद इस डिवाइस पर उपलब्ध नहीं है।</string>
     <string name="translation_needs_download">%1$s से अनुवाद के लिए Mozilla से एक बार %2$d MB डाउनलोड करना होगा।</string>
     <string name="translation_download">डाउनलोड करें</string>
+    <string name="translation_info_title">अनुवाद कैसे काम करता है</string>
+    <string name="translation_info_device_title">आपके डिवाइस पर</string>
+    <string name="translation_info_device">नोट और लेख आपके फ़ोन पर ही अनुवादित होते हैं, और Android वहीं पहचानता है कि वे किस भाषा में हैं। आप जो अनुवाद करते हैं, वह कभी आपके डिवाइस से बाहर नहीं जाता: कोई अनुवाद सेवा उसे नहीं देखती, और हम भी नहीं।</string>
+    <string name="translation_info_download_title">हर भाषा के लिए एक डाउनलोड</string>
+    <string name="translation_info_download">जब आप किसी भाषा से पहली बार अनुवाद करते हैं, तो ऐप Mozilla से अनुवाद इंजन और उस भाषा के मॉडल डाउनलोड करने से पहले पूछता है, आमतौर पर 30 से 60 MB। Mozilla सिर्फ़ यह देखता है कि कौन-सी फ़ाइलें डाउनलोड हुईं, यह नहीं कि आप क्या अनुवाद करते हैं। उसके बाद अनुवाद ऑफ़लाइन काम करता है।</string>
+    <string name="translation_info_open_source_title">ओपन सोर्स</string>
+    <string name="translation_info_open_source">इंजन Bergamot है, Firefox में शामिल ओपन-सोर्स अनुवादक, Firefox के भाषा मॉडल के साथ। इसका लाइसेंस ओपन-सोर्स लाइसेंस में है।</string>
     <string name="translation_failed_note">यह नोट अनुवाद नहीं हो सका। अपना कनेक्शन जाँचें और दोबारा कोशिश करें।</string>
     <string name="translation_failed_article">यह लेख अनुवाद नहीं हो सका। अपना कनेक्शन जाँचें और दोबारा कोशिश करें।</string>
     <string name="explore_search_placeholder">लोगों को खोजें या @user@domain</string>

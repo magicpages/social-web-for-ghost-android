@@ -318,6 +318,13 @@
     <string name="translation_error_unsupported">Перевод с этого языка (%1$s) недоступен на этом устройстве.</string>
     <string name="translation_needs_download">Для перевода с этого языка (%1$s) нужно один раз скачать %2$d МБ у Mozilla.</string>
     <string name="translation_download">Скачать</string>
+    <string name="translation_info_title">Как работает перевод</string>
+    <string name="translation_info_device_title">На вашем устройстве</string>
+    <string name="translation_info_device">Заметки и статьи переводятся на вашем телефоне, и Android там же определяет их язык. То, что вы переводите, никогда не покидает устройство: ни один сервис перевода этого не видит, и мы тоже.</string>
+    <string name="translation_info_download_title">Одна загрузка на язык</string>
+    <string name="translation_info_download">Когда вы впервые переводите с какого-то языка, приложение спрашивает, прежде чем скачать у Mozilla движок перевода и модели этого языка, обычно 30–60 МБ. Mozilla видит, какие файлы скачиваются, но не то, что вы переводите. После этого перевод работает офлайн.</string>
+    <string name="translation_info_open_source_title">Открытый исходный код</string>
+    <string name="translation_info_open_source">Движок — Bergamot, переводчик с открытым исходным кодом, встроенный в Firefox, с языковыми моделями Firefox. Его лицензия есть в разделе «Лицензии открытого ПО».</string>
     <string name="translation_failed_note">Не удалось перевести заметку. Проверьте подключение и повторите попытку.</string>
     <string name="translation_failed_article">Не удалось перевести статью. Проверьте подключение и повторите попытку.</string>
     <string name="explore_search_placeholder">Поиск людей или @user@domain</string>

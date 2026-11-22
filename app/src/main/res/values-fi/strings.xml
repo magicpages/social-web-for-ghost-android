@@ -304,6 +304,13 @@
     <string name="translation_error_unsupported">Kääntäminen tästä kielestä (%1$s) ei ole käytettävissä tällä laitteella.</string>
     <string name="translation_needs_download">Kääntäminen tästä kielestä (%1$s) vaatii kertaluonteisen %2$d Mt:n latauksen Mozillalta.</string>
     <string name="translation_download">Lataa</string>
+    <string name="translation_info_title">Näin kääntäminen toimii</string>
+    <string name="translation_info_device_title">Laitteellasi</string>
+    <string name="translation_info_device">Muistiinpanot ja artikkelit käännetään puhelimessasi, ja Android tunnistaa siellä niiden kielen. Kääntämäsi teksti ei koskaan lähde laitteelta: mikään käännöspalvelu ei näe sitä, emmekä me.</string>
+    <string name="translation_info_download_title">Yksi lataus kieltä kohden</string>
+    <string name="translation_info_download">Kun käännät jostakin kielestä ensimmäistä kertaa, sovellus kysyy ennen kuin lataa Mozillalta käännösmoottorin ja kielen mallit, yleensä 30–60 Mt. Mozilla näkee, mitkä tiedostot ladataan, ei sitä, mitä käännät. Sen jälkeen kääntäminen toimii ilman verkkoa.</string>
+    <string name="translation_info_open_source_title">Avoin lähdekoodi</string>
+    <string name="translation_info_open_source">Moottori on Bergamot, Firefoxiin sisäänrakennettu avoimen lähdekoodin kääntäjä, ja mallit ovat Firefoxin kielimalleja. Sen lisenssi löytyy kohdasta Avoimen lähdekoodin lisenssit.</string>
     <string name="translation_failed_note">Muistiinpanoa ei voitu kääntää. Tarkista yhteytesi ja yritä uudelleen.</string>
     <string name="translation_failed_article">Artikkelia ei voitu kääntää. Tarkista yhteytesi ja yritä uudelleen.</string>
     <string name="explore_search_placeholder">Hae ihmisiä tai @user@domain</string>

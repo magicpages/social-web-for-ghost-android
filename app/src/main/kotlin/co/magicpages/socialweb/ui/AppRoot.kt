@@ -62,6 +62,7 @@ import co.magicpages.socialweb.data.linkpreview.LinkPreviews
 import co.magicpages.socialweb.data.settings.AppSettings
 import co.magicpages.socialweb.ui.about.AboutScreen
 import co.magicpages.socialweb.ui.about.LicensesScreen
+import co.magicpages.socialweb.ui.about.TranslationInfoScreen
 import co.magicpages.socialweb.ui.components.CustomEmojiSource
 import co.magicpages.socialweb.ui.components.ImageViewerHost
 import co.magicpages.socialweb.ui.components.LocalBrowserUriHandler
@@ -147,6 +148,10 @@ data object AboutKey : NavKey
 /** The open-source licenses of the libraries the app ships with. */
 @Serializable
 data object LicensesKey : NavKey
+
+/** How translation works and why it's private. */
+@Serializable
+data object TranslationInfoKey : NavKey
 
 /** The welcome pages, as a tour from About. */
 @Serializable
@@ -463,9 +468,15 @@ private fun SignedInNavigation(
                     SettingsScreen(onBack = back, onOpenBlocked = { push(BlockedKey) }, onOpenAbout = { push(AboutKey) })
                 }
                 entry<AboutKey>(clazzContentKey = contentKey) {
-                    AboutScreen(onBack = back, onOpenLicenses = { push(LicensesKey) }, onOpenWelcome = { push(WelcomeTourKey) })
+                    AboutScreen(
+                        onBack = back,
+                        onOpenLicenses = { push(LicensesKey) },
+                        onOpenTranslation = { push(TranslationInfoKey) },
+                        onOpenWelcome = { push(WelcomeTourKey) },
+                    )
                 }
                 entry<LicensesKey>(clazzContentKey = contentKey) { LicensesScreen(onBack = back) }
+                entry<TranslationInfoKey>(clazzContentKey = contentKey) { TranslationInfoScreen(onBack = back) }
                 // The welcome pages again; their button closes the tour, back to About.
                 entry<WelcomeTourKey>(clazzContentKey = contentKey) {
                     WelcomeScreen(onContinue = back, continueLabel = R.string.about_done)

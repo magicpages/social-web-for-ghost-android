@@ -297,6 +297,13 @@
     <string name="translation_error_unsupported">此裝置不支援從%1$s翻譯。</string>
     <string name="translation_needs_download">從%1$s翻譯需要從 Mozilla 一次性下載 %2$d MB。</string>
     <string name="translation_download">下載</string>
+    <string name="translation_info_title">翻譯的運作方式</string>
+    <string name="translation_info_device_title">在你的裝置上</string>
+    <string name="translation_info_device">筆記和文章會在你的手機上翻譯，語言也由 Android 在裝置上辨識。你翻譯的內容永遠不會離開裝置：任何翻譯服務都看不到，我們也看不到。</string>
+    <string name="translation_info_download_title">每種語言下載一次</string>
+    <string name="translation_info_download">第一次從某種語言翻譯時，應用程式會先徵得你的同意，再從 Mozilla 下載翻譯引擎和該語言的模型，通常為 30 到 60 MB。Mozilla 只能看到下載了哪些檔案，看不到你翻譯的內容。之後即可離線翻譯。</string>
+    <string name="translation_info_open_source_title">開放原始碼</string>
+    <string name="translation_info_open_source">引擎是 Bergamot，也就是 Firefox 內建的開放原始碼翻譯器，使用 Firefox 的語言模型。授權資訊請見「開放原始碼授權」。</string>
     <string name="translation_failed_note">無法翻譯這則筆記。請檢查網路連線後再試一次。</string>
     <string name="translation_failed_article">無法翻譯這篇文章。請檢查網路連線後再試一次。</string>
     <string name="explore_search_placeholder">搜尋使用者或 @user@domain</string>

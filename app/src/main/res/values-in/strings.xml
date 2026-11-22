@@ -297,6 +297,13 @@
     <string name="translation_error_unsupported">Menerjemahkan dari %1$s tidak tersedia di perangkat ini.</string>
     <string name="translation_needs_download">Menerjemahkan dari %1$s memerlukan unduhan satu kali sebesar %2$d MB dari Mozilla.</string>
     <string name="translation_download">Unduh</string>
+    <string name="translation_info_title">Cara kerja terjemahan</string>
+    <string name="translation_info_device_title">Di perangkat Anda</string>
+    <string name="translation_info_device">Catatan dan artikel diterjemahkan di ponsel Anda, dan Android mengenali bahasanya di sana. Apa yang Anda terjemahkan tidak pernah meninggalkan perangkat: tidak ada layanan terjemahan yang melihatnya, begitu juga kami.</string>
+    <string name="translation_info_download_title">Satu unduhan per bahasa</string>
+    <string name="translation_info_download">Saat pertama kali menerjemahkan dari suatu bahasa, aplikasi akan bertanya sebelum mengunduh mesin terjemahan dan model bahasa tersebut dari Mozilla, biasanya 30 sampai 60 MB. Mozilla hanya melihat file mana yang diunduh, bukan apa yang Anda terjemahkan. Setelah itu, terjemahan berfungsi secara offline.</string>
+    <string name="translation_info_open_source_title">Sumber terbuka</string>
+    <string name="translation_info_open_source">Mesinnya adalah Bergamot, penerjemah sumber terbuka yang ada di Firefox, dengan model bahasa Firefox. Lisensinya ada di Lisensi sumber terbuka.</string>
     <string name="translation_failed_note">Gagal menerjemahkan catatan ini. Periksa koneksi Anda lalu coba lagi.</string>
     <string name="translation_failed_article">Gagal menerjemahkan artikel ini. Periksa koneksi Anda lalu coba lagi.</string>
     <string name="explore_search_placeholder">Cari orang atau @user@domain</string>

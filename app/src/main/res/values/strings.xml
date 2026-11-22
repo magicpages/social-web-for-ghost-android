@@ -404,6 +404,13 @@
     <string name="translation_error_unsupported">Translating from %1$s isn\'t available on this device.</string>
     <string name="translation_needs_download">Translating from %1$s needs a one-time download of %2$d MB from Mozilla.</string>
     <string name="translation_download">Download</string>
+    <string name="translation_info_title">How translation works</string>
+    <string name="translation_info_device_title">On your device</string>
+    <string name="translation_info_device">Notes and articles are translated on your phone, and Android tells which language they\'re in. What you translate never leaves the device: no translation service sees it, and neither do we.</string>
+    <string name="translation_info_download_title">One download per language</string>
+    <string name="translation_info_download">The first time you translate from a language, the app asks before it downloads the translation engine and that language\'s models from Mozilla, usually 30 to 60 MB. Mozilla sees which files are downloaded, not what you translate. After that, translating works offline.</string>
+    <string name="translation_info_open_source_title">Open source</string>
+    <string name="translation_info_open_source">The engine is Bergamot, the open-source translator built into Firefox, with Firefox\'s language models. Its license is under Open-source licenses.</string>
     <string name="translation_failed_note">Couldn\'t translate this note. Check your connection and try again.</string>
     <string name="translation_failed_article">Couldn\'t translate this article. Check your connection and try again.</string>
 

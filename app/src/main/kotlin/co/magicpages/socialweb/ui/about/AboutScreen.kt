@@ -45,12 +45,12 @@ internal const val WebsiteUrl = "https://www.magicpages.co"
 internal const val PrivacyPolicyUrl = "https://www.magicpages.co/legal/privacy/android/"
 
 /**
- * The app's icon, name and version, links to its website and privacy policy, the open-source
- * licenses, and a way back to the welcome pages.
+ * The app's icon, name and version, links to its website and privacy policy, how translation works,
+ * the open-source licenses, and a way back to the welcome pages.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AboutScreen(onBack: () -> Unit, onOpenLicenses: () -> Unit, onOpenWelcome: () -> Unit) {
+fun AboutScreen(onBack: () -> Unit, onOpenLicenses: () -> Unit, onOpenTranslation: () -> Unit, onOpenWelcome: () -> Unit) {
     val uriHandler = LocalUriHandler.current
     Scaffold(
         topBar = {
@@ -78,6 +78,7 @@ fun AboutScreen(onBack: () -> Unit, onOpenLicenses: () -> Unit, onOpenWelcome: (
                     listOf(
                         AboutRow(AppIcons.Public, R.string.about_website, external = true) { uriHandler.openUri(WebsiteUrl) },
                         AboutRow(AppIcons.PrivacyTip, R.string.about_privacy, external = true) { uriHandler.openUri(PrivacyPolicyUrl) },
+                        AboutRow(AppIcons.Translate, R.string.translation_info_title, onClick = onOpenTranslation),
                         AboutRow(AppIcons.Description, R.string.about_licenses, onClick = onOpenLicenses),
                     ),
                 )

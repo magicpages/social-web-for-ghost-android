@@ -297,6 +297,13 @@
     <string name="translation_error_unsupported">Thiết bị này không hỗ trợ dịch từ %1$s.</string>
     <string name="translation_needs_download">Để dịch từ %1$s, cần tải xuống một lần %2$d MB từ Mozilla.</string>
     <string name="translation_download">Tải xuống</string>
+    <string name="translation_info_title">Cách dịch hoạt động</string>
+    <string name="translation_info_device_title">Trên thiết bị của bạn</string>
+    <string name="translation_info_device">Ghi chú và bài viết được dịch ngay trên điện thoại của bạn, và Android nhận biết ngôn ngữ của chúng tại đó. Nội dung bạn dịch không bao giờ rời khỏi thiết bị: không dịch vụ dịch nào thấy nó, kể cả chúng tôi.</string>
+    <string name="translation_info_download_title">Một lần tải xuống cho mỗi ngôn ngữ</string>
+    <string name="translation_info_download">Lần đầu bạn dịch từ một ngôn ngữ, ứng dụng sẽ hỏi trước khi tải công cụ dịch và mô hình của ngôn ngữ đó từ Mozilla, thường từ 30 đến 60 MB. Mozilla chỉ thấy tệp nào được tải xuống, không thấy bạn dịch gì. Sau đó, việc dịch hoạt động ngoại tuyến.</string>
+    <string name="translation_info_open_source_title">Mã nguồn mở</string>
+    <string name="translation_info_open_source">Công cụ dịch là Bergamot, trình dịch mã nguồn mở được tích hợp trong Firefox, cùng các mô hình ngôn ngữ của Firefox. Giấy phép của nó nằm trong mục Giấy phép mã nguồn mở.</string>
     <string name="translation_failed_note">Không thể dịch ghi chú này. Hãy kiểm tra kết nối và thử lại.</string>
     <string name="translation_failed_article">Không thể dịch bài viết này. Hãy kiểm tra kết nối và thử lại.</string>
     <string name="explore_search_placeholder">Tìm người hoặc @user@domain</string>

@@ -332,6 +332,13 @@
     <string name="translation_error_unsupported">الترجمة من اللغة %1$s غير متاحة على هذا الجهاز.</string>
     <string name="translation_needs_download">تحتاج الترجمة من اللغة %1$s إلى تنزيل لمرة واحدة بحجم %2$d ميغابايت من Mozilla.</string>
     <string name="translation_download">تنزيل</string>
+    <string name="translation_info_title">كيف تعمل الترجمة</string>
+    <string name="translation_info_device_title">على جهازك</string>
+    <string name="translation_info_device">تُترجم الملاحظات والمقالات على هاتفك، ويتعرّف Android هناك على لغتها. ما تترجمه لا يغادر جهازك أبدًا: لا تراه أي خدمة ترجمة، ولا نحن أيضًا.</string>
+    <string name="translation_info_download_title">تنزيل واحد لكل لغة</string>
+    <string name="translation_info_download">عندما تترجم من لغة لأول مرة، يسألك التطبيق قبل أن ينزّل محرك الترجمة ونماذج تلك اللغة من Mozilla، وحجمها عادةً من 30 إلى 60 ميغابايت. ترى Mozilla الملفات التي تُنزَّل فقط، لا ما تترجمه. بعد ذلك تعمل الترجمة دون اتصال.</string>
+    <string name="translation_info_open_source_title">مفتوح المصدر</string>
+    <string name="translation_info_open_source">المحرك هو Bergamot، المترجم مفتوح المصدر المدمج في Firefox، مع نماذج اللغة الخاصة بـ Firefox. تجد ترخيصه في تراخيص المصادر المفتوحة.</string>
     <string name="translation_failed_note">تعذّرت ترجمة هذه الملاحظة. تحقق من اتصالك ثم حاول مرة أخرى.</string>
     <string name="translation_failed_article">تعذّرت ترجمة هذا المقال. تحقق من اتصالك ثم حاول مرة أخرى.</string>
     <string name="explore_search_placeholder">ابحث عن أشخاص أو @user@domain</string>

@@ -318,6 +318,13 @@
     <string name="translation_error_unsupported">Переклад із цієї мови (%1$s) недоступний на цьому пристрої.</string>
     <string name="translation_needs_download">Для перекладу з цієї мови (%1$s) потрібно один раз завантажити %2$d МБ від Mozilla.</string>
     <string name="translation_download">Завантажити</string>
+    <string name="translation_info_title">Як працює переклад</string>
+    <string name="translation_info_device_title">На вашому пристрої</string>
+    <string name="translation_info_device">Нотатки й статті перекладаються на вашому телефоні, і Android там само визначає їхню мову. Те, що ви перекладаєте, ніколи не залишає пристрій: жоден сервіс перекладу цього не бачить, і ми теж.</string>
+    <string name="translation_info_download_title">Одне завантаження на мову</string>
+    <string name="translation_info_download">Коли ви вперше перекладаєте з якоїсь мови, застосунок питає, перш ніж завантажити з Mozilla рушій перекладу й моделі цієї мови, зазвичай 30–60 МБ. Mozilla бачить, які файли завантажуються, але не те, що ви перекладаєте. Після цього переклад працює офлайн.</string>
+    <string name="translation_info_open_source_title">Відкритий код</string>
+    <string name="translation_info_open_source">Рушій — Bergamot, перекладач із відкритим кодом, вбудований у Firefox, з мовними моделями Firefox. Його ліцензія є в розділі «Ліцензії відкритого коду».</string>
     <string name="translation_failed_note">Не вдалося перекласти нотатку. Перевірте підключення й спробуйте ще раз.</string>
     <string name="translation_failed_article">Не вдалося перекласти статтю. Перевірте підключення й спробуйте ще раз.</string>
     <string name="explore_search_placeholder">Пошук людей або @user@domain</string>

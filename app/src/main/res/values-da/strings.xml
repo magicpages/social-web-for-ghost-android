@@ -304,6 +304,13 @@
     <string name="translation_error_unsupported">Oversættelse fra %1$s er ikke tilgængelig på denne enhed.</string>
     <string name="translation_needs_download">Oversættelse fra %1$s kræver en engangsdownload på %2$d MB fra Mozilla.</string>
     <string name="translation_download">Download</string>
+    <string name="translation_info_title">Sådan virker oversættelse</string>
+    <string name="translation_info_device_title">På din enhed</string>
+    <string name="translation_info_device">Noter og artikler oversættes på din telefon, og Android finder ud af, hvilket sprog de er på. Det, du oversætter, forlader aldrig enheden: ingen oversættelsestjeneste ser det, og det gør vi heller ikke.</string>
+    <string name="translation_info_download_title">Én download pr. sprog</string>
+    <string name="translation_info_download">Første gang du oversætter fra et sprog, spørger appen, før den henter oversættelsesmotoren og sprogets modeller fra Mozilla, typisk 30 til 60 MB. Mozilla ser, hvilke filer der hentes, ikke hvad du oversætter. Derefter virker oversættelse offline.</string>
+    <string name="translation_info_open_source_title">Open source</string>
+    <string name="translation_info_open_source">Motoren er Bergamot, den open source-oversætter, der er indbygget i Firefox, med Firefox\' sprogmodeller. Dens licens står under Open source-licenser.</string>
     <string name="translation_failed_note">Kunne ikke oversætte denne note. Tjek din forbindelse, og prøv igen.</string>
     <string name="translation_failed_article">Kunne ikke oversætte denne artikel. Tjek din forbindelse, og prøv igen.</string>
     <string name="explore_search_placeholder">Søg efter personer eller @user@domain</string>

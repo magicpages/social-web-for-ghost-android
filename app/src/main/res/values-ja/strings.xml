@@ -297,6 +297,13 @@
     <string name="translation_error_unsupported">%1$sからの翻訳は、このデバイスでは利用できません。</string>
     <string name="translation_needs_download">%1$sからの翻訳には、Mozilla から %2$d MB のダウンロードが 1 回必要です。</string>
     <string name="translation_download">ダウンロード</string>
+    <string name="translation_info_title">翻訳のしくみ</string>
+    <string name="translation_info_device_title">デバイス上で</string>
+    <string name="translation_info_device">ノートや記事はスマートフォン上で翻訳され、言語の判別も Android がその場で行います。翻訳する内容がデバイスの外に出ることはありません。翻訳サービスにも、私たちにも見えません。</string>
+    <string name="translation_info_download_title">言語ごとに 1 回のダウンロード</string>
+    <string name="translation_info_download">ある言語から初めて翻訳するとき、アプリは翻訳エンジンとその言語のモデルを Mozilla からダウンロードする前に確認します。通常 30〜60 MB です。Mozilla にわかるのはダウンロードされるファイルだけで、翻訳する内容はわかりません。その後はオフラインで翻訳できます。</string>
+    <string name="translation_info_open_source_title">オープンソース</string>
+    <string name="translation_info_open_source">エンジンは Firefox に組み込まれているオープンソースの翻訳ソフト Bergamot で、Firefox の言語モデルを使います。ライセンスは「オープンソースライセンス」で確認できます。</string>
     <string name="translation_failed_note">このノートを翻訳できませんでした。接続を確認して、もう一度お試しください。</string>
     <string name="translation_failed_article">この記事を翻訳できませんでした。接続を確認して、もう一度お試しください。</string>
     <string name="explore_search_placeholder">ユーザーまたは @user@domain を検索</string>

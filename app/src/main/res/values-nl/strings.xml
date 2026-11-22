@@ -304,6 +304,13 @@
     <string name="translation_error_unsupported">Vertalen vanuit het %1$s is niet beschikbaar op dit apparaat.</string>
     <string name="translation_needs_download">Vertalen vanuit het %1$s vraagt een eenmalige download van %2$d MB van Mozilla.</string>
     <string name="translation_download">Downloaden</string>
+    <string name="translation_info_title">Zo werkt vertalen</string>
+    <string name="translation_info_device_title">Op je apparaat</string>
+    <string name="translation_info_device">Notities en artikelen worden op je telefoon vertaald, en Android herkent daar in welke taal ze zijn. Wat je vertaalt, verlaat je apparaat nooit: geen vertaaldienst ziet het, en wij ook niet.</string>
+    <string name="translation_info_download_title">Eén download per taal</string>
+    <string name="translation_info_download">De eerste keer dat je vanuit een taal vertaalt, vraagt de app het eerst voordat hij de vertaalengine en de modellen van die taal bij Mozilla downloadt, meestal 30 tot 60 MB. Mozilla ziet welke bestanden worden gedownload, niet wat je vertaalt. Daarna werkt vertalen offline.</string>
+    <string name="translation_info_open_source_title">Open source</string>
+    <string name="translation_info_open_source">De engine is Bergamot, de opensourcevertaler die in Firefox zit, met de taalmodellen van Firefox. De licentie staat bij Open-sourcelicenties.</string>
     <string name="translation_failed_note">Deze notitie kan niet worden vertaald. Controleer je verbinding en probeer het opnieuw.</string>
     <string name="translation_failed_article">Dit artikel kan niet worden vertaald. Controleer je verbinding en probeer het opnieuw.</string>
     <string name="explore_search_placeholder">Zoek mensen of @user@domain</string>
