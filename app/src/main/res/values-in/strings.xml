@@ -30,6 +30,8 @@
     <string name="notes_empty">Belum ada catatan. Catatan dari orang yang Anda ikuti akan muncul di sini.</string>
     <string name="reader_title">Pembaca</string>
     <string name="reader_empty">Belum ada artikel. Tulisan panjang dari orang yang Anda ikuti akan muncul di sini.</string>
+    <string name="reader_following">Mengikuti</string>
+    <string name="reader_topic_empty">Belum ada artikel di topik ini. Tarik ke bawah untuk mencoba lagi.</string>
     <string name="nav_reader">Pembaca</string>
     <string name="nav_notes">Catatan</string>
     <string name="nav_notifications">Notifikasi</string>
@@ -158,6 +160,8 @@
     <string name="quote_card_alt_post">Postingan oleh %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">“%1$s”, dari %2$s</string>
     <string name="quote_card_alt_quote_plain">“%1$s”</string>
+    <string name="quote_card_alt_quoted">Mengutip postingan oleh %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Mengutip postingan oleh %1$s (%2$s).</string>
     <string name="action_like">Suka</string>
     <string name="action_unlike">Batal suka</string>
     <string name="like_failed">Gagal menyimpan suka Anda. Coba lagi.</string>
@@ -281,6 +285,10 @@
     <string name="article_members_title">Postingan ini khusus pelanggan</string>
     <string name="article_members_message">Masuk dengan keanggotaan Anda untuk membaca postingan selengkapnya.</string>
     <string name="article_sign_in">Masuk untuk membaca</string>
+    <string name="article_sign_in_to">Masuk ke %1$s</string>
+    <string name="article_sign_out_of">Keluar dari %1$s</string>
+    <string name="reader_hide">Sembunyikan pembaca</string>
+    <string name="reader_show">Tampilkan pembaca</string>
     <string name="article_members_loading">Memuat artikel lengkap…</string>
     <string name="article_members_unavailable">Gagal memuat artikel lengkap. Keanggotaan Anda mungkin tidak mencakup postingan ini.</string>
 

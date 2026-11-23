@@ -30,6 +30,8 @@
     <string name="notes_empty">Нотаток ще немає. Тут з’являтимуться нотатки людей, на яких ви підписані.</string>
     <string name="reader_title">Читання</string>
     <string name="reader_empty">Статей ще немає. Тут з’являтимуться довгі дописи людей, на яких ви підписані.</string>
+    <string name="reader_following">Підписки</string>
+    <string name="reader_topic_empty">У цій темі ще немає статей. Потягніть униз, щоб спробувати ще раз.</string>
     <string name="nav_reader">Читання</string>
     <string name="nav_notes">Нотатки</string>
     <string name="nav_notifications">Сповіщення</string>
@@ -176,6 +178,8 @@
     <string name="quote_card_alt_post">Допис від %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">«%1$s», з допису %2$s</string>
     <string name="quote_card_alt_quote_plain">«%1$s»</string>
+    <string name="quote_card_alt_quoted">Цитує допис від %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Цитує допис від %1$s (%2$s).</string>
     <string name="action_like">Вподобати</string>
     <string name="action_unlike">Скасувати вподобання</string>
     <string name="like_failed">Не вдалося зберегти вподобання. Спробуйте ще раз.</string>
@@ -302,6 +306,10 @@
     <string name="article_members_title">Цей допис лише для передплатників</string>
     <string name="article_members_message">Увійдіть зі своїм членством, щоб прочитати допис повністю.</string>
     <string name="article_sign_in">Увійти, щоб читати</string>
+    <string name="article_sign_in_to">Увійти в %1$s</string>
+    <string name="article_sign_out_of">Вийти з %1$s</string>
+    <string name="reader_hide">Приховати режим читання</string>
+    <string name="reader_show">Показати режим читання</string>
     <string name="article_members_loading">Завантаження повної статті…</string>
     <string name="article_members_unavailable">Не вдалося завантажити повну статтю. Можливо, ваше членство не охоплює цей допис.</string>
 

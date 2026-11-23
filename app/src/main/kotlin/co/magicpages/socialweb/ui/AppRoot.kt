@@ -61,6 +61,10 @@ import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.data.gif.Gifs
 import co.magicpages.socialweb.data.linkpreview.LinkPreviews
 import co.magicpages.socialweb.data.settings.AppSettings
+import co.magicpages.socialweb.data.settings.hidesReaderFor
+import co.magicpages.socialweb.ui.article.LocalReaderSites
+import co.magicpages.socialweb.ui.article.ReaderSites
+import co.magicpages.socialweb.ui.article.ReaderSitesViewModel
 import co.magicpages.socialweb.ui.about.AboutScreen
 import co.magicpages.socialweb.ui.about.LicensesScreen
 import co.magicpages.socialweb.ui.about.TranslationInfoScreen
@@ -361,7 +365,18 @@ private fun SignedInNavigation(
     }
     // A double tap must not stack the same screen twice.
     val push: (NavKey) -> Unit = { key -> if (backStack.lastOrNull() != key) backStack.add(key) }
-    val openPost: (Post) -> Unit = { push(PostKey(it.id, it.url.ifBlank { null })) }
+    val readerSitesModel = hiltViewModel<ReaderSitesViewModel>()
+    val hiddenReaderSites by readerSitesModel.hidden.collectAsStateWithLifecycle()
+    val readerSites = remember(hiddenReaderSites, readerSitesModel) { ReaderSites(hiddenReaderSites, readerSitesModel::setHidden) }
+    val browser = LocalUriHandler.current
+    // An article of a site whose reader view is hidden opens as its page in the browser, not in the app. False for any other post.
+    // Lists keep the callbacks they were first given, so the hidden sites are read when the tap happens, not when this was made.
+    val openAsPage: (Post) -> Boolean = { post ->
+        val page = post.webUrl?.takeIf { post.isArticle && readerSitesModel.hidden.value.hidesReaderFor(it) }
+        if (page != null) browser.openUri(page)
+        page != null
+    }
+    val openPost: (Post) -> Unit = { if (!openAsPage(it)) push(PostKey(it.id, it.url.ifBlank { null })) }
     val openProfile: (Author) -> Unit = { push(ProfileKey(it.handle, it.url)) }
     val back: () -> Unit = { if (backStack.size > 1) backStack.removeLastOrNull() }
     // Taps in the tabs (the list pane) swap what the detail pane shows instead of stacking on it. On a phone
@@ -383,7 +398,6 @@ private fun SignedInNavigation(
     }
 
     // Mention links in post text open the profile in the app, and links to a post open its thread; every other link goes to the browser.
-    val browser = LocalUriHandler.current
     val uriHandler = remember(browser, backStack) {
         object : UriHandler {
             override fun openUri(uri: String) {
@@ -430,7 +444,12 @@ private fun SignedInNavigation(
             ListDetailSceneStrategy.preferredPaneSize(width = ListPaneWidth)
     }
     val detailMetadata = remember { ListDetailSceneStrategy.detailPane() }
-    CompositionLocalProvider(LocalUriHandler provides uriHandler, LocalBrowserUriHandler provides browser, LocalOpenReport provides openReport) {
+    CompositionLocalProvider(
+        LocalUriHandler provides uriHandler,
+        LocalBrowserUriHandler provides browser,
+        LocalOpenReport provides openReport,
+        LocalReaderSites provides readerSites,
+    ) {
         NavDisplay(
             backStack = backStack,
             onBack = back,
@@ -454,7 +473,7 @@ private fun SignedInNavigation(
                         HomeScreen(
                             accountId = session.accountId,
                             detailOpen = backStack.size > 1,
-                            onOpenPost = { openFromList(PostKey(it.id, it.url.ifBlank { null })) },
+                            onOpenPost = { if (!openAsPage(it)) openFromList(PostKey(it.id, it.url.ifBlank { null })) },
                             onOpenPostById = { id, url -> openFromList(PostKey(id, url?.ifBlank { null })) },
                             onOpenProfile = { openFromList(ProfileKey(it.handle, it.url)) },
                             onOpenOwnProfile = { openFromList(ProfileKey("me")) },

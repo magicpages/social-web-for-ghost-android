@@ -30,6 +30,8 @@
     <string name="notes_empty">還沒有筆記。你追蹤的人發布的筆記會顯示在這裡。</string>
     <string name="reader_title">閱讀器</string>
     <string name="reader_empty">還沒有文章。你追蹤的人發布的長文會顯示在這裡。</string>
+    <string name="reader_following">追蹤中</string>
+    <string name="reader_topic_empty">這個話題下還沒有文章。下拉即可重試。</string>
     <string name="nav_reader">閱讀器</string>
     <string name="nav_notes">筆記</string>
     <string name="nav_notifications">通知</string>
@@ -158,6 +160,8 @@
     <string name="quote_card_alt_post">%1$s (%2$s) 的貼文：%3$s</string>
     <string name="quote_card_alt_quote">「%1$s」，出自 %2$s</string>
     <string name="quote_card_alt_quote_plain">「%1$s」</string>
+    <string name="quote_card_alt_quoted">引用了 %1$s (%2$s) 的貼文：%3$s</string>
+    <string name="quote_card_alt_quoted_plain">引用了 %1$s (%2$s) 的貼文。</string>
     <string name="action_like">讚</string>
     <string name="action_unlike">收回讚</string>
     <string name="like_failed">無法儲存你的讚。請再試一次。</string>
@@ -281,6 +285,10 @@
     <string name="article_members_title">此貼文僅限訂閱者閱讀</string>
     <string name="article_members_message">使用你的會員身分登入，即可閱讀完整貼文。</string>
     <string name="article_sign_in">登入後閱讀</string>
+    <string name="article_sign_in_to">登入 %1$s</string>
+    <string name="article_sign_out_of">登出 %1$s</string>
+    <string name="reader_hide">隱藏閱讀器</string>
+    <string name="reader_show">顯示閱讀器</string>
     <string name="article_members_loading">正在載入完整文章…</string>
     <string name="article_members_unavailable">無法載入完整文章。你的會員資格可能不包含此貼文。</string>
 

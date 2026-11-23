@@ -30,6 +30,8 @@
     <string name="notes_empty">لا توجد ملاحظات بعد. ستظهر هنا ملاحظات الأشخاص الذين تتابعهم.</string>
     <string name="reader_title">القارئ</string>
     <string name="reader_empty">لا توجد مقالات بعد. ستظهر هنا المنشورات الطويلة للأشخاص الذين تتابعهم.</string>
+    <string name="reader_following">المتابَعون</string>
+    <string name="reader_topic_empty">لا توجد مقالات في هذا الموضوع بعد. اسحب لأسفل لإعادة المحاولة.</string>
     <string name="nav_reader">القارئ</string>
     <string name="nav_notes">الملاحظات</string>
     <string name="nav_notifications">الإشعارات</string>
@@ -188,6 +190,8 @@
     <string name="quote_card_alt_post">منشور من %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">“%1$s”، من %2$s</string>
     <string name="quote_card_alt_quote_plain">“%1$s”</string>
+    <string name="quote_card_alt_quoted">يقتبس منشورًا من %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">يقتبس منشورًا من %1$s (%2$s).</string>
     <string name="action_like">إعجاب</string>
     <string name="action_unlike">إلغاء الإعجاب</string>
     <string name="like_failed">تعذّر حفظ إعجابك. حاول مرة أخرى.</string>
@@ -316,6 +320,10 @@
     <string name="article_members_title">هذا المنشور للمشتركين فقط</string>
     <string name="article_members_message">سجّل الدخول بعضويتك لقراءة المنشور كاملًا.</string>
     <string name="article_sign_in">سجّل الدخول للقراءة</string>
+    <string name="article_sign_in_to">تسجيل الدخول إلى %1$s</string>
+    <string name="article_sign_out_of">تسجيل الخروج من %1$s</string>
+    <string name="reader_hide">إخفاء القارئ</string>
+    <string name="reader_show">إظهار القارئ</string>
     <string name="article_members_loading">جارٍ تحميل المقال كاملًا…</string>
     <string name="article_members_unavailable">تعذّر تحميل المقال كاملًا. قد لا تشمل عضويتك هذا المنشور.</string>
 

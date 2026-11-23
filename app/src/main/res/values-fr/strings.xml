@@ -30,6 +30,8 @@
     <string name="notes_empty">Aucune note pour l\'instant. Les notes des personnes que vous suivez apparaissent ici.</string>
     <string name="reader_title">Lecteur</string>
     <string name="reader_empty">Aucun article pour l\'instant. Les articles longs des personnes que vous suivez apparaissent ici.</string>
+    <string name="reader_following">Abonnements</string>
+    <string name="reader_topic_empty">Aucun article dans ce sujet pour l\'instant. Tirez vers le bas pour réessayer.</string>
     <string name="nav_reader">Lecteur</string>
     <string name="nav_notes">Notes</string>
     <string name="nav_notifications">Notifications</string>
@@ -170,6 +172,8 @@
     <string name="quote_card_alt_post">Publication de %1$s (%2$s)\u00A0: %3$s</string>
     <string name="quote_card_alt_quote">«\u00A0%1$s\u00A0», de %2$s</string>
     <string name="quote_card_alt_quote_plain">«\u00A0%1$s\u00A0»</string>
+    <string name="quote_card_alt_quoted">Cite une publication de %1$s (%2$s)\u00A0: %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Cite une publication de %1$s (%2$s).</string>
     <string name="action_like">J\'aime</string>
     <string name="action_unlike">Je n\'aime plus</string>
     <string name="like_failed">Impossible d\'enregistrer votre mention J\'aime. Réessayez.</string>
@@ -295,6 +299,10 @@
     <string name="article_members_title">Cette publication est réservée aux abonnés</string>
     <string name="article_members_message">Connectez-vous avec votre abonnement pour lire la publication en entier.</string>
     <string name="article_sign_in">Se connecter pour lire</string>
+    <string name="article_sign_in_to">Se connecter à %1$s</string>
+    <string name="article_sign_out_of">Se déconnecter de %1$s</string>
+    <string name="reader_hide">Masquer le lecteur</string>
+    <string name="reader_show">Afficher le lecteur</string>
     <string name="article_members_loading">Chargement de l\'article complet…</string>
     <string name="article_members_unavailable">Impossible de charger l\'article complet. Votre abonnement n\'inclut peut-être pas cette publication.</string>
 

@@ -2,6 +2,7 @@ package co.magicpages.socialweb.ui.quote
 
 import co.magicpages.socialweb.data.activitypub.Attachment
 import co.magicpages.socialweb.data.activitypub.Author
+import co.magicpages.socialweb.data.activitypub.CustomEmoji
 import co.magicpages.socialweb.data.activitypub.Post
 import java.time.Instant
 import org.junit.Assert.assertEquals
@@ -195,5 +196,81 @@ class QuoteCardSpecTest {
         assertEquals("short", ellipsize("short", 10))
         assertEquals("one two…", ellipsize("one two three four", 10))
         assertEquals("abcdefghij…", ellipsize("abcdefghijklmnop", 10))
+    }
+
+    private val quoteLine = """<p class="quote-inline">RE: <a href="https://remote.example/@bob/7">https://remote.example/@bob/7</a></p>"""
+
+    @Test
+    fun `a quote post names the post it quotes`() {
+        val card = postQuote(post(content = "<p>My take</p>$quoteLine"))
+
+        assertEquals("https://remote.example/@bob/7", card.quotedUrl)
+        assertEquals("My take", card.body)
+    }
+
+    @Test
+    fun `a note that quotes nothing, an article and a hidden post name no quoted post`() {
+        assertNull(postQuote(post()).quotedUrl)
+        assertNull(postQuote(post(type = Post.TYPE_ARTICLE, content = "<p>Words</p>$quoteLine")).quotedUrl)
+        assertNull(postQuote(post(contentWarning = "Spoilers", content = "<p>Words</p>$quoteLine")).quotedUrl)
+    }
+
+    @Test
+    fun `the link card is the first page the words link to, not a mention, hashtag or the post itself`() {
+        val html = """<p><a href="https://social.example/@bob" class="u-url mention">@<span>bob</span></a> """ +
+            """<a href="https://social.example/tags/news" class="mention hashtag">#<span>news</span></a> """ +
+            """<a href="https://remote.example/@ada/1">self</a> """ +
+            """<a href="http://192.168.1.2/admin">private</a> """ +
+            """<a href="https://example.com/story">story</a> <a href="https://example.org/other">other</a></p>"""
+
+        assertEquals("https://example.com/story", postQuote(post(content = html)).linkUrl)
+    }
+
+    @Test
+    fun `media, a quoted post, an article or a warning leave no link card`() {
+        val link = """<p><a href="https://example.com/story">story</a></p>"""
+        val image = Attachment(type = "Image", mediaType = "image/png", url = "https://remote.example/1.png")
+
+        assertEquals("https://example.com/story", postQuote(post(content = link)).linkUrl)
+        assertNull(postQuote(post(content = link, attachments = listOf(image))).linkUrl)
+        assertNull(postQuote(post(content = link + quoteLine)).linkUrl)
+        assertNull(postQuote(post(content = link, type = Post.TYPE_ARTICLE)).linkUrl)
+        assertNull(postQuote(post(content = link, sensitive = true)).linkUrl)
+    }
+
+    @Test
+    fun `a note's video is a still with its poster and shape`() {
+        val video = Attachment(
+            type = "Video",
+            mediaType = "video/mp4",
+            url = "https://remote.example/v.mp4",
+            posterUrl = "https://remote.example/poster.jpg",
+            width = 1280,
+            height = 720,
+        )
+
+        assertEquals(QuoteVideo("https://remote.example/poster.jpg", 1280f / 720f), postQuote(post(attachments = listOf(video))).video)
+        assertNull(postQuote(post()).video)
+        assertNull(postQuote(post(attachments = listOf(video), sensitive = true)).video)
+    }
+
+    @Test
+    fun `custom emoji are found by their shortcodes, and unknown shortcodes stay text`() {
+        val emojis = listOf(
+            CustomEmoji("blobcat", "https://remote.example/blobcat.png"),
+            CustomEmoji("party", "https://remote.example/party.png"),
+        )
+
+        val runs = emojiRuns("Hi :blobcat: and :nope: :party::blobcat:", emojis)
+
+        assertEquals(
+            listOf(
+                EmojiRun(3, 12, "https://remote.example/blobcat.png"),
+                EmojiRun(24, 31, "https://remote.example/party.png"),
+                EmojiRun(31, 40, "https://remote.example/blobcat.png"),
+            ),
+            runs,
+        )
+        assertEquals(emptyList<EmojiRun>(), emojiRuns("Hi :blobcat:", emptyList()))
     }
 }

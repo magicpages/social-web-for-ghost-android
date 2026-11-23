@@ -177,4 +177,20 @@ class FeedFilterTest {
         assertTrue(result.posts.isEmpty())
         assertEquals("n3", result.next)
     }
+
+    @Test
+    fun `articles only skips a page of notes and keeps the articles of the next`() = runTest {
+        val pages = mapOf(
+            null to page(post("n1"), post("n2"), next = "n1"),
+            "n1" to page(post("n3"), articleOf("a1"), next = null),
+        )
+        val asked = ArrayList<String?>()
+
+        val result = loadFiltered(FeedFilter(), null, articlesOnly = true) { asked += it; pages.getValue(it) }
+
+        assertEquals(listOf(null, "n1"), asked)
+        assertEquals(listOf("a1"), result.posts.map { it.id })
+    }
+
+    private fun articleOf(id: String) = post(id).copy(type = Post.TYPE_ARTICLE)
 }

@@ -30,6 +30,8 @@
     <string name="notes_empty">Заметок пока нет. Здесь появятся заметки людей, на которых вы подписаны.</string>
     <string name="reader_title">Чтение</string>
     <string name="reader_empty">Статей пока нет. Здесь появятся длинные публикации людей, на которых вы подписаны.</string>
+    <string name="reader_following">Подписки</string>
+    <string name="reader_topic_empty">В этой теме пока нет статей. Потяните вниз, чтобы повторить.</string>
     <string name="nav_reader">Чтение</string>
     <string name="nav_notes">Заметки</string>
     <string name="nav_notifications">Уведомления</string>
@@ -176,6 +178,8 @@
     <string name="quote_card_alt_post">Пост от %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">«%1$s», из поста %2$s</string>
     <string name="quote_card_alt_quote_plain">«%1$s»</string>
+    <string name="quote_card_alt_quoted">Цитирует пост от %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Цитирует пост от %1$s (%2$s).</string>
     <string name="action_like">Нравится</string>
     <string name="action_unlike">Не нравится</string>
     <string name="like_failed">Не удалось сохранить лайк. Повторите попытку.</string>
@@ -302,6 +306,10 @@
     <string name="article_members_title">Этот пост только для подписчиков</string>
     <string name="article_members_message">Войдите со своим членством, чтобы прочитать пост полностью.</string>
     <string name="article_sign_in">Войти, чтобы читать</string>
+    <string name="article_sign_in_to">Войти в %1$s</string>
+    <string name="article_sign_out_of">Выйти из %1$s</string>
+    <string name="reader_hide">Скрыть режим чтения</string>
+    <string name="reader_show">Показать режим чтения</string>
     <string name="article_members_loading">Загрузка полной статьи…</string>
     <string name="article_members_unavailable">Не удалось загрузить полную статью. Возможно, ваше членство не включает этот пост.</string>
 

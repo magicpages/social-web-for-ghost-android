@@ -30,6 +30,8 @@
     <string name="notes_empty">Henüz not yok. Takip ettiğiniz kişilerin notları burada görünür.</string>
     <string name="reader_title">Okuyucu</string>
     <string name="reader_empty">Henüz makale yok. Takip ettiğiniz kişilerin uzun yazıları burada görünür.</string>
+    <string name="reader_following">Takip edilenler</string>
+    <string name="reader_topic_empty">Bu konuda henüz makale yok. Tekrar denemek için aşağı çekin.</string>
     <string name="nav_reader">Okuyucu</string>
     <string name="nav_notes">Notlar</string>
     <string name="nav_notifications">Bildirimler</string>
@@ -164,6 +166,8 @@
     <string name="quote_card_alt_post">%1$s (%2$s) tarafından paylaşılan gönderi: %3$s</string>
     <string name="quote_card_alt_quote">“%1$s”, kaynak: %2$s</string>
     <string name="quote_card_alt_quote_plain">“%1$s”</string>
+    <string name="quote_card_alt_quoted">%1$s (%2$s) tarafından paylaşılan bir gönderiyi alıntılıyor: %3$s</string>
+    <string name="quote_card_alt_quoted_plain">%1$s (%2$s) tarafından paylaşılan bir gönderiyi alıntılıyor.</string>
     <string name="action_like">Beğen</string>
     <string name="action_unlike">Beğenmekten vazgeç</string>
     <string name="like_failed">Beğeniniz kaydedilemedi. Tekrar deneyin.</string>
@@ -288,6 +292,10 @@
     <string name="article_members_title">Bu gönderi yalnızca abonelere özel</string>
     <string name="article_members_message">Gönderinin tamamını okumak için üyeliğinizle giriş yapın.</string>
     <string name="article_sign_in">Okumak için giriş yap</string>
+    <string name="article_sign_in_to">%1$s sitesine giriş yap</string>
+    <string name="article_sign_out_of">%1$s sitesinden çıkış yap</string>
+    <string name="reader_hide">Okuyucuyu gizle</string>
+    <string name="reader_show">Okuyucuyu göster</string>
     <string name="article_members_loading">Makalenin tamamı yükleniyor…</string>
     <string name="article_members_unavailable">Makalenin tamamı yüklenemedi. Üyeliğiniz bu gönderiyi kapsamıyor olabilir.</string>
 

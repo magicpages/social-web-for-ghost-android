@@ -82,23 +82,27 @@ private fun needsBoundary(codePoint: Int): Boolean {
 }
 
 /**
- * One page of a feed with [filter] applied. A page whose posts are all filtered out would leave the
- * list with nothing on screen to scroll and so nothing to ask for the next page, so this keeps
- * loading until a page keeps something, the feed ends, or [maxRequests] pages have been read.
+ * One page of a feed with [filter] applied, and with only its articles when [articlesOnly]. A page
+ * whose posts are all filtered out would leave the list with nothing on screen to scroll and so
+ * nothing to ask for the next page, so this keeps loading until a page keeps something, the feed
+ * ends, or [maxRequests] pages have been read.
  */
 suspend fun loadFiltered(
     filter: FeedFilter,
     next: String?,
     maxRequests: Int = MaxFilteredRequests,
+    articlesOnly: Boolean = false,
     load: suspend (next: String?) -> PostsPage,
 ): PostsPage {
-    if (!filter.isActive) return load(next)
+    if (!filter.isActive && !articlesOnly) return load(next)
     var cursor = next
     var requests = 0
     while (true) {
         val page = load(cursor)
         requests++
-        val kept = withContext(Dispatchers.Default) { page.posts.filterNot(filter::hides) }
+        val kept = withContext(Dispatchers.Default) {
+            page.posts.filter { (!articlesOnly || it.isArticle) && !filter.hides(it) }
+        }
         if (kept.isNotEmpty() || page.next == null || requests >= maxRequests) return PostsPage(kept, page.next)
         cursor = page.next
     }

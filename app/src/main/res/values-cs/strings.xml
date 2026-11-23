@@ -30,6 +30,8 @@
     <string name="notes_empty">Zatím žádné poznámky. Poznámky od lidí, které sledujete, se zobrazí tady.</string>
     <string name="reader_title">Čtečka</string>
     <string name="reader_empty">Zatím žádné články. Dlouhé příspěvky od lidí, které sledujete, se zobrazí tady.</string>
+    <string name="reader_following">Sledované</string>
+    <string name="reader_topic_empty">V tomto tématu zatím nejsou žádné články. Přetažením dolů to zkusíte znovu.</string>
     <string name="nav_reader">Čtečka</string>
     <string name="nav_notes">Poznámky</string>
     <string name="nav_notifications">Oznámení</string>
@@ -176,6 +178,8 @@
     <string name="quote_card_alt_post">Příspěvek od uživatele %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">„%1$s“, od %2$s</string>
     <string name="quote_card_alt_quote_plain">„%1$s“</string>
+    <string name="quote_card_alt_quoted">Cituje příspěvek od uživatele %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Cituje příspěvek od uživatele %1$s (%2$s).</string>
     <string name="action_like">Líbí se mi</string>
     <string name="action_unlike">Už se mi nelíbí</string>
     <string name="like_failed">Označení „Líbí se mi“ se nepodařilo uložit. Zkuste to znovu.</string>
@@ -302,6 +306,10 @@
     <string name="article_members_title">Tento příspěvek je jen pro odběratele</string>
     <string name="article_members_message">Přihlaste se svým členstvím a přečtěte si celý příspěvek.</string>
     <string name="article_sign_in">Přihlásit se a číst</string>
+    <string name="article_sign_in_to">Přihlásit se k %1$s</string>
+    <string name="article_sign_out_of">Odhlásit se z %1$s</string>
+    <string name="reader_hide">Skrýt čtečku</string>
+    <string name="reader_show">Zobrazit čtečku</string>
     <string name="article_members_loading">Načítání celého článku…</string>
     <string name="article_members_unavailable">Celý článek se nepodařilo načíst. Vaše členství tento příspěvek nemusí zahrnovat.</string>
 

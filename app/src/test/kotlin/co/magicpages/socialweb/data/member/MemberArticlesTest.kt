@@ -16,6 +16,17 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
+/** Cookies as a function of the URL; [cleared] collects the sites whose member session was cleared. */
+private class FakeCookies(private val read: (String) -> String?) : SiteCookies {
+    val cleared = mutableListOf<String>()
+
+    override fun header(url: String): String? = read(url)
+
+    override fun clearMemberSession(url: String) {
+        cleared += url
+    }
+}
+
 class MemberArticlesTest {
     private val requests = mutableListOf<HttpRequestData>()
     private val memberCookie = "ghost-members-ssr=token123; ghost-members-ssr.sig=sig456"
@@ -35,7 +46,7 @@ class MemberArticlesTest {
         handler: suspend MockRequestHandleScope.(HttpRequestData) -> HttpResponseData,
     ): MemberArticles = MemberArticles(
         HttpClient(MockEngine { request -> requests += request; handler(request) }) { expectSuccess = false },
-        MemberSessions(SiteCookies(cookies)),
+        MemberSessions(FakeCookies(cookies)),
     )
 
     @Test
@@ -119,7 +130,7 @@ class MemberArticlesTest {
 
     @Test
     fun `sessions are read per site from the browser's cookies`() = runTest {
-        val sessions = MemberSessions(SiteCookies { url -> if (url.startsWith("https://example.com")) memberCookie else null })
+        val sessions = MemberSessions(FakeCookies { url -> if (url.startsWith("https://example.com")) memberCookie else null })
 
         assertTrue(sessions.hasSession("https://example.com/some-post/"))
         assertFalse(sessions.hasSession("https://other.example/"))
@@ -128,8 +139,27 @@ class MemberArticlesTest {
     }
 
     @Test
+    fun `signing out clears that site's session and announces the change`() = runTest {
+        val cookies = FakeCookies { memberCookie }
+        val sessions = MemberSessions(cookies)
+        val before = sessions.changes.value
+
+        sessions.signOut("https://example.com/")
+
+        assertEquals(listOf("https://example.com/"), cookies.cleared)
+        assertEquals(before + 1, sessions.changes.value)
+    }
+
+    @Test
+    fun `the session and its signature are the cookies a sign out expires`() {
+        assertEquals(listOf("ghost-members-ssr", "ghost-members-ssr.sig"), memberCookieNames("a=1; $memberCookie; b=2"))
+        assertEquals(emptyList<String>(), memberCookieNames("a=1; b=2"))
+        assertEquals(emptyList<String>(), memberCookieNames(null))
+    }
+
+    @Test
     fun `closing the browser announces that sessions may have changed`() {
-        val sessions = MemberSessions(SiteCookies { null })
+        val sessions = MemberSessions(FakeCookies { null })
         val before = sessions.changes.value
 
         sessions.notifyChanged()

@@ -30,6 +30,8 @@
     <string name="notes_empty">Ancora nessuna nota. Le note delle persone che segui compaiono qui.</string>
     <string name="reader_title">Lettore</string>
     <string name="reader_empty">Ancora nessun articolo. I post lunghi delle persone che segui compaiono qui.</string>
+    <string name="reader_following">Seguiti</string>
+    <string name="reader_topic_empty">Ancora nessun articolo in questo argomento. Scorri verso il basso per riprovare.</string>
     <string name="nav_reader">Lettore</string>
     <string name="nav_notes">Note</string>
     <string name="nav_notifications">Notifiche</string>
@@ -170,6 +172,8 @@
     <string name="quote_card_alt_post">Post di %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">«%1$s», da %2$s</string>
     <string name="quote_card_alt_quote_plain">«%1$s»</string>
+    <string name="quote_card_alt_quoted">Cita un post di %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Cita un post di %1$s (%2$s).</string>
     <string name="action_like">Mi piace</string>
     <string name="action_unlike">Non mi piace più</string>
     <string name="like_failed">Impossibile salvare il tuo Mi piace. Riprova.</string>
@@ -295,6 +299,10 @@
     <string name="article_members_title">Questo post è riservato agli iscritti</string>
     <string name="article_members_message">Accedi con il tuo abbonamento per leggere il post completo.</string>
     <string name="article_sign_in">Accedi per leggere</string>
+    <string name="article_sign_in_to">Accedi a %1$s</string>
+    <string name="article_sign_out_of">Esci da %1$s</string>
+    <string name="reader_hide">Nascondi lettore</string>
+    <string name="reader_show">Mostra lettore</string>
     <string name="article_members_loading">Caricamento dell\'articolo completo…</string>
     <string name="article_members_unavailable">Impossibile caricare l\'articolo completo. Il tuo abbonamento potrebbe non includere questo post.</string>
 

@@ -30,6 +30,8 @@
     <string name="notes_empty">Brak notatek. Notatki od obserwowanych osób pojawią się tutaj.</string>
     <string name="reader_title">Czytnik</string>
     <string name="reader_empty">Brak artykułów. Długie wpisy od obserwowanych osób pojawią się tutaj.</string>
+    <string name="reader_following">Obserwowani</string>
+    <string name="reader_topic_empty">W tym temacie nie ma jeszcze artykułów. Pociągnij w dół, aby spróbować ponownie.</string>
     <string name="nav_reader">Czytnik</string>
     <string name="nav_notes">Notatki</string>
     <string name="nav_notifications">Powiadomienia</string>
@@ -176,6 +178,8 @@
     <string name="quote_card_alt_post">Wpis użytkownika %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">„%1$s”, autor: %2$s</string>
     <string name="quote_card_alt_quote_plain">„%1$s”</string>
+    <string name="quote_card_alt_quoted">Cytuje wpis użytkownika %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Cytuje wpis użytkownika %1$s (%2$s).</string>
     <string name="action_like">Polub</string>
     <string name="action_unlike">Cofnij polubienie</string>
     <string name="like_failed">Nie udało się zapisać polubienia. Spróbuj ponownie.</string>
@@ -302,6 +306,10 @@
     <string name="article_members_title">Ten wpis jest tylko dla subskrybentów</string>
     <string name="article_members_message">Zaloguj się na swoje konto członkowskie, aby przeczytać cały wpis.</string>
     <string name="article_sign_in">Zaloguj się, aby czytać</string>
+    <string name="article_sign_in_to">Zaloguj się w %1$s</string>
+    <string name="article_sign_out_of">Wyloguj się z %1$s</string>
+    <string name="reader_hide">Ukryj czytnik</string>
+    <string name="reader_show">Pokaż czytnik</string>
     <string name="article_members_loading">Wczytywanie pełnego artykułu…</string>
     <string name="article_members_unavailable">Nie udało się wczytać pełnego artykułu. Twoje członkostwo może nie obejmować tego wpisu.</string>
 

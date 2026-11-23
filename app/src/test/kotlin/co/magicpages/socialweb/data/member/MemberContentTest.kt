@@ -90,4 +90,76 @@ class MemberContentTest {
 
         assertTrue(MemberContent.extract(html, preview) is Extraction.Full)
     }
+
+    private fun fullContent(html: String, preview: String = publicPart): String {
+        val result = MemberContent.extract(page(html), preview)
+        assertTrue(result is Extraction.Full)
+        return (result as Extraction.Full).html
+    }
+
+    @Test
+    fun `a share box and author box after the post are left out`() {
+        val content = fullContent(
+            "<p>$first</p><p>$second</p><p>$third</p>" +
+                """<div class="share-buttons"><a href="https://example.com/share">Share this post</a></div>""" +
+                """<div class="author-box"><p>Written by an author with a long and friendly bio.</p></div>""",
+        )
+
+        assertTrue(third in content)
+        assertFalse("Share this post" in content)
+        assertFalse("friendly bio" in content)
+    }
+
+    @Test
+    fun `a theme element before the post is left out`() {
+        val content = fullContent(
+            """<div class="reading-time"><span>5 min read</span></div><p>$first</p><p>$second</p><p>$third</p>""",
+        )
+
+        assertFalse("5 min read" in content)
+        assertTrue(first in content)
+        assertTrue(third in content)
+    }
+
+    @Test
+    fun `cards and card comments count as the post`() {
+        val content = fullContent(
+            """<div class="theme-banner">Sponsored by a theme</div><p>$first</p>""" +
+                """<!--kg-card-begin: html--><div class="custom">$second</div><!--kg-card-end: html-->""" +
+                """<figure class="kg-card kg-image-card"><img src="https://example.com/a.png"></figure>""" +
+                "<p>$third</p>" +
+                """<div class="related-posts">Related posts</div>""",
+        )
+
+        assertFalse("Sponsored by a theme" in content)
+        assertFalse("Related posts" in content)
+        assertTrue("kg-image-card" in content)
+        assertTrue("class=\"custom\"" in content)
+    }
+
+    @Test
+    fun `extras between blocks of the post are kept`() {
+        val content = fullContent(
+            """<div class="theme-banner">Banner</div><p>$first</p><p>$second</p>""" +
+                """<div class="newsletter-signup">Join the newsletter</div><p>$third</p>""" +
+                """<div class="author-box">About the author</div>""",
+        )
+
+        assertTrue("Join the newsletter" in content)
+        assertFalse("Banner" in content)
+        assertFalse("About the author" in content)
+    }
+
+    @Test
+    fun `a post with none of Ghost's pieces is kept as it is`() {
+        val preview = "<div>$first</div><div>$second</div>"
+        val content = fullContent(
+            """<div class="intro">$first</div><div>$second</div><div>$third</div><span>Trailing note</span>""",
+            preview,
+        )
+
+        assertTrue("class=\"intro\"" in content)
+        assertTrue("Trailing note" in content)
+        assertTrue(third in content)
+    }
 }

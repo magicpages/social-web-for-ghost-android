@@ -7,6 +7,7 @@ import co.magicpages.socialweb.data.feed.FeedFilter
 import co.magicpages.socialweb.data.feed.SavedFeedPosition
 import co.magicpages.socialweb.data.fediverse.FediverseExplore
 import co.magicpages.socialweb.data.fediverse.normalizeServer
+import co.magicpages.socialweb.data.translation.siteOf
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -129,6 +130,22 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         _reader.value = settings
     }
 
+    private val _readerHiddenSites = MutableStateFlow(prefs.getStringSet(KeyReaderHiddenSites, null)?.toSet().orEmpty())
+
+    /**
+     * The sites (hosts without "www.") whose articles open as their page in the browser instead of the reader view,
+     * as chosen with "Hide reader". Device-wide: it applies to every account.
+     */
+    val readerHiddenSites: StateFlow<Set<String>> = _readerHiddenSites.asStateFlow()
+
+    /** Hides or shows the reader view for the site [articleUrl] is on; nothing happens for an address without a host. */
+    fun setReaderHidden(articleUrl: String, hidden: Boolean) {
+        val site = siteOf(articleUrl) ?: return
+        val next = if (hidden) _readerHiddenSites.value + site else _readerHiddenSites.value - site
+        prefs.edit { putStringSet(KeyReaderHiddenSites, next) }
+        _readerHiddenSites.value = next
+    }
+
     private val _fediverseExplore = MutableStateFlow(
         FediverseExplore(
             enabled = prefs.getBoolean(KeyFediverseEnabled, false),
@@ -172,6 +189,7 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         private const val KeyReaderBackground = "reader_background"
         private const val KeyReaderFont = "reader_font"
         private const val KeyReaderTextSize = "reader_text_size"
+        private const val KeyReaderHiddenSites = "reader_hidden_sites"
         private const val KeyFediverseEnabled = "fediverse_explore"
         private const val KeyFediverseServer = "fediverse_explore_server"
     }

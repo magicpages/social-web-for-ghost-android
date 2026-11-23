@@ -31,6 +31,7 @@ import co.magicpages.socialweb.data.activitypub.Hidden
 import co.magicpages.socialweb.data.activitypub.Moderation.Outcome
 import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.data.activitypub.serverOf
+import co.magicpages.socialweb.ui.article.ReaderViewAction
 import co.magicpages.socialweb.ui.components.ActionSheet
 import co.magicpages.socialweb.ui.components.ActionSheetScope
 import co.magicpages.socialweb.ui.components.AppIcons
@@ -51,10 +52,10 @@ private sealed interface PostMenuDialog {
 }
 
 /**
- * The "more" button at the end of a post's actions, with what isn't for every tap: Translate,
- * Copy link (or a Ghost note's fediverse link), Copy text for a note, and for the site's own posts
- * Remind me to share again (articles) and Delete, or Report and Block for everyone else's. [shareInMenu]
- * adds Share, for a row too narrow to show its own button.
+ * The "more" button at the end of a post's actions, with what isn't for every tap: Show reader (an article of a
+ * site whose reader view is hidden), Translate, Copy link (or a Ghost note's fediverse link), Copy text for a note, and
+ * for the site's own posts Remind me to share again (articles) and Delete, or Report and Block for everyone else's.
+ * [shareInMenu] adds Share, for a row too narrow to show its own button.
  */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -74,7 +75,10 @@ internal fun PostMoreMenu(item: FeedItem, height: Dp, shareInMenu: Boolean = fal
             modifier = Modifier.size(ButtonDefaults.iconSizeFor(height)),
         )
     }
-    PostMenu(item, sheetOpen, onClose = { sheetOpen = false }, shareInMenu = shareInMenu) { TranslateAction(item) }
+    PostMenu(item, sheetOpen, onClose = { sheetOpen = false }, shareInMenu = shareInMenu) {
+        ReaderViewAction(item.post)
+        TranslateAction(item)
+    }
 }
 
 /**

@@ -30,6 +30,8 @@
     <string name="notes_empty">Noch keine Notizen. Notizen der Personen, denen du folgst, erscheinen hier.</string>
     <string name="reader_title">Reader</string>
     <string name="reader_empty">Noch keine Artikel. Lange Beiträge der Personen, denen du folgst, erscheinen hier.</string>
+    <string name="reader_following">Folge ich</string>
+    <string name="reader_topic_empty">In diesem Thema gibt es noch keine Artikel. Zum Wiederholen nach unten ziehen.</string>
     <string name="nav_reader">Reader</string>
     <string name="nav_notes">Notizen</string>
     <string name="nav_notifications">Benachrichtigungen</string>
@@ -164,6 +166,8 @@
     <string name="quote_card_alt_post">Beitrag von %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">„%1$s“, von %2$s</string>
     <string name="quote_card_alt_quote_plain">„%1$s“</string>
+    <string name="quote_card_alt_quoted">Zitiert einen Beitrag von %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Zitiert einen Beitrag von %1$s (%2$s).</string>
     <string name="action_like">Gefällt mir</string>
     <string name="action_unlike">Gefällt mir nicht mehr</string>
     <string name="like_failed">Dein „Gefällt mir“ konnte nicht gespeichert werden. Versuche es erneut.</string>
@@ -288,6 +292,10 @@
     <string name="article_members_title">Dieser Beitrag ist nur für Abonnenten</string>
     <string name="article_members_message">Melde dich mit deiner Mitgliedschaft an, um den ganzen Beitrag zu lesen.</string>
     <string name="article_sign_in">Zum Lesen anmelden</string>
+    <string name="article_sign_in_to">Bei %1$s anmelden</string>
+    <string name="article_sign_out_of">Von %1$s abmelden</string>
+    <string name="reader_hide">Reader ausblenden</string>
+    <string name="reader_show">Reader einblenden</string>
     <string name="article_members_loading">Vollständiger Artikel wird geladen…</string>
     <string name="article_members_unavailable">Der vollständige Artikel konnte nicht geladen werden. Deine Mitgliedschaft enthält diesen Beitrag möglicherweise nicht.</string>
 

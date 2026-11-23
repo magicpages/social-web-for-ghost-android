@@ -92,7 +92,19 @@ private val inlineContentTag: String by lazy {
  * shortcode is still what reads out or gets copied. Shortcodes without an emoji stay plain text.
  */
 fun AnnotatedString.withCustomEmojis(emojis: List<CustomEmoji>): AnnotatedString {
-    if (emojis.isEmpty()) return this
+    val found = emojiShortcodes(text, emojis)
+    if (found.isEmpty()) return this
+    return buildAnnotatedString {
+        append(this@withCustomEmojis)
+        for (emoji in found) {
+            addStringAnnotation(inlineContentTag, emoji.groupValues[1], emoji.range.first, emoji.range.last + 1)
+        }
+    }
+}
+
+/** The `:shortcode:` matches in [text] that have an entry in [emojis]; group 1 is the shortcode. */
+internal fun emojiShortcodes(text: String, emojis: List<CustomEmoji>): List<MatchResult> {
+    if (emojis.isEmpty()) return emptyList()
     val known = emojis.mapTo(HashSet()) { it.shortcode }
     val found = ArrayList<MatchResult>()
     var match = shortcodePattern.find(text)
@@ -105,13 +117,7 @@ fun AnnotatedString.withCustomEmojis(emojis: List<CustomEmoji>): AnnotatedString
             match = shortcodePattern.find(text, match.range.last)
         }
     }
-    if (found.isEmpty()) return this
-    return buildAnnotatedString {
-        append(this@withCustomEmojis)
-        for (emoji in found) {
-            addStringAnnotation(inlineContentTag, emoji.groupValues[1], emoji.range.first, emoji.range.last + 1)
-        }
-    }
+    return found
 }
 
 /** Draws each of [emojis] as an image a little larger than the text around it. */

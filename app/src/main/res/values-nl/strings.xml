@@ -30,6 +30,8 @@
     <string name="notes_empty">Nog geen notities. Notities van mensen die je volgt verschijnen hier.</string>
     <string name="reader_title">Lezer</string>
     <string name="reader_empty">Nog geen artikelen. Lange berichten van mensen die je volgt verschijnen hier.</string>
+    <string name="reader_following">Volgend</string>
+    <string name="reader_topic_empty">Nog geen artikelen in dit onderwerp. Trek omlaag om het opnieuw te proberen.</string>
     <string name="nav_reader">Lezer</string>
     <string name="nav_notes">Notities</string>
     <string name="nav_notifications">Meldingen</string>
@@ -164,6 +166,8 @@
     <string name="quote_card_alt_post">Bericht van %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">“%1$s”, van %2$s</string>
     <string name="quote_card_alt_quote_plain">“%1$s”</string>
+    <string name="quote_card_alt_quoted">Citeert een bericht van %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Citeert een bericht van %1$s (%2$s).</string>
     <string name="action_like">Liken</string>
     <string name="action_unlike">Like ongedaan maken</string>
     <string name="like_failed">Je like kan niet worden opgeslagen. Probeer het opnieuw.</string>
@@ -288,6 +292,10 @@
     <string name="article_members_title">Dit bericht is alleen voor abonnees</string>
     <string name="article_members_message">Log in met je lidmaatschap om het volledige bericht te lezen.</string>
     <string name="article_sign_in">Inloggen om te lezen</string>
+    <string name="article_sign_in_to">Inloggen bij %1$s</string>
+    <string name="article_sign_out_of">Uitloggen bij %1$s</string>
+    <string name="reader_hide">Lezer verbergen</string>
+    <string name="reader_show">Lezer tonen</string>
     <string name="article_members_loading">Het volledige artikel wordt geladen…</string>
     <string name="article_members_unavailable">Het volledige artikel kan niet worden geladen. Je lidmaatschap bevat dit bericht mogelijk niet.</string>
 

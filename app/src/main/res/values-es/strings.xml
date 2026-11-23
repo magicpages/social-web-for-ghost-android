@@ -30,6 +30,8 @@
     <string name="notes_empty">Aún no hay notas. Las notas de las personas a las que sigues aparecen aquí.</string>
     <string name="reader_title">Lector</string>
     <string name="reader_empty">Aún no hay artículos. Las publicaciones largas de las personas a las que sigues aparecen aquí.</string>
+    <string name="reader_following">Siguiendo</string>
+    <string name="reader_topic_empty">Aún no hay artículos en este tema. Desliza hacia abajo para volver a intentarlo.</string>
     <string name="nav_reader">Lector</string>
     <string name="nav_notes">Notas</string>
     <string name="nav_notifications">Notificaciones</string>
@@ -170,6 +172,8 @@
     <string name="quote_card_alt_post">Publicación de %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">“%1$s”, de %2$s</string>
     <string name="quote_card_alt_quote_plain">“%1$s”</string>
+    <string name="quote_card_alt_quoted">Cita una publicación de %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Cita una publicación de %1$s (%2$s).</string>
     <string name="action_like">Me gusta</string>
     <string name="action_unlike">Quitar Me gusta</string>
     <string name="like_failed">No se pudo guardar tu Me gusta. Inténtalo de nuevo.</string>
@@ -295,6 +299,10 @@
     <string name="article_members_title">Esta publicación es solo para suscriptores</string>
     <string name="article_members_message">Inicia sesión con tu suscripción para leer la publicación completa.</string>
     <string name="article_sign_in">Inicia sesión para leer</string>
+    <string name="article_sign_in_to">Inicia sesión en %1$s</string>
+    <string name="article_sign_out_of">Cierra sesión en %1$s</string>
+    <string name="reader_hide">Ocultar lector</string>
+    <string name="reader_show">Mostrar lector</string>
     <string name="article_members_loading">Cargando el artículo completo…</string>
     <string name="article_members_unavailable">No se pudo cargar el artículo completo. Es posible que tu suscripción no incluya esta publicación.</string>
 

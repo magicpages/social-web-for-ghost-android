@@ -55,6 +55,8 @@ enum class Feed {
 @HiltViewModel(assistedFactory = FeedViewModel.Factory::class)
 class FeedViewModel @AssistedInject constructor(
     @Assisted feed: Feed,
+    /** The Ghost topic whose articles a Reader list shows; null for the timeline of followed accounts. */
+    @Assisted topic: String?,
     accounts: AccountStore,
     private val activityPub: ActivityPubClient,
     private val interactions: PostInteractions,
@@ -66,7 +68,7 @@ class FeedViewModel @AssistedInject constructor(
 ) : ViewModel() {
     @AssistedFactory
     interface Factory {
-        fun create(feed: Feed): FeedViewModel
+        fun create(feed: Feed, topic: String?): FeedViewModel
     }
 
     // Reposts of one post are folded into one item per load of the list: a refresh starts anew.
@@ -78,12 +80,15 @@ class FeedViewModel @AssistedInject constructor(
     ) { account, filter -> account to filter }
         .flatMapLatest { (account, filter) ->
             Pager(PagingConfig(pageSize = 20, enablePlaceholders = false)) {
-                val groups = RepostGroups().also { repostGroups.value = it }
+                // Reposts are folded per load of the Reader's timeline; a topic's list is the service's own and has none to fold.
+                val groups = if (topic == null) RepostGroups().also { repostGroups.value = it } else null
                 PostsPagingSource(interactions, groups = groups) { next ->
-                    loadFiltered(filter, next) { cursor ->
-                        when (feed) {
-                            Feed.Reader -> activityPub.readerFeed(account.site, account.credential, cursor)
-                            Feed.Notes -> activityPub.notesFeed(account.site, account.credential, cursor)
+                    // A topic's list may hold notes as well; the Reader shows articles only.
+                    loadFiltered(filter, next, articlesOnly = topic != null) { cursor ->
+                        when {
+                            topic != null -> activityPub.discoverFeed(account.site, account.credential, topic, cursor)
+                            feed == Feed.Reader -> activityPub.readerFeed(account.site, account.credential, cursor)
+                            else -> activityPub.notesFeed(account.site, account.credential, cursor)
                         }
                     }.also { freshAvatars.track(it.posts) }
                 }
@@ -111,7 +116,8 @@ class FeedViewModel @AssistedInject constructor(
     fun toggleLike(post: Post) = interactions.toggleLike(post)
     fun toggleRepost(post: Post) = interactions.toggleRepost(post)
 
-    private val feedName = feed.name
+    // A topic's list is placed on its own: it is another list than the Reader's timeline.
+    private val feedName = if (topic == null) feed.name else "${feed.name}:$topic"
 
     /** Whether any filter is on, for telling an empty list that was filtered from one with nothing in it. */
     val filtering: StateFlow<Boolean> = settings.feedFilter

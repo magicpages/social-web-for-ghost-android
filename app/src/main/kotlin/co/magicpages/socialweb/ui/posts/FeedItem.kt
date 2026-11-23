@@ -92,4 +92,4 @@ internal fun AnnotatedString.firstPreviewLink(post: Post): String? {
     return null
 }
 
-private fun String.isSameLink(other: String) = other.isNotBlank() && trimEnd('/') == other.trim().trimEnd('/')
+internal fun String.isSameLink(other: String) = other.isNotBlank() && trimEnd('/') == other.trim().trimEnd('/')

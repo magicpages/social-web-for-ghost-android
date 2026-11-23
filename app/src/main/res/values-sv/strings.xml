@@ -30,6 +30,8 @@
     <string name="notes_empty">Inga anteckningar än. Anteckningar från personer du följer visas här.</string>
     <string name="reader_title">Läsare</string>
     <string name="reader_empty">Inga artiklar än. Långa inlägg från personer du följer visas här.</string>
+    <string name="reader_following">Följer</string>
+    <string name="reader_topic_empty">Inga artiklar i det här ämnet än. Dra nedåt för att försöka igen.</string>
     <string name="nav_reader">Läsare</string>
     <string name="nav_notes">Anteckningar</string>
     <string name="nav_notifications">Aviseringar</string>
@@ -164,6 +166,8 @@
     <string name="quote_card_alt_post">Inlägg av %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">”%1$s”, från %2$s</string>
     <string name="quote_card_alt_quote_plain">”%1$s”</string>
+    <string name="quote_card_alt_quoted">Citerar ett inlägg av %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Citerar ett inlägg av %1$s (%2$s).</string>
     <string name="action_like">Gilla</string>
     <string name="action_unlike">Sluta gilla</string>
     <string name="like_failed">Det gick inte att spara din gillning. Försök igen.</string>
@@ -288,6 +292,10 @@
     <string name="article_members_title">Det här inlägget är bara för prenumeranter</string>
     <string name="article_members_message">Logga in med ditt medlemskap för att läsa hela inlägget.</string>
     <string name="article_sign_in">Logga in för att läsa</string>
+    <string name="article_sign_in_to">Logga in på %1$s</string>
+    <string name="article_sign_out_of">Logga ut från %1$s</string>
+    <string name="reader_hide">Dölj läsare</string>
+    <string name="reader_show">Visa läsare</string>
     <string name="article_members_loading">Laddar hela artikeln…</string>
     <string name="article_members_unavailable">Det gick inte att ladda hela artikeln. Ditt medlemskap kanske inte omfattar det här inlägget.</string>
 

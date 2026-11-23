@@ -1,10 +1,13 @@
 package co.magicpages.socialweb.ui.feed
 
 import android.os.SystemClock
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -21,6 +24,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -62,7 +66,8 @@ private const val StaleAfterMillis = 5 * 60_000L
 
 /**
  * One timeline tab. [reselections] counts taps on its already-selected tab, each a request to
- * scroll back to the top; [accountMenu] sits at the end of the top bar.
+ * scroll back to the top; [accountMenu] sits at the end of the top bar. The Reader shows its
+ * timeline and a page for each of Ghost's topics, side by side under chips.
  */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -75,49 +80,10 @@ fun FeedScreen(
     onSignOut: () -> Unit,
     accountMenu: @Composable () -> Unit,
 ) {
-    val viewModel = hiltViewModel<FeedViewModel, FeedViewModel.Factory>(key = feed.name) { it.create(feed) }
-    val posts = viewModel.posts.collectAsLazyPagingItems()
-    val filtering by viewModel.filtering.collectAsStateWithLifecycle()
+    val viewModel = hiltViewModel<FeedViewModel, FeedViewModel.Factory>(key = feed.name) { it.create(feed, null) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listState = rememberLazyListState()
-    val scope = rememberCoroutineScope()
-    OnReselect(reselections) { listState.scrollToTop() }
     val snackbar = remember { SnackbarHostState() }
-    CollectMessages(viewModel.messages, snackbar)
-    val newPosts = rememberNewPosts(viewModel, account?.id, posts, listState)
-    // A fresh note belongs at the top of the Notes list, which the server has but we don't yet.
-    // It arrives above the first visible post, and the list keeps that post in place: scroll up
-    // only once the refresh has landed.
-    LaunchedEffect(viewModel) {
-        // The one composer is shared with the Reader's screen, which has no notes to refresh.
-        if (feed != Feed.Notes) return@LaunchedEffect
-        viewModel.noteComposer.posted.collect {
-            posts.refresh()
-            withTimeoutOrNull(1_000) { snapshotFlow { posts.loadState.refresh }.first { it is LoadState.Loading } }
-            snapshotFlow { posts.loadState.refresh }.first { it !is LoadState.Loading }
-            listState.scrollToTop()
-        }
-    }
-    // Remember when the list was last up to date, and reload one that went stale while the app was away.
-    LaunchedEffect(posts) {
-        snapshotFlow { posts.loadState.refresh }.collect {
-            if (it is LoadState.NotLoading) viewModel.lastRefreshed = SystemClock.elapsedRealtime()
-        }
-    }
-    LifecycleResumeEffect(posts) {
-        val stale = SystemClock.elapsedRealtime() - viewModel.lastRefreshed > StaleAfterMillis
-        if (stale && viewModel.positionRestored && posts.loadState.refresh !is LoadState.Loading) posts.refresh()
-        onPauseOrDispose {}
-    }
-    val callbacks = remember(viewModel) {
-        PostCallbacks(
-            open = onOpenPost,
-            openProfile = onOpenProfile,
-            reply = viewModel.composer::start,
-            toggleLike = viewModel::toggleLike,
-            toggleRepost = viewModel::toggleRepost,
-        )
-    }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -153,6 +119,117 @@ fun FeedScreen(
             )
         },
     ) { padding ->
+        if (feed == Feed.Reader) {
+            ReaderPager(Modifier.fillMaxSize().padding(padding)) { topic, current, onLoaded ->
+                // Each topic has a view model and list of its own, so a page is where it was left when swiped back to.
+                val topicModel = topic?.let {
+                    hiltViewModel<FeedViewModel, FeedViewModel.Factory>(key = "${feed.name}:${it.slug}") { factory ->
+                        factory.create(feed, it.slug)
+                    }
+                }
+                FeedPage(
+                    viewModel = topicModel ?: viewModel,
+                    feed = feed,
+                    account = account,
+                    listState = if (topic == null) listState else rememberLazyListState(),
+                    current = current,
+                    reselections = reselections,
+                    emptyMessage = if (topic == null) R.string.reader_empty else R.string.reader_topic_empty,
+                    snackbar = snackbar,
+                    onOpenPost = onOpenPost,
+                    onOpenProfile = onOpenProfile,
+                    onSignOut = onSignOut,
+                    onLoaded = onLoaded,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+        } else {
+            FeedPage(
+                viewModel = viewModel,
+                feed = feed,
+                account = account,
+                listState = listState,
+                current = true,
+                reselections = reselections,
+                emptyMessage = R.string.notes_empty,
+                snackbar = snackbar,
+                onOpenPost = onOpenPost,
+                onOpenProfile = onOpenProfile,
+                onSignOut = onSignOut,
+                modifier = Modifier.fillMaxSize().padding(padding),
+            )
+        }
+    }
+}
+
+/**
+ * One list of a timeline tab, with its pull to refresh, empty and error states, and its reply editor.
+ * Only the [current] list scrolls back to the top on [reselections]; [onLoaded] is called each time
+ * the list has finished loading.
+ */
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+internal fun FeedPage(
+    viewModel: FeedViewModel,
+    feed: Feed,
+    account: StoredAccount?,
+    listState: LazyListState,
+    current: Boolean,
+    reselections: Int,
+    @StringRes emptyMessage: Int,
+    snackbar: SnackbarHostState,
+    onOpenPost: (Post) -> Unit,
+    onOpenProfile: (Author) -> Unit,
+    onSignOut: () -> Unit,
+    modifier: Modifier = Modifier,
+    onLoaded: () -> Unit = {},
+) {
+    val posts = viewModel.posts.collectAsLazyPagingItems()
+    val filtering by viewModel.filtering.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
+    // Composed only while current, so a page swiped to later doesn't take the taps made while it was away for its own.
+    if (current) OnReselect(reselections) { listState.scrollToTop() }
+    CollectMessages(viewModel.messages, snackbar)
+    val newPosts = rememberNewPosts(viewModel, account?.id, posts, listState)
+    // A fresh note belongs at the top of the Notes list, which the server has but we don't yet.
+    // It arrives above the first visible post, and the list keeps that post in place: scroll up
+    // only once the refresh has landed.
+    LaunchedEffect(viewModel) {
+        // The one composer is shared with the Reader's screen, which has no notes to refresh.
+        if (feed != Feed.Notes) return@LaunchedEffect
+        viewModel.noteComposer.posted.collect {
+            posts.refresh()
+            withTimeoutOrNull(1_000) { snapshotFlow { posts.loadState.refresh }.first { it is LoadState.Loading } }
+            snapshotFlow { posts.loadState.refresh }.first { it !is LoadState.Loading }
+            listState.scrollToTop()
+        }
+    }
+    // Remember when the list was last up to date, and reload one that went stale while the app was away.
+    val loaded by rememberUpdatedState(onLoaded)
+    LaunchedEffect(posts) {
+        snapshotFlow { posts.loadState.refresh }.collect {
+            if (it is LoadState.NotLoading) {
+                viewModel.lastRefreshed = SystemClock.elapsedRealtime()
+                loaded()
+            }
+        }
+    }
+    LifecycleResumeEffect(posts) {
+        val stale = SystemClock.elapsedRealtime() - viewModel.lastRefreshed > StaleAfterMillis
+        if (stale && viewModel.positionRestored && posts.loadState.refresh !is LoadState.Loading) posts.refresh()
+        onPauseOrDispose {}
+    }
+    val callbacks = remember(viewModel) {
+        PostCallbacks(
+            open = onOpenPost,
+            openProfile = onOpenProfile,
+            reply = viewModel.composer::start,
+            toggleLike = viewModel::toggleLike,
+            toggleRepost = viewModel::toggleRepost,
+        )
+    }
+
+    Box(modifier) {
         val refresh = posts.loadState.refresh
         val refreshing = refresh is LoadState.Loading && posts.itemCount > 0
         val pullState = rememberPullToRefreshState()
@@ -163,7 +240,7 @@ fun FeedScreen(
             indicator = {
                 PullToRefreshDefaults.LoadingIndicator(pullState, refreshing, Modifier.align(Alignment.TopCenter))
             },
-            modifier = Modifier.fillMaxSize().padding(padding),
+            modifier = Modifier.fillMaxSize(),
         ) {
             when {
                 refresh is LoadState.Error && posts.itemCount == 0 -> FullScreenError(
@@ -174,13 +251,7 @@ fun FeedScreen(
                 )
                 refresh is LoadState.Loading && posts.itemCount == 0 -> CenteredLoading()
                 refresh is LoadState.NotLoading && posts.itemCount == 0 -> ScrollableMessage(
-                    stringResource(
-                        when {
-                            filtering -> R.string.feed_filtered_empty
-                            feed == Feed.Reader -> R.string.reader_empty
-                            else -> R.string.notes_empty
-                        },
-                    ),
+                    stringResource(if (filtering) R.string.feed_filtered_empty else emptyMessage),
                 )
                 else -> LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -197,6 +268,6 @@ fun FeedScreen(
                 modifier = Modifier.align(Alignment.TopCenter).padding(top = 8.dp),
             )
         }
+        ReplyEditorHost(viewModel.composer)
     }
-    ReplyEditorHost(viewModel.composer)
 }

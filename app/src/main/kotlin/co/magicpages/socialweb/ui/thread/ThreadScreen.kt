@@ -73,12 +73,15 @@ import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.data.ghost.isGhostActivityPubUrl
 import co.magicpages.socialweb.data.settings.ReaderBackground
 import co.magicpages.socialweb.data.translation.TranslationProblem
+import co.magicpages.socialweb.ui.article.ArticleSiteAction
 import co.magicpages.socialweb.ui.article.LocalArticleAudio
 import co.magicpages.socialweb.ui.article.LocalReaderSettings
 import co.magicpages.socialweb.ui.article.ReaderSettingsAction
 import co.magicpages.socialweb.ui.article.ReaderSettingsViewModel
+import co.magicpages.socialweb.ui.article.ReaderViewAction
 import co.magicpages.socialweb.ui.article.articleItems
 import co.magicpages.socialweb.ui.article.rememberArticleAudio
+import co.magicpages.socialweb.ui.article.rememberArticleSite
 import co.magicpages.socialweb.ui.components.AppIcons
 import co.magicpages.socialweb.ui.components.CenteredLoading
 import co.magicpages.socialweb.ui.components.browserUriHandler
@@ -190,6 +193,9 @@ fun ThreadScreen(
 
     val readerSettingsModel = hiltViewModel<ReaderSettingsViewModel>()
     val readerSettings by readerSettingsModel.settings.collectAsStateWithLifecycle()
+    // The Ghost site the open article comes from. Its member session is read here, so the menu opens with the right entry.
+    val articleSite = rememberArticleSite(focused?.post?.takeIf { articleOpen })
+    val browser = browserUriHandler()
 
     // The reader's page colour covers the whole screen while an article is open, replies included.
     ReaderTheme(if (articleOpen) readerSettings.background else ReaderBackground.Auto) {
@@ -214,6 +220,12 @@ fun ThreadScreen(
                         OpenInBrowserAction(webUrl)
                         if (articleOpen && focused != null) {
                             ArticleMoreMenu(focused) {
+                                ArticleSiteAction(articleSite)
+                                // The page is the browser's: this screen is the reader view, which is left for it.
+                                ReaderViewAction(focused.post) { page ->
+                                    browser.openUri(page)
+                                    onBack()
+                                }
                                 if (canTranslate) ArticleTranslateAction(articleTranslation, onToggle = translation::toggle)
                             }
                         }

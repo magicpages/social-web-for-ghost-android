@@ -30,6 +30,8 @@
     <string name="notes_empty">Ingen noter endnu. Noter fra de personer, du følger, vises her.</string>
     <string name="reader_title">Læser</string>
     <string name="reader_empty">Ingen artikler endnu. Lange opslag fra de personer, du følger, vises her.</string>
+    <string name="reader_following">Følger</string>
+    <string name="reader_topic_empty">Ingen artikler i dette emne endnu. Træk ned for at prøve igen.</string>
     <string name="nav_reader">Læser</string>
     <string name="nav_notes">Noter</string>
     <string name="nav_notifications">Notifikationer</string>
@@ -164,6 +166,8 @@
     <string name="quote_card_alt_post">Opslag af %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">»%1$s«, fra %2$s</string>
     <string name="quote_card_alt_quote_plain">»%1$s«</string>
+    <string name="quote_card_alt_quoted">Citerer et opslag af %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Citerer et opslag af %1$s (%2$s).</string>
     <string name="action_like">Like</string>
     <string name="action_unlike">Fjern like</string>
     <string name="like_failed">Kunne ikke gemme dit like. Prøv igen.</string>
@@ -288,6 +292,10 @@
     <string name="article_members_title">Dette opslag er kun for abonnenter</string>
     <string name="article_members_message">Log ind med dit medlemskab for at læse hele opslaget.</string>
     <string name="article_sign_in">Log ind for at læse</string>
+    <string name="article_sign_in_to">Log ind på %1$s</string>
+    <string name="article_sign_out_of">Log ud af %1$s</string>
+    <string name="reader_hide">Skjul læser</string>
+    <string name="reader_show">Vis læser</string>
     <string name="article_members_loading">Indlæser hele artiklen…</string>
     <string name="article_members_unavailable">Kunne ikke indlæse hele artiklen. Dit medlemskab omfatter muligvis ikke dette opslag.</string>
 

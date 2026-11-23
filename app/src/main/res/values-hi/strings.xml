@@ -30,6 +30,8 @@
     <string name="notes_empty">अभी कोई नोट नहीं है। आप जिन्हें फ़ॉलो करते हैं, उनके नोट यहाँ दिखेंगे।</string>
     <string name="reader_title">रीडर</string>
     <string name="reader_empty">अभी कोई लेख नहीं है। आप जिन्हें फ़ॉलो करते हैं, उनकी लंबी पोस्ट यहाँ दिखेंगी।</string>
+    <string name="reader_following">फ़ॉलो कर रहे हैं</string>
+    <string name="reader_topic_empty">इस विषय में अभी कोई लेख नहीं है। दोबारा कोशिश करने के लिए नीचे खींचें।</string>
     <string name="nav_reader">रीडर</string>
     <string name="nav_notes">नोट्स</string>
     <string name="nav_notifications">सूचनाएँ</string>
@@ -164,6 +166,8 @@
     <string name="quote_card_alt_post">%1$s (%2$s) की पोस्ट: %3$s</string>
     <string name="quote_card_alt_quote">“%1$s”, %2$s से</string>
     <string name="quote_card_alt_quote_plain">“%1$s”</string>
+    <string name="quote_card_alt_quoted">यह %1$s (%2$s) की एक पोस्ट को उद्धृत करता है: %3$s</string>
+    <string name="quote_card_alt_quoted_plain">यह %1$s (%2$s) की एक पोस्ट को उद्धृत करता है।</string>
     <string name="action_like">पसंद करें</string>
     <string name="action_unlike">पसंद हटाएँ</string>
     <string name="like_failed">आपकी पसंद सेव नहीं हो सकी। दोबारा कोशिश करें।</string>
@@ -288,6 +292,10 @@
     <string name="article_members_title">यह पोस्ट सिर्फ़ सब्सक्राइबर के लिए है</string>
     <string name="article_members_message">पूरी पोस्ट पढ़ने के लिए अपनी सदस्यता से साइन इन करें।</string>
     <string name="article_sign_in">पढ़ने के लिए साइन इन करें</string>
+    <string name="article_sign_in_to">%1$s में साइन इन करें</string>
+    <string name="article_sign_out_of">%1$s से साइन आउट करें</string>
+    <string name="reader_hide">रीडर छिपाएँ</string>
+    <string name="reader_show">रीडर दिखाएँ</string>
     <string name="article_members_loading">पूरा लेख लोड हो रहा है…</string>
     <string name="article_members_unavailable">पूरा लेख लोड नहीं हो सका। हो सकता है आपकी सदस्यता में यह पोस्ट शामिल न हो।</string>
 

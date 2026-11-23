@@ -30,6 +30,8 @@
     <string name="notes_empty">Ainda não há notas. As notas das pessoas que você segue aparecem aqui.</string>
     <string name="reader_title">Leitor</string>
     <string name="reader_empty">Ainda não há artigos. Os posts longos das pessoas que você segue aparecem aqui.</string>
+    <string name="reader_following">Seguindo</string>
+    <string name="reader_topic_empty">Ainda não há artigos neste tópico. Puxe para baixo para tentar de novo.</string>
     <string name="nav_reader">Leitor</string>
     <string name="nav_notes">Notas</string>
     <string name="nav_notifications">Notificações</string>
@@ -170,6 +172,8 @@
     <string name="quote_card_alt_post">Post de %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">“%1$s”, de %2$s</string>
     <string name="quote_card_alt_quote_plain">“%1$s”</string>
+    <string name="quote_card_alt_quoted">Cita um post de %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Cita um post de %1$s (%2$s).</string>
     <string name="action_like">Curtir</string>
     <string name="action_unlike">Descurtir</string>
     <string name="like_failed">Não foi possível salvar sua curtida. Tente de novo.</string>
@@ -295,6 +299,10 @@
     <string name="article_members_title">Este post é exclusivo para assinantes</string>
     <string name="article_members_message">Entre com sua assinatura para ler o post completo.</string>
     <string name="article_sign_in">Entrar para ler</string>
+    <string name="article_sign_in_to">Entrar em %1$s</string>
+    <string name="article_sign_out_of">Sair de %1$s</string>
+    <string name="reader_hide">Ocultar leitor</string>
+    <string name="reader_show">Mostrar leitor</string>
     <string name="article_members_loading">Carregando o artigo completo…</string>
     <string name="article_members_unavailable">Não foi possível carregar o artigo completo. Sua assinatura pode não incluir este post.</string>
 

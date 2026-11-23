@@ -30,6 +30,8 @@
     <string name="notes_empty">Chưa có ghi chú nào. Ghi chú từ những người bạn theo dõi sẽ hiện ở đây.</string>
     <string name="reader_title">Trình đọc</string>
     <string name="reader_empty">Chưa có bài viết nào. Bài viết dài từ những người bạn theo dõi sẽ hiện ở đây.</string>
+    <string name="reader_following">Đang theo dõi</string>
+    <string name="reader_topic_empty">Chưa có bài viết nào trong chủ đề này. Kéo xuống để thử lại.</string>
     <string name="nav_reader">Trình đọc</string>
     <string name="nav_notes">Ghi chú</string>
     <string name="nav_notifications">Thông báo</string>
@@ -158,6 +160,8 @@
     <string name="quote_card_alt_post">Bài đăng của %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">“%1$s”, từ %2$s</string>
     <string name="quote_card_alt_quote_plain">“%1$s”</string>
+    <string name="quote_card_alt_quoted">Trích dẫn bài đăng của %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Trích dẫn bài đăng của %1$s (%2$s).</string>
     <string name="action_like">Thích</string>
     <string name="action_unlike">Bỏ thích</string>
     <string name="like_failed">Không thể lưu lượt thích của bạn. Hãy thử lại.</string>
@@ -281,6 +285,10 @@
     <string name="article_members_title">Bài đăng này chỉ dành cho người đăng ký</string>
     <string name="article_members_message">Đăng nhập bằng tư cách thành viên để đọc toàn bộ bài đăng.</string>
     <string name="article_sign_in">Đăng nhập để đọc</string>
+    <string name="article_sign_in_to">Đăng nhập vào %1$s</string>
+    <string name="article_sign_out_of">Đăng xuất khỏi %1$s</string>
+    <string name="reader_hide">Ẩn trình đọc</string>
+    <string name="reader_show">Hiện trình đọc</string>
     <string name="article_members_loading">Đang tải toàn bộ bài viết…</string>
     <string name="article_members_unavailable">Không thể tải toàn bộ bài viết. Gói thành viên của bạn có thể không bao gồm bài đăng này.</string>
 

@@ -30,6 +30,8 @@
     <string name="notes_empty">Ei vielä muistiinpanoja. Seuraamiesi ihmisten muistiinpanot näkyvät tässä.</string>
     <string name="reader_title">Lukija</string>
     <string name="reader_empty">Ei vielä artikkeleita. Seuraamiesi ihmisten pitkät julkaisut näkyvät tässä.</string>
+    <string name="reader_following">Seurattavat</string>
+    <string name="reader_topic_empty">Tässä aiheessa ei ole vielä artikkeleita. Yritä uudelleen vetämällä alas.</string>
     <string name="nav_reader">Lukija</string>
     <string name="nav_notes">Muistiinpanot</string>
     <string name="nav_notifications">Ilmoitukset</string>
@@ -164,6 +166,8 @@
     <string name="quote_card_alt_post">Käyttäjän %1$s julkaisu (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">”%1$s”, lähde: %2$s</string>
     <string name="quote_card_alt_quote_plain">”%1$s”</string>
+    <string name="quote_card_alt_quoted">Lainaa käyttäjän %1$s julkaisua (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Lainaa käyttäjän %1$s julkaisua (%2$s).</string>
     <string name="action_like">Tykkää</string>
     <string name="action_unlike">Poista tykkäys</string>
     <string name="like_failed">Tykkäystä ei voitu tallentaa. Yritä uudelleen.</string>
@@ -288,6 +292,10 @@
     <string name="article_members_title">Tämä julkaisu on vain tilaajille</string>
     <string name="article_members_message">Kirjaudu jäsenyydelläsi lukeaksesi koko julkaisun.</string>
     <string name="article_sign_in">Kirjaudu lukeaksesi</string>
+    <string name="article_sign_in_to">Kirjaudu sivustolle %1$s</string>
+    <string name="article_sign_out_of">Kirjaudu ulos sivustolta %1$s</string>
+    <string name="reader_hide">Piilota lukija</string>
+    <string name="reader_show">Näytä lukija</string>
     <string name="article_members_loading">Ladataan koko artikkelia…</string>
     <string name="article_members_unavailable">Koko artikkelia ei voitu ladata. Jäsenyytesi ei välttämättä kata tätä julkaisua.</string>
 

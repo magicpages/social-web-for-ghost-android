@@ -30,6 +30,8 @@
     <string name="notes_empty">Ingen notater ennå. Notater fra folk du følger, vises her.</string>
     <string name="reader_title">Leser</string>
     <string name="reader_empty">Ingen artikler ennå. Lange innlegg fra folk du følger, vises her.</string>
+    <string name="reader_following">Følger</string>
+    <string name="reader_topic_empty">Ingen artikler i dette emnet ennå. Dra ned for å prøve igjen.</string>
     <string name="nav_reader">Leser</string>
     <string name="nav_notes">Notater</string>
     <string name="nav_notifications">Varsler</string>
@@ -164,6 +166,8 @@
     <string name="quote_card_alt_post">Innlegg av %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">«%1$s», fra %2$s</string>
     <string name="quote_card_alt_quote_plain">«%1$s»</string>
+    <string name="quote_card_alt_quoted">Siterer et innlegg av %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">Siterer et innlegg av %1$s (%2$s).</string>
     <string name="action_like">Lik</string>
     <string name="action_unlike">Fjern like</string>
     <string name="like_failed">Kunne ikke lagre liken din. Prøv igjen.</string>
@@ -288,6 +292,10 @@
     <string name="article_members_title">Dette innlegget er bare for abonnenter</string>
     <string name="article_members_message">Logg inn med medlemskapet ditt for å lese hele innlegget.</string>
     <string name="article_sign_in">Logg inn for å lese</string>
+    <string name="article_sign_in_to">Logg inn på %1$s</string>
+    <string name="article_sign_out_of">Logg ut av %1$s</string>
+    <string name="reader_hide">Skjul leser</string>
+    <string name="reader_show">Vis leser</string>
     <string name="article_members_loading">Laster inn hele artikkelen…</string>
     <string name="article_members_unavailable">Kunne ikke laste inn hele artikkelen. Medlemskapet ditt dekker kanskje ikke dette innlegget.</string>
 

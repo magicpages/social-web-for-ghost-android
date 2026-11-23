@@ -30,6 +30,8 @@
     <string name="notes_empty">아직 노트가 없어요. 팔로우하는 사람의 노트가 여기에 표시돼요.</string>
     <string name="reader_title">리더</string>
     <string name="reader_empty">아직 글이 없어요. 팔로우하는 사람의 긴 글이 여기에 표시돼요.</string>
+    <string name="reader_following">팔로잉</string>
+    <string name="reader_topic_empty">이 주제에는 아직 글이 없어요. 아래로 당겨 다시 시도하세요.</string>
     <string name="nav_reader">리더</string>
     <string name="nav_notes">노트</string>
     <string name="nav_notifications">알림</string>
@@ -158,6 +160,8 @@
     <string name="quote_card_alt_post">%1$s(%2$s)님의 게시물: %3$s</string>
     <string name="quote_card_alt_quote">“%1$s” - %2$s</string>
     <string name="quote_card_alt_quote_plain">“%1$s”</string>
+    <string name="quote_card_alt_quoted">%1$s(%2$s)님의 게시물을 인용합니다: %3$s</string>
+    <string name="quote_card_alt_quoted_plain">%1$s(%2$s)님의 게시물을 인용합니다.</string>
     <string name="action_like">좋아요</string>
     <string name="action_unlike">좋아요 취소</string>
     <string name="like_failed">좋아요를 저장하지 못했어요. 다시 시도하세요.</string>
@@ -281,6 +285,10 @@
     <string name="article_members_title">이 게시물은 구독자 전용이에요</string>
     <string name="article_members_message">멤버십으로 로그인하면 전체 게시물을 읽을 수 있어요.</string>
     <string name="article_sign_in">로그인하고 읽기</string>
+    <string name="article_sign_in_to">%1$s에 로그인</string>
+    <string name="article_sign_out_of">%1$s에서 로그아웃</string>
+    <string name="reader_hide">리더 숨기기</string>
+    <string name="reader_show">리더 보기</string>
     <string name="article_members_loading">전체 글 불러오는 중…</string>
     <string name="article_members_unavailable">전체 글을 불러오지 못했어요. 내 멤버십에 이 게시물이 포함되지 않을 수 있어요.</string>
 

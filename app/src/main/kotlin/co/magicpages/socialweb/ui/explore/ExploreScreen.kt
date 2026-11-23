@@ -574,8 +574,9 @@ private fun SearchCover(
     }
 }
 
+/** A chip of a topic row, as on Explore and the Reader: filled, with a check, while [selected]. */
 @Composable
-private fun TopicChip(label: String, selected: Boolean, onClick: () -> Unit) {
+internal fun TopicChip(label: String, selected: Boolean, onClick: () -> Unit) {
     FilterChip(
         selected = selected,
         onClick = onClick,

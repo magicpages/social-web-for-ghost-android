@@ -32,6 +32,8 @@
     <string name="notes_empty">No notes yet. Notes from the people you follow show up here.</string>
     <string name="reader_title">Reader</string>
     <string name="reader_empty">No articles yet. Long-form posts from the people you follow show up here.</string>
+    <string name="reader_following">Following</string>
+    <string name="reader_topic_empty">No articles in this topic yet. Pull down to try again.</string>
 
     <string name="explore_search_placeholder">Search people or @user@domain</string>
     <string name="explore_search_hint">Search for people by name, or enter a full @user@domain to find someone on another server.</string>
@@ -181,6 +183,8 @@
     <string name="quote_card_alt_post">Post by %1$s (%2$s): %3$s</string>
     <string name="quote_card_alt_quote">“%1$s”, from %2$s</string>
     <string name="quote_card_alt_quote_plain">“%1$s”</string>
+    <string name="quote_card_alt_quoted">It quotes a post by %1$s (%2$s): %3$s</string>
+    <string name="quote_card_alt_quoted_plain">It quotes a post by %1$s (%2$s).</string>
     <string name="action_like">Like</string>
     <string name="action_unlike">Unlike</string>
     <string name="like_failed">Couldn\'t save your like. Try again.</string>
@@ -388,6 +392,10 @@
     <string name="article_members_title">This post is for subscribers only</string>
     <string name="article_members_message">Sign in with your membership to read the full post.</string>
     <string name="article_sign_in">Sign in to read</string>
+    <string name="article_sign_in_to">Sign in to %1$s</string>
+    <string name="article_sign_out_of">Sign out of %1$s</string>
+    <string name="reader_hide">Hide reader</string>
+    <string name="reader_show">Show reader</string>
     <string name="article_members_loading">Loading the full article…</string>
     <string name="article_members_unavailable">Couldn\'t load the full article. Your membership may not include this post.</string>
 
