@@ -31,6 +31,9 @@
     <string name="reader_title">القارئ</string>
     <string name="reader_empty">لا توجد مقالات بعد. ستظهر هنا المنشورات الطويلة للأشخاص الذين تتابعهم.</string>
     <string name="reader_following">المتابَعون</string>
+    <string name="reader_topics_choose">المواضيع</string>
+    <string name="reader_topics_title">المواضيع في القارئ</string>
+    <string name="reader_topics_note">كل موضوع تختاره يحصل على صفحة خاصة به هنا بجانب «المتابَعون». يمكنك أيضًا تثبيت موضوع من «استكشاف».</string>
     <string name="reader_topic_empty">لا توجد مقالات في هذا الموضوع بعد. اسحب لأسفل لإعادة المحاولة.</string>
     <string name="nav_reader">القارئ</string>
     <string name="nav_notes">الملاحظات</string>
@@ -564,6 +567,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">المنشورات</string>
     <string name="explore_topic_people">الأشخاص</string>
+    <string name="explore_topic_pin">تثبيت في القارئ</string>
+    <string name="explore_topic_unpin">إلغاء التثبيت من القارئ</string>
+    <string name="explore_topic_pinned">تم التثبيت في القارئ</string>
+    <string name="explore_topic_unpinned">تمت الإزالة من القارئ</string>
     <string name="explore_topic_posts_empty">لا توجد منشورات في هذا الموضوع بعد. اسحب لأسفل لإعادة المحاولة.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">التقاط صورة</string>

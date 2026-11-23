@@ -31,6 +31,9 @@
     <string name="reader_title">Trình đọc</string>
     <string name="reader_empty">Chưa có bài viết nào. Bài viết dài từ những người bạn theo dõi sẽ hiện ở đây.</string>
     <string name="reader_following">Đang theo dõi</string>
+    <string name="reader_topics_choose">Chủ đề</string>
+    <string name="reader_topics_title">Chủ đề trong Trình đọc</string>
+    <string name="reader_topics_note">Mỗi chủ đề bạn chọn sẽ có trang riêng ở đây, bên cạnh Đang theo dõi. Bạn cũng có thể ghim chủ đề trong Khám phá.</string>
     <string name="reader_topic_empty">Chưa có bài viết nào trong chủ đề này. Kéo xuống để thử lại.</string>
     <string name="nav_reader">Trình đọc</string>
     <string name="nav_notes">Ghi chú</string>
@@ -504,6 +507,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Bài đăng</string>
     <string name="explore_topic_people">Mọi người</string>
+    <string name="explore_topic_pin">Ghim vào Trình đọc</string>
+    <string name="explore_topic_unpin">Bỏ ghim khỏi Trình đọc</string>
+    <string name="explore_topic_pinned">Đã ghim vào Trình đọc</string>
+    <string name="explore_topic_unpinned">Đã gỡ khỏi Trình đọc</string>
     <string name="explore_topic_posts_empty">Chưa có bài đăng nào trong chủ đề này. Kéo xuống để thử lại.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Chụp ảnh</string>

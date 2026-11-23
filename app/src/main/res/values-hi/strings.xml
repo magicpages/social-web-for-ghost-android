@@ -31,6 +31,9 @@
     <string name="reader_title">रीडर</string>
     <string name="reader_empty">अभी कोई लेख नहीं है। आप जिन्हें फ़ॉलो करते हैं, उनकी लंबी पोस्ट यहाँ दिखेंगी।</string>
     <string name="reader_following">फ़ॉलो कर रहे हैं</string>
+    <string name="reader_topics_choose">विषय</string>
+    <string name="reader_topics_title">रीडर में विषय</string>
+    <string name="reader_topics_note">आपका चुना हर विषय यहाँ “फ़ॉलो कर रहे हैं” के बगल में अपना पेज पाता है। आप एक्सप्लोर में भी कोई विषय पिन कर सकते हैं।</string>
     <string name="reader_topic_empty">इस विषय में अभी कोई लेख नहीं है। दोबारा कोशिश करने के लिए नीचे खींचें।</string>
     <string name="nav_reader">रीडर</string>
     <string name="nav_notes">नोट्स</string>
@@ -516,6 +519,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">पोस्ट</string>
     <string name="explore_topic_people">लोग</string>
+    <string name="explore_topic_pin">रीडर में पिन करें</string>
+    <string name="explore_topic_unpin">रीडर से अनपिन करें</string>
+    <string name="explore_topic_pinned">रीडर में पिन किया गया</string>
+    <string name="explore_topic_unpinned">रीडर से हटाया गया</string>
     <string name="explore_topic_posts_empty">इस विषय में अभी कोई पोस्ट नहीं है। दोबारा कोशिश करने के लिए नीचे खींचें।</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">फ़ोटो लें</string>

@@ -31,6 +31,9 @@
     <string name="reader_title">Pembaca</string>
     <string name="reader_empty">Belum ada artikel. Tulisan panjang dari orang yang Anda ikuti akan muncul di sini.</string>
     <string name="reader_following">Mengikuti</string>
+    <string name="reader_topics_choose">Topik</string>
+    <string name="reader_topics_title">Topik di Pembaca</string>
+    <string name="reader_topics_note">Setiap topik yang Anda pilih mendapat halamannya sendiri di sini, di samping Mengikuti. Anda juga bisa menyematkan topik di Jelajahi.</string>
     <string name="reader_topic_empty">Belum ada artikel di topik ini. Tarik ke bawah untuk mencoba lagi.</string>
     <string name="nav_reader">Pembaca</string>
     <string name="nav_notes">Catatan</string>
@@ -504,6 +507,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Kiriman</string>
     <string name="explore_topic_people">Orang</string>
+    <string name="explore_topic_pin">Sematkan ke Pembaca</string>
+    <string name="explore_topic_unpin">Lepas dari Pembaca</string>
+    <string name="explore_topic_pinned">Disematkan ke Pembaca</string>
+    <string name="explore_topic_unpinned">Dihapus dari Pembaca</string>
     <string name="explore_topic_posts_empty">Belum ada kiriman di topik ini. Tarik ke bawah untuk mencoba lagi.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Ambil foto</string>

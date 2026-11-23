@@ -31,6 +31,9 @@
     <string name="reader_title">Читання</string>
     <string name="reader_empty">Статей ще немає. Тут з’являтимуться довгі дописи людей, на яких ви підписані.</string>
     <string name="reader_following">Підписки</string>
+    <string name="reader_topics_choose">Теми</string>
+    <string name="reader_topics_title">Теми в читанні</string>
+    <string name="reader_topics_note">Кожна вибрана тема отримає тут власну сторінку поруч із підписками. Закріпити тему можна й у розділі «Огляд».</string>
     <string name="reader_topic_empty">У цій темі ще немає статей. Потягніть униз, щоб спробувати ще раз.</string>
     <string name="nav_reader">Читання</string>
     <string name="nav_notes">Нотатки</string>
@@ -540,6 +543,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Дописи</string>
     <string name="explore_topic_people">Люди</string>
+    <string name="explore_topic_pin">Закріпити в читанні</string>
+    <string name="explore_topic_unpin">Відкріпити від читання</string>
+    <string name="explore_topic_pinned">Закріплено в читанні</string>
+    <string name="explore_topic_unpinned">Прибрано з читання</string>
     <string name="explore_topic_posts_empty">У цій темі ще немає дописів. Потягніть униз, щоб спробувати ще раз.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Зробити знімок</string>

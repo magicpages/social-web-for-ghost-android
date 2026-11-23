@@ -31,6 +31,9 @@
     <string name="reader_title">Lezer</string>
     <string name="reader_empty">Nog geen artikelen. Lange berichten van mensen die je volgt verschijnen hier.</string>
     <string name="reader_following">Volgend</string>
+    <string name="reader_topics_choose">Onderwerpen</string>
+    <string name="reader_topics_title">Onderwerpen in de lezer</string>
+    <string name="reader_topics_note">Elk onderwerp dat je kiest krijgt hier een eigen pagina, naast Volgend. Je kunt een onderwerp ook vastzetten in Verkennen.</string>
     <string name="reader_topic_empty">Nog geen artikelen in dit onderwerp. Trek omlaag om het opnieuw te proberen.</string>
     <string name="nav_reader">Lezer</string>
     <string name="nav_notes">Notities</string>
@@ -516,6 +519,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Berichten</string>
     <string name="explore_topic_people">Mensen</string>
+    <string name="explore_topic_pin">Vastzetten in lezer</string>
+    <string name="explore_topic_unpin">Losmaken uit lezer</string>
+    <string name="explore_topic_pinned">Vastgezet in de lezer</string>
+    <string name="explore_topic_unpinned">Verwijderd uit de lezer</string>
     <string name="explore_topic_posts_empty">Nog geen berichten in dit onderwerp. Trek omlaag om het opnieuw te proberen.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Foto maken</string>

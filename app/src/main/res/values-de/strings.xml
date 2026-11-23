@@ -31,6 +31,9 @@
     <string name="reader_title">Reader</string>
     <string name="reader_empty">Noch keine Artikel. Lange Beiträge der Personen, denen du folgst, erscheinen hier.</string>
     <string name="reader_following">Folge ich</string>
+    <string name="reader_topics_choose">Themen</string>
+    <string name="reader_topics_title">Themen im Reader</string>
+    <string name="reader_topics_note">Jedes Thema, das du auswählst, bekommt hier eine eigene Seite neben „Folge ich“. Du kannst Themen auch in „Entdecken“ anheften.</string>
     <string name="reader_topic_empty">In diesem Thema gibt es noch keine Artikel. Zum Wiederholen nach unten ziehen.</string>
     <string name="nav_reader">Reader</string>
     <string name="nav_notes">Notizen</string>
@@ -516,6 +519,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Beiträge</string>
     <string name="explore_topic_people">Personen</string>
+    <string name="explore_topic_pin">Im Reader anheften</string>
+    <string name="explore_topic_unpin">Aus dem Reader lösen</string>
+    <string name="explore_topic_pinned">Im Reader angeheftet</string>
+    <string name="explore_topic_unpinned">Aus dem Reader entfernt</string>
     <string name="explore_topic_posts_empty">In diesem Thema gibt es noch keine Beiträge. Zum Wiederholen nach unten ziehen.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Foto aufnehmen</string>

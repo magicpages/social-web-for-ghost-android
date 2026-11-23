@@ -31,6 +31,9 @@
     <string name="reader_title">Leser</string>
     <string name="reader_empty">Ingen artikler ennå. Lange innlegg fra folk du følger, vises her.</string>
     <string name="reader_following">Følger</string>
+    <string name="reader_topics_choose">Emner</string>
+    <string name="reader_topics_title">Emner i leseren</string>
+    <string name="reader_topics_note">Hvert emne du velger, får sin egen side her ved siden av Følger. Du kan også feste et emne under Utforsk.</string>
     <string name="reader_topic_empty">Ingen artikler i dette emnet ennå. Dra ned for å prøve igjen.</string>
     <string name="nav_reader">Leser</string>
     <string name="nav_notes">Notater</string>
@@ -516,6 +519,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Innlegg</string>
     <string name="explore_topic_people">Folk</string>
+    <string name="explore_topic_pin">Fest i leseren</string>
+    <string name="explore_topic_unpin">Løsne fra leseren</string>
+    <string name="explore_topic_pinned">Festet i leseren</string>
+    <string name="explore_topic_unpinned">Fjernet fra leseren</string>
     <string name="explore_topic_posts_empty">Ingen innlegg i dette emnet ennå. Dra ned for å prøve igjen.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Ta bilde</string>

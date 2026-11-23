@@ -31,6 +31,9 @@
     <string name="reader_title">閱讀器</string>
     <string name="reader_empty">還沒有文章。你追蹤的人發布的長文會顯示在這裡。</string>
     <string name="reader_following">追蹤中</string>
+    <string name="reader_topics_choose">主題</string>
+    <string name="reader_topics_title">閱讀器中的主題</string>
+    <string name="reader_topics_note">你選擇的每個主題都會在這裡有自己的頁面，位於「追蹤中」旁邊。你也可以在「探索」中釘選主題。</string>
     <string name="reader_topic_empty">這個話題下還沒有文章。下拉即可重試。</string>
     <string name="nav_reader">閱讀器</string>
     <string name="nav_notes">筆記</string>
@@ -504,6 +507,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">貼文</string>
     <string name="explore_topic_people">用戶</string>
+    <string name="explore_topic_pin">釘選到閱讀器</string>
+    <string name="explore_topic_unpin">從閱讀器取消釘選</string>
+    <string name="explore_topic_pinned">已釘選到閱讀器</string>
+    <string name="explore_topic_unpinned">已從閱讀器移除</string>
     <string name="explore_topic_posts_empty">這個話題下還沒有貼文。下拉即可重試。</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">拍照</string>

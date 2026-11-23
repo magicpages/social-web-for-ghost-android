@@ -64,12 +64,34 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         prefs.edit {
             remove(KeyColorSource + accountId)
             remove(KeyCustomColor + accountId)
+            remove(KeyPinnedTopics + accountId)
             prefs.all.keys
                 .filter { it.startsWith("$KeyFeedPosition$accountId:") }
                 .forEach { remove(it) }
         }
         _accountColors.value -= accountId
+        _pinnedTopics.value -= accountId
     }
+
+    private val _pinnedTopics = MutableStateFlow(readPinnedTopics())
+
+    /**
+     * Each account's topics pinned to the Reader, as slugs, by account id. An account that isn't listed has none: the
+     * Reader shows only its timeline until topics are picked, since a page for each of Ghost's topics is too many.
+     */
+    val pinnedTopics: StateFlow<Map<String, Set<String>>> = _pinnedTopics.asStateFlow()
+
+    fun setTopicPinned(accountId: String, slug: String, pinned: Boolean) {
+        val current = _pinnedTopics.value[accountId].orEmpty()
+        val next = if (pinned) current + slug else current - slug
+        prefs.edit { putStringSet(KeyPinnedTopics + accountId, next) }
+        _pinnedTopics.value += accountId to next
+    }
+
+    private fun readPinnedTopics(): Map<String, Set<String>> =
+        prefs.all.keys.filter { it.startsWith(KeyPinnedTopics) }.associate { key ->
+            key.removePrefix(KeyPinnedTopics) to prefs.getStringSet(key, null)?.toSet().orEmpty()
+        }
 
     private val _feedFilter = MutableStateFlow(FeedFilter(prefs.getBoolean(KeyHideReposts, false), readMutedWords()))
 
@@ -186,6 +208,7 @@ class AppSettings @Inject constructor(@ApplicationContext context: Context) {
         private const val KeyHideReposts = "feed_hide_reposts"
         private const val KeyMutedWords = "feed_muted_words"
         private const val KeyFeedPosition = "feed_position:"
+        private const val KeyPinnedTopics = "pinned_topics:"
         private const val KeyReaderBackground = "reader_background"
         private const val KeyReaderFont = "reader_font"
         private const val KeyReaderTextSize = "reader_text_size"

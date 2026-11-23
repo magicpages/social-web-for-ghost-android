@@ -31,6 +31,9 @@
     <string name="reader_title">Čtečka</string>
     <string name="reader_empty">Zatím žádné články. Dlouhé příspěvky od lidí, které sledujete, se zobrazí tady.</string>
     <string name="reader_following">Sledované</string>
+    <string name="reader_topics_choose">Témata</string>
+    <string name="reader_topics_title">Témata ve čtečce</string>
+    <string name="reader_topics_note">Každé téma, které vyberete, tu dostane vlastní stránku vedle Sledovaných. Témata můžete připnout i na kartě Objevovat.</string>
     <string name="reader_topic_empty">V tomto tématu zatím nejsou žádné články. Přetažením dolů to zkusíte znovu.</string>
     <string name="nav_reader">Čtečka</string>
     <string name="nav_notes">Poznámky</string>
@@ -540,6 +543,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Příspěvky</string>
     <string name="explore_topic_people">Lidé</string>
+    <string name="explore_topic_pin">Připnout do čtečky</string>
+    <string name="explore_topic_unpin">Odepnout ze čtečky</string>
+    <string name="explore_topic_pinned">Připnuto do čtečky</string>
+    <string name="explore_topic_unpinned">Odebráno ze čtečky</string>
     <string name="explore_topic_posts_empty">V tomto tématu zatím nejsou žádné příspěvky. Přetažením dolů to zkusíte znovu.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Vyfotit</string>

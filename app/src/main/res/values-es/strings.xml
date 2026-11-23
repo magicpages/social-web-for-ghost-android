@@ -31,6 +31,9 @@
     <string name="reader_title">Lector</string>
     <string name="reader_empty">Aún no hay artículos. Las publicaciones largas de las personas a las que sigues aparecen aquí.</string>
     <string name="reader_following">Siguiendo</string>
+    <string name="reader_topics_choose">Temas</string>
+    <string name="reader_topics_title">Temas en el lector</string>
+    <string name="reader_topics_note">Cada tema que elijas tendrá aquí su propia página, junto a Siguiendo. También puedes fijar un tema en Explorar.</string>
     <string name="reader_topic_empty">Aún no hay artículos en este tema. Desliza hacia abajo para volver a intentarlo.</string>
     <string name="nav_reader">Lector</string>
     <string name="nav_notes">Notas</string>
@@ -528,6 +531,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Publicaciones</string>
     <string name="explore_topic_people">Personas</string>
+    <string name="explore_topic_pin">Fijar en el lector</string>
+    <string name="explore_topic_unpin">Quitar del lector</string>
+    <string name="explore_topic_pinned">Fijado en el lector</string>
+    <string name="explore_topic_unpinned">Quitado del lector</string>
     <string name="explore_topic_posts_empty">Aún no hay publicaciones en este tema. Desliza hacia abajo para volver a intentarlo.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Hacer una foto</string>

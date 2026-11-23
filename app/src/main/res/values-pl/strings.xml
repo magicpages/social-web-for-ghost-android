@@ -31,6 +31,9 @@
     <string name="reader_title">Czytnik</string>
     <string name="reader_empty">Brak artykułów. Długie wpisy od obserwowanych osób pojawią się tutaj.</string>
     <string name="reader_following">Obserwowani</string>
+    <string name="reader_topics_choose">Tematy</string>
+    <string name="reader_topics_title">Tematy w czytniku</string>
+    <string name="reader_topics_note">Każdy wybrany temat dostaje tu własną stronę obok Obserwowanych. Temat możesz też przypiąć w zakładce Odkrywaj.</string>
     <string name="reader_topic_empty">W tym temacie nie ma jeszcze artykułów. Pociągnij w dół, aby spróbować ponownie.</string>
     <string name="nav_reader">Czytnik</string>
     <string name="nav_notes">Notatki</string>
@@ -540,6 +543,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Wpisy</string>
     <string name="explore_topic_people">Osoby</string>
+    <string name="explore_topic_pin">Przypnij do czytnika</string>
+    <string name="explore_topic_unpin">Odepnij od czytnika</string>
+    <string name="explore_topic_pinned">Przypięto do czytnika</string>
+    <string name="explore_topic_unpinned">Usunięto z czytnika</string>
     <string name="explore_topic_posts_empty">W tym temacie nie ma jeszcze wpisów. Pociągnij w dół, aby spróbować ponownie.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Zrób zdjęcie</string>

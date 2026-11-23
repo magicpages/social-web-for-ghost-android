@@ -31,6 +31,9 @@
     <string name="reader_title">Læser</string>
     <string name="reader_empty">Ingen artikler endnu. Lange opslag fra de personer, du følger, vises her.</string>
     <string name="reader_following">Følger</string>
+    <string name="reader_topics_choose">Emner</string>
+    <string name="reader_topics_title">Emner i læseren</string>
+    <string name="reader_topics_note">Hvert emne, du vælger, får sin egen side her ved siden af Følger. Du kan også fastgøre et emne under Udforsk.</string>
     <string name="reader_topic_empty">Ingen artikler i dette emne endnu. Træk ned for at prøve igen.</string>
     <string name="nav_reader">Læser</string>
     <string name="nav_notes">Noter</string>
@@ -516,6 +519,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Opslag</string>
     <string name="explore_topic_people">Personer</string>
+    <string name="explore_topic_pin">Fastgør i læseren</string>
+    <string name="explore_topic_unpin">Frigør fra læseren</string>
+    <string name="explore_topic_pinned">Fastgjort i læseren</string>
+    <string name="explore_topic_unpinned">Fjernet fra læseren</string>
     <string name="explore_topic_posts_empty">Ingen opslag i dette emne endnu. Træk ned for at prøve igen.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Tag et billede</string>

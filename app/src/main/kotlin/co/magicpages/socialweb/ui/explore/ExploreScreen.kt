@@ -2,6 +2,7 @@ package co.magicpages.socialweb.ui.explore
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -174,6 +175,7 @@ fun ExploreScreen(
     val topicView by viewModel.topicView.collectAsStateWithLifecycle()
     val fediverse by viewModel.fediverse.collectAsStateWithLifecycle()
     val fediverseSelected by viewModel.fediverseSelected.collectAsStateWithLifecycle()
+    val pinned by viewModel.pinned.collectAsStateWithLifecycle()
     val fediverseTag by viewModel.fediverseTag.collectAsStateWithLifecycle()
     val fediversePosts = viewModel.fediversePosts.collectAsLazyPagingItems()
     val fediverseTrends by viewModel.fediverseTrends.collectAsStateWithLifecycle()
@@ -325,18 +327,30 @@ fun ExploreScreen(
                 }
             }
 
-            if (!fediverseSelected && selected != null) {
-                SingleChoiceSegmentedButtonRow(
-                    Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(horizontal = Gutter).padding(bottom = 8.dp),
+            val slug = selected
+            if (!fediverseSelected && slug != null) {
+                val isPinned = slug in pinned
+                Row(
+                    Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(start = Gutter, end = Gutter - 8.dp).padding(bottom = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    TopicView.entries.forEachIndexed { index, view ->
-                        SegmentedButton(
-                            selected = topicView == view,
-                            onClick = { viewModel.setTopicView(view) },
-                            shape = SegmentedButtonDefaults.itemShape(index, TopicView.entries.size),
-                        ) {
-                            Text(stringResource(if (view == TopicView.Posts) R.string.explore_topic_posts else R.string.explore_topic_people))
+                    SingleChoiceSegmentedButtonRow(Modifier.weight(1f)) {
+                        TopicView.entries.forEachIndexed { index, view ->
+                            SegmentedButton(
+                                selected = topicView == view,
+                                onClick = { viewModel.setTopicView(view) },
+                                shape = SegmentedButtonDefaults.itemShape(index, TopicView.entries.size),
+                            ) {
+                                Text(stringResource(if (view == TopicView.Posts) R.string.explore_topic_posts else R.string.explore_topic_people))
+                            }
                         }
+                    }
+                    // Pinning gives the topic a page in the Reader, where its articles are a swipe away.
+                    IconToggleButton(checked = isPinned, onCheckedChange = { viewModel.setPinned(slug, it) }) {
+                        Icon(
+                            if (isPinned) AppIcons.PushPinFilled else AppIcons.PushPin,
+                            contentDescription = stringResource(if (isPinned) R.string.explore_topic_unpin else R.string.explore_topic_pin),
+                        )
                     }
                 }
             }

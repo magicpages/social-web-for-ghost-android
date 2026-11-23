@@ -31,6 +31,9 @@
     <string name="reader_title">Lukija</string>
     <string name="reader_empty">Ei vielä artikkeleita. Seuraamiesi ihmisten pitkät julkaisut näkyvät tässä.</string>
     <string name="reader_following">Seurattavat</string>
+    <string name="reader_topics_choose">Aiheet</string>
+    <string name="reader_topics_title">Aiheet lukijassa</string>
+    <string name="reader_topics_note">Jokainen valitsemasi aihe saa tänne oman sivun Seurattavien viereen. Voit kiinnittää aiheen myös Tutki-välilehdellä.</string>
     <string name="reader_topic_empty">Tässä aiheessa ei ole vielä artikkeleita. Yritä uudelleen vetämällä alas.</string>
     <string name="nav_reader">Lukija</string>
     <string name="nav_notes">Muistiinpanot</string>
@@ -516,6 +519,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Julkaisut</string>
     <string name="explore_topic_people">Ihmiset</string>
+    <string name="explore_topic_pin">Kiinnitä lukijaan</string>
+    <string name="explore_topic_unpin">Irrota lukijasta</string>
+    <string name="explore_topic_pinned">Kiinnitetty lukijaan</string>
+    <string name="explore_topic_unpinned">Poistettu lukijasta</string>
     <string name="explore_topic_posts_empty">Tässä aiheessa ei ole vielä julkaisuja. Yritä uudelleen vetämällä alas.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Ota kuva</string>

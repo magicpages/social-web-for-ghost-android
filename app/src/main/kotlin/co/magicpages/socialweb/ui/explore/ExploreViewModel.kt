@@ -102,7 +102,7 @@ class ExploreViewModel @Inject constructor(
     private val freshAvatars: FreshAvatars,
     private val moderation: Moderation,
     private val fediverseClient: FediverseClient,
-    settings: AppSettings,
+    private val settings: AppSettings,
 ) : ViewModel() {
     // The same account with a replaced credential keeps its lists; a switch starts them anew.
     private val active: Flow<StoredAccount> = accounts.account
@@ -153,12 +153,26 @@ class ExploreViewModel @Inject constructor(
     private val inFlight = HashSet<String>()
 
     private val followFailures = MutableSharedFlow<Int>(extraBufferCapacity = 1)
+    private val pinChanges = MutableSharedFlow<Int>(extraBufferCapacity = 1)
 
     /** Reply editor state for the posts of a topic. */
     val composer = ReplyComposer(viewModelScope, interactions)
 
     /** String resources to show in a snackbar. */
-    val messages: Flow<Int> = merge(followFailures, postMessages(interactions, composer, moderation))
+    val messages: Flow<Int> = merge(followFailures, pinChanges, postMessages(interactions, composer, moderation))
+
+    private val activeId: StateFlow<String?> = accounts.activeId.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+
+    /** The topic slugs the active account pinned to the Reader. */
+    val pinned: StateFlow<Set<String>> = combine(activeId, settings.pinnedTopics) { id, pins -> id?.let { pins[it] }.orEmpty() }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptySet())
+
+    /** Pins the topic [slug] to the active account's Reader, or takes it off, and says where it went. */
+    fun setPinned(slug: String, pinned: Boolean) {
+        val id = activeId.value ?: return
+        settings.setTopicPinned(id, slug, pinned)
+        pinChanges.tryEmit(if (pinned) R.string.explore_topic_pinned else R.string.explore_topic_unpinned)
+    }
 
     init {
         // Who an account follows, and which topic was open, say nothing about another account.

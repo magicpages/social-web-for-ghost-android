@@ -31,6 +31,9 @@
     <string name="reader_title">Okuyucu</string>
     <string name="reader_empty">Henüz makale yok. Takip ettiğiniz kişilerin uzun yazıları burada görünür.</string>
     <string name="reader_following">Takip edilenler</string>
+    <string name="reader_topics_choose">Konular</string>
+    <string name="reader_topics_title">Okuyucudaki konular</string>
+    <string name="reader_topics_note">Seçtiğin her konu burada Takip edilenler’in yanında kendi sayfasını alır. Bir konuyu Keşfet’te de sabitleyebilirsin.</string>
     <string name="reader_topic_empty">Bu konuda henüz makale yok. Tekrar denemek için aşağı çekin.</string>
     <string name="nav_reader">Okuyucu</string>
     <string name="nav_notes">Notlar</string>
@@ -516,6 +519,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">Gönderiler</string>
     <string name="explore_topic_people">Kişiler</string>
+    <string name="explore_topic_pin">Okuyucuya sabitle</string>
+    <string name="explore_topic_unpin">Okuyucudan kaldır</string>
+    <string name="explore_topic_pinned">Okuyucuya sabitlendi</string>
+    <string name="explore_topic_unpinned">Okuyucudan kaldırıldı</string>
     <string name="explore_topic_posts_empty">Bu konuda henüz gönderi yok. Tekrar denemek için aşağı çekin.</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">Fotoğraf çek</string>

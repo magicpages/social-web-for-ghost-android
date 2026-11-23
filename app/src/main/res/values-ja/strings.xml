@@ -31,6 +31,9 @@
     <string name="reader_title">リーダー</string>
     <string name="reader_empty">記事はまだありません。フォローしている人の長文投稿がここに表示されます。</string>
     <string name="reader_following">フォロー中</string>
+    <string name="reader_topics_choose">トピック</string>
+    <string name="reader_topics_title">リーダーのトピック</string>
+    <string name="reader_topics_note">選んだトピックごとに、「フォロー中」の隣に専用のページができます。「探索」からトピックを固定することもできます。</string>
     <string name="reader_topic_empty">このトピックにはまだ記事がありません。下にスワイプしてもう一度お試しください。</string>
     <string name="nav_reader">リーダー</string>
     <string name="nav_notes">ノート</string>
@@ -504,6 +507,10 @@
     <!-- topic feeds -->
     <string name="explore_topic_posts">投稿</string>
     <string name="explore_topic_people">人</string>
+    <string name="explore_topic_pin">リーダーに固定</string>
+    <string name="explore_topic_unpin">リーダーから固定解除</string>
+    <string name="explore_topic_pinned">リーダーに固定しました</string>
+    <string name="explore_topic_unpinned">リーダーから外しました</string>
     <string name="explore_topic_posts_empty">このトピックにはまだ投稿がありません。下にスワイプしてもう一度お試しください。</string>
     <!-- Take a photo in the composer -->
     <string name="note_take_photo">写真を撮る</string>
