@@ -699,6 +699,9 @@
         <item quantity="other">%1$d شخص يتحدثون</item>
     </plurals>
     <string name="explore_fediverse_header_note">الرائج هناك الآن. الإعجابات والردود والمتابعات لا تزال تمر عبر موقعك.</string>
+    <string name="explore_fediverse_members">من أشخاص على %1$s</string>
+    <string name="explore_fediverse_members_note">أكثر منشوراتهم رواجًا مؤخرًا. الإعجابات والردود والمتابعات لا تزال تمر عبر موقعك.</string>
+    <string name="explore_fediverse_members_empty">لم ينشر أحد على %1$s شيئًا علنيًا مؤخرًا.</string>
     <string name="explore_fediverse_stories">قصص يشاركها الناس</string>
     <string name="explore_fediverse_tag_note">الأحدث أولًا، من %1$s</string>
     <string name="explore_fediverse_sheet_title">استكشاف خادم آخر</string>

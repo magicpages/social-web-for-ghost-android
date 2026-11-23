@@ -669,6 +669,9 @@
         <item quantity="other">Обсуждают %1$d человека</item>
     </plurals>
     <string name="explore_fediverse_header_note">Сейчас популярно там. Лайки, ответы и подписки по-прежнему идут через ваш сайт.</string>
+    <string name="explore_fediverse_members">От людей с %1$s</string>
+    <string name="explore_fediverse_members_note">Их самые популярные посты за последнее время. Лайки, ответы и подписки по-прежнему идут через ваш сайт.</string>
+    <string name="explore_fediverse_members_empty">В последнее время никто на %1$s не публиковал ничего открыто.</string>
     <string name="explore_fediverse_stories">Чем делятся люди</string>
     <string name="explore_fediverse_tag_note">Сначала новые посты, с %1$s</string>
     <string name="explore_fediverse_sheet_title">Обзор другого сервера</string>

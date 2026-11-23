@@ -624,6 +624,9 @@
         <item quantity="other">%1$d 人が話題にしています</item>
     </plurals>
     <string name="explore_fediverse_header_note">いまそこで人気の投稿です。いいね、返信、フォローはこれまでどおりあなたのサイトから行われます。</string>
+    <string name="explore_fediverse_members">%1$s のユーザーから</string>
+    <string name="explore_fediverse_members_note">最近いちばん人気の投稿です。いいね、返信、フォローはこれまでどおりあなたのサイトから行われます。</string>
+    <string name="explore_fediverse_members_empty">最近 %1$s で公開投稿した人はいません。</string>
     <string name="explore_fediverse_stories">みんながシェアしている記事</string>
     <string name="explore_fediverse_tag_note">新しい投稿から順に、%1$s より</string>
     <string name="explore_fediverse_sheet_title">別のサーバーを探索</string>

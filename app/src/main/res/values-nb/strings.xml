@@ -639,6 +639,9 @@
         <item quantity="other">%1$d personer snakker om det</item>
     </plurals>
     <string name="explore_fediverse_header_note">Populært der akkurat nå. Liker, svar og følging går fortsatt gjennom nettstedet ditt.</string>
+    <string name="explore_fediverse_members">Fra folk på %1$s</string>
+    <string name="explore_fediverse_members_note">De mest populære innleggene deres i det siste. Liker, svar og følging går fortsatt gjennom nettstedet ditt.</string>
+    <string name="explore_fediverse_members_empty">Ingen på %1$s har postet offentlig i det siste.</string>
     <string name="explore_fediverse_stories">Saker folk deler</string>
     <string name="explore_fediverse_tag_note">Nyeste innlegg først, fra %1$s</string>
     <string name="explore_fediverse_sheet_title">Utforsk en annen server</string>

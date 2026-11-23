@@ -639,6 +639,9 @@
         <item quantity="other">%1$d henkilöä puhuu tästä</item>
     </plurals>
     <string name="explore_fediverse_header_note">Suosittua siellä juuri nyt. Tykkäykset, vastaukset ja seuraamiset kulkevat yhä sivustosi kautta.</string>
+    <string name="explore_fediverse_members">Palvelimen %1$s käyttäjiltä</string>
+    <string name="explore_fediverse_members_note">Heidän suosituimmat julkaisunsa viime aikoina. Tykkäykset, vastaukset ja seuraamiset kulkevat yhä sivustosi kautta.</string>
+    <string name="explore_fediverse_members_empty">Kukaan palvelimella %1$s ei ole julkaissut mitään julkisesti viime aikoina.</string>
     <string name="explore_fediverse_stories">Juttuja, joita jaetaan</string>
     <string name="explore_fediverse_tag_note">Uusimmat julkaisut ensin, palvelimelta %1$s</string>
     <string name="explore_fediverse_sheet_title">Tutki toista palvelinta</string>

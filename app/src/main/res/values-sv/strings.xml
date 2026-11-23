@@ -639,6 +639,9 @@
         <item quantity="other">%1$d personer pratar om det</item>
     </plurals>
     <string name="explore_fediverse_header_note">Populärt där just nu. Gillanden, svar och följningar går fortfarande via din webbplats.</string>
+    <string name="explore_fediverse_members">Från folk på %1$s</string>
+    <string name="explore_fediverse_members_note">Deras populäraste inlägg på sistone. Gillanden, svar och följningar går fortfarande via din webbplats.</string>
+    <string name="explore_fediverse_members_empty">Ingen på %1$s har postat offentligt på sistone.</string>
     <string name="explore_fediverse_stories">Artiklar som folk delar</string>
     <string name="explore_fediverse_tag_note">Nyaste inläggen först, från %1$s</string>
     <string name="explore_fediverse_sheet_title">Utforska en annan server</string>

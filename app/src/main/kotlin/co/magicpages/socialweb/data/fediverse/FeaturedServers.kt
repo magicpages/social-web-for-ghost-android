@@ -9,8 +9,9 @@ data class TopicServer(val host: String, val topic: ServerTopic)
 data class LanguageServer(val host: String, val language: String)
 
 /**
- * Servers to pick from, each checked to share its trending posts, its trending hashtags and the posts
- * under a hashtag without signing in. Many servers keep hashtag timelines to their own members.
+ * Servers to pick from, each checked to share its members' posts (mastodon.social only its trends), its
+ * hashtags and the posts under a hashtag without signing in. Many servers keep hashtag timelines to their
+ * own members.
  */
 val TopicServers: List<TopicServer> = listOf(
     TopicServer("mastodon.social", ServerTopic.General),
@@ -18,7 +19,7 @@ val TopicServers: List<TopicServer> = listOf(
     TopicServer("fosstodon.org", ServerTopic.OpenSource),
     TopicServer("fediscience.org", ServerTopic.Science),
     TopicServer("climatejustice.social", ServerTopic.Climate),
-    TopicServer("journa.host", ServerTopic.Journalism),
+    TopicServer("newsie.social", ServerTopic.Journalism),
     TopicServer("mastodon.gamedev.place", ServerTopic.GameDevelopment),
     TopicServer("musician.social", ServerTopic.Music),
     TopicServer("indieweb.social", ServerTopic.IndieWeb),

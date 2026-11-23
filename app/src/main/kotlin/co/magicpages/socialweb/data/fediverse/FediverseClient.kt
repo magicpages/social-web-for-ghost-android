@@ -17,8 +17,13 @@ import io.ktor.http.isSuccess
 import io.ktor.http.path
 import java.io.IOException
 import java.net.IDN
+import java.time.Instant
+import java.time.format.DateTimeParseException
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
@@ -38,8 +43,11 @@ data class TrendingTag(val name: String, val people: Int)
 /** A web page a server sees shared a lot: [people] is how many accounts shared it today and yesterday. */
 data class TrendingLink(val url: String, val title: String, val provider: String?, val imageUrl: String?, val people: Int)
 
-/** What else a server sees trending besides posts. Either list is empty when it has none or won't say. */
-data class FediverseTrends(val tags: List<TrendingTag>, val links: List<TrendingLink>)
+/**
+ * What else a server shows besides posts. Either list is empty when it has none or won't say.
+ * [fromMembers] says they come from the server's own members' posts rather than its trends.
+ */
+data class FediverseTrends(val tags: List<TrendingTag>, val links: List<TrendingLink>, val fromMembers: Boolean)
 
 /** A public server refused a request (or isn't one); 401, 403 and 422 mean it keeps that list to signed-in users. */
 class PublicServerException(val server: String, val status: Int) : Exception("HTTP $status from $server") {
@@ -47,9 +55,10 @@ class PublicServerException(val server: String, val status: Int) : Exception("HT
 }
 
 /**
- * Reads what a Mastodon-compatible server shares without signing in: its trending posts and hashtags,
- * and the posts under a hashtag. The posts come back as the app's [Post]s with their ActivityPub ids,
- * so opening, liking, reposting and replying go through the user's own site, which fetches them.
+ * Reads what a Mastodon-compatible server shares without signing in: its own members' recent posts, its
+ * trending posts and hashtags, and the posts under a hashtag. The posts come back as the app's [Post]s with
+ * their ActivityPub ids, so opening, liking, reposting and replying go through the user's own site, which
+ * fetches them.
  */
 @Singleton
 class FediverseClient @Inject constructor(
@@ -57,6 +66,58 @@ class FediverseClient @Inject constructor(
     private val json: Json,
     private val explored: ExploredPosts,
 ) {
+    private val highlightCache = ConcurrentHashMap<String, CachedHighlights>()
+    private val highlightLocks = ConcurrentHashMap<String, Mutex>()
+    private val showsMembers = ConcurrentHashMap<String, Boolean>()
+
+    /**
+     * What [server]'s own members posted lately, ranked; null when it keeps those posts to signed-in users,
+     * as mastodon.social does, and Explore shows its trends instead. The posts and the hashtags above them
+     * come from one read, kept for a few minutes so both lists agree; [forgetHighlights] starts over.
+     */
+    suspend fun highlights(server: String): ServerHighlights? =
+        highlightLocks.computeIfAbsent(server) { Mutex() }.withLock {
+            highlightCache[server]?.takeIf { System.currentTimeMillis() - it.atMillis < HighlightsCacheMillis }?.let { return@withLock it.highlights }
+            val highlights = try {
+                highlightsOf(memberStatuses(server), server).also { explored.remember(it.posts) }
+            } catch (e: PublicServerException) {
+                if (!e.notPublic) throw e
+                null
+            }
+            highlightCache[server] = CachedHighlights(highlights, System.currentTimeMillis())
+            showsMembers[server] = highlights != null
+            highlights
+        }
+
+    /** Whether Explore shows [server]'s members' posts rather than its trends; known after the first [highlights]. */
+    suspend fun showsMembers(server: String): Boolean = showsMembers[server] ?: (highlights(server) != null)
+
+    /** Makes the next [highlights] read the server again, as a pull to refresh should. */
+    fun forgetHighlights(server: String) {
+        highlightCache.remove(server)
+    }
+
+    /**
+     * The local timeline back to about a day ago: enough pages for a quiet server to have something to rank,
+     * and no more than [MembersMaxPages] on a busy one, where a day is thousands of posts.
+     */
+    private suspend fun memberStatuses(server: String): List<MastodonStatus> {
+        val since = System.currentTimeMillis() - MembersWindowMillis
+        val statuses = ArrayList<MastodonStatus>()
+        var maxId: String? = null
+        var usable = 0
+        repeat(MembersMaxPages) {
+            val query = listOfNotNull("local" to "true", "limit" to "$MembersPageSize", maxId?.let { "max_id" to it })
+            val page = get<List<MastodonStatus>>(server, listOf("timelines", "public"), *query.toTypedArray())
+            statuses += page
+            usable += page.count { it.isOwnPost }
+            val oldest = page.lastOrNull()?.createdMillis
+            if (page.size < MembersPageSize || (usable >= MembersEnough && oldest != null && oldest < since)) return statuses
+            maxId = page.last().id
+        }
+        return statuses
+    }
+
     /** A page of the server's trending posts, from [offset]; the next page's offset is in [PostsPage.next]. */
     suspend fun trendingPosts(server: String, offset: Int): PostsPage {
         val statuses = get<List<MastodonStatus>>(server, listOf("trends", "statuses"), "limit" to "$PageSize", "offset" to "$offset")
@@ -81,17 +142,25 @@ class FediverseClient @Inject constructor(
             )
         }
 
-    /** The newest public posts under #[tag], older than [maxId] when it's given; the next page's id is in [PostsPage.next]. */
-    suspend fun tagPosts(server: String, tag: String, maxId: String?): PostsPage {
-        val query = listOfNotNull("limit" to "$PageSize", maxId?.let { "max_id" to it })
+    /**
+     * The newest public posts under #[tag], older than [maxId] when it's given; the next page's id is in
+     * [PostsPage.next]. With [membersOnly], only the server's own members' posts, as its highlights are.
+     */
+    suspend fun tagPosts(server: String, tag: String, maxId: String?, membersOnly: Boolean): PostsPage {
+        val query = listOfNotNull("limit" to "$PageSize", maxId?.let { "max_id" to it }, ("local" to "true").takeIf { membersOnly })
         val statuses = get<List<MastodonStatus>>(server, listOf("timelines", "tag", tag), *query.toTypedArray())
         val posts = statuses.map { it.toPost(server) }.also(explored::remember)
         return PostsPage(posts, next = if (statuses.size < PageSize) null else statuses.last().id)
     }
 
-    /** Throws unless [server] answers for its trending posts, which is all Explore needs from it. */
+    /** Throws unless [server] answers for its members' posts or, failing those, its trending posts: what Explore shows. */
     suspend fun check(server: String) {
-        get<List<JsonElement>>(server, listOf("trends", "statuses"), "limit" to "1")
+        try {
+            get<List<JsonElement>>(server, listOf("timelines", "public"), "local" to "true", "limit" to "1")
+        } catch (e: PublicServerException) {
+            if (!e.notPublic) throw e
+            get<List<JsonElement>>(server, listOf("trends", "statuses"), "limit" to "1")
+        }
     }
 
     private suspend inline fun <reified T> get(server: String, segments: List<String>, vararg query: Pair<String, String>): T {
@@ -119,10 +188,18 @@ class FediverseClient @Inject constructor(
         }
     }
 
+    private class CachedHighlights(val highlights: ServerHighlights?, val atMillis: Long)
+
     private companion object {
         const val PageSize = 20
         const val TagLimit = 20
         const val LinkLimit = 10
+        const val MembersPageSize = 40
+        const val MembersMaxPages = 5
+        /** Fewer posts than this is too few to rank, so a quiet server is read further back than a day. */
+        const val MembersEnough = 80
+        const val MembersWindowMillis = 24 * 60 * 60 * 1000L
+        const val HighlightsCacheMillis = 3 * 60 * 1000L
     }
 }
 
@@ -153,6 +230,7 @@ internal data class MastodonStatus(
     val uri: String,
     val url: String? = null,
     @SerialName("created_at") val createdAt: String? = null,
+    @SerialName("in_reply_to_id") val inReplyToId: String? = null,
     val content: String = "",
     val sensitive: Boolean = false,
     @SerialName("spoiler_text") val spoilerText: String = "",
@@ -161,7 +239,17 @@ internal data class MastodonStatus(
     @SerialName("replies_count") val replies: Int = 0,
     @SerialName("reblogs_count") val reblogs: Int = 0,
     @SerialName("favourites_count") val favourites: Int = 0,
+    val tags: List<MastodonStatusTag> = emptyList(),
+    /** The preview of the first link in the post, once the server has fetched it. */
+    val card: MastodonCard? = null,
 )
+
+internal val MastodonStatus.createdMillis: Long?
+    get() = try {
+        createdAt?.let { Instant.parse(it).toEpochMilli() }
+    } catch (_: DateTimeParseException) {
+        null
+    }
 
 @Serializable
 internal data class MastodonAccount(
@@ -172,6 +260,19 @@ internal data class MastodonAccount(
     val url: String? = null,
     /** The ActivityPub id; servers before Mastodon 4.2 leave it out. */
     val uri: String? = null,
+    /** Set by the account itself when it posts automatically. */
+    val bot: Boolean = false,
+)
+
+@Serializable
+internal data class MastodonStatusTag(val name: String)
+
+@Serializable
+internal data class MastodonCard(
+    val url: String,
+    val title: String = "",
+    @SerialName("provider_name") val providerName: String? = null,
+    val image: String? = null,
 )
 
 @Serializable

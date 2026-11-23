@@ -639,6 +639,9 @@
         <item quantity="other">%1$d kişi konuşuyor</item>
     </plurals>
     <string name="explore_fediverse_header_note">Şu anda orada popüler. Beğeniler, yanıtlar ve takipler yine sitenizden geçer.</string>
+    <string name="explore_fediverse_members">%1$s kullanıcılarından</string>
+    <string name="explore_fediverse_members_note">Son zamanlardaki en popüler gönderileri. Beğeniler, yanıtlar ve takipler yine sitenizden geçer.</string>
+    <string name="explore_fediverse_members_empty">Son zamanlarda %1$s üzerinde kimse herkese açık bir şey paylaşmadı.</string>
     <string name="explore_fediverse_stories">İnsanların paylaştığı haberler</string>
     <string name="explore_fediverse_tag_note">Önce en yeni gönderiler, %1$s kaynağından</string>
     <string name="explore_fediverse_sheet_title">Başka bir sunucuyu keşfedin</string>

@@ -669,6 +669,9 @@
         <item quantity="other">%1$d osoby o tym mówi</item>
     </plurals>
     <string name="explore_fediverse_header_note">Teraz popularne na tym serwerze. Polubienia, odpowiedzi i obserwowanie nadal idą przez twoją witrynę.</string>
+    <string name="explore_fediverse_members">Od osób z %1$s</string>
+    <string name="explore_fediverse_members_note">Ich najpopularniejsze wpisy z ostatnich dni. Polubienia, odpowiedzi i obserwowanie nadal idą przez twoją witrynę.</string>
+    <string name="explore_fediverse_members_empty">Nikt z %1$s nie opublikował ostatnio nic publicznie.</string>
     <string name="explore_fediverse_stories">Artykuły, które udostępniają ludzie</string>
     <string name="explore_fediverse_tag_note">Najnowsze wpisy najpierw, z %1$s</string>
     <string name="explore_fediverse_sheet_title">Odkrywaj inny serwer</string>

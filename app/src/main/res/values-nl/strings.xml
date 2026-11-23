@@ -639,6 +639,9 @@
         <item quantity="other">%1$d mensen praten erover</item>
     </plurals>
     <string name="explore_fediverse_header_note">Nu populair daar. Likes, reacties en volgen lopen nog steeds via je site.</string>
+    <string name="explore_fediverse_members">Van mensen op %1$s</string>
+    <string name="explore_fediverse_members_note">Hun populairste berichten van de laatste tijd. Likes, reacties en volgen lopen nog steeds via je site.</string>
+    <string name="explore_fediverse_members_empty">Niemand op %1$s heeft de laatste tijd iets openbaar geplaatst.</string>
     <string name="explore_fediverse_stories">Verhalen die mensen delen</string>
     <string name="explore_fediverse_tag_note">Nieuwste berichten eerst, van %1$s</string>
     <string name="explore_fediverse_sheet_title">Een andere server verkennen</string>

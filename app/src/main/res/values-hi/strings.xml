@@ -639,6 +639,9 @@
         <item quantity="other">%1$d लोग चर्चा कर रहे हैं</item>
     </plurals>
     <string name="explore_fediverse_header_note">अभी वहाँ लोकप्रिय। लाइक, जवाब और फ़ॉलो अब भी आपकी साइट से होते हैं।</string>
+    <string name="explore_fediverse_members">%1$s के लोगों से</string>
+    <string name="explore_fediverse_members_note">हाल की उनकी सबसे लोकप्रिय पोस्ट। लाइक, जवाब और फ़ॉलो अब भी आपकी साइट से होते हैं।</string>
+    <string name="explore_fediverse_members_empty">हाल में %1$s पर किसी ने सार्वजनिक रूप से पोस्ट नहीं किया है।</string>
     <string name="explore_fediverse_stories">लोग जो कहानियाँ शेयर कर रहे हैं</string>
     <string name="explore_fediverse_tag_note">सबसे नई पोस्ट पहले, %1$s से</string>
     <string name="explore_fediverse_sheet_title">कोई दूसरा सर्वर एक्सप्लोर करें</string>

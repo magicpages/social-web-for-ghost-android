@@ -654,6 +654,9 @@
         <item quantity="other">%1$d pessoas falando disso</item>
     </plurals>
     <string name="explore_fediverse_header_note">Em alta lá agora. Curtidas, respostas e seguidas continuam passando pelo seu site.</string>
+    <string name="explore_fediverse_members">De pessoas em %1$s</string>
+    <string name="explore_fediverse_members_note">As publicações mais populares delas nos últimos dias. Curtidas, respostas e seguidas continuam passando pelo seu site.</string>
+    <string name="explore_fediverse_members_empty">Ninguém em %1$s publicou em público nos últimos dias.</string>
     <string name="explore_fediverse_stories">Histórias que as pessoas estão compartilhando</string>
     <string name="explore_fediverse_tag_note">Posts mais recentes primeiro, de %1$s</string>
     <string name="explore_fediverse_sheet_title">Explorar outro servidor</string>

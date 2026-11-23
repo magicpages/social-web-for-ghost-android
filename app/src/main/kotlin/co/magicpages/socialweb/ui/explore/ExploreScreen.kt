@@ -129,6 +129,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.text.style.TextAlign
 import androidx.paging.compose.LazyPagingItems
+import co.magicpages.socialweb.data.fediverse.FediverseExplore
 import co.magicpages.socialweb.data.fediverse.FediverseTrends
 import co.magicpages.socialweb.data.fediverse.TrendingLink
 import co.magicpages.socialweb.data.fediverse.TrendingTag
@@ -350,8 +351,9 @@ fun ExploreScreen(
                 onRefresh = {
                     when {
                         fediverseSelected -> {
+                            // Forgets the server's posts first, so the list reads them again rather than the copy kept for the hashtags.
+                            viewModel.refreshFediverse()
                             posts.refresh()
-                            viewModel.refreshTrends()
                         }
                         listsPosts -> posts.refresh()
                         else -> {
@@ -608,9 +610,10 @@ private fun FediverseChip(label: String, selected: Boolean, onClick: () -> Unit)
 }
 
 /**
- * The Fediverse source in one scroll: which server it is, its trending hashtags and the stories its
- * people share, then its trending posts; or, with [tag] open, that hashtag's newest posts. A hashtag
- * link in a post opens here as well, rather than on the server's website.
+ * The Fediverse source in one scroll: which server it is, the hashtags and stories its members share,
+ * then their best recent posts (or, on a server that keeps those to signed-in users, its trends); or,
+ * with [tag] open, that hashtag's newest posts. A hashtag link in a post opens here as well, rather than
+ * on the server's website.
  */
 @Composable
 private fun FediverseList(
@@ -642,7 +645,7 @@ private fun FediverseList(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (tag == null) {
-                item(key = "fediverse-header", contentType = "header") { TrendingHeader(server, onChangeServer) }
+                item(key = "fediverse-header", contentType = "header") { TrendingHeader(server, trends?.fromMembers, onChangeServer) }
                 val tags = trends?.tags.orEmpty()
                 if (tags.isNotEmpty()) {
                     item(key = "fediverse-tags", contentType = "tags") {
@@ -681,10 +684,10 @@ private fun FediverseList(
                 }
                 refresh is LoadState.NotLoading && posts.itemCount == 0 -> item(key = "fediverse-state", contentType = "state") {
                     Text(
-                        if (tag != null) {
-                            stringResource(R.string.explore_fediverse_tag_empty, tag, server)
-                        } else {
-                            stringResource(R.string.explore_fediverse_posts_empty, server)
+                        when {
+                            tag != null -> stringResource(R.string.explore_fediverse_tag_empty, tag, server)
+                            trends?.fromMembers == true -> stringResource(R.string.explore_fediverse_members_empty, server)
+                            else -> stringResource(R.string.explore_fediverse_posts_empty, server)
                         },
                         style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.Center,
@@ -697,23 +700,27 @@ private fun FediverseList(
     }
 }
 
-/** Where the trends come from, and the way to another server. */
+/**
+ * Where the posts come from, and the way to another server. [fromMembers] is null until that's known; most
+ * servers show their members' posts, and the default one only its trends, so the header guesses so meanwhile.
+ */
 @Composable
-private fun TrendingHeader(server: String, onChangeServer: () -> Unit) {
+private fun TrendingHeader(server: String, fromMembers: Boolean?, onChangeServer: () -> Unit) {
+    val members = fromMembers ?: (server != FediverseExplore.DefaultServer)
     Row(
         Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(start = Gutter, end = 8.dp, top = 4.dp, bottom = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(
-                stringResource(R.string.explore_fediverse_trending, server),
+                stringResource(if (members) R.string.explore_fediverse_members else R.string.explore_fediverse_trending, server),
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.semantics { heading() },
             )
             Text(
-                stringResource(R.string.explore_fediverse_header_note),
+                stringResource(if (members) R.string.explore_fediverse_members_note else R.string.explore_fediverse_header_note),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

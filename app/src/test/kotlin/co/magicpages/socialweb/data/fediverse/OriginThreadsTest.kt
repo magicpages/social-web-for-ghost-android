@@ -9,6 +9,7 @@ import io.ktor.client.engine.mock.respond
 import io.ktor.client.request.HttpRequestData
 import io.ktor.http.HttpStatusCode
 import java.io.IOException
+import java.util.Collections
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
@@ -125,7 +126,8 @@ class OriginThreadsTest {
     // Asking the server
 
     private val postId = "https://socel.net/users/ana/statuses/100"
-    private val requests = mutableListOf<HttpRequestData>()
+    // The post and its context are asked for at once, from the engine's threads.
+    private val requests: MutableList<HttpRequestData> = Collections.synchronizedList(mutableListOf())
 
     private fun status(id: String, uri: String, parent: String?, replies: Int = 0, likes: Int = 0) = """
         {"id":"$id","uri":"$uri","url":"$uri","created_at":"2026-11-22T13:41:00.000Z","content":"<p>$id</p>",

@@ -624,6 +624,9 @@
         <item quantity="other">%1$d orang membicarakannya</item>
     </plurals>
     <string name="explore_fediverse_header_note">Sedang populer di sana. Suka, balasan, dan ikuti tetap lewat situsmu.</string>
+    <string name="explore_fediverse_members">Dari orang-orang di %1$s</string>
+    <string name="explore_fediverse_members_note">Postingan mereka yang paling populer belakangan ini. Suka, balasan, dan ikuti tetap lewat situsmu.</string>
+    <string name="explore_fediverse_members_empty">Belum ada yang memposting secara publik di %1$s belakangan ini.</string>
     <string name="explore_fediverse_stories">Cerita yang dibagikan orang</string>
     <string name="explore_fediverse_tag_note">Postingan terbaru dulu, dari %1$s</string>
     <string name="explore_fediverse_sheet_title">Jelajahi server lain</string>

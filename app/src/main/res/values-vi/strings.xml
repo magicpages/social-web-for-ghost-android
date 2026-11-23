@@ -624,6 +624,9 @@
         <item quantity="other">%1$d người đang bàn luận</item>
     </plurals>
     <string name="explore_fediverse_header_note">Đang phổ biến ở đó. Thích, trả lời và theo dõi vẫn đi qua trang của bạn.</string>
+    <string name="explore_fediverse_members">Từ mọi người trên %1$s</string>
+    <string name="explore_fediverse_members_note">Những bài đăng được yêu thích nhất của họ gần đây. Thích, trả lời và theo dõi vẫn đi qua trang của bạn.</string>
+    <string name="explore_fediverse_members_empty">Gần đây chưa ai trên %1$s đăng công khai.</string>
     <string name="explore_fediverse_stories">Câu chuyện mọi người đang chia sẻ</string>
     <string name="explore_fediverse_tag_note">Bài mới nhất trước, từ %1$s</string>
     <string name="explore_fediverse_sheet_title">Khám phá máy chủ khác</string>

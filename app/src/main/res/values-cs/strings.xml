@@ -669,6 +669,9 @@
         <item quantity="other">Mluví o tom %1$d lidí</item>
     </plurals>
     <string name="explore_fediverse_header_note">Tam teď populární. Lajky, odpovědi a sledování dál jdou přes tvůj web.</string>
+    <string name="explore_fediverse_members">Od lidí na %1$s</string>
+    <string name="explore_fediverse_members_note">Jejich nejoblíbenější příspěvky z poslední doby. Lajky, odpovědi a sledování dál jdou přes tvůj web.</string>
+    <string name="explore_fediverse_members_empty">Na %1$s v poslední době nikdo nic veřejně nezveřejnil.</string>
     <string name="explore_fediverse_stories">Články, které lidé sdílejí</string>
     <string name="explore_fediverse_tag_note">Nejnovější příspěvky první, z %1$s</string>
     <string name="explore_fediverse_sheet_title">Objevovat jiný server</string>

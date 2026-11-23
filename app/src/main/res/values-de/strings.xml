@@ -639,6 +639,9 @@
         <item quantity="other">%1$d Personen sprechen darüber</item>
     </plurals>
     <string name="explore_fediverse_header_note">Dort gerade beliebt. Likes, Antworten und Folgen laufen weiterhin über deine Website.</string>
+    <string name="explore_fediverse_members">Von Leuten auf %1$s</string>
+    <string name="explore_fediverse_members_note">Ihre beliebtesten Beiträge der letzten Zeit. Likes, Antworten und Folgen laufen weiterhin über deine Website.</string>
+    <string name="explore_fediverse_members_empty">Auf %1$s hat zuletzt niemand öffentlich gepostet.</string>
     <string name="explore_fediverse_stories">Geschichten, die gerade geteilt werden</string>
     <string name="explore_fediverse_tag_note">Neueste Beiträge zuerst, von %1$s</string>
     <string name="explore_fediverse_sheet_title">Einen anderen Server entdecken</string>

@@ -647,6 +647,9 @@
         <item quantity="other">%1$d people talking</item>
     </plurals>
     <string name="explore_fediverse_header_note">Popular there right now. Likes, replies and follows still go through your site.</string>
+    <string name="explore_fediverse_members">From people on %1$s</string>
+    <string name="explore_fediverse_members_note">Their most popular posts lately. Likes, replies and follows still go through your site.</string>
+    <string name="explore_fediverse_members_empty">No one on %1$s has posted in public lately.</string>
     <string name="explore_fediverse_stories">Stories people are sharing</string>
     <string name="explore_fediverse_tag_note">Newest posts first, from %1$s</string>
     <string name="explore_fediverse_sheet_title">Explore another server</string>

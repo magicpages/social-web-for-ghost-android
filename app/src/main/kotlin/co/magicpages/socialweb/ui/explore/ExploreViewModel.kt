@@ -16,6 +16,7 @@ import co.magicpages.socialweb.R
 import co.magicpages.socialweb.data.activitypub.FreshAvatars
 import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.data.activitypub.PostInteractions
+import co.magicpages.socialweb.data.activitypub.PostsPage
 import co.magicpages.socialweb.ui.posts.FeedItem
 import co.magicpages.socialweb.ui.posts.PostsPagingSource
 import co.magicpages.socialweb.ui.posts.ReplyComposer
@@ -298,8 +299,9 @@ class ExploreViewModel @Inject constructor(
             if (hidden.isEmpty) data else data.filter { !it.isHiddenBy(hidden) }
         }
 
-    // Posts from a public server, as its own API gives them. Whether the user liked or reposted one isn't known
-    // there, so its pages leave the site's overrides alone; a like made here still shows through them.
+    // Posts from a public server, as its own API gives them: its members' best recent posts, or its trending
+    // posts when it keeps its members' posts to signed-in users. Whether the user liked or reposted one isn't
+    // known there, so its pages leave the site's overrides alone; a like made here still shows through them.
     val fediversePosts: Flow<PagingData<FeedItem>> = combine(active, fediverseVisited, fediverse, _fediverseTag) { _, visited, source, tag ->
         Triple(visited && source.enabled, source.server, tag)
     }
@@ -311,9 +313,11 @@ class ExploreViewModel @Inject constructor(
                 Pager(PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false)) {
                     PostsPagingSource(interactions, authoritative = false) { next ->
                         if (tag == null) {
-                            fediverseClient.trendingPosts(server, next?.toIntOrNull() ?: 0)
+                            val offset = next?.toIntOrNull() ?: 0
+                            val highlights = fediverseClient.highlights(server)
+                            if (highlights == null) fediverseClient.trendingPosts(server, offset) else highlights.posts.page(offset)
                         } else {
-                            fediverseClient.tagPosts(server, tag, next)
+                            fediverseClient.tagPosts(server, tag, next, membersOnly = fediverseClient.showsMembers(server))
                         }
                     }
                 }.flow.onStart { emit(PagingData.empty(LOADING_STATES)) }
@@ -328,9 +332,9 @@ class ExploreViewModel @Inject constructor(
         }
 
     /**
-     * The server's trending hashtags and stories, shown above its posts; null while they load. Each
-     * list on its own is a nice-to-have: one the server won't give is left empty, and only the posts
-     * say why when the server can't be read at all.
+     * The hashtags and stories shown above the server's posts, from the same source as those posts; null
+     * while they load. Each list on its own is a nice-to-have: one the server won't give is left empty,
+     * and only the posts say why when the server can't be read at all.
      */
     val fediverseTrends: StateFlow<FediverseTrends?> = combine(fediverseVisited, fediverse, trendRefreshes) { visited, source, _ ->
         source.server.takeIf { visited && source.enabled }
@@ -339,16 +343,26 @@ class ExploreViewModel @Inject constructor(
             flow {
                 if (server == null) return@flow
                 emit(null)
-                emit(
-                    coroutineScope {
-                        val tags = async { readOrEmpty { fediverseClient.trendingTags(server) } }
-                        val links = async { readOrEmpty { fediverseClient.trendingLinks(server) } }
-                        FediverseTrends(tags.await(), links.await())
-                    },
-                )
+                emit(trendsOf(server))
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    private suspend fun trendsOf(server: String): FediverseTrends {
+        val highlights = try {
+            fediverseClient.highlights(server)
+        } catch (_: GhostException) {
+            return FediverseTrends(emptyList(), emptyList(), fromMembers = false)
+        } catch (_: PublicServerException) {
+            return FediverseTrends(emptyList(), emptyList(), fromMembers = false)
+        }
+        if (highlights != null) return FediverseTrends(highlights.tags, highlights.links, fromMembers = true)
+        return coroutineScope {
+            val tags = async { readOrEmpty { fediverseClient.trendingTags(server) } }
+            val links = async { readOrEmpty { fediverseClient.trendingLinks(server) } }
+            FediverseTrends(tags.await(), links.await(), fromMembers = false)
+        }
+    }
 
     private suspend fun <T> readOrEmpty(read: suspend () -> List<T>): List<T> = try {
         read()
@@ -356,6 +370,11 @@ class ExploreViewModel @Inject constructor(
         emptyList()
     } catch (_: PublicServerException) {
         emptyList()
+    }
+
+    private fun List<Post>.page(offset: Int): PostsPage {
+        val end = minOf(offset + PAGE_SIZE, size)
+        return PostsPage(if (offset < end) subList(offset, end) else emptyList(), next = if (end < size) "$end" else null)
     }
 
     /** Sets what the search field holds; the service is asked once typing pauses. */
@@ -415,8 +434,11 @@ class ExploreViewModel @Inject constructor(
         _fediverseTag.value = tag?.removePrefix("#")
     }
 
-    /** Asks the server for its hashtags and stories again; its posts reload through their own refresh. */
-    fun refreshTrends() = trendRefreshes.update { it + 1 }
+    /** Reads the server again: the hashtags and stories here, and its posts once the list refreshes after this. */
+    fun refreshFediverse() {
+        fediverseClient.forgetHighlights(fediverse.value.server)
+        trendRefreshes.update { it + 1 }
+    }
 
     /** Switches a selected topic between its posts and its people. */
     fun setTopicView(view: TopicView) {

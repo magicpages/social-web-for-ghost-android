@@ -624,6 +624,9 @@
         <item quantity="other">%1$d 人在討論</item>
     </plurals>
     <string name="explore_fediverse_header_note">那裡目前的熱門內容。按讚、回覆和追蹤仍然透過你的網站進行。</string>
+    <string name="explore_fediverse_members">來自 %1$s 上的使用者</string>
+    <string name="explore_fediverse_members_note">他們最近最受歡迎的貼文。按讚、回覆和追蹤仍然透過你的網站進行。</string>
+    <string name="explore_fediverse_members_empty">%1$s 上最近沒有人公開發文。</string>
     <string name="explore_fediverse_stories">大家在分享的報導</string>
     <string name="explore_fediverse_tag_note">最新嘟文在前，來自 %1$s</string>
     <string name="explore_fediverse_sheet_title">探索其他伺服器</string>
