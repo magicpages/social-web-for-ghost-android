@@ -635,7 +635,6 @@
     <string name="explore_hashtags">Hashtagy</string>
     <string name="explore_fediverse_trending">Populární na %1$s</string>
     <string name="explore_fediverse_change">Změnit</string>
-    <string name="explore_fediverse_back">Zpět na populární příspěvky</string>
     <string name="explore_fediverse_posts_empty">Na %1$s teď nic populárního není.</string>
     <string name="explore_fediverse_tag_empty">Na %2$s zatím nejsou veřejné příspěvky s #%1$s.</string>
     <string name="settings_experimental">Experimentální</string>
@@ -698,6 +697,12 @@
     <string name="reach_entry">Podívejte se, kam až se vaše příspěvky dostaly</string>
     <string name="reach_people_on_servers">%1$s na %2$s</string>
     <string name="reach_partial">Na vašem webu je tolik aktivity, že se počítá jen část posledních 30 dní.</string>
+    <string name="reach_followers">Sledující</string>
+    <string name="reach_new_followers">Noví sledující</string>
+    <string name="reach_new_week">+%1$s za posledních 7 dní</string>
+    <string name="reach_week_before">%1$s týden předtím</string>
+    <string name="reach_new_month">%1$s za posledních 30 dní</string>
+    <string name="reach_growth_note">Počítáno z oznámení o sledování, takže zrušená sledování se neodečítají.</string>
     <string name="reach_top">Nejdál v poslední době</string>
     <string name="reach_recent">Vaše nedávné příspěvky</string>
     <string name="reach_nothing">Zatím nic. Až lidé vaše příspěvky sdílejí, odpoví na ně nebo je olajkují, uvidíte to tady.</string>

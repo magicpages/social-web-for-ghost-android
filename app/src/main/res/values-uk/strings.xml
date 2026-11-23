@@ -635,7 +635,6 @@
     <string name="explore_hashtags">Хештеги</string>
     <string name="explore_fediverse_trending">Популярне на %1$s</string>
     <string name="explore_fediverse_change">Змінити</string>
-    <string name="explore_fediverse_back">Назад до популярних дописів</string>
     <string name="explore_fediverse_posts_empty">Зараз на %1$s нічого не популярне.</string>
     <string name="explore_fediverse_tag_empty">На %2$s ще немає публічних дописів з #%1$s.</string>
     <string name="settings_experimental">Експериментальне</string>
@@ -698,6 +697,12 @@
     <string name="reach_entry">Подивіться, як далеко розійшлися ваші дописи</string>
     <string name="reach_people_on_servers">%1$s на %2$s</string>
     <string name="reach_partial">На вашому сайті стільки активності, що враховано лише частину останніх 30 днів.</string>
+    <string name="reach_followers">Підписники</string>
+    <string name="reach_new_followers">Нові підписники</string>
+    <string name="reach_new_week">+%1$s за останні 7 днів</string>
+    <string name="reach_week_before">%1$s за тиждень до того</string>
+    <string name="reach_new_month">%1$s за останні 30 днів</string>
+    <string name="reach_growth_note">Рахується за сповіщеннями про підписку, тож відписки не віднімаються.</string>
     <string name="reach_top">Розійшлися найдалі останнім часом</string>
     <string name="reach_recent">Ваші нещодавні дописи</string>
     <string name="reach_nothing">Поки нічого. Коли люди поширюватимуть ваші дописи, відповідатимуть на них чи вподобатимуть їх, це з\'явиться тут.</string>

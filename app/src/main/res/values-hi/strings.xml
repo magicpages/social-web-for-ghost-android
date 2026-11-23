@@ -607,7 +607,6 @@
     <string name="explore_hashtags">हैशटैग</string>
     <string name="explore_fediverse_trending">%1$s पर ट्रेंडिंग</string>
     <string name="explore_fediverse_change">बदलें</string>
-    <string name="explore_fediverse_back">ट्रेंडिंग पोस्ट पर वापस जाएँ</string>
     <string name="explore_fediverse_posts_empty">%1$s पर अभी कुछ भी ट्रेंड नहीं कर रहा।</string>
     <string name="explore_fediverse_tag_empty">%2$s पर #%1$s वाली कोई सार्वजनिक पोस्ट अभी नहीं है।</string>
     <string name="settings_experimental">प्रायोगिक</string>
@@ -666,6 +665,12 @@
     <string name="reach_entry">देखें कि आपकी पोस्ट कितनी दूर तक गईं</string>
     <string name="reach_people_on_servers">%2$s पर %1$s</string>
     <string name="reach_partial">आपकी साइट पर इतनी गतिविधि है कि पिछले 30 दिनों का केवल एक हिस्सा गिना गया है।</string>
+    <string name="reach_followers">फ़ॉलोअर</string>
+    <string name="reach_new_followers">नए फ़ॉलोअर</string>
+    <string name="reach_new_week">पिछले 7 दिनों में +%1$s</string>
+    <string name="reach_week_before">उससे पहले के हफ़्ते में %1$s</string>
+    <string name="reach_new_month">पिछले 30 दिनों में %1$s</string>
+    <string name="reach_growth_note">आपकी फ़ॉलो सूचनाओं से गिना गया है, इसलिए अनफ़ॉलो घटाए नहीं जाते।</string>
     <string name="reach_top">हाल में सबसे दूर तक गईं</string>
     <string name="reach_recent">आपकी हाल की पोस्ट</string>
     <string name="reach_nothing">अभी कुछ नहीं। जब लोग आपकी पोस्ट रीपोस्ट करेंगे, उसका जवाब देंगे या उसे पसंद करेंगे, तो वह यहाँ दिखेगा।</string>

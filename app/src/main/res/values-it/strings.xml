@@ -621,7 +621,6 @@
     <string name="explore_hashtags">Hashtag</string>
     <string name="explore_fediverse_trending">Di tendenza su %1$s</string>
     <string name="explore_fediverse_change">Cambia</string>
-    <string name="explore_fediverse_back">Torna ai post di tendenza</string>
     <string name="explore_fediverse_posts_empty">Niente di tendenza su %1$s in questo momento.</string>
     <string name="explore_fediverse_tag_empty">Ancora nessun post pubblico con #%1$s su %2$s.</string>
     <string name="settings_experimental">Sperimentale</string>
@@ -682,6 +681,12 @@
     <string name="reach_entry">Guarda fin dove sono arrivati i tuoi post</string>
     <string name="reach_people_on_servers">%1$s su %2$s</string>
     <string name="reach_partial">Il tuo sito ha così tanta attività che viene contata solo una parte degli ultimi 30 giorni.</string>
+    <string name="reach_followers">Follower</string>
+    <string name="reach_new_followers">Nuovi follower</string>
+    <string name="reach_new_week">+%1$s negli ultimi 7 giorni</string>
+    <string name="reach_week_before">%1$s la settimana prima</string>
+    <string name="reach_new_month">%1$s negli ultimi 30 giorni</string>
+    <string name="reach_growth_note">Contati dalle notifiche dei nuovi follower, quindi chi smette di seguirti non viene sottratto.</string>
     <string name="reach_top">Arrivati più lontano di recente</string>
     <string name="reach_recent">I tuoi post recenti</string>
     <string name="reach_nothing">Ancora niente. Quando qualcuno condivide i tuoi post, risponde o mette mi piace, lo vedi qui.</string>

@@ -107,7 +107,7 @@ class ComposerText(initial: TextFieldValue) {
     val mention: MentionToken? by derivedStateOf { mentionAt(value) }
 
     fun sync(text: String) {
-        if (value.text != text) value = TextFieldValue(text, TextRange(text.length))
+        if (value.text != text) value = startingValue(text)
     }
 
     /** Puts [author] in place of the mention being typed; returns the new text. */
@@ -127,7 +127,14 @@ class ComposerText(initial: TextFieldValue) {
 
 @Composable
 fun rememberComposerText(text: String): ComposerText =
-    rememberSaveable(saver = ComposerText.Saver) { ComposerText(TextFieldValue(text, TextRange(text.length))) }
+    rememberSaveable(saver = ComposerText.Saver) { ComposerText(startingValue(text)) }
+
+/**
+ * [text] the writer didn't type, with the cursor at its end; or at its start when it opens with an empty
+ * line, which a note about a post or link leaves for the writer's own words above the link.
+ */
+internal fun startingValue(text: String): TextFieldValue =
+    TextFieldValue(text, TextRange(if (text.startsWith("\n")) 0 else text.length))
 
 /**
  * The bar above the keyboard in a composer: [actions] (adding an image, say), or, while an `@…`

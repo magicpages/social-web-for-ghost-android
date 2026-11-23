@@ -607,7 +607,6 @@
     <string name="explore_hashtags">Hashtags</string>
     <string name="explore_fediverse_trending">Populair op %1$s</string>
     <string name="explore_fediverse_change">Wijzigen</string>
-    <string name="explore_fediverse_back">Terug naar populaire berichten</string>
     <string name="explore_fediverse_posts_empty">Er is nu niets populair op %1$s.</string>
     <string name="explore_fediverse_tag_empty">Nog geen openbare berichten met #%1$s op %2$s.</string>
     <string name="settings_experimental">Experimenteel</string>
@@ -666,6 +665,12 @@
     <string name="reach_entry">Bekijk hoe ver je berichten zijn gekomen</string>
     <string name="reach_people_on_servers">%1$s op %2$s</string>
     <string name="reach_partial">Je site heeft zoveel activiteit dat maar een deel van de laatste 30 dagen meetelt.</string>
+    <string name="reach_followers">Volgers</string>
+    <string name="reach_new_followers">Nieuwe volgers</string>
+    <string name="reach_new_week">+%1$s in de laatste 7 dagen</string>
+    <string name="reach_week_before">%1$s de week ervoor</string>
+    <string name="reach_new_month">%1$s in de laatste 30 dagen</string>
+    <string name="reach_growth_note">Geteld uit je volgmeldingen, dus ontvolgen wordt niet afgetrokken.</string>
     <string name="reach_top">Kwamen de laatste tijd het verst</string>
     <string name="reach_recent">Je recente berichten</string>
     <string name="reach_nothing">Nog niets. Als mensen je berichten delen, erop reageren of ze leuk vinden, zie je dat hier.</string>

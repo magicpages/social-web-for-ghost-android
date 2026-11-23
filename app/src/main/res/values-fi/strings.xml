@@ -607,7 +607,6 @@
     <string name="explore_hashtags">Aihetunnisteet</string>
     <string name="explore_fediverse_trending">Suosittua palvelimella %1$s</string>
     <string name="explore_fediverse_change">Vaihda</string>
-    <string name="explore_fediverse_back">Takaisin suosittuihin julkaisuihin</string>
     <string name="explore_fediverse_posts_empty">Palvelimella %1$s ei ole juuri nyt mitään suosittua.</string>
     <string name="explore_fediverse_tag_empty">Palvelimella %2$s ei ole vielä julkisia julkaisuja tunnisteella #%1$s.</string>
     <string name="settings_experimental">Kokeelliset</string>
@@ -666,6 +665,12 @@
     <string name="reach_entry">Katso, kuinka pitkälle julkaisusi ovat kulkeneet</string>
     <string name="reach_people_on_servers">%1$s, %2$s</string>
     <string name="reach_partial">Sivustollasi on niin paljon toimintaa, että vain osa viimeisistä 30 päivästä lasketaan.</string>
+    <string name="reach_followers">Seuraajat</string>
+    <string name="reach_new_followers">Uudet seuraajat</string>
+    <string name="reach_new_week">+%1$s viimeisen 7 päivän aikana</string>
+    <string name="reach_week_before">%1$s edellisellä viikolla</string>
+    <string name="reach_new_month">%1$s viimeisen 30 päivän aikana</string>
+    <string name="reach_growth_note">Laskettu seuraamisilmoituksistasi, joten seuraamisen lopettaneita ei vähennetä.</string>
     <string name="reach_top">Kulkeneet viime aikoina pisimmälle</string>
     <string name="reach_recent">Viimeisimmät julkaisusi</string>
     <string name="reach_nothing">Ei vielä mitään. Kun joku jakaa julkaisusi, vastaa siihen tai tykkää siitä, se näkyy täällä.</string>

@@ -106,4 +106,28 @@ class PostActivityTest {
     fun `potential reach adds every reposter's followers to the site's own`() {
         assertEquals(3_000_000_100L, potentialReach(100, listOf(Int.MAX_VALUE, 852_516_353)))
     }
+
+    @Test
+    fun `follower growth counts each person once, at their newest follow`() {
+        val now = Instant.parse("2025-05-15T12:00:00Z").toEpochMilli()
+        val growth = followerGrowth(
+            listOf(
+                notification(Notification.Type.Follow, "@a@one.social", post = null, at = "2025-05-15T10:00:00Z"),
+                // Exactly a week ago still counts as this week.
+                notification(Notification.Type.Follow, "@b@one.social", post = null, at = "2025-05-08T12:00:00Z"),
+                // Followed, unfollowed and followed again: only this week's follow counts.
+                notification(Notification.Type.Follow, "@a@one.social", post = null, at = "2025-05-05T10:00:00Z"),
+                notification(Notification.Type.Follow, "@c@two.social", post = null, at = "2025-05-05T09:00:00Z"),
+                notification(Notification.Type.Follow, "@d@two.social", post = null, at = "2025-04-20T10:00:00Z"),
+                notification(Notification.Type.Follow, "@e@two.social", post = null, at = "2025-04-10T10:00:00Z"),
+                notification(Notification.Type.Like, "@f@two.social", post = "mine", at = "2025-05-15T11:00:00Z"),
+            ),
+            now,
+        )
+
+        assertEquals(2, growth.lastWeek)
+        assertEquals(1, growth.weekBefore)
+        assertEquals(4, growth.lastMonth)
+        assertEquals(listOf("@a@one.social", "@b@one.social", "@c@two.social", "@d@two.social"), growth.newest.map { it.handle })
+    }
 }

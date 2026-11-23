@@ -593,7 +593,6 @@
     <string name="explore_hashtags">ハッシュタグ</string>
     <string name="explore_fediverse_trending">%1$s のトレンド</string>
     <string name="explore_fediverse_change">変更</string>
-    <string name="explore_fediverse_back">トレンドの投稿に戻る</string>
     <string name="explore_fediverse_posts_empty">%1$s では今トレンドがありません。</string>
     <string name="explore_fediverse_tag_empty">%2$s には #%1$s の公開投稿がまだありません。</string>
     <string name="settings_experimental">試験運用</string>
@@ -650,6 +649,12 @@
     <string name="reach_entry">投稿がどこまで届いたかを見る</string>
     <string name="reach_people_on_servers">%2$s の %1$s</string>
     <string name="reach_partial">サイトのアクティビティが多いため、過去 30 日間の一部だけを数えています。</string>
+    <string name="reach_followers">フォロワー</string>
+    <string name="reach_new_followers">新しいフォロワー</string>
+    <string name="reach_new_week">過去 7 日間で +%1$s</string>
+    <string name="reach_week_before">その前の週は %1$s</string>
+    <string name="reach_new_month">過去 30 日間で %1$s</string>
+    <string name="reach_growth_note">フォロー通知から数えているため、フォロー解除は差し引かれません。</string>
     <string name="reach_top">最近いちばん遠くまで届いた投稿</string>
     <string name="reach_recent">最近の投稿</string>
     <string name="reach_nothing">まだありません。投稿がリポスト、返信、いいねされると、ここに表示されます。</string>

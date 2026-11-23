@@ -39,9 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -139,7 +137,7 @@ fun ComposerField(
     val focus = remember { FocusRequester() }
     SideEffect { text.sync(value) }
     TextField(
-        value = if (text.value.text == value) text.value else TextFieldValue(value, TextRange(value.length)),
+        value = if (text.value.text == value) text.value else startingValue(value),
         onValueChange = {
             text.value = it
             if (it.text != value) onValueChange(it.text)

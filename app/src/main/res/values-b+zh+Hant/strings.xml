@@ -593,7 +593,6 @@
     <string name="explore_hashtags">主題標籤</string>
     <string name="explore_fediverse_trending">%1$s 上的熱門</string>
     <string name="explore_fediverse_change">變更</string>
-    <string name="explore_fediverse_back">返回熱門嘟文</string>
     <string name="explore_fediverse_posts_empty">%1$s 上目前沒有熱門內容。</string>
     <string name="explore_fediverse_tag_empty">%2$s 上還沒有帶 #%1$s 的公開嘟文。</string>
     <string name="settings_experimental">實驗性功能</string>
@@ -650,6 +649,12 @@
     <string name="reach_entry">看看你的貼文傳播了多遠</string>
     <string name="reach_people_on_servers">%2$s 上的 %1$s</string>
     <string name="reach_partial">你的網站活動太多，只統計了最近 30 天中的一部分。</string>
+    <string name="reach_followers">追蹤者</string>
+    <string name="reach_new_followers">新追蹤者</string>
+    <string name="reach_new_week">最近 7 天 +%1$s</string>
+    <string name="reach_week_before">前一週 %1$s</string>
+    <string name="reach_new_month">最近 30 天 %1$s</string>
+    <string name="reach_growth_note">根據你的追蹤通知統計，取消追蹤不會被扣除。</string>
     <string name="reach_top">最近傳播最遠</string>
     <string name="reach_recent">你最近的貼文</string>
     <string name="reach_nothing">還沒有。有人轉發、回覆或喜歡你的貼文時，會顯示在這裡。</string>

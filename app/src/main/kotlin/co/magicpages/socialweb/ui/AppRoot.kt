@@ -513,7 +513,7 @@ private fun SignedInNavigation(
                 }
                 entry<ReachKey>(clazzContentKey = contentKey, metadata = detailMetadata) {
                     SharedEdgeInsets(WindowInsetsSides.Start) {
-                        ReachScreen(onBack = back, onOpenPostReach = { push(PostReachKey(it)) }, onSignOut = onSignOut)
+                        ReachScreen(onBack = back, onOpenPostReach = { push(PostReachKey(it)) }, onOpenProfile = openProfile, onSignOut = onSignOut)
                     }
                 }
                 entry<PostReachKey>(clazzContentKey = contentKey, metadata = detailMetadata) { key ->

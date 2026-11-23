@@ -635,7 +635,6 @@
     <string name="explore_hashtags">Хештеги</string>
     <string name="explore_fediverse_trending">Популярное на %1$s</string>
     <string name="explore_fediverse_change">Изменить</string>
-    <string name="explore_fediverse_back">Назад к популярным постам</string>
     <string name="explore_fediverse_posts_empty">Сейчас на %1$s ничего не популярно.</string>
     <string name="explore_fediverse_tag_empty">На %2$s пока нет публичных постов с #%1$s.</string>
     <string name="settings_experimental">Экспериментальное</string>
@@ -698,6 +697,12 @@
     <string name="reach_entry">Посмотрите, как далеко разошлись ваши публикации</string>
     <string name="reach_people_on_servers">%1$s на %2$s</string>
     <string name="reach_partial">На вашем сайте столько активности, что учитывается только часть последних 30 дней.</string>
+    <string name="reach_followers">Подписчики</string>
+    <string name="reach_new_followers">Новые подписчики</string>
+    <string name="reach_new_week">+%1$s за последние 7 дней</string>
+    <string name="reach_week_before">%1$s за неделю до этого</string>
+    <string name="reach_new_month">%1$s за последние 30 дней</string>
+    <string name="reach_growth_note">Считается по уведомлениям о подписке, поэтому отписки не вычитаются.</string>
     <string name="reach_top">Разошлись дальше всех за последнее время</string>
     <string name="reach_recent">Ваши недавние публикации</string>
     <string name="reach_nothing">Пока ничего. Когда люди будут делиться вашими публикациями, отвечать на них или лайкать их, это появится здесь.</string>

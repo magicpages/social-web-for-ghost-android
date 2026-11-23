@@ -621,7 +621,6 @@
     <string name="explore_hashtags">Hashtags</string>
     <string name="explore_fediverse_trending">Em alta em %1$s</string>
     <string name="explore_fediverse_change">Alterar</string>
-    <string name="explore_fediverse_back">Voltar às publicações em alta</string>
     <string name="explore_fediverse_posts_empty">Nada em alta em %1$s neste momento.</string>
     <string name="explore_fediverse_tag_empty">Ainda não há publicações públicas com #%1$s em %2$s.</string>
     <string name="settings_experimental">Experimental</string>
@@ -682,6 +681,12 @@
     <string name="reach_entry">Veja até onde chegaram as suas publicações</string>
     <string name="reach_people_on_servers">%1$s em %2$s</string>
     <string name="reach_partial">O seu site tem tanta atividade que só uma parte dos últimos 30 dias é contada.</string>
+    <string name="reach_followers">Seguidores</string>
+    <string name="reach_new_followers">Novos seguidores</string>
+    <string name="reach_new_week">+%1$s nos últimos 7 dias</string>
+    <string name="reach_week_before">%1$s na semana anterior</string>
+    <string name="reach_new_month">%1$s nos últimos 30 dias</string>
+    <string name="reach_growth_note">Contados a partir das suas notificações de seguimento, por isso quem deixa de seguir não é descontado.</string>
     <string name="reach_top">As que foram mais longe ultimamente</string>
     <string name="reach_recent">As suas publicações recentes</string>
     <string name="reach_nothing">Ainda nada. Quando alguém partilhar, responder ou gostar das suas publicações, aparece aqui.</string>

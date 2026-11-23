@@ -10,6 +10,8 @@ import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.feed.htmlToPlainText
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.data.reach.ActivityHistory
+import co.magicpages.socialweb.data.reach.FollowerGrowth
+import co.magicpages.socialweb.data.reach.followerGrowth
 import co.magicpages.socialweb.data.reach.DayMillis
 import co.magicpages.socialweb.data.reach.PostActivity
 import co.magicpages.socialweb.data.reach.activityByPost
@@ -56,6 +58,10 @@ sealed interface ReachUiState {
     data class Failed(val error: Throwable) : ReachUiState
     data class Loaded(
         val summary: ReachSummary,
+        /** New followers over the same window, from the follow notifications. */
+        val growth: FollowerGrowth,
+        /** The site's follower count; null when the profile couldn't be read. */
+        val followers: Int?,
         /** The posts that travelled furthest in the window, old ones included. */
         val top: List<ReachPost>,
         /** The site's newest posts, newest first, without its reposts of others. */
@@ -85,7 +91,8 @@ class ReachViewModel @Inject constructor(
         loadJob = viewModelScope.launch {
             val result = try {
                 val account = accounts.account.first() ?: throw GhostException.Unauthorized(null)
-                val since = System.currentTimeMillis() - WindowDays * DayMillis
+                val now = System.currentTimeMillis()
+                val since = now - WindowDays * DayMillis
                 coroutineScope {
                     val window = async { history.since(account, since) }
                     val posts = async {
@@ -93,11 +100,24 @@ class ReachViewModel @Inject constructor(
                         val more = first.next?.let { activityPub.postsBy(account.site, account.credential, "me", it).posts }.orEmpty()
                         first.posts + more
                     }
+                    // The count is a nice-to-have next to the new followers; the screen works without it.
+                    val followers = async {
+                        try {
+                            activityPub.profile(account.site, account.credential, "me").followerCount
+                        } catch (_: GhostException) {
+                            null
+                        } catch (_: SocialWebException) {
+                            null
+                        }
+                    }
                     withContext(Dispatchers.Default) {
-                        val recentNotifications = window.await().notifications.filter { (timestampMillis(it.createdAt) ?: 0) >= since }
+                        val notifications = window.await().notifications
+                        val recentNotifications = notifications.filter { (timestampMillis(it.createdAt) ?: 0) >= since }
                         val activity = activityByPost(recentNotifications).values
                         ReachUiState.Loaded(
                             summary = activity.summary(partial = !window.await().covers(since)),
+                            growth = followerGrowth(notifications, now),
+                            followers = followers.await(),
                             top = activity.filter { it.score > 0 && it.post != null }
                                 .sortedByDescending { it.score }
                                 .take(TopCount)

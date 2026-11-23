@@ -103,6 +103,31 @@ fun firstDayPercent(times: List<Long>, startMillis: Long): Int? {
 fun potentialReach(ownFollowers: Int, reposterFollowers: Collection<Int>): Long =
     ownFollowers.toLong() + reposterFollowers.sumOf { it.toLong() }
 
+/**
+ * New followers from the follow notifications: in the last week, the week before and the last 30 days,
+ * and the newest of them. Unfollows aren't notified, so these are new followers, not the net change.
+ */
+data class FollowerGrowth(val lastWeek: Int, val weekBefore: Int, val lastMonth: Int, val newest: List<Author>)
+
+/**
+ * Adds up the follows in [notifications] as of [nowMillis]. Someone who followed, unfollowed and followed
+ * again counts once, at their newest follow.
+ */
+fun followerGrowth(notifications: List<Notification>, nowMillis: Long, newestCount: Int = 5): FollowerGrowth {
+    val follows = notifications
+        .filter { it.type == Notification.Type.Follow }
+        .mapNotNull { follow -> timestampMillis(follow.createdAt)?.let { follow.actor to it } }
+        .sortedByDescending { it.second }
+        .distinctBy { it.first.handle }
+    fun since(daysAgo: Int) = nowMillis - daysAgo * DayMillis
+    return FollowerGrowth(
+        lastWeek = follows.count { it.second >= since(7) },
+        weekBefore = follows.count { it.second >= since(14) && it.second < since(7) },
+        lastMonth = follows.count { it.second >= since(30) },
+        newest = follows.filter { it.second >= since(30) }.take(newestCount).map { it.first },
+    )
+}
+
 /** Epoch millis of an ISO-8601 timestamp, or null when it's missing or unreadable. */
 fun timestampMillis(value: String?): Long? =
     value?.let { runCatching { Instant.parse(it).toEpochMilli() }.getOrNull() }

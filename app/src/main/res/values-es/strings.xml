@@ -621,7 +621,6 @@
     <string name="explore_hashtags">Etiquetas</string>
     <string name="explore_fediverse_trending">Tendencias en %1$s</string>
     <string name="explore_fediverse_change">Cambiar</string>
-    <string name="explore_fediverse_back">Volver a las publicaciones en tendencia</string>
     <string name="explore_fediverse_posts_empty">No hay nada en tendencia en %1$s ahora mismo.</string>
     <string name="explore_fediverse_tag_empty">Aún no hay publicaciones públicas con #%1$s en %2$s.</string>
     <string name="settings_experimental">Experimental</string>
@@ -682,6 +681,12 @@
     <string name="reach_entry">Mira hasta dónde han llegado tus publicaciones</string>
     <string name="reach_people_on_servers">%1$s en %2$s</string>
     <string name="reach_partial">Tu sitio tiene tanta actividad que solo se cuenta una parte de los últimos 30 días.</string>
+    <string name="reach_followers">Seguidores</string>
+    <string name="reach_new_followers">Nuevos seguidores</string>
+    <string name="reach_new_week">+%1$s en los últimos 7 días</string>
+    <string name="reach_week_before">%1$s la semana anterior</string>
+    <string name="reach_new_month">%1$s en los últimos 30 días</string>
+    <string name="reach_growth_note">Contados a partir de tus notificaciones de seguimiento, así que no se restan quienes dejan de seguirte.</string>
     <string name="reach_top">Las que más lejos llegaron últimamente</string>
     <string name="reach_recent">Tus publicaciones recientes</string>
     <string name="reach_nothing">Nada todavía. Cuando la gente comparta, responda o le guste lo que publicas, aparecerá aquí.</string>

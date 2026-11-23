@@ -593,7 +593,6 @@
     <string name="explore_hashtags">Hashtag</string>
     <string name="explore_fediverse_trending">Thịnh hành trên %1$s</string>
     <string name="explore_fediverse_change">Thay đổi</string>
-    <string name="explore_fediverse_back">Quay lại bài viết thịnh hành</string>
     <string name="explore_fediverse_posts_empty">Hiện không có gì thịnh hành trên %1$s.</string>
     <string name="explore_fediverse_tag_empty">Chưa có bài viết công khai nào với #%1$s trên %2$s.</string>
     <string name="settings_experimental">Thử nghiệm</string>
@@ -650,6 +649,12 @@
     <string name="reach_entry">Xem bài đăng của bạn đã lan xa đến đâu</string>
     <string name="reach_people_on_servers">%1$s trên %2$s</string>
     <string name="reach_partial">Trang của bạn có quá nhiều hoạt động nên chỉ một phần của 30 ngày qua được tính.</string>
+    <string name="reach_followers">Người theo dõi</string>
+    <string name="reach_new_followers">Người theo dõi mới</string>
+    <string name="reach_new_week">+%1$s trong 7 ngày qua</string>
+    <string name="reach_week_before">%1$s tuần trước đó</string>
+    <string name="reach_new_month">%1$s trong 30 ngày qua</string>
+    <string name="reach_growth_note">Được tính từ thông báo theo dõi của bạn, nên lượt hủy theo dõi không bị trừ.</string>
     <string name="reach_top">Lan xa nhất gần đây</string>
     <string name="reach_recent">Bài đăng gần đây của bạn</string>
     <string name="reach_nothing">Chưa có gì. Khi mọi người đăng lại, trả lời hoặc thích bài đăng của bạn, nó sẽ hiện ở đây.</string>

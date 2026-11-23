@@ -615,7 +615,6 @@
     <string name="explore_hashtags">Hashtags</string>
     <string name="explore_fediverse_trending">Trending on %1$s</string>
     <string name="explore_fediverse_change">Change</string>
-    <string name="explore_fediverse_back">Back to trending posts</string>
     <string name="explore_fediverse_posts_empty">Nothing\'s trending on %1$s right now.</string>
     <string name="explore_fediverse_tag_empty">No public posts with #%1$s on %2$s yet.</string>
     <string name="settings_experimental">Experimental</string>
@@ -674,6 +673,12 @@
     <string name="reach_entry">See how far your posts travelled</string>
     <string name="reach_people_on_servers">%1$s on %2$s</string>
     <string name="reach_partial">Your site gets so much activity that only part of the last 30 days is counted.</string>
+    <string name="reach_followers">Followers</string>
+    <string name="reach_new_followers">New followers</string>
+    <string name="reach_new_week">+%1$s in the last 7 days</string>
+    <string name="reach_week_before">%1$s the week before</string>
+    <string name="reach_new_month">%1$s in the last 30 days</string>
+    <string name="reach_growth_note">Counted from your follow notifications, so unfollows aren\'t taken off.</string>
     <string name="reach_top">Travelled furthest lately</string>
     <string name="reach_recent">Your recent posts</string>
     <string name="reach_nothing">Nothing yet. When people repost, reply to or like your posts, it shows up here.</string>

@@ -737,7 +737,7 @@ private fun TagHeader(tag: String, server: String, people: Int?, onBack: () -> U
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(onClick = onBack) {
-            Icon(AppIcons.ArrowBack, contentDescription = stringResource(R.string.explore_fediverse_back))
+            Icon(AppIcons.ArrowBack, contentDescription = stringResource(R.string.back))
         }
         Column(Modifier.weight(1f).padding(start = 4.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(

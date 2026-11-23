@@ -635,7 +635,6 @@
     <string name="explore_hashtags">Hashtagi</string>
     <string name="explore_fediverse_trending">Popularne na %1$s</string>
     <string name="explore_fediverse_change">Zmień</string>
-    <string name="explore_fediverse_back">Wróć do popularnych wpisów</string>
     <string name="explore_fediverse_posts_empty">Na %1$s nic nie jest teraz popularne.</string>
     <string name="explore_fediverse_tag_empty">Na %2$s nie ma jeszcze publicznych wpisów z #%1$s.</string>
     <string name="settings_experimental">Eksperymentalne</string>
@@ -698,6 +697,12 @@
     <string name="reach_entry">Zobacz, jak daleko dotarły Twoje wpisy</string>
     <string name="reach_people_on_servers">%1$s na %2$s</string>
     <string name="reach_partial">Na Twojej stronie dzieje się tak dużo, że liczona jest tylko część ostatnich 30 dni.</string>
+    <string name="reach_followers">Obserwujący</string>
+    <string name="reach_new_followers">Nowi obserwujący</string>
+    <string name="reach_new_week">+%1$s w ostatnich 7 dniach</string>
+    <string name="reach_week_before">%1$s w tygodniu wcześniej</string>
+    <string name="reach_new_month">%1$s w ostatnich 30 dniach</string>
+    <string name="reach_growth_note">Liczone z powiadomień o obserwowaniu, więc rezygnacje z obserwowania nie są odejmowane.</string>
     <string name="reach_top">Najdalej w ostatnim czasie</string>
     <string name="reach_recent">Twoje ostatnie wpisy</string>
     <string name="reach_nothing">Jeszcze nic. Gdy ktoś udostępni Twoje wpisy, odpowie na nie albo je polubi, zobaczysz to tutaj.</string>

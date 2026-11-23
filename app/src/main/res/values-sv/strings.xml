@@ -607,7 +607,6 @@
     <string name="explore_hashtags">Hashtaggar</string>
     <string name="explore_fediverse_trending">Populärt på %1$s</string>
     <string name="explore_fediverse_change">Byt</string>
-    <string name="explore_fediverse_back">Tillbaka till populära inlägg</string>
     <string name="explore_fediverse_posts_empty">Inget är populärt på %1$s just nu.</string>
     <string name="explore_fediverse_tag_empty">Inga offentliga inlägg med #%1$s på %2$s än.</string>
     <string name="settings_experimental">Experimentellt</string>
@@ -666,6 +665,12 @@
     <string name="reach_entry">Se hur långt dina inlägg har nått</string>
     <string name="reach_people_on_servers">%1$s på %2$s</string>
     <string name="reach_partial">Din webbplats har så mycket aktivitet att bara en del av de senaste 30 dagarna räknas.</string>
+    <string name="reach_followers">Följare</string>
+    <string name="reach_new_followers">Nya följare</string>
+    <string name="reach_new_week">+%1$s de senaste 7 dagarna</string>
+    <string name="reach_week_before">%1$s veckan innan</string>
+    <string name="reach_new_month">%1$s de senaste 30 dagarna</string>
+    <string name="reach_growth_note">Räknat från dina följ-aviseringar, så de som slutar följa dras inte av.</string>
     <string name="reach_top">Nått längst på sistone</string>
     <string name="reach_recent">Dina senaste inlägg</string>
     <string name="reach_nothing">Inget ännu. När folk delar, svarar på eller gillar dina inlägg syns det här.</string>

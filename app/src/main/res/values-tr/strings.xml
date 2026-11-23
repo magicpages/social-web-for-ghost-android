@@ -607,7 +607,6 @@
     <string name="explore_hashtags">Etiketler</string>
     <string name="explore_fediverse_trending">%1$s gündemi</string>
     <string name="explore_fediverse_change">Değiştir</string>
-    <string name="explore_fediverse_back">Gündemdeki gönderilere dön</string>
     <string name="explore_fediverse_posts_empty">Şu anda %1$s gündeminde bir şey yok.</string>
     <string name="explore_fediverse_tag_empty">%2$s üzerinde henüz #%1$s etiketli herkese açık gönderi yok.</string>
     <string name="settings_experimental">Deneysel</string>
@@ -666,6 +665,12 @@
     <string name="reach_entry">Gönderilerinin ne kadar uzağa ulaştığını gör</string>
     <string name="reach_people_on_servers">%2$s üzerinde %1$s</string>
     <string name="reach_partial">Sitende o kadar çok etkinlik var ki son 30 günün yalnızca bir kısmı sayılıyor.</string>
+    <string name="reach_followers">Takipçiler</string>
+    <string name="reach_new_followers">Yeni takipçiler</string>
+    <string name="reach_new_week">Son 7 günde +%1$s</string>
+    <string name="reach_week_before">Önceki hafta %1$s</string>
+    <string name="reach_new_month">Son 30 günde %1$s</string>
+    <string name="reach_growth_note">Takip bildirimlerinden sayılır, bu yüzden takibi bırakanlar düşülmez.</string>
     <string name="reach_top">Son zamanlarda en uzağa gidenler</string>
     <string name="reach_recent">Son gönderilerin</string>
     <string name="reach_nothing">Henüz bir şey yok. İnsanlar gönderilerini paylaştığında, yanıtladığında veya beğendiğinde burada görünür.</string>

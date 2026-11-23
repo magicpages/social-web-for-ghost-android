@@ -607,7 +607,6 @@
     <string name="explore_hashtags">Hashtags</string>
     <string name="explore_fediverse_trending">Populært på %1$s</string>
     <string name="explore_fediverse_change">Skift</string>
-    <string name="explore_fediverse_back">Tilbage til populære opslag</string>
     <string name="explore_fediverse_posts_empty">Intet er populært på %1$s lige nu.</string>
     <string name="explore_fediverse_tag_empty">Ingen offentlige opslag med #%1$s på %2$s endnu.</string>
     <string name="settings_experimental">Eksperimentelt</string>
@@ -666,6 +665,12 @@
     <string name="reach_entry">Se, hvor langt dine opslag er nået</string>
     <string name="reach_people_on_servers">%1$s på %2$s</string>
     <string name="reach_partial">Der er så meget aktivitet på dit site, at kun en del af de sidste 30 dage tælles med.</string>
+    <string name="reach_followers">Følgere</string>
+    <string name="reach_new_followers">Nye følgere</string>
+    <string name="reach_new_week">+%1$s de sidste 7 dage</string>
+    <string name="reach_week_before">%1$s ugen før</string>
+    <string name="reach_new_month">%1$s de sidste 30 dage</string>
+    <string name="reach_growth_note">Talt ud fra dine følg-notifikationer, så dem, der stopper med at følge, trækkes ikke fra.</string>
     <string name="reach_top">Nået længst for nylig</string>
     <string name="reach_recent">Dine seneste opslag</string>
     <string name="reach_nothing">Intet endnu. Når folk deler, svarer på eller synes godt om dine opslag, kan du se det her.</string>

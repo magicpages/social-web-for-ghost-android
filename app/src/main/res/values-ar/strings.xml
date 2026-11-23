@@ -663,7 +663,6 @@
     <string name="explore_hashtags">الوسوم</string>
     <string name="explore_fediverse_trending">الرائج على %1$s</string>
     <string name="explore_fediverse_change">تغيير</string>
-    <string name="explore_fediverse_back">العودة إلى المنشورات الرائجة</string>
     <string name="explore_fediverse_posts_empty">لا شيء رائج على %1$s الآن.</string>
     <string name="explore_fediverse_tag_empty">لا توجد منشورات عامة بالوسم #%1$s على %2$s بعد.</string>
     <string name="settings_experimental">تجريبي</string>
@@ -730,6 +729,12 @@
     <string name="reach_entry">اعرف إلى أي مدى وصلت منشوراتك</string>
     <string name="reach_people_on_servers">%1$s على %2$s</string>
     <string name="reach_partial">موقعك فيه نشاط كبير لدرجة أن جزءًا فقط من آخر 30 يومًا محسوب.</string>
+    <string name="reach_followers">المتابعون</string>
+    <string name="reach_new_followers">متابعون جدد</string>
+    <string name="reach_new_week">+%1$s في آخر 7 أيام</string>
+    <string name="reach_week_before">%1$s في الأسبوع الذي قبله</string>
+    <string name="reach_new_month">%1$s في آخر 30 يومًا</string>
+    <string name="reach_growth_note">محسوبة من إشعارات المتابعة، لذلك لا تُطرح إلغاءات المتابعة.</string>
     <string name="reach_top">الأبعد وصولًا مؤخرًا</string>
     <string name="reach_recent">منشوراتك الأخيرة</string>
     <string name="reach_nothing">لا شيء بعد. عندما يعيد الناس نشر منشوراتك أو يردون عليها أو يعجبون بها، سيظهر ذلك هنا.</string>

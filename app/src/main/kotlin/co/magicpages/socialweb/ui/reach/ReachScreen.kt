@@ -52,6 +52,7 @@ import co.magicpages.socialweb.data.activitypub.Author
 import co.magicpages.socialweb.data.activitypub.serverOf
 import co.magicpages.socialweb.data.feed.htmlToPlainText
 import co.magicpages.socialweb.data.ghost.GhostException
+import co.magicpages.socialweb.data.reach.FollowerGrowth
 import co.magicpages.socialweb.data.reach.Interaction
 import co.magicpages.socialweb.ui.components.AppIcons
 import co.magicpages.socialweb.ui.components.Avatar
@@ -66,10 +67,10 @@ import java.text.DateFormat
 import java.text.NumberFormat
 import java.util.Date
 
-/** The site's reach lately, its top posts, and its recent posts, each opening how it travelled. */
+/** The site's followers and reach lately, its top posts, and its recent posts, each opening how it travelled. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReachScreen(onBack: () -> Unit, onOpenPostReach: (String) -> Unit, onSignOut: () -> Unit) {
+fun ReachScreen(onBack: () -> Unit, onOpenPostReach: (String) -> Unit, onOpenProfile: (Author) -> Unit, onSignOut: () -> Unit) {
     val viewModel = hiltViewModel<ReachViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
     ReachScaffold(stringResource(R.string.reach_title), onBack) { padding ->
@@ -92,6 +93,13 @@ fun ReachScreen(onBack: () -> Unit, onOpenPostReach: (String) -> Unit, onSignOut
                     contentPadding = PaddingValues(bottom = 24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
+                    item(key = "growth") { GrowthCard(current.growth, current.followers) }
+                    if (current.growth.newest.isNotEmpty()) {
+                        sectionLabel("new-followers", R.string.reach_new_followers)
+                        items(current.growth.newest, key = { "follower:" + it.handle }) { follower ->
+                            PersonRow(Interaction(follower, atMillis = null), followers = null, onOpenProfile = onOpenProfile)
+                        }
+                    }
                     item(key = "summary") { SummaryCard(current.summary) }
                     if (current.top.isEmpty() && current.recent.isEmpty()) {
                         item(key = "nothing") { Note(stringResource(R.string.reach_nothing)) }
@@ -232,6 +240,40 @@ private fun Card(content: @Composable () -> Unit) {
         modifier = ContentColumn.padding(horizontal = Gutter, vertical = 8.dp),
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) { content() }
+    }
+}
+
+/** The site's followers, and how many it gained lately. */
+@Composable
+private fun GrowthCard(growth: FollowerGrowth, followers: Int?) {
+    val numbers = remember { NumberFormat.getIntegerInstance() }
+    Card {
+        // The count names itself; without it, the lines below need the heading to say what they count.
+        if (followers != null) {
+            Stat(followers, R.plurals.profile_follower_count, Modifier.semantics { heading() })
+        } else {
+            Text(
+                stringResource(R.string.reach_followers),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.semantics { heading() },
+            )
+        }
+        Text(
+            stringResource(R.string.reach_new_week, numbers.format(growth.lastWeek)),
+            style = MaterialTheme.typography.titleMedium,
+            color = if (growth.lastWeek > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+        )
+        Text(
+            stringResource(R.string.reach_week_before, numbers.format(growth.weekBefore)) + " · " +
+                stringResource(R.string.reach_new_month, numbers.format(growth.lastMonth)),
+            style = MaterialTheme.typography.bodyMedium,
+        )
+        Text(
+            stringResource(R.string.reach_growth_note),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 

@@ -607,7 +607,6 @@
     <string name="explore_hashtags">Emneknagger</string>
     <string name="explore_fediverse_trending">Populært på %1$s</string>
     <string name="explore_fediverse_change">Bytt</string>
-    <string name="explore_fediverse_back">Tilbake til populære innlegg</string>
     <string name="explore_fediverse_posts_empty">Ingenting er populært på %1$s akkurat nå.</string>
     <string name="explore_fediverse_tag_empty">Ingen offentlige innlegg med #%1$s på %2$s ennå.</string>
     <string name="settings_experimental">Eksperimentelt</string>
@@ -666,6 +665,12 @@
     <string name="reach_entry">Se hvor langt innleggene dine har nådd</string>
     <string name="reach_people_on_servers">%1$s på %2$s</string>
     <string name="reach_partial">Det er så mye aktivitet på nettstedet ditt at bare en del av de siste 30 dagene telles.</string>
+    <string name="reach_followers">Følgere</string>
+    <string name="reach_new_followers">Nye følgere</string>
+    <string name="reach_new_week">+%1$s de siste 7 dagene</string>
+    <string name="reach_week_before">%1$s uken før</string>
+    <string name="reach_new_month">%1$s de siste 30 dagene</string>
+    <string name="reach_growth_note">Telt fra følg-varslene dine, så de som slutter å følge, trekkes ikke fra.</string>
     <string name="reach_top">Nådd lengst i det siste</string>
     <string name="reach_recent">De nyeste innleggene dine</string>
     <string name="reach_nothing">Ingenting ennå. Når folk deler, svarer på eller liker innleggene dine, vises det her.</string>

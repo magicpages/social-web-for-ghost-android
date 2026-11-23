@@ -593,7 +593,6 @@
     <string name="explore_hashtags">话题标签</string>
     <string name="explore_fediverse_trending">%1$s 上的热门</string>
     <string name="explore_fediverse_change">更改</string>
-    <string name="explore_fediverse_back">返回热门嘟文</string>
     <string name="explore_fediverse_posts_empty">%1$s 上目前没有热门内容。</string>
     <string name="explore_fediverse_tag_empty">%2$s 上还没有带 #%1$s 的公开嘟文。</string>
     <string name="settings_experimental">实验性功能</string>
@@ -650,6 +649,12 @@
     <string name="reach_entry">看看你的帖子传播了多远</string>
     <string name="reach_people_on_servers">%2$s 上的 %1$s</string>
     <string name="reach_partial">你的网站活动太多，只统计了最近 30 天中的一部分。</string>
+    <string name="reach_followers">关注者</string>
+    <string name="reach_new_followers">新关注者</string>
+    <string name="reach_new_week">最近 7 天 +%1$s</string>
+    <string name="reach_week_before">前一周 %1$s</string>
+    <string name="reach_new_month">最近 30 天 %1$s</string>
+    <string name="reach_growth_note">根据你的关注通知统计，取消关注不会被扣除。</string>
     <string name="reach_top">最近传播最远</string>
     <string name="reach_recent">你最近的帖子</string>
     <string name="reach_nothing">还没有。有人转发、回复或喜欢你的帖子时，会显示在这里。</string>

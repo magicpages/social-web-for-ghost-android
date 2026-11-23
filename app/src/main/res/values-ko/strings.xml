@@ -593,7 +593,6 @@
     <string name="explore_hashtags">해시태그</string>
     <string name="explore_fediverse_trending">%1$s의 트렌드</string>
     <string name="explore_fediverse_change">변경</string>
-    <string name="explore_fediverse_back">트렌드 게시물로 돌아가기</string>
     <string name="explore_fediverse_posts_empty">지금 %1$s에는 트렌드가 없어요.</string>
     <string name="explore_fediverse_tag_empty">%2$s에 #%1$s 공개 게시물이 아직 없어요.</string>
     <string name="settings_experimental">실험실</string>
@@ -650,6 +649,12 @@
     <string name="reach_entry">게시물이 얼마나 멀리 퍼졌는지 확인하세요</string>
     <string name="reach_people_on_servers">%2$s의 %1$s</string>
     <string name="reach_partial">사이트 활동이 너무 많아 지난 30일 중 일부만 집계했습니다.</string>
+    <string name="reach_followers">팔로워</string>
+    <string name="reach_new_followers">새 팔로워</string>
+    <string name="reach_new_week">지난 7일 동안 +%1$s</string>
+    <string name="reach_week_before">그 전 주 %1$s</string>
+    <string name="reach_new_month">지난 30일 동안 %1$s</string>
+    <string name="reach_growth_note">팔로우 알림으로 집계하므로 팔로우 취소는 빠지지 않습니다.</string>
     <string name="reach_top">최근 가장 멀리 퍼진 게시물</string>
     <string name="reach_recent">최근 게시물</string>
     <string name="reach_nothing">아직 없습니다. 사람들이 게시물을 리포스트하거나 답글을 달거나 좋아요를 누르면 여기에 표시됩니다.</string>

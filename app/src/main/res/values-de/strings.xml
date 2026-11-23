@@ -607,7 +607,6 @@
     <string name="explore_hashtags">Hashtags</string>
     <string name="explore_fediverse_trending">Im Trend auf %1$s</string>
     <string name="explore_fediverse_change">Ändern</string>
-    <string name="explore_fediverse_back">Zurück zu den Trends</string>
     <string name="explore_fediverse_posts_empty">Auf %1$s ist gerade nichts im Trend.</string>
     <string name="explore_fediverse_tag_empty">Noch keine öffentlichen Beiträge mit #%1$s auf %2$s.</string>
     <string name="settings_experimental">Experimentell</string>
@@ -666,6 +665,12 @@
     <string name="reach_entry">Sieh, wie weit deine Beiträge gekommen sind</string>
     <string name="reach_people_on_servers">%1$s auf %2$s</string>
     <string name="reach_partial">Auf deiner Seite ist so viel los, dass nur ein Teil der letzten 30 Tage gezählt wird.</string>
+    <string name="reach_followers">Follower</string>
+    <string name="reach_new_followers">Neue Follower</string>
+    <string name="reach_new_week">+%1$s in den letzten 7 Tagen</string>
+    <string name="reach_week_before">%1$s in der Woche davor</string>
+    <string name="reach_new_month">%1$s in den letzten 30 Tagen</string>
+    <string name="reach_growth_note">Gezählt aus deinen Follow-Benachrichtigungen, wer wieder entfolgt, wird also nicht abgezogen.</string>
     <string name="reach_top">Zuletzt am weitesten gekommen</string>
     <string name="reach_recent">Deine neuesten Beiträge</string>
     <string name="reach_nothing">Noch nichts. Wenn Leute deine Beiträge teilen, darauf antworten oder sie liken, siehst du es hier.</string>
