@@ -14,12 +14,15 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.expressiveLightColorScheme
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -60,6 +63,7 @@ fun SocialWebTheme(seed: Int? = null, content: @Composable () -> Unit) {
     MaterialExpressiveTheme(
         colorScheme = appColorScheme(seed, dark),
         motionScheme = MotionScheme.expressive(),
+        typography = ContentDirectionTypography,
     ) {
         CompositionLocalProvider(LocalThemeSeed provides seed) {
             LikeColor(dark, content)
@@ -69,6 +73,48 @@ fun SocialWebTheme(seed: Int? = null, content: @Composable () -> Unit) {
 
 /** The seed [SocialWebTheme] built its colours from, so [ReaderTheme] can build the other brightness. */
 private val LocalThemeSeed = staticCompositionLocalOf<Int?> { null }
+
+/**
+ * Material's type scale, each text's direction from its own first letters rather than the app's
+ * language. Posts come in any language: an English title in the Arabic app is laid out left to
+ * right (its full stop at its end), and an Arabic note in the English app right to left.
+ */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+private val ContentDirectionTypography: Typography = Typography().run {
+    fun TextStyle.byContent() = copy(textDirection = TextDirection.Content)
+    copy(
+        displayLarge = displayLarge.byContent(),
+        displayMedium = displayMedium.byContent(),
+        displaySmall = displaySmall.byContent(),
+        headlineLarge = headlineLarge.byContent(),
+        headlineMedium = headlineMedium.byContent(),
+        headlineSmall = headlineSmall.byContent(),
+        titleLarge = titleLarge.byContent(),
+        titleMedium = titleMedium.byContent(),
+        titleSmall = titleSmall.byContent(),
+        bodyLarge = bodyLarge.byContent(),
+        bodyMedium = bodyMedium.byContent(),
+        bodySmall = bodySmall.byContent(),
+        labelLarge = labelLarge.byContent(),
+        labelMedium = labelMedium.byContent(),
+        labelSmall = labelSmall.byContent(),
+        displayLargeEmphasized = displayLargeEmphasized.byContent(),
+        displayMediumEmphasized = displayMediumEmphasized.byContent(),
+        displaySmallEmphasized = displaySmallEmphasized.byContent(),
+        headlineLargeEmphasized = headlineLargeEmphasized.byContent(),
+        headlineMediumEmphasized = headlineMediumEmphasized.byContent(),
+        headlineSmallEmphasized = headlineSmallEmphasized.byContent(),
+        titleLargeEmphasized = titleLargeEmphasized.byContent(),
+        titleMediumEmphasized = titleMediumEmphasized.byContent(),
+        titleSmallEmphasized = titleSmallEmphasized.byContent(),
+        bodyLargeEmphasized = bodyLargeEmphasized.byContent(),
+        bodyMediumEmphasized = bodyMediumEmphasized.byContent(),
+        bodySmallEmphasized = bodySmallEmphasized.byContent(),
+        labelLargeEmphasized = labelLargeEmphasized.byContent(),
+        labelMediumEmphasized = labelMediumEmphasized.byContent(),
+        labelSmallEmphasized = labelSmallEmphasized.byContent(),
+    )
+}
 
 @Composable
 private fun appColorScheme(seed: Int?, dark: Boolean): ColorScheme = when {

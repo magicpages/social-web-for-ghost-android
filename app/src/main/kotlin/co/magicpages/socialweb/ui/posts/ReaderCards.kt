@@ -12,11 +12,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -37,11 +37,17 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
@@ -60,16 +66,21 @@ class ReaderPage(val magazine: ReaderMagazine, val prominentHeight: Dp)
 
 /**
  * The Reader's layout for a list [width] by [height]. A prominent card is 4:3, but never taller than
- * 60% of the list, so a landscape phone still shows more than one card.
+ * 60% of the list, so a landscape phone still shows more than one card. From a font scale of 1.5,
+ * no pairs: half the width can't fit a title that large.
  */
 @Composable
 internal fun rememberReaderPage(posts: LazyPagingItems<FeedItem>, width: Dp, height: Dp): ReaderPage {
-    val magazine by remember(posts) { derivedStateOf { ReaderLayout.arrange(posts.itemSnapshotList.items) } }
+    val pairs = LocalDensity.current.fontScale < LargeFontScale
+    val magazine by remember(posts, pairs) { derivedStateOf { ReaderLayout.arrange(posts.itemSnapshotList.items, pairs) } }
     return remember(magazine, width, height) {
         val cardWidth = min(width, MaxContentWidth) - Gutter * 2
         ReaderPage(magazine, min(cardWidth * 3 / 4, height * 0.6f))
     }
 }
+
+/** Font scale from which the Reader has no pairs of tall cards. */
+private const val LargeFontScale = 1.5f
 
 /** What one item of the Reader draws: [block]'s card, or its two. */
 @Composable
@@ -79,7 +90,8 @@ internal fun ReaderBlockView(block: ReaderBlock, callbacks: PostCallbacks, page:
             ReaderStyle.Prominent -> ImageCard(
                 block.item,
                 callbacks,
-                Modifier.padding(horizontal = Gutter, vertical = 8.dp).fillMaxWidth().height(page.prominentHeight),
+                // At least this tall: grows with a title that a large font scale makes longer.
+                Modifier.padding(horizontal = Gutter, vertical = 8.dp).fillMaxWidth().heightIn(min = page.prominentHeight),
                 MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
                 padding = 16.dp,
                 avatarSize = 20.dp,
@@ -109,8 +121,8 @@ private fun TallCard(item: FeedItem, callbacks: PostCallbacks, modifier: Modifie
 )
 
 /**
- * The cover filling the card, darkened towards its foot, and over that who reposted the article,
- * the publication and the title. [modifier] gives the card its size.
+ * The cover filling the card, and over its foot who reposted the article, the publication and the
+ * title, on a scrim of their own. [modifier] gives the card its size.
  */
 @Composable
 private fun ImageCard(
@@ -122,10 +134,16 @@ private fun ImageCard(
     avatarSize: Dp,
     showsDate: Boolean = true,
 ) {
-    ReaderCardFrame(item, callbacks, ImageCardShape, modifier) {
+    ReaderCardFrame(item, callbacks, MaterialTheme.shapes.large, modifier) {
         Cover(item.post, Modifier.matchParentSize())
-        Box(Modifier.matchParentSize().background(CoverScrim))
-        Column(Modifier.align(Alignment.BottomStart).padding(padding), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Column(
+            Modifier
+                .align(Alignment.BottomStart)
+                .fillMaxWidth()
+                .drawBehind { drawRect(textScrim(ScrimFade.toPx() / size.height)) }
+                .padding(start = padding, top = ScrimFade, end = padding, bottom = padding),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
             if (item.reposters.isNotEmpty()) RepostContext(item.reposters, callbacks.openProfile, color = Color.White.copy(alpha = 0.85f))
             Publication(item, avatarSize, onImage = true, showsDate = showsDate)
             Text(
@@ -133,6 +151,8 @@ private fun ImageCard(
                 style = titleStyle.copy(shadow = TitleShadow),
                 color = Color.White,
                 maxLines = 4,
+                // Full width, so a one-line title aligns by its own language like a longer one does.
+                modifier = Modifier.fillMaxWidth(),
                 overflow = TextOverflow.Ellipsis,
             )
         }
@@ -157,11 +177,12 @@ private fun CompactCard(item: FeedItem, callbacks: PostCallbacks, modifier: Modi
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
                     maxLines = 3,
                     overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 if (item.reposters.isNotEmpty()) RepostContext(item.reposters, callbacks.openProfile)
             }
             when {
-                hasCover -> Cover(post, Modifier.size(CompactCoverSize).clip(RoundedCornerShape(10.dp)))
+                hasCover -> Cover(post, Modifier.size(CompactCoverSize).clip(MaterialTheme.shapes.medium))
                 iconAsImage -> Avatar(
                     post.author.avatarUrl,
                     post.author.displayName,
@@ -205,45 +226,71 @@ private fun ReaderCardFrame(
 
 /**
  * The publication's icon and name, and how long ago the article came out. Where both don't fit,
- * the date gives way to the name.
+ * the date is left out rather than cut short: the name says more about the article.
  */
 @Composable
 private fun Publication(item: FeedItem, avatarSize: Dp, onImage: Boolean, showsDate: Boolean = true, showsAvatar: Boolean = true) {
     val author = item.post.author
     val color = if (onImage) Color.White.copy(alpha = 0.9f) else MaterialTheme.colorScheme.onSurfaceVariant
     val style = MaterialTheme.typography.labelMedium
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-        if (showsAvatar) {
-            Avatar(
-                author.avatarUrl,
+    val date = item.publishedAtMillis?.takeIf { showsDate }?.let { relativeTime(it) }
+    Layout(
+        content = {
+            if (showsAvatar) {
+                Avatar(
+                    author.avatarUrl,
+                    author.displayName,
+                    avatarSize,
+                    Modifier.layoutId(AvatarId).then(if (onImage) Modifier.border(1.dp, Color.White.copy(alpha = 0.6f), CircleShape) else Modifier),
+                )
+            }
+            EmojiText(
                 author.displayName,
-                avatarSize,
-                if (onImage) Modifier.border(1.dp, Color.White.copy(alpha = 0.6f), CircleShape) else Modifier,
+                emojiSourceId = author.emojiSourceId,
+                style = style.copy(fontWeight = FontWeight.SemiBold),
+                color = color,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.layoutId(NameId),
             )
-        }
-        EmojiText(
-            author.displayName,
-            emojiSourceId = author.emojiSourceId,
-            style = style.copy(fontWeight = FontWeight.SemiBold),
-            color = color,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-        if (showsDate) {
-            item.publishedAtMillis?.let {
+            if (date != null) {
                 Text(
-                    "· " + relativeTime(it),
+                    "· $date",
                     style = style,
                     color = color,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    // Weighted, so it's measured after the name and takes only what is left.
-                    modifier = Modifier.weight(1f, fill = false),
+                    // Read out without the dot.
+                    modifier = Modifier.layoutId(DateId).clearAndSetSemantics { contentDescription = date },
                 )
             }
+        },
+    ) { measurables, constraints ->
+        val loose = constraints.copy(minWidth = 0, minHeight = 0)
+        val avatarGap = 6.dp.roundToPx()
+        // About a space: the dot then sits evenly between the name and the date.
+        val dateGap = 4.dp.roundToPx()
+        val avatar = measurables.firstOrNull { it.layoutId == AvatarId }?.measure(loose)
+        val textWidth = (constraints.maxWidth - (avatar?.let { it.width + avatarGap } ?: 0)).coerceAtLeast(0)
+        val name = measurables.first { it.layoutId == NameId }.measure(loose.copy(maxWidth = textWidth))
+        val dateMeasured = measurables.firstOrNull { it.layoutId == DateId }?.measure(Constraints())
+        val dateShown = dateMeasured?.takeIf { name.width + dateGap + it.width <= textWidth }
+        val width = (avatar?.let { it.width + avatarGap } ?: 0) + name.width + (dateShown?.let { dateGap + it.width } ?: 0)
+        val height = maxOf(avatar?.height ?: 0, name.height, dateShown?.height ?: 0)
+        layout(width, height) {
+            var x = 0
+            avatar?.let {
+                it.placeRelative(x, (height - it.height) / 2)
+                x += it.width + avatarGap
+            }
+            name.placeRelative(x, (height - name.height) / 2)
+            dateShown?.placeRelative(x + name.width + dateGap, (height - dateShown.height) / 2)
         }
     }
 }
+
+private const val AvatarId = "avatar"
+private const val NameId = "name"
+private const val DateId = "date"
 
 /**
  * The article's cover, filling its frame. Under a content warning, or marked sensitive while the
@@ -264,16 +311,20 @@ private fun Cover(post: Post, modifier: Modifier) {
     }
 }
 
-/** Dark enough under the text to read it over any cover. */
-private val CoverScrim = Brush.verticalGradient(
-    0.3f to Color.Black.copy(alpha = 0f),
-    0.6f to Color.Black.copy(alpha = 0.5f),
+/**
+ * Black under the text on a cover, faded in over [fadeFraction] of its height: at least 55% black
+ * where the text starts, so white text has 4.5:1 contrast even on a white cover.
+ */
+private fun textScrim(fadeFraction: Float) = Brush.verticalGradient(
+    0f to Color.Black.copy(alpha = 0f),
+    fadeFraction to Color.Black.copy(alpha = 0.55f),
     1f to Color.Black.copy(alpha = 0.8f),
 )
 
-private val TitleShadow = Shadow(Color.Black.copy(alpha = 0.3f), Offset(0f, 2f), blurRadius = 12f)
+/** How far above the text its scrim fades in. */
+private val ScrimFade = 48.dp
 
-private val ImageCardShape = RoundedCornerShape(16.dp)
+private val TitleShadow = Shadow(Color.Black.copy(alpha = 0.3f), Offset(0f, 2f), blurRadius = 12f)
 
 /** A compact card's square cover. */
 private val CompactCoverSize = 88.dp

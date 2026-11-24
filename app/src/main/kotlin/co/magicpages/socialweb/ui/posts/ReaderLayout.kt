@@ -59,11 +59,11 @@ object ReaderLayout {
         }
     }
 
-    /** [items] laid out, keyed by the post each block draws at. */
-    fun arrange(items: List<FeedItem>): ReaderMagazine {
+    /** [items] laid out, keyed by the post each block draws at; with [pairs] off, every article on its own. */
+    fun arrange(items: List<FeedItem>, pairs: Boolean = true): ReaderMagazine {
         val blocks = LinkedHashMap<String, ReaderBlock>()
         val absorbed = HashSet<String>()
-        for (block in blocks(items, styles(items))) {
+        for (block in blocks(items, styles(items), pairs)) {
             when (block) {
                 is ReaderBlock.Single -> blocks[block.item.post.id] = block
                 is ReaderBlock.TallPair -> {
@@ -77,10 +77,11 @@ object ReaderLayout {
 
     /**
      * Each article on its own, except that in a run of compact articles with a cover, the third and
-     * fourth (and the seventh and eighth…) are a pair of tall cards. Anything else ends the run.
+     * fourth (and the seventh and eighth…) are a pair of tall cards, unless [pairs] is off. Anything
+     * else ends the run.
      */
-    fun blocks(items: List<FeedItem>, styles: Map<String, ReaderStyle>): List<ReaderBlock> {
-        fun pairable(item: FeedItem) = styles[item.post.id] == ReaderStyle.Compact && item.hasCover
+    fun blocks(items: List<FeedItem>, styles: Map<String, ReaderStyle>, pairs: Boolean = true): List<ReaderBlock> {
+        fun pairable(item: FeedItem) = pairs && styles[item.post.id] == ReaderStyle.Compact && item.hasCover
         val blocks = mutableListOf<ReaderBlock>()
         var run = 0
         var i = 0
