@@ -131,7 +131,7 @@ fun ReplyEditor(
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
+                        overflow = TextOverflow.MiddleEllipsis,
                     )
                     // A note the reader had translated is quoted as they read it, with the way back to the original.
                     val translations = LocalPostTranslations.current

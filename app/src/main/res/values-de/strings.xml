@@ -3,8 +3,8 @@
     <string name="login_site_label">Ghost-Website-Adresse</string>
     <string name="shortcut_new_note_short">Neue Notiz</string>
     <string name="shortcut_new_note_long">Neue Notiz schreiben</string>
-    <string name="shortcut_notifications_short">Benachrichtigungen</string>
-    <string name="shortcut_notifications_long">Benachrichtigungen öffnen</string>
+    <string name="shortcut_notifications_short">Mitteilungen</string>
+    <string name="shortcut_notifications_long">Mitteilungen öffnen</string>
     <string name="login_continue">Weiter</string>
     <string name="login_change_site">Andere Website verwenden</string>
     <string name="login_method_password">E-Mail und Passwort</string>
@@ -37,10 +37,10 @@
     <string name="reader_topic_empty">In diesem Thema gibt es noch keine Artikel. Zum Wiederholen nach unten ziehen.</string>
     <string name="nav_reader">Reader</string>
     <string name="nav_notes">Notizen</string>
-    <string name="nav_notifications">Benachrichtigungen</string>
+    <string name="nav_notifications">Mitteilungen</string>
     <plurals name="nav_unread">
-        <item quantity="one">%1$d ungelesene Benachrichtigung</item>
-        <item quantity="other">%1$d ungelesene Benachrichtigungen</item>
+        <item quantity="one">%1$d ungelesene Mitteilung</item>
+        <item quantity="other">%1$d ungelesene Mitteilungen</item>
     </plurals>
     <string name="load_more_failed">Weitere Inhalte konnten nicht geladen werden. Zum Wiederholen tippen.</string>
     <string name="session_ended">Deine Ghost-Sitzung ist abgelaufen.</string>
@@ -213,7 +213,7 @@
     <string name="note_image_too_large">Das Bild ist größer als 5 MB.</string>
     <string name="note_image_unsupported">Dieser Bildtyp wird nicht unterstützt.</string>
 
-    <string name="notifications_empty">Noch keine Benachrichtigungen. „Gefällt mir“-Angaben, Antworten, Reposts, Erwähnungen und neue Follower erscheinen hier.</string>
+    <string name="notifications_empty">Noch keine Mitteilungen. „Gefällt mir“-Angaben, Antworten, Reposts, Erwähnungen und neue Follower erscheinen hier.</string>
     <string name="notification_liked">%1$s gefällt dein Beitrag</string>
     <string name="notification_reposted">%1$s hat deinen Beitrag repostet</string>
     <string name="notification_replied">%1$s hat dir geantwortet</string>
@@ -229,7 +229,7 @@
 
     <string name="settings_title">Einstellungen</string>
     <string name="settings_notifications">Benachrichtigungen</string>
-    <string name="settings_notifications_explainer">Lege fest, über welche neuen Aktivitäten die App dich als Systembenachrichtigung informiert, solange sie im Hintergrund läuft – für alle Websites, bei denen du angemeldet bist. Der Tab „Benachrichtigungen“ zeigt immer alles an.</string>
+    <string name="settings_notifications_explainer">Lege fest, über welche neuen Aktivitäten die App dich als Systembenachrichtigung informiert, solange sie im Hintergrund läuft – für alle Websites, bei denen du angemeldet bist. Der Tab „Mitteilungen“ zeigt immer alles an.</string>
     <string name="settings_notify_replies">Antworten</string>
     <string name="settings_notify_mentions">Erwähnungen</string>
     <string name="settings_notify_likes">„Gefällt mir“-Angaben</string>
@@ -328,7 +328,7 @@
     <string name="translation_settings_unsupported">Ins %1$s kann das Gerät noch nicht übersetzen. Wähle eine andere Sprache.</string>
     <string name="translation_settings_automatic_title">Automatische Übersetzung</string>
     <string name="translation_settings_automatic">Beim Öffnen eines Beitrags übersetzen</string>
-    <string name="translation_settings_automatic_summary">Der Beitrag und seine Antworten, aus Sprachen auf diesem Gerät. Ohne Nachfrage wird nichts geladen.</string>
+    <string name="translation_settings_automatic_summary">Übersetzt den Beitrag und seine Antworten aus den Sprachen auf diesem Gerät. Ohne Nachfrage wird nichts geladen.</string>
     <string name="translation_settings_skipped">Diese Sprachen nicht übersetzen</string>
     <string name="translation_settings_skipped_none">Keine</string>
     <string name="translation_settings_skipped_explainer">Beiträge in diesen Sprachen werden nicht automatisch übersetzt.</string>
@@ -337,7 +337,7 @@
     <string name="translation_settings_downloads_explainer">Lade Sprachen vorab, um offline zu übersetzen. Die Dateien kommen von Mozilla.</string>
     <string name="translation_settings_none_downloaded">Noch keine Sprachen geladen.</string>
     <string name="translation_settings_size">%1$d MB</string>
-    <string name="translation_settings_needed">%1$d MB · Andere Sprachen brauchen sie</string>
+    <string name="translation_settings_needed">%1$d MB · Wird für andere Sprachen gebraucht</string>
     <string name="translation_settings_downloading">Wird geladen…</string>
     <string name="translation_settings_add">Sprache herunterladen</string>
     <string name="translation_settings_add_explainer">Jede Sprache wird einmal von Mozilla geladen. Mozilla sieht, welche Dateien geladen werden, nicht was du übersetzt.</string>
@@ -385,7 +385,7 @@
     <string name="block_account_title">%1$s blockieren?</string>
     <string name="block_account_text">Du siehst die Beiträge dieses Kontos nicht mehr, und es kann dir weder folgen noch dir antworten. Das gegenseitige Folgen wird beendet.</string>
     <string name="block_server_title">Alle auf %1$s blockieren?</string>
-    <string name="block_server_text">Du siehst keine Beiträge oder Benachrichtigungen von Personen auf diesem Server mehr, und das gegenseitige Folgen zwischen dir und seinen Konten wird beendet.</string>
+    <string name="block_server_text">Du siehst keine Beiträge oder Mitteilungen von Personen auf diesem Server mehr, und das gegenseitige Folgen zwischen dir und seinen Konten wird beendet.</string>
     <string name="unblock_account_title">Blockierung von %1$s aufheben?</string>
     <string name="unblock_account_text">Dieses Konto kann dir wieder folgen und deine Beiträge sehen. Follows, die durch die Blockierung beendet wurden, werden nicht wiederhergestellt.</string>
     <string name="unblock_server_title">Blockierung von %1$s aufheben?</string>
@@ -686,7 +686,7 @@
     <string name="reach_new_week">+%1$s in den letzten 7 Tagen</string>
     <string name="reach_week_before">%1$s in der Woche davor</string>
     <string name="reach_new_month">%1$s in den letzten 30 Tagen</string>
-    <string name="reach_growth_note">Gezählt aus deinen Follow-Benachrichtigungen, wer wieder entfolgt, wird also nicht abgezogen.</string>
+    <string name="reach_growth_note">Gezählt aus deinen Follow-Mitteilungen. Wer wieder entfolgt, wird nicht abgezogen.</string>
     <string name="reach_top">Zuletzt am weitesten gekommen</string>
     <string name="reach_recent">Deine neuesten Beiträge</string>
     <string name="reach_nothing">Noch nichts. Wenn Leute deine Beiträge teilen, darauf antworten oder sie liken, siehst du es hier.</string>
@@ -700,7 +700,7 @@
     <string name="reach_reposted_by">Geteilt von</string>
     <string name="reach_replies">Antworten</string>
     <string name="reach_liked_by">Geliked von</string>
-    <string name="reach_listed_since">Wer hier steht, stammt aus deinen Benachrichtigungen seit %1$s.</string>
+    <string name="reach_listed_since">Wer hier steht, stammt aus deinen Mitteilungen seit %1$s.</string>
     <string name="reach_see">Sieh, wie weit er gekommen ist</string>
     <plurals name="reach_last_days" tools:ignore="ImpliedQuantity">
         <item quantity="one">Letzter %1$d Tag</item>

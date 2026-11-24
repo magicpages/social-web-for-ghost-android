@@ -274,7 +274,7 @@ private fun MentionChip(author: Author, onClick: () -> Unit, modifier: Modifier 
                         author.handle,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
+                        overflow = TextOverflow.MiddleEllipsis,
                     )
                 }
             }

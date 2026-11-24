@@ -155,7 +155,8 @@ private fun BackgroundSwatch(background: ReaderBackground, selected: Boolean, mo
     val shape = MaterialTheme.shapes.small
     Box(
         modifier
-            .height(36.dp)
+            // A full touch target: the swatch is the button.
+            .height(48.dp)
             .clip(shape)
             .background(fill, shape)
             .border(if (selected) BorderStroke(2.dp, colors.primary) else BorderStroke(1.dp, colors.outlineVariant), shape)

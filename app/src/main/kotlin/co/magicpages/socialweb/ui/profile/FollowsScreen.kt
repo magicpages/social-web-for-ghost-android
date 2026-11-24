@@ -156,7 +156,7 @@ private fun AccountRow(author: Author, onClick: () -> Unit) {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.MiddleEllipsis,
             )
         },
         leadingContent = { Avatar(author.avatarUrl, name, 40.dp) },

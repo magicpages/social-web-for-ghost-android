@@ -1,7 +1,9 @@
 package co.magicpages.socialweb.ui.moderation
 
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -42,7 +44,13 @@ fun BlockDialog(target: BlockTarget, unblock: Boolean = false, onConfirm: () -> 
         icon = { Icon(AppIcons.Block, contentDescription = null) },
         title = { Text(stringResource(title, name)) },
         text = { Text(stringResource(text)) },
-        confirmButton = { TextButton(onClick = onConfirm) { Text(stringResource(confirm)) } },
+        confirmButton = {
+            // Unblocking undoes harm; blocking is the one that cuts ties, so only it is marked.
+            TextButton(
+                onClick = onConfirm,
+                colors = if (unblock) ButtonDefaults.textButtonColors() else ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+            ) { Text(stringResource(confirm)) }
+        },
         dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.dialog_cancel)) } },
     )
 }

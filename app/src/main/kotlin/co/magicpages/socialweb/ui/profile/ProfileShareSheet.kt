@@ -136,7 +136,8 @@ fun ProfileShareSheet(name: String, handle: String, avatarUrl: String?, url: Str
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
+                    // The server tells two handles apart, so a long one gives up its middle, not its end.
+                    overflow = TextOverflow.MiddleEllipsis,
                     modifier = Modifier.weight(1f, fill = false),
                 )
                 IconButton(onClick = { copyHandle(handle) }) {

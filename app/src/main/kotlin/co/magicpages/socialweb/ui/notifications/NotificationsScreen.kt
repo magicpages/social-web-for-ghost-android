@@ -194,8 +194,7 @@ private fun NotificationRow(
                         headline,
                         // The first name's emoji; a second name from another server shows its shortcodes as text.
                         actor.emojiSourceId,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
+                        // Whole: cut, "Bridgy Fed for Bluesky …" no longer says what happened.
                         modifier = Modifier.weight(1f).alignByBaseline(),
                     )
                     item.createdAtMillis?.let { millis ->

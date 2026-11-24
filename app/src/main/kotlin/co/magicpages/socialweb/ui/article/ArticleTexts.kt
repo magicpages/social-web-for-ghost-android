@@ -5,7 +5,7 @@ import androidx.compose.ui.text.AnnotatedString
 /**
  * The text a translation covers, in reading order: paragraphs, headings, quotes, list items,
  * captions, callouts, toggle headings, link card titles and descriptions, button labels, table
- * cells. Code, names of files and the like stay as they are.
+ * cells, the members-only box. Code, names of files and the like stay as they are.
  */
 fun ArticleDocument.translatableTexts(): List<String> {
     val texts = ArrayList<String>()
@@ -54,10 +54,11 @@ private fun ArticleDocument.mapTexts(transform: (String) -> String): ArticleDocu
             is ArticleBlock.Embed -> block.copy(caption = richOrNull(block.caption))
             is ArticleBlock.File -> block.copy(caption = plainOrNull(block.caption))
             is ArticleBlock.Table -> block.copy(rows = block.rows.map { row -> row.map { rich(it) } })
+            // The site's own words for its gate, in its language; translated, the gate reads as the post around it.
+            is ArticleBlock.MembersOnly -> block.copy(title = plainOrNull(block.title), message = plainOrNull(block.message))
             is ArticleBlock.Code,
             ArticleBlock.Divider,
             is ArticleBlock.Audio,
-            is ArticleBlock.MembersOnly,
             -> block
         }
     }

@@ -140,7 +140,7 @@ fun SiteSettingsScreen(
         topBar = {
             LargeFlexibleTopAppBar(
                 title = { Text(site?.siteTitle.orEmpty(), maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                subtitle = { site?.let { Text(it.handle, maxLines = 1, overflow = TextOverflow.Ellipsis) } },
+                subtitle = { site?.let { Text(it.handle, maxLines = 1, overflow = TextOverflow.MiddleEllipsis) } },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(AppIcons.ArrowBack, contentDescription = stringResource(R.string.back))

@@ -89,6 +89,7 @@ fun ActionSheetScope.SheetAction(
         supportingContent = supportingText?.let { { Text(it) } },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
     ) {
-        Text(text, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        // Two lines, so "Block @someone@a.long.server" still names whom it blocks.
+        Text(text, maxLines = 2, overflow = TextOverflow.Ellipsis)
     }
 }

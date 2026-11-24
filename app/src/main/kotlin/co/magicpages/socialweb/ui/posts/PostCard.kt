@@ -358,7 +358,8 @@ private fun AuthorLines(author: Author, publishedAtMillis: Long?, callbacks: Pos
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            // The server tells two handles apart, so a long one gives up its middle, not its end.
+            overflow = TextOverflow.MiddleEllipsis,
         )
     }
 }
@@ -381,7 +382,7 @@ private fun NameLine(author: Author, publishedAtMillis: Long?, modifier: Modifie
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            overflow = TextOverflow.MiddleEllipsis,
             modifier = Modifier.weight(1f, fill = false),
         )
         publishedAtMillis?.let {
@@ -761,7 +762,13 @@ internal fun ActionBar(item: FeedItem, callbacks: PostCallbacks, large: Boolean)
             val rowSpacing = if (compact) 0.dp else spacing
             val pull = rowPadding.calculateStartPadding(layoutDirection).roundToPx()
             val loose = Constraints(maxWidth = constraints.maxWidth + pull)
-            val counted = subcompose(if (compact) ActionSlot.CountedCompact else ActionSlot.Counted) {
+            // Each way of measuring needs slots of its own: a slot subcomposes once per measure.
+            val countedSlot = when {
+                shareInMenu -> ActionSlot.CountedBesideMenu
+                compact -> ActionSlot.CountedCompact
+                else -> ActionSlot.Counted
+            }
+            val counted = subcompose(countedSlot) {
                 CountedActions(item, callbacks, height, rowSpacing, rowPadding)
             }.single().measure(loose)
             val slot = when {
@@ -853,8 +860,8 @@ private fun CountedActions(item: FeedItem, callbacks: PostCallbacks, height: Dp,
     }
 }
 
-/** The row's slots: its counted actions (roomy or compact), and the end of it with or without its own Share. */
-private enum class ActionSlot { Counted, CountedCompact, WithShare, WithShareCompact, WithoutShare }
+/** The row's slots: its counted actions (roomy, compact or beside a menu with Share), and the end of it with or without its own Share. */
+private enum class ActionSlot { Counted, CountedCompact, CountedBesideMenu, WithShare, WithShareCompact, WithoutShare }
 
 /** Share and more, the end of an [ActionBar]; with [shareInMenu] Share is an entry of the menu instead. */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)

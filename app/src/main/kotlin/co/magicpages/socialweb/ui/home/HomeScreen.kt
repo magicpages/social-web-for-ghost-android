@@ -6,7 +6,7 @@ import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
-import androidx.compose.foundation.text.TextAutoSize
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
@@ -14,7 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.runtime.setValue
@@ -25,7 +28,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.isSpecified
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -155,6 +161,8 @@ fun HomeScreen(
     }
     // Drawn over the whole screen, navigation included; Explore covers it with a copy of its search.
     var cover by remember { mutableStateOf<(@Composable () -> Unit)?>(null) }
+    // How far each tab's label must shrink to fit, so all of them can shrink alike.
+    val labelFits = remember { mutableStateMapOf<HomeTab, Float>() }
 
     Box(Modifier.fillMaxSize()) {
         NavigationSuiteScaffold(
@@ -172,7 +180,7 @@ fun HomeScreen(
                             }
                         },
                         icon = { Icon(entry.icon(selected), contentDescription = null) },
-                        label = { TabLabel(stringResource(entry.label)) },
+                        label = { TabLabel(stringResource(entry.label), entry, labelFits) },
                         badge = if (entry == HomeTab.Notifications && unread > 0) {
                             {
                                 val description = pluralStringResource(R.plurals.nav_unread, unread, unread)
@@ -231,18 +239,43 @@ private fun HomeTab.icon(selected: Boolean): ImageVector = when (this) {
 }
 
 /**
- * A tab's label on one line. With a larger font it shrinks to fit, down to its size at 100%, then
- * ends in an ellipsis; wrapped, "Notifications" would break mid-word.
+ * A tab's label on one line. With a larger font every label shrinks by the same factor, enough for
+ * the longest to fit ([fits] collects what each needs), down to its size at 100%; past that it ends
+ * in an ellipsis. Wrapped, "Notifications" would break mid-word, and shrinking only the label that
+ * overflows would leave the tabs in different sizes.
  */
 @Composable
-private fun TabLabel(text: String) {
-    val size = LocalTextStyle.current.fontSize
+private fun TabLabel(text: String, tab: HomeTab, fits: SnapshotStateMap<HomeTab, Float>) {
+    val style = LocalTextStyle.current
     val fontScale = LocalDensity.current.fontScale
-    Text(
-        text,
-        maxLines = 1,
-        softWrap = false,
-        overflow = TextOverflow.Ellipsis,
-        autoSize = if (fontScale > 1f) TextAutoSize.StepBased(minFontSize = size / fontScale, maxFontSize = size) else null,
-    )
+    val measurer = rememberTextMeasurer()
+    BoxWithConstraints {
+        val room = constraints.maxWidth
+        val fit = remember(text, style, measurer, room) {
+            // Large fonts scale non-linearly (small sizes grow most), so a smaller size shrinks the
+            // text by less than its ratio: refine against the measured width a few times.
+            var scale = 1f
+            repeat(4) {
+                val width = measurer.measure(text, style.scaled(scale), maxLines = 1, softWrap = false).size.width
+                if (width <= room) return@remember scale
+                scale *= room.toFloat() / width
+            }
+            scale
+        }
+        SideEffect { fits[tab] = fit }
+        val scale = (fits.values.minOrNull() ?: fit).coerceIn(1f / fontScale, 1f)
+        Text(
+            text,
+            style = style.scaled(scale),
+            maxLines = 1,
+            softWrap = false,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
 }
+
+/** This style at [scale] times its size, line height included. */
+private fun TextStyle.scaled(scale: Float): TextStyle = if (scale == 1f) this else copy(
+    fontSize = fontSize * scale,
+    lineHeight = if (lineHeight.isSpecified) lineHeight * scale else lineHeight,
+)

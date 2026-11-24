@@ -736,8 +736,6 @@ private fun TrendingHeader(server: String, fromMembers: Boolean?, onChangeServer
             Text(
                 stringResource(if (members) R.string.explore_fediverse_members else R.string.explore_fediverse_trending, server),
                 style = MaterialTheme.typography.titleMedium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.semantics { heading() },
             )
             Text(
@@ -950,7 +948,7 @@ private fun PostRow(post: Post, onClick: () -> Unit) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
+                    overflow = TextOverflow.MiddleEllipsis,
                 )
                 if (text.isNotEmpty()) {
                     EmojiText(
@@ -985,7 +983,8 @@ private fun AccountRow(
     val bioText = remember(bio) { bio?.let { parsePostHtml(bioHtml(it)).text.trim() }.orEmpty() }
     ListItem(
         headlineContent = {
-            EmojiText(name, author.emojiSourceId, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            // Two lines: the Follow button beside it leaves a large font little room.
+            EmojiText(name, author.emojiSourceId, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
         },
         supportingContent = {
             Column {
@@ -994,7 +993,7 @@ private fun AccountRow(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
+                    overflow = TextOverflow.MiddleEllipsis,
                 )
                 if (bioText.isNotEmpty()) {
                     EmojiText(
