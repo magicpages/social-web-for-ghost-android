@@ -182,10 +182,15 @@ fun ExploreScreen(
     val fediverseTag by viewModel.fediverseTag.collectAsStateWithLifecycle()
     val fediversePosts = viewModel.fediversePosts.collectAsLazyPagingItems()
     val fediverseTrends by viewModel.fediverseTrends.collectAsStateWithLifecycle()
+    val neighbours by viewModel.neighbours.collectAsStateWithLifecycle()
+    val neighboursSelected by viewModel.neighboursSelected.collectAsStateWithLifecycle()
+    val neighboursRefreshing by viewModel.neighboursRefreshing.collectAsStateWithLifecycle()
+    val neighbourDetails by viewModel.neighbourDetails.collectAsStateWithLifecycle()
+    val recommendStates by viewModel.recommendStates.collectAsStateWithLifecycle()
     var serverSheet by rememberSaveable { mutableStateOf(false) }
     // Back steps out of a hashtag to the trending posts before it leaves Explore.
     BackHandler(enabled = fediverseSelected && fediverseTag != null) { viewModel.openTag(null) }
-    val showPosts = !fediverseSelected && selected != null && topicView == TopicView.Posts
+    val showPosts = !fediverseSelected && !neighboursSelected && selected != null && topicView == TopicView.Posts
     // The list on screen: a topic's or the server's posts, or else the suggested accounts.
     val posts = if (fediverseSelected) fediversePosts else topicPosts
     val callbacks = remember(viewModel) {
@@ -218,7 +223,7 @@ fun ExploreScreen(
         if (listState.canScrollBackward) listState.scrollToTop() else searchBarState.animateToExpanded()
     }
     // Each list starts at its own top, not at the offset the other one was left at.
-    LaunchedEffect(selected, showPosts, fediverseSelected, fediverseTag, fediverse.server) { listState.scrollToItem(0) }
+    LaunchedEffect(selected, showPosts, fediverseSelected, neighboursSelected, fediverseTag, fediverse.server) { listState.scrollToItem(0) }
 
     // Beside the tabs the profile opens in the detail pane, which a back gesture closes without ever hiding
     // this tab, so there is nothing to cover and the search simply closes.
@@ -312,8 +317,18 @@ fun ExploreScreen(
                 contentPadding = PaddingValues(horizontal = Gutter, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
+                // The first tab, and the one open to begin with; it isn't there for roles the service doesn't suggest accounts to.
+                if (neighbours !is NeighboursUiState.Unavailable) {
+                    item(key = "neighbours") {
+                        TopicChip(stringResource(R.string.explore_neighbours), selected = neighboursSelected, onClick = viewModel::selectNeighbours)
+                    }
+                }
                 item(key = "for-you") {
-                    TopicChip(stringResource(R.string.explore_for_you), selected = selected == null && !fediverseSelected, onClick = { viewModel.select(null) })
+                    TopicChip(
+                        stringResource(R.string.explore_for_you),
+                        selected = selected == null && !fediverseSelected && !neighboursSelected,
+                        onClick = { viewModel.select(null) },
+                    )
                 }
                 if (fediverse.enabled) {
                     item(key = "fediverse") {
@@ -326,12 +341,16 @@ fun ExploreScreen(
                     }
                 }
                 items(topics, key = { it.slug }) { topic ->
-                    TopicChip(topic.name, selected = !fediverseSelected && selected == topic.slug, onClick = { viewModel.select(topic.slug) })
+                    TopicChip(
+                        topic.name,
+                        selected = !fediverseSelected && !neighboursSelected && selected == topic.slug,
+                        onClick = { viewModel.select(topic.slug) },
+                    )
                 }
             }
 
             val slug = selected
-            if (!fediverseSelected && slug != null) {
+            if (!fediverseSelected && !neighboursSelected && slug != null) {
                 val isPinned = slug in pinned
                 Row(
                     Modifier.widthIn(max = MaxContentWidth).fillMaxWidth().padding(start = Gutter, end = Gutter - 8.dp).padding(bottom = 8.dp),
@@ -361,12 +380,13 @@ fun ExploreScreen(
             val listsPosts = showPosts || fediverseSelected
             val refresh = if (listsPosts) posts.loadState.refresh else suggestions.loadState.refresh
             val itemCount = if (listsPosts) posts.itemCount else suggestions.itemCount
-            val refreshing = refresh is LoadState.Loading && itemCount > 0
+            val refreshing = if (neighboursSelected) neighboursRefreshing else refresh is LoadState.Loading && itemCount > 0
             val pullState = rememberPullToRefreshState()
             PullToRefreshBox(
                 isRefreshing = refreshing,
                 onRefresh = {
                     when {
+                        neighboursSelected -> viewModel.refreshNeighbours()
                         fediverseSelected -> {
                             // Forgets the server's posts first, so the list reads them again rather than the copy kept for the hashtags.
                             viewModel.refreshFediverse()
@@ -386,6 +406,19 @@ fun ExploreScreen(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 when {
+                    neighboursSelected -> NeighboursList(
+                        state = neighbours,
+                        following = following,
+                        details = neighbourDetails,
+                        recommendStates = recommendStates,
+                        listState = listState,
+                        onToggleFollow = viewModel::toggleFollow,
+                        onRecommend = viewModel::recommend,
+                        onLoadDetails = viewModel::loadNeighbourDetails,
+                        onOpenProfile = onOpenProfile,
+                        onRetry = viewModel::refreshNeighbours,
+                        onSignOut = onSignOut,
+                    )
                     fediverseSelected -> FediverseList(
                         server = fediverse.server,
                         tag = fediverseTag,
@@ -1016,7 +1049,7 @@ private fun AccountRow(
 /** Not following yet is the call to action, so it is filled; "Following" settles into a tonal state, as on the profile. */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun FollowButton(name: String, following: Boolean, onClick: () -> Unit) {
+internal fun FollowButton(name: String, following: Boolean, onClick: () -> Unit) {
     val colors = ToggleButtonDefaults.colors(
         containerColor = MaterialTheme.colorScheme.primary,
         contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -1042,4 +1075,4 @@ private fun FollowButton(name: String, following: Boolean, onClick: () -> Unit) 
 }
 
 /** What the user changed here wins over the follow state a list was loaded with. */
-private fun Map<String, Boolean>.isFollowing(author: Author): Boolean = this[author.handle.lowercase()] ?: author.followedByMe
+internal fun Map<String, Boolean>.isFollowing(author: Author): Boolean = this[author.handle.lowercase()] ?: author.followedByMe

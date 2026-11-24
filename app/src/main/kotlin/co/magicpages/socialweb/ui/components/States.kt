@@ -90,12 +90,17 @@ fun AppendState(state: LoadState, onRetry: () -> Unit) {
     }
 }
 
-/** Lives in a LazyColumn so pull-to-refresh still works when there's nothing else to scroll. */
+/**
+ * Lives in a LazyColumn so pull-to-refresh still works when there's nothing else to scroll. A [header] sits above
+ * the message, which then takes just the room it needs instead of the whole screen.
+ */
 @Composable
-fun ScrollableMessage(text: String, modifier: Modifier = Modifier) {
-    LazyColumn(modifier.fillMaxSize()) {
+fun ScrollableMessage(text: String, modifier: Modifier = Modifier, header: (@Composable () -> Unit)? = null) {
+    LazyColumn(modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+        if (header != null) item(key = "header") { header() }
         item {
-            Box(Modifier.fillParentMaxSize().padding(horizontal = Gutter, vertical = 24.dp), contentAlignment = Alignment.Center) {
+            val size = if (header == null) Modifier.fillParentMaxSize() else Modifier.fillParentMaxWidth()
+            Box(size.padding(horizontal = Gutter, vertical = 24.dp), contentAlignment = Alignment.Center) {
                 Text(text, style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
             }
         }

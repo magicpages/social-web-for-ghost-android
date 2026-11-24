@@ -873,7 +873,7 @@ private fun MembershipButton(site: ProfileSite) {
 
 /** Asks before changing the signed-in site's recommendations, which its readers see and the recommended site is told about. */
 @Composable
-private fun RecommendationDialog(recommended: Boolean, name: String, onConfirm: () -> Unit, onDismiss: () -> Unit) {
+internal fun RecommendationDialog(recommended: Boolean, name: String, onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(if (recommended) R.string.unrecommend_title else R.string.recommend_title, name)) },

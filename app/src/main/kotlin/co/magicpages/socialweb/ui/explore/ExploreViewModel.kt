@@ -39,6 +39,12 @@ import co.magicpages.socialweb.data.activitypub.SuggestedAccount
 import co.magicpages.socialweb.data.activitypub.SuggestedAccountsPage
 import co.magicpages.socialweb.data.activitypub.Topic
 import co.magicpages.socialweb.data.ghost.GhostException
+import co.magicpages.socialweb.data.activitypub.NeighbourFacts
+import co.magicpages.socialweb.data.activitypub.PublishingRhythm
+import co.magicpages.socialweb.data.ghost.AdminRecommendation
+import co.magicpages.socialweb.data.ghost.OwnRecommendations
+import co.magicpages.socialweb.data.ghost.ghostSiteUrl
+import co.magicpages.socialweb.data.ghost.recommends
 import co.magicpages.socialweb.data.ghost.parseWebUri
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -88,6 +94,63 @@ sealed interface SearchUiState {
 /** What a selected topic lists. */
 enum class TopicView { Posts, People }
 
+/** An account on the Neighbours tab. [siteUrl] is its Ghost site, which only Ghost accounts have. */
+@Immutable
+data class Neighbour(val account: SuggestedAccount) {
+    val siteUrl: String? get() = ghostSiteUrl(account.id)
+}
+
+/** What the Neighbours tab shows. */
+@Immutable
+sealed interface NeighboursUiState {
+    data object Loading : NeighboursUiState
+
+    /** At most the 20 accounts the service suggested, in its order; they stay put while the tab is open. */
+    data class Loaded(val neighbours: List<Neighbour>) : NeighboursUiState
+
+    data class Failed(val error: Throwable) : NeighboursUiState
+
+    /** The tab isn't offered: the service refuses the list to this role, or has nobody to suggest. */
+    data object Unavailable : NeighboursUiState
+}
+
+/** What was found out about a neighbour, each part as it arrives; missing parts show nothing. */
+@Immutable
+data class NeighbourDetails(
+    val latestArticleTitle: String? = null,
+    val rhythm: PublishingRhythm? = null,
+    /** Their site's own `recommendations.json` lists this site. */
+    val recommendsYou: Boolean = false,
+)
+
+/** Where the Recommend button of a neighbour stands. */
+enum class RecommendState {
+    /** Nothing to offer: no Ghost site, already recommended, or this site's own list couldn't be read. */
+    Hidden,
+    Available,
+    Busy,
+
+    /** Recommended just now, from here. */
+    Done,
+}
+
+/** The signed-in site's recommendations as they bear on the neighbours' Recommend buttons. */
+@Immutable
+class RecommendStates(
+    private val own: List<AdminRecommendation>?,
+    private val busy: Set<String>,
+    private val done: Set<String>,
+) {
+    fun of(siteUrl: String?): RecommendState = when {
+        siteUrl == null -> RecommendState.Hidden
+        siteUrl in done -> RecommendState.Done
+        // Busy before the own list: it already holds the site a moment before the button settles on Done.
+        siteUrl in busy -> RecommendState.Busy
+        own == null || own.recommends(siteUrl) -> RecommendState.Hidden
+        else -> RecommendState.Available
+    }
+}
+
 /**
  * The Explore tab: searching for accounts, and the accounts the service suggests, either for the
  * site ("For you") or under one of its topics. Follow changes made here are kept in [following] so
@@ -103,6 +166,8 @@ class ExploreViewModel @Inject constructor(
     private val moderation: Moderation,
     private val fediverseClient: FediverseClient,
     private val settings: AppSettings,
+    private val ownRecommendations: OwnRecommendations,
+    private val neighbourFacts: NeighbourFacts,
 ) : ViewModel() {
     // The same account with a replaced credential keeps its lists; a switch starts them anew.
     private val active: Flow<StoredAccount> = accounts.account
@@ -154,12 +219,13 @@ class ExploreViewModel @Inject constructor(
 
     private val followFailures = MutableSharedFlow<Int>(extraBufferCapacity = 1)
     private val pinChanges = MutableSharedFlow<Int>(extraBufferCapacity = 1)
+    private val recommendFailures = MutableSharedFlow<Int>(extraBufferCapacity = 1)
 
     /** Reply editor state for the posts of a topic. */
     val composer = ReplyComposer(viewModelScope, interactions)
 
     /** String resources to show in a snackbar. */
-    val messages: Flow<Int> = merge(followFailures, pinChanges, postMessages(interactions, composer, moderation))
+    val messages: Flow<Int> = merge(followFailures, pinChanges, recommendFailures, postMessages(interactions, composer, moderation))
 
     private val activeId: StateFlow<String?> = accounts.activeId.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
@@ -174,6 +240,50 @@ class ExploreViewModel @Inject constructor(
         pinChanges.tryEmit(if (pinned) R.string.explore_topic_pinned else R.string.explore_topic_unpinned)
     }
 
+    private val _neighboursSelected = MutableStateFlow(true)
+    private val neighbourRefreshes = MutableStateFlow(0)
+    private val _neighbours = MutableStateFlow<NeighboursUiState>(NeighboursUiState.Loading)
+    private val _neighboursRefreshing = MutableStateFlow(false)
+    private val _neighbourDetails = MutableStateFlow<Map<String, NeighbourDetails>>(emptyMap())
+    private val activityAsked = HashSet<String>()
+    private val recommendsAsked = HashSet<String>()
+    private val recommending = MutableStateFlow<Set<String>>(emptySet())
+    private val recommendedHere = MutableStateFlow<Set<String>>(emptySet())
+
+    // The account (site and credential) the Neighbours were loaded for: a reload for the same one keeps them
+    // on screen while it runs, another one starts from loading.
+    private var neighboursOwner: Any? = null
+
+    /**
+     * The Neighbours tab: accounts in the site's own topics that it doesn't follow yet. Loaded once and then left
+     * alone, so a follow doesn't reshuffle the list under the thumb; a pull to refresh reads it again. The tab is
+     * [NeighboursUiState.Unavailable] for roles the service refuses, and when nobody is left to show.
+     */
+    val neighbours: StateFlow<NeighboursUiState> = combine(_neighbours, moderation.hidden) { state, hidden ->
+        if (state is NeighboursUiState.Loaded && !hidden.isEmpty) {
+            val shown = state.neighbours.filterNot { hidden.hides(it.account.toAuthor()) }
+            if (shown.isEmpty()) NeighboursUiState.Unavailable else state.copy(neighbours = shown)
+        } else {
+            state
+        }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, NeighboursUiState.Loading)
+
+    /** Whether the Neighbours chip is the one selected, as it is until another is picked; never while the tab is unavailable. */
+    val neighboursSelected: StateFlow<Boolean> = combine(_neighboursSelected, neighbours) { selected, state ->
+        selected && state !is NeighboursUiState.Unavailable
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
+
+    /** Whether the Neighbours are being read again while the old ones are still shown. */
+    val neighboursRefreshing: StateFlow<Boolean> = _neighboursRefreshing.asStateFlow()
+
+    /** What is known about each neighbour so far, by lower-case handle. */
+    val neighbourDetails: StateFlow<Map<String, NeighbourDetails>> = _neighbourDetails.asStateFlow()
+
+    /** How the neighbours' Recommend buttons stand. */
+    val recommendStates: StateFlow<RecommendStates> = combine(ownRecommendations.list, recommending, recommendedHere) { own, busy, done ->
+        RecommendStates(own, busy, done)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, RecommendStates(null, emptySet(), emptySet()))
+
     init {
         // Who an account follows, and which topic was open, say nothing about another account.
         accounts.activeId
@@ -184,6 +294,12 @@ class ExploreViewModel @Inject constructor(
                 _following.value = emptyMap()
                 _fediverseSelected.value = false
                 _fediverseTag.value = null
+                _neighboursSelected.value = true
+                _neighbourDetails.value = emptyMap()
+                activityAsked.clear()
+                recommendsAsked.clear()
+                recommending.value = emptySet()
+                recommendedHere.value = emptySet()
             }
             .launchIn(viewModelScope)
         // A hashtag belongs to the server it was opened on; switching the source off leaves no chip to come back to.
@@ -200,6 +316,48 @@ class ExploreViewModel @Inject constructor(
                 _fediverseTag.value = null
             }
             .launchIn(viewModelScope)
+    }
+
+    init {
+        combine(active, neighbourRefreshes) { account, _ -> account }
+            .mapLatest { account ->
+                val owner = account.site to account.credential
+                if (owner != neighboursOwner) {
+                    neighboursOwner = owner
+                    _neighbours.value = NeighboursUiState.Loading
+                }
+                _neighboursRefreshing.value = _neighbours.value is NeighboursUiState.Loaded
+                try {
+                    val result = loadNeighbours(account)
+                    // A reload that fails leaves the accounts being read where they are.
+                    if (result !is NeighboursUiState.Failed || _neighbours.value !is NeighboursUiState.Loaded) _neighbours.value = result
+                    if (result is NeighboursUiState.Loaded) {
+                        // Which Recommend buttons to offer; without the list none is.
+                        viewModelScope.launch {
+                            try {
+                                ownRecommendations.refresh()
+                            } catch (_: GhostException) {
+                            }
+                        }
+                    }
+                } finally {
+                    _neighboursRefreshing.value = false
+                }
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private suspend fun loadNeighbours(account: StoredAccount): NeighboursUiState = try {
+        val people = activityPub.recommendations(account.site, account.credential, NEIGHBOURS_LIMIT)
+            .filterNot { account.isMe(it.handle) }
+            .distinctBy { it.handle.lowercase() }
+            .take(NEIGHBOURS_LIMIT)
+        if (people.isEmpty()) NeighboursUiState.Unavailable else NeighboursUiState.Loaded(people.map(::Neighbour))
+    } catch (e: SocialWebException) {
+        // Editors get a 403: the tab simply isn't theirs, which is no error to show.
+        if (e.status == 403) NeighboursUiState.Unavailable else NeighboursUiState.Failed(e)
+    } catch (e: GhostException) {
+        NeighboursUiState.Failed(e)
     }
 
     val search: StateFlow<SearchUiState> = combine(
@@ -429,6 +587,7 @@ class ExploreViewModel @Inject constructor(
 
     /** Picks the topic to list, or "For you" for null. */
     fun select(slug: String?) {
+        _neighboursSelected.value = false
         _fediverseSelected.value = false
         _fediverseTag.value = null
         if (_selected.value == slug) return
@@ -439,8 +598,80 @@ class ExploreViewModel @Inject constructor(
 
     /** Picks the Fediverse source, on its trending posts. */
     fun selectFediverse() {
+        _neighboursSelected.value = false
         _fediverseSelected.value = true
         fediverseVisited.value = true
+    }
+
+    /** Picks the Neighbours tab. */
+    fun selectNeighbours() {
+        _fediverseSelected.value = false
+        _fediverseTag.value = null
+        _neighboursSelected.value = true
+    }
+
+    /** Reads the Neighbours again, which may bring other accounts; only asked for by the user. */
+    fun refreshNeighbours() {
+        neighbourRefreshes.update { it + 1 }
+    }
+
+    /**
+     * Looks up what a card shows about [neighbour]: its newest article and how often it publishes, and whether its
+     * site recommends this one. Asked for as the card comes into view, once; what can't be read is asked again the
+     * next time it does.
+     */
+    fun loadNeighbourDetails(neighbour: Neighbour) {
+        val handle = neighbour.account.handle
+        val key = handle.lowercase()
+        val siteUrl = neighbour.siteUrl
+        val askActivity = activityAsked.add(key)
+        val askRecommends = siteUrl != null && recommendsAsked.add(key)
+        if (!askActivity && !askRecommends) return
+        val startedIn = generation
+        viewModelScope.launch {
+            val account = accounts.account.first() ?: return@launch
+            if (askActivity) {
+                launch {
+                    val activity = neighbourFacts.activity(account, handle)
+                    if (startedIn != generation) return@launch
+                    if (activity == null) {
+                        activityAsked.remove(key)
+                    } else {
+                        putDetails(key) { copy(latestArticleTitle = activity.latestArticleTitle, rhythm = activity.rhythm) }
+                    }
+                }
+            }
+            if (askRecommends && siteUrl != null) {
+                launch {
+                    val recommends = neighbourFacts.recommends(siteUrl, account.site.siteUrl)
+                    if (startedIn != generation) return@launch
+                    if (recommends == null) recommendsAsked.remove(key) else putDetails(key) { copy(recommendsYou = recommends) }
+                }
+            }
+        }
+    }
+
+    private fun putDetails(key: String, change: NeighbourDetails.() -> NeighbourDetails) {
+        _neighbourDetails.update { it + (key to (it[key] ?: NeighbourDetails()).change()) }
+    }
+
+    /** Adds [neighbour]'s site to the site's recommendations; the button says how it went. */
+    fun recommend(neighbour: Neighbour) {
+        val siteUrl = neighbour.siteUrl ?: return
+        if (siteUrl in recommending.value) return
+        recommending.update { it + siteUrl }
+        val startedIn = generation
+        viewModelScope.launch {
+            try {
+                ownRecommendations.recommend(siteUrl)
+                if (startedIn == generation) recommendedHere.update { it + siteUrl }
+            } catch (e: GhostException) {
+                val denied = e is GhostException.Unauthorized || e is GhostException.Rejected
+                recommendFailures.emit(if (denied) R.string.recommend_not_allowed else R.string.recommend_failed)
+            } finally {
+                recommending.update { it - siteUrl }
+            }
+        }
     }
 
     /** Lists the posts under #[tag], or the trending posts again for null. */
@@ -479,7 +710,7 @@ class ExploreViewModel @Inject constructor(
         val before = _following.value[key] ?: author.followedByMe
         val after = !before
         val startedIn = generation
-        _following.update { it + (key to after) }
+        setFollowing(key, after)
         viewModelScope.launch {
             try {
                 val account = accounts.account.first() ?: throw GhostException.Unauthorized(null)
@@ -501,8 +732,21 @@ class ExploreViewModel @Inject constructor(
 
     private suspend fun rollBack(key: String, before: Boolean, startedIn: Int) {
         if (startedIn != generation) return
-        _following.update { it + (key to before) }
+        setFollowing(key, before)
         followFailures.emit(R.string.follow_failed)
+    }
+
+    /** Records the follow state of [key] for every list, the Neighbours too, which keep their accounts as loaded. */
+    private fun setFollowing(key: String, value: Boolean) {
+        _following.update { it + (key to value) }
+        _neighbours.update { state ->
+            if (state !is NeighboursUiState.Loaded) return@update state
+            state.copy(
+                neighbours = state.neighbours.map {
+                    if (it.account.handle.lowercase() == key) Neighbour(it.account.copy(followedByMe = value)) else it
+                },
+            )
+        }
     }
 
     private fun StoredAccount.isMe(handle: String) = handle.equals(profile.handle, ignoreCase = true)
@@ -512,6 +756,7 @@ class ExploreViewModel @Inject constructor(
         const val MIN_QUERY_LENGTH = 2
         const val DEBOUNCE_MILLIS = 300L
         const val PAGE_SIZE = 20
+        const val NEIGHBOURS_LIMIT = 20
 
         /** A first load in flight, with nothing yet to show. */
         val LOADING_STATES = LoadStates(

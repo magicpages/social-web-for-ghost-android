@@ -69,22 +69,31 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import co.magicpages.socialweb.R
 import co.magicpages.socialweb.data.account.AccountStore
+import co.magicpages.socialweb.data.activitypub.SocialWebException
+import co.magicpages.socialweb.data.activitypub.Topic
+import co.magicpages.socialweb.data.curator.CuratorDesk
+import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.data.settings.AccountColors
 import co.magicpages.socialweb.data.settings.AppSettings
 import co.magicpages.socialweb.data.settings.ColorSource
 import co.magicpages.socialweb.data.settings.parseHexColor
 import co.magicpages.socialweb.ui.components.AppIcons
 import co.magicpages.socialweb.ui.components.HandleText
+import co.magicpages.socialweb.ui.curator.CuratorTopicsDialog
 import co.magicpages.socialweb.ui.posts.MaxContentWidth
 import co.magicpages.socialweb.ui.theme.Gutter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 /** A signed-in site, as its settings screen shows it, with its colours: the site's own accent colour (ARGB, if it has one) and the choice. */
 data class ColorsUi(
@@ -100,7 +109,8 @@ data class ColorsUi(
 class SiteSettingsViewModel @AssistedInject constructor(
     @Assisted private val accountId: String,
     private val settings: AppSettings,
-    accounts: AccountStore,
+    private val desk: CuratorDesk,
+    private val accounts: AccountStore,
 ) : ViewModel() {
     @AssistedFactory
     interface Factory {
@@ -114,7 +124,33 @@ class SiteSettingsViewModel @AssistedInject constructor(
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
+    /** What the site's writer said they write about, for the curator desk in the Reader; empty if they haven't. */
+    val chosenTopics: StateFlow<List<Topic>> = desk.state(accountId).map { it.topics }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
+    private val _topicChoices = MutableStateFlow<List<Topic>>(emptyList())
+
+    /**
+     * The topics to choose from. Empty until loaded, and for good when the service has none to offer or won't say
+     * (403 for an editor, who has no curator desk): the setting is then left out rather than shown broken.
+     */
+    val topicChoices: StateFlow<List<Topic>> = _topicChoices.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            val account = accounts.signedIn(accountId) ?: return@launch
+            try {
+                _topicChoices.value = desk.availableTopics(account)
+            } catch (_: SocialWebException) {
+                // Nothing to choose from.
+            } catch (_: GhostException) {
+                // Same: it is tried again the next time the screen opens.
+            }
+        }
+    }
+
     fun setColors(colors: AccountColors) = settings.setAccountColors(accountId, colors)
+
+    fun setTopics(topics: List<Topic>) = desk.chooseTopics(accountId, topics)
 }
 
 /**
@@ -134,6 +170,9 @@ fun SiteSettingsScreen(
 ) {
     val viewModel = hiltViewModel<SiteSettingsViewModel, SiteSettingsViewModel.Factory>(key = accountId) { it.create(accountId) }
     val site by viewModel.colors.collectAsStateWithLifecycle()
+    val chosenTopics by viewModel.chosenTopics.collectAsStateWithLifecycle()
+    val topicChoices by viewModel.topicChoices.collectAsStateWithLifecycle()
+    var choosingTopics by rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     var confirmingRemove by rememberSaveable { mutableStateOf(false) }
 
@@ -173,6 +212,21 @@ fun SiteSettingsScreen(
                     count = 1,
                     icon = AppIcons.Mention,
                 )
+
+                // What the Reader's curator desk offers posts about; only where the service lets this account have one.
+                if (topicChoices.isNotEmpty()) {
+                    val noTopics = stringResource(R.string.curator_settings_none)
+                    SectionTitle(R.string.reader_title, Modifier.padding(top = 16.dp))
+                    LinkRow(
+                        title = stringResource(R.string.curator_settings_title),
+                        status = chosenTopics.joinToString { it.name }.ifBlank { noTopics },
+                        onClick = { choosingTopics = true },
+                        index = 0,
+                        count = 1,
+                        icon = AppIcons.Reader,
+                    )
+                    Explainer(stringResource(R.string.curator_settings_footer))
+                }
 
                 SectionTitle(R.string.settings_colors, Modifier.padding(top = 16.dp))
                 ColorChoices(ui, viewModel::setColors)
@@ -225,6 +279,17 @@ fun SiteSettingsScreen(
                     dismissButton = {
                         TextButton(onClick = { confirmingRemove = false }) { Text(stringResource(R.string.dialog_cancel)) }
                     },
+                )
+            }
+            if (choosingTopics && topicChoices.isNotEmpty()) {
+                CuratorTopicsDialog(
+                    topics = topicChoices,
+                    selected = chosenTopics.mapTo(linkedSetOf()) { it.slug },
+                    onSave = {
+                        choosingTopics = false
+                        viewModel.setTopics(it)
+                    },
+                    onDismiss = { choosingTopics = false },
                 )
             }
         }

@@ -54,6 +54,9 @@ import co.magicpages.socialweb.ui.components.OnReselect
 import co.magicpages.socialweb.ui.components.ScrollableMessage
 import co.magicpages.socialweb.ui.components.errorMessage
 import co.magicpages.socialweb.ui.components.scrollToTop
+import co.magicpages.socialweb.ui.curator.CuratorDeskCard
+import co.magicpages.socialweb.ui.curator.CuratorDeskEffects
+import co.magicpages.socialweb.ui.curator.CuratorDeskViewModel
 import co.magicpages.socialweb.ui.posts.CollectMessages
 import co.magicpages.socialweb.ui.posts.PostCallbacks
 import co.magicpages.socialweb.ui.posts.ReplyEditorHost
@@ -86,6 +89,12 @@ fun FeedScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listState = rememberLazyListState()
     val snackbar = remember { SnackbarHostState() }
+    // The Reader's own: a few posts a day from the topics the writer picked, above its timeline.
+    val curator = if (feed == Feed.Reader) hiltViewModel<CuratorDeskViewModel>() else null
+    if (curator != null) CuratorDeskEffects(curator)
+    val deskHeader: (@Composable () -> Unit)? = if (curator == null) null else {
+        { CuratorDeskCard(curator, onOpenPost, onOpenProfile) }
+    }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -142,6 +151,8 @@ fun FeedScreen(
                     onOpenProfile = onOpenProfile,
                     onSignOut = onSignOut,
                     onLoaded = onLoaded,
+                    // Only the timeline has it; a topic's page is that topic.
+                    header = if (topic == null) deskHeader else null,
                     modifier = Modifier.fillMaxSize(),
                 )
             }
@@ -185,6 +196,7 @@ internal fun FeedPage(
     onSignOut: () -> Unit,
     modifier: Modifier = Modifier,
     onLoaded: () -> Unit = {},
+    header: (@Composable () -> Unit)? = null,
 ) {
     val posts = viewModel.posts.collectAsLazyPagingItems()
     val filtering by viewModel.filtering.collectAsStateWithLifecycle()
@@ -254,6 +266,7 @@ internal fun FeedPage(
                 refresh is LoadState.Loading && posts.itemCount == 0 -> CenteredLoading()
                 refresh is LoadState.NotLoading && posts.itemCount == 0 -> ScrollableMessage(
                     stringResource(if (filtering) R.string.feed_filtered_empty else emptyMessage),
+                    header = header,
                 )
                 else -> BoxWithConstraints(Modifier.fillMaxSize()) {
                     val reader = if (feed == Feed.Reader) rememberReaderPage(posts, maxWidth, maxHeight) else null
@@ -263,7 +276,7 @@ internal fun FeedPage(
                         contentPadding = PaddingValues(vertical = 8.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        feedItems(posts, callbacks, reader = reader, caughtUpAbove = newPosts.caughtUpAbove)
+                        feedItems(posts, callbacks, reader = reader, caughtUpAbove = newPosts.caughtUpAbove, header = header)
                     }
                 }
             }

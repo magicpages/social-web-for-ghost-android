@@ -44,13 +44,16 @@ fun CollectMessages(messages: Flow<Int>, snackbar: SnackbarHostState) {
 /**
  * A paged post list, followed by its loading/retry footer. Posts are flat rows split by dividers;
  * with [reader] (the Reader), articles are laid out as a magazine instead. A "caught up" line goes
- * above the post [caughtUpAbove], unless that post is the first.
+ * above the post [caughtUpAbove], unless that post is the first. A [header] is drawn above the first
+ * post, inside that post's own item: a list item of its own would shift every index the list's
+ * position is saved and restored by.
  */
 fun LazyListScope.feedItems(
     posts: LazyPagingItems<FeedItem>,
     callbacks: PostCallbacks,
     reader: ReaderPage? = null,
     caughtUpAbove: String? = null,
+    header: (@Composable () -> Unit)? = null,
 ) {
     val magazine = reader?.magazine
     items(
@@ -76,6 +79,7 @@ fun LazyListScope.feedItems(
         // Part of the post's own item, so list indices stay those of the posts.
         val caughtUp = index > 0 && item.post.id == caughtUpAbove
         Column(Modifier.widthIn(max = MaxContentWidth).fillMaxWidth()) {
+            if (index == 0) header?.invoke()
             if (reader != null && block != null) {
                 if (caughtUp) CaughtUpLine()
                 ReaderBlockView(block, callbacks, reader)

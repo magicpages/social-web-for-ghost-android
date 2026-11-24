@@ -303,7 +303,7 @@ private const val DateId = "date"
  * blur, left out); the title stays, as the article's own screen asks before showing it.
  */
 @Composable
-private fun Cover(post: Post, modifier: Modifier) {
+internal fun Cover(post: Post, modifier: Modifier) {
     val hidden = !post.contentWarning.isNullOrBlank() || (post.sensitive && !LocalShowSensitiveMedia.current)
     Box(modifier.background(MaterialTheme.colorScheme.surfaceContainerHighest)) {
         if (hidden && Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return@Box

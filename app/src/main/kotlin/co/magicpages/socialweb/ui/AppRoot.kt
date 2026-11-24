@@ -57,6 +57,7 @@ import co.magicpages.socialweb.data.activitypub.MentionDirectory
 import co.magicpages.socialweb.data.activitypub.Moderation
 import co.magicpages.socialweb.data.activitypub.SensitiveMediaPreference
 import co.magicpages.socialweb.data.activitypub.Post
+import co.magicpages.socialweb.data.curator.CuratorStore
 import co.magicpages.socialweb.data.ghost.GhostAdminClient
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.data.gif.Gifs
@@ -211,6 +212,7 @@ class AppViewModel @Inject constructor(
     private val ghost: GhostAdminClient,
     private val settings: AppSettings,
     private val handledReplies: HandledReplies,
+    private val curatorStore: CuratorStore,
     /** Shared by every post card through [LocalLinkedPosts]. */
     val linkedPosts: LinkedPosts,
     /** Shared by every post card through [LocalPostTranslations]. */
@@ -294,6 +296,7 @@ class AppViewModel @Inject constructor(
         accounts.remove(account.id)
         settings.forgetAccount(account.id)
         handledReplies.forgetAccount(account.id)
+        curatorStore.forgetAccount(account.id)
     }
 }
 

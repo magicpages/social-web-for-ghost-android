@@ -56,6 +56,7 @@ import co.magicpages.socialweb.data.account.AccountStore
 import co.magicpages.socialweb.data.activitypub.ActivityPubClient
 import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.activitypub.Topic
+import co.magicpages.socialweb.data.curator.TopTopicSlug
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.data.settings.AppSettings
 import co.magicpages.socialweb.ui.components.AppIcons
@@ -77,9 +78,6 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-/** The slug of the topic Ghost Admin leaves out of its Reader: it lists who is popular, not a subject. */
-private const val TopSlug = "top"
 
 /** Ghost's topics for the Reader's pages, and which of them the account pinned there. */
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -117,7 +115,7 @@ class ReaderTopicsViewModel @Inject constructor(
                 }
                 .filterNotNull()
         }
-        .map { loaded -> loaded.filter { it.slug != TopSlug } }
+        .map { loaded -> loaded.filter { it.slug != TopTopicSlug } }
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val activeId: StateFlow<String?> = accounts.activeId.stateIn(viewModelScope, SharingStarted.Eagerly, null)
