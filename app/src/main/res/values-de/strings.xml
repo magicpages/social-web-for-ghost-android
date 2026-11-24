@@ -730,4 +730,67 @@
         <item quantity="one">Bis zu %1$s Person hätte ihn sehen können</item>
         <item quantity="other">Bis zu %1$s Personen hätten ihn sehen können</item>
     </plurals>
+    <plurals name="notifications_waiting">
+        <item quantity="one">%1$d Antwort wartet</item>
+        <item quantity="other">%1$d Antworten warten</item>
+    </plurals>
+    <string name="waiting_replies_dismiss">Ausblenden</string>
+
+    <!-- Handle and domain (site settings) -->
+    <string name="settings_identity">Handle und Domain</string>
+    <string name="settings_identity_summary">Dein Handle, seine Domain, Aliase und das Mitnehmen deiner Follower</string>
+    <string name="identity_title">Handle und Domain</string>
+    <string name="identity_handle">Dein Social-Web-Handle</string>
+    <string name="identity_handle_explainer">Wie eine E-Mail-Adresse zeigt dein Handle, wie dich Menschen finden und mit dir sprechen. Den Nutzernamen änderst du unter Profil bearbeiten, die Domain hier.</string>
+    <string name="identity_handle_username">Nutzername</string>
+    <string name="identity_handle_domain">Domain</string>
+    <string name="identity_domain_section">Domain</string>
+    <string name="identity_domain_field">Social-Web-Domain</string>
+    <string name="identity_domain_explainer">Eine eigene Domain macht deinen Handle kürzer oder passt zu dem Namen, den deine Leser kennen. Ghost muss darauf antworten, bevor die Änderung gespeichert werden kann. Zeigt die Domain nicht mehr auf diese Website oder schaltest du das Social Web ab, wandert dein Handle auf eine andere Domain, und Follower auf anderen Servern verlieren dich womöglich aus den Augen.</string>
+    <string name="identity_domain_change">Domain ändern</string>
+    <string name="identity_domain_activate">Aktivieren</string>
+    <string name="identity_domain_validate">Prüfen</string>
+    <string name="identity_domain_save">Speichern</string>
+    <string name="identity_domain_remove">Entfernen</string>
+    <string name="identity_domain_validated">Die Weiterleitung funktioniert. Speichere, um diese Domain zu nutzen.</string>
+    <string name="identity_domain_preview">Dein Handle wird zu %1$s</string>
+    <string name="identity_domain_confirm_title">Domain ändern?</string>
+    <string name="identity_domain_confirm_text">Dein Handle ändert sich von %1$s zu %2$s. Bereits veröffentlichte Beiträge zeigen weiter auf den alten, und andere Server müssen dein Konto womöglich neu nachschlagen. Follower auf anderen Servern kommen vielleicht nicht mit.</string>
+    <string name="identity_domain_remove_title">Eigene Domain entfernen?</string>
+    <string name="identity_domain_remove_text">Dein Handle geht von %1$s zurück auf die Domain deiner Website. Follower auf anderen Servern kommen vielleicht nicht mit, und für sie lässt sich das nicht rückgängig machen.</string>
+    <string name="identity_domain_forbidden">Nur der Eigentümer der Website und Administratoren können die Social-Web-Domain ändern.</string>
+    <string name="identity_domain_invalid">Das ist keine Domain. Gib eine an wie news.beispiel.de.</string>
+    <string name="identity_domain_no_redirect">Ghost konnte die WebFinger-Adresse dieser Domain nicht erreichen. Prüfe die Weiterleitung und versuche es erneut.</string>
+    <string name="identity_domain_conflict">Ein anderes Konto nutzt diese Domain schon für sein Handle.</string>
+    <string name="identity_domain_unreachable">Diese Domain ist nicht erreichbar. Sie muss antworten, bevor sie genutzt werden kann.</string>
+    <string name="identity_domain_wrong_actor">Diese Domain antwortet, aber nicht für dieses Konto. Prüfe, wohin die Weiterleitung zeigt.</string>
+    <string name="identity_redirect_title">Weiterleitung einrichten</string>
+    <string name="identity_redirect_body">Richte eine Weiterleitung oder einen Proxy ein, der Social-Web-Anfragen von der neuen Domain an Ghost schickt.</string>
+    <string name="identity_redirect_from">Weiterleiten von</string>
+    <string name="identity_redirect_to">Weiterleiten an</string>
+    <string name="identity_copy_value">Wert kopieren</string>
+    <string name="identity_aliases">Aliase</string>
+    <string name="identity_aliases_explainer">Follower von einem anderen Social-Web-Konto, etwa Mastodon, mitzunehmen beginnt mit einem Alias hier. Den Umzug startest du dann beim alten Konto, und nicht jeder Server kann ihn rückgängig machen.</string>
+    <string name="identity_aliases_forbidden">Nur der Eigentümer der Website und Administratoren sehen und ändern Aliase.</string>
+    <string name="identity_alias_field">Handle des alten Kontos</string>
+    <string name="identity_alias_hint">nutzer@domain des Kontos, von dem du umziehst</string>
+    <string name="identity_alias_add">Alias anlegen</string>
+    <string name="identity_alias_unlink">Lösen</string>
+    <string name="identity_alias_invalid">Gib ein Handle an wie alt@mastodon.social.</string>
+    <string name="identity_alias_not_found">Dieses Profil wurde nicht gefunden. Prüfe das Handle und versuche es erneut.</string>
+    <string name="identity_move_away">Follower auf ein anderes Konto mitnehmen</string>
+    <string name="identity_move_explainer">Trage dieses Handle zuerst als Alias in deinem neuen Profil ein und gib dann dessen Handle hier an. Passende Server leiten deine Follower dorthin. Das lässt sich nicht rückgängig machen: Lass dieses Konto erreichbar, während sie es verarbeiten, und rechne damit, dass manche Follower nicht mitkommen.</string>
+    <string name="identity_move_in_progress">Ein Umzug zu %1$s läuft. Du kannst ihn erneut senden, aber nicht an ein anderes Konto.</string>
+    <string name="identity_move_sent">Deine Follower wurden gebeten, %1$s zu folgen. Bis jeder Server das umsetzt, dauert es, und manche tun es nicht. Von hier führt kein Weg zurück: Um zurückzukehren, startest du einen Umzug beim neuen Konto.</string>
+    <string name="identity_move_field">Handle des neuen Kontos</string>
+    <string name="identity_move_hint">nutzer@domain des Kontos, zu dem du umziehst</string>
+    <string name="identity_move_action">Follower mitnehmen</string>
+    <string name="identity_move_confirm_title">Follower mitnehmen?</string>
+    <string name="identity_move_confirm_text">Deine Follower werden gebeten, stattdessen %1$s zu folgen. Manche Server machen das nicht mit, und Ghost kann sie nicht zurückholen: Dafür müsstest du beim neuen Konto einen Umzug starten.</string>
+    <string name="identity_move_forbidden">Nur der Eigentümer der Website kann Follower auf ein anderes Konto mitnehmen. Domain und Aliase oben sind für Eigentümer und Administratoren.</string>
+    <string name="identity_move_invalid">Gib ein Ziel an wie neu@mastodon.social.</string>
+    <string name="identity_move_self">Das ist dieses Konto. Gib ein anderes an.</string>
+    <string name="identity_move_not_found">Das Zielprofil wurde nicht gefunden. Prüfe sein Handle und versuche es erneut.</string>
+    <string name="identity_move_conflict">Es läuft schon ein Umzug, oder einer wurde an ein anderes Konto gesendet.</string>
+    <string name="identity_move_alias_required">Trage dieses Konto zuerst als Alias im Zielprofil ein.</string>
 </resources>

@@ -34,6 +34,8 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 
 /**
  * Client for the site's social web API under `/.ghost/activitypub/v1/`.
@@ -276,6 +278,54 @@ class ActivityPubClient @Inject constructor(
         send(site, credential, HttpMethod.Post, "actions/bluesky/disable", version = "v2")
     }
 
+    /** The site's handle and custom social web domain (`GET domain`, Owner and Administrator only). */
+    suspend fun domain(site: GhostSite, credential: Credential): SocialWebDomain =
+        decode(send(site, credential, HttpMethod.Get, "domain"))
+
+    /**
+     * Checks that [domain] redirects its WebFinger requests to the site, without saving it, and answers
+     * with the handle the account would get. Fails with 400 (`invalid-domain`, `invalid-webfinger`),
+     * 409 (`conflict`) or 422 (`not-reachable`, `wrong-actor`), see [SocialWebException.code].
+     */
+    suspend fun validateDomain(site: GhostSite, credential: Credential, domain: String): SocialWebDomain =
+        decode(send(site, credential, HttpMethod.Post, "domain/validate", body = domainBody(domain)))
+
+    /** Saves [domain] as the custom domain of the handle, or null for the site's own host; fails like [validateDomain]. */
+    suspend fun setDomain(site: GhostSite, credential: Credential, domain: String?): SocialWebDomain =
+        decode(send(site, credential, HttpMethod.Put, "domain", body = domainBody(domain)))
+
+    /** The accounts that are aliases of the site's account (`GET aliases`, Owner and Administrator only). */
+    suspend fun aliases(site: GhostSite, credential: Credential): List<AccountAlias> =
+        decode<AccountAliases>(send(site, credential, HttpMethod.Get, "aliases")).aliases
+
+    /** Adds the account [sourceHandle] (`@user@domain`) as an alias. 400 for a bad handle, 404 when it can't be found. */
+    suspend fun addAlias(site: GhostSite, credential: Credential, sourceHandle: String): List<AccountAlias> =
+        decode<AccountAliases>(
+            send(site, credential, HttpMethod.Post, "aliases", body = jsonBody(AddAliasBody.serializer(), AddAliasBody(sourceHandle))),
+        ).aliases
+
+    /** Removes the alias with the actor URL [actorUri]. */
+    suspend fun removeAlias(site: GhostSite, credential: Credential, actorUri: String): List<AccountAlias> =
+        decode<AccountAliases>(
+            send(site, credential, HttpMethod.Delete, "aliases", body = jsonBody(RemoveAliasBody.serializer(), RemoveAliasBody(actorUri))),
+        ).aliases
+
+    /** Where moving the followers to another account stands (`GET migration`, Owner only). */
+    suspend fun migration(site: GhostSite, credential: Credential): AccountMigration =
+        decode(send(site, credential, HttpMethod.Get, "migration"))
+
+    /**
+     * Tells the followers' servers to move to [targetHandle] (`POST migration`, Owner only). Fails with
+     * 400 (`SELF_MOVE` when it is the site's own account), 404 (destination not found), 409 (a move to
+     * another account has started) or 422 (the destination doesn't list this account as an alias).
+     */
+    suspend fun moveAccount(site: GhostSite, credential: Credential, targetHandle: String): AccountMigration =
+        decode(send(site, credential, HttpMethod.Post, "migration", body = jsonBody(MoveBody.serializer(), MoveBody(targetHandle))))
+
+    /** The service needs the `domain` key even to clear the domain, and the app's [json] leaves nulls out, so this writes it by hand. */
+    private fun domainBody(domain: String?): OutgoingContent =
+        TextContent(buildJsonObject { put("domain", domain) }.toString(), ContentType.Application.Json)
+
     private suspend fun send(
         site: GhostSite,
         credential: Credential,
@@ -292,7 +342,9 @@ class ActivityPubClient @Inject constructor(
             response = request(method, url, token(site, credential, rejected = token), body, params)
         }
         if (!response.status.isSuccess()) {
-            throw SocialWebException(response.status.value, response.errorMessage())
+            // Read the body once: a response's body can't be relied on twice.
+            val error = response.errorBody()
+            throw SocialWebException(response.status.value, error?.let { it.message ?: it.error }, error?.code)
         }
         return response
     }
@@ -345,8 +397,6 @@ class ActivityPubClient @Inject constructor(
         else -> false
     }
 
-    private suspend fun HttpResponse.errorMessage(): String? = errorBody()?.let { it.message ?: it.error }
-
     private suspend fun HttpResponse.errorBody(): ErrorBody? = try {
         json.decodeFromString<ErrorBody>(bodyAsText())
     } catch (_: SerializationException) {
@@ -382,6 +432,15 @@ class ActivityPubClient @Inject constructor(
         val bannerImageUrl: String,
     )
 
+    @Serializable
+    private data class AddAliasBody(val sourceHandle: String)
+
+    @Serializable
+    private data class RemoveAliasBody(val actorUri: String)
+
+    @Serializable
+    private data class MoveBody(val targetHandle: String)
+
     /** No default, so the flag is always sent: the service rejects a body without it. */
     @Serializable
     private data class PreferencesBody(val showSensitiveMedia: Boolean)
@@ -393,4 +452,8 @@ class ActivityPubClient @Inject constructor(
     }
 }
 
-class SocialWebException(val status: Int, val detail: String?) : Exception("HTTP $status: $detail")
+/**
+ * A refusal by the social web service, or an answer that doesn't parse. [code] is the service's
+ * machine-readable reason (such as `SELF_MOVE` or `not-reachable`) when it gives one.
+ */
+class SocialWebException(val status: Int, val detail: String?, val code: String? = null) : Exception("HTTP $status: $detail")

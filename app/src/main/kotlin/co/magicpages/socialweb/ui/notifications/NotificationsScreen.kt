@@ -17,11 +17,15 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +41,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +60,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
@@ -99,7 +105,15 @@ fun NotificationsScreen(
     val notifications = viewModel.notifications.collectAsLazyPagingItems()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listState = rememberLazyListState()
-    OnReselect(reselections) { listState.scrollToTop() }
+    val waitingListState = rememberLazyListState()
+    val waiting by viewModel.waiting.collectAsStateWithLifecycle()
+    // Which of the two views the user picked; it falls back to all notifications once nothing waits.
+    var showWaiting by rememberSaveable { mutableStateOf(false) }
+    val filtering = showWaiting && waiting.isNotEmpty()
+    LaunchedEffect(waiting.isEmpty(), showWaiting) {
+        if (showWaiting && waiting.isEmpty()) showWaiting = false
+    }
+    OnReselect(reselections) { (if (filtering) waitingListState else listState).scrollToTop() }
     LaunchedEffect(viewModel) { viewModel.unseen.collect { notifications.refresh() } }
     // The background check can only announce new notifications once the user allowed it.
     RequestNotificationPermissionOnce()
@@ -135,14 +149,36 @@ fun NotificationsScreen(
                     onSignOut = onSignOut,
                 )
                 refresh is LoadState.Loading && notifications.itemCount == 0 -> CenteredLoading()
-                refresh is LoadState.NotLoading && notifications.itemCount == 0 ->
+                refresh is LoadState.NotLoading && notifications.itemCount == 0 && waiting.isEmpty() ->
                     ScrollableMessage(stringResource(R.string.notifications_empty))
+                filtering -> LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    state = waitingListState,
+                    contentPadding = PaddingValues(vertical = 8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    item(key = "waiting-filter", contentType = "filter") {
+                        WaitingFilter(waiting.size, selected = true) { showWaiting = false }
+                    }
+                    items(waiting, key = { it.id }, contentType = { "waiting" }) { group ->
+                        Column(Modifier.widthIn(max = MaxContentWidth).fillMaxWidth()) {
+                            NotificationRow(group, onOpenPost = onOpenPost, onOpenProfile = onOpenProfile)
+                            WaitingActions(onLike = { viewModel.like(group.newest) }, onDismiss = { viewModel.dismiss(group.newest) })
+                        }
+                    }
+                }
                 else -> LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     state = listState,
                     contentPadding = PaddingValues(vertical = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
+                    // Only while something waits; a count that nags would be worse than none.
+                    if (waiting.isNotEmpty()) {
+                        item(key = "waiting-filter", contentType = "filter") {
+                            WaitingFilter(waiting.size, selected = false) { showWaiting = true }
+                        }
+                    }
                     items(
                         count = notifications.itemCount,
                         key = notifications.itemKey { it.id },
@@ -268,6 +304,45 @@ private fun NotificationRow(
                 }
             }
         }
+    }
+}
+
+/**
+ * The quiet row above the list: [count] replies are waiting. While [selected] the list shows only them, and the
+ * chip closes the filter again instead of reopening it, so nothing has to be found elsewhere.
+ */
+@Composable
+private fun WaitingFilter(count: Int, selected: Boolean, onClick: () -> Unit) {
+    val label = pluralStringResource(R.plurals.notifications_waiting, count, count)
+    Row(
+        Modifier
+            .widthIn(max = MaxContentWidth)
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 4.dp),
+    ) {
+        FilterChip(
+            selected = selected,
+            onClick = onClick,
+            label = { Text(label, maxLines = 1) },
+            leadingIcon = { Icon(AppIcons.Reply, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) },
+            trailingIcon = if (selected) {
+                { Icon(AppIcons.Close, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
+            } else {
+                null
+            },
+        )
+    }
+}
+
+/**
+ * What can be done with a waiting reply besides opening it: a like, which also takes it off the list, or a dismissal
+ * that asks for nothing. Both stay small, so nobody feels pushed to answer everything.
+ */
+@Composable
+private fun WaitingActions(onLike: () -> Unit, onDismiss: () -> Unit) {
+    Row(Modifier.fillMaxWidth().padding(end = 8.dp), horizontalArrangement = Arrangement.End) {
+        TextButton(onClick = onLike) { Text(stringResource(R.string.action_like)) }
+        TextButton(onClick = onDismiss) { Text(stringResource(R.string.waiting_replies_dismiss)) }
     }
 }
 

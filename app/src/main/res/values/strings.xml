@@ -738,4 +738,67 @@
         <item quantity="one">Up to %1$s person could have seen it</item>
         <item quantity="other">Up to %1$s people could have seen it</item>
     </plurals>
+    <plurals name="notifications_waiting">
+        <item quantity="one">%1$d reply waiting</item>
+        <item quantity="other">%1$d replies waiting</item>
+    </plurals>
+    <string name="waiting_replies_dismiss">Dismiss</string>
+
+    <!-- Handle and domain (site settings) -->
+    <string name="settings_identity">Handle and domain</string>
+    <string name="settings_identity_summary">Your handle, its domain, aliases and moving followers</string>
+    <string name="identity_title">Handle and domain</string>
+    <string name="identity_handle">Your social web handle</string>
+    <string name="identity_handle_explainer">Like an email address, your handle is how people find you and interact with you. The username changes in Edit profile, the domain here.</string>
+    <string name="identity_handle_username">Username</string>
+    <string name="identity_handle_domain">Domain</string>
+    <string name="identity_domain_section">Domain</string>
+    <string name="identity_domain_field">Social web domain</string>
+    <string name="identity_domain_explainer">A custom domain makes your handle shorter, or matches the name your readers know. Ghost has to answer on it before the change can be saved. If the domain stops pointing at this site, or the social web is switched off, your handle moves to another domain, and followers on other servers may lose track of your posts.</string>
+    <string name="identity_domain_change">Change domain</string>
+    <string name="identity_domain_activate">Activate</string>
+    <string name="identity_domain_validate">Validate</string>
+    <string name="identity_domain_save">Save</string>
+    <string name="identity_domain_remove">Remove</string>
+    <string name="identity_domain_validated">The redirect works. Save to use this domain.</string>
+    <string name="identity_domain_preview">Your handle becomes %1$s</string>
+    <string name="identity_domain_confirm_title">Change the domain?</string>
+    <string name="identity_domain_confirm_text">Your handle changes from %1$s to %2$s. Posts you already published keep pointing at the old one, and other servers may have to look your account up again. Followers on other servers might not come along.</string>
+    <string name="identity_domain_remove_title">Remove the custom domain?</string>
+    <string name="identity_domain_remove_text">Your handle goes back from %1$s to the site\'s own domain. Followers on other servers might not come along, and this can\'t be undone for them.</string>
+    <string name="identity_domain_forbidden">Only the site owner and administrators can change the social web domain.</string>
+    <string name="identity_domain_invalid">That isn\'t a domain. Enter one like news.example.com.</string>
+    <string name="identity_domain_no_redirect">Ghost couldn\'t reach this domain\'s WebFinger address. Check the redirect and try again.</string>
+    <string name="identity_domain_conflict">Another account already uses this domain for its handle.</string>
+    <string name="identity_domain_unreachable">This domain can\'t be reached. It needs to answer before it can be used.</string>
+    <string name="identity_domain_wrong_actor">This domain answers, but not for this account. Check where the redirect points.</string>
+    <string name="identity_redirect_title">Set up your redirect</string>
+    <string name="identity_redirect_body">Add a redirect or a proxy service that forwards social web requests from the new domain to Ghost.</string>
+    <string name="identity_redirect_from">Redirect from</string>
+    <string name="identity_redirect_to">Redirect to</string>
+    <string name="identity_copy_value">Copy value</string>
+    <string name="identity_aliases">Aliases</string>
+    <string name="identity_aliases_explainer">Moving your followers from another social web account, like Mastodon, starts with an alias here. The move itself starts on the old account, and not every server can undo it.</string>
+    <string name="identity_aliases_forbidden">Only the site owner and administrators can see and change aliases.</string>
+    <string name="identity_alias_field">Old account handle</string>
+    <string name="identity_alias_hint">user@domain of the account you move from</string>
+    <string name="identity_alias_add">Create alias</string>
+    <string name="identity_alias_unlink">Unlink</string>
+    <string name="identity_alias_invalid">Enter a handle like old@mastodon.social.</string>
+    <string name="identity_alias_not_found">Couldn\'t find that profile. Check the handle and try again.</string>
+    <string name="identity_move_away">Move followers to another account</string>
+    <string name="identity_move_explainer">Add this handle as an alias on your new profile first. Then enter that profile\'s handle here. Compatible servers then direct your followers there. This can\'t be undone: keep this account available while they process it, and know that some followers won\'t come along.</string>
+    <string name="identity_move_in_progress">A move to %1$s is in progress. You can send it again, but not to another account.</string>
+    <string name="identity_move_sent">Your followers were told to follow %1$s. It takes a while for each server to update, and some won\'t. There is no way back here: to return, you have to move again from the new account.</string>
+    <string name="identity_move_field">New account handle</string>
+    <string name="identity_move_hint">user@domain of the account you move to</string>
+    <string name="identity_move_action">Move followers</string>
+    <string name="identity_move_confirm_title">Move followers?</string>
+    <string name="identity_move_confirm_text">Your followers will be told to follow %1$s instead. Some servers won\'t follow through, and Ghost can\'t move them back: you\'d have to start a move from the new account.</string>
+    <string name="identity_move_forbidden">Only the site owner can move followers to another account. The domain and aliases above are for owners and administrators.</string>
+    <string name="identity_move_invalid">Enter a destination like new@mastodon.social.</string>
+    <string name="identity_move_self">That\'s this account. Enter a different one.</string>
+    <string name="identity_move_not_found">Couldn\'t find the destination profile. Check its handle and try again.</string>
+    <string name="identity_move_conflict">A move is already going on, or was sent to a different account.</string>
+    <string name="identity_move_alias_required">Add this account as an alias on the destination profile first.</string>
 </resources>

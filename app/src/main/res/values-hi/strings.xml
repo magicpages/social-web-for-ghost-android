@@ -730,4 +730,67 @@
         <item quantity="one">इसे %1$s व्यक्ति तक देख सकता था</item>
         <item quantity="other">इसे %1$s लोग तक देख सकते थे</item>
     </plurals>
+    <plurals name="notifications_waiting">
+        <item quantity="one">%1$d जवाब बाकी है</item>
+        <item quantity="other">%1$d जवाब बाकी हैं</item>
+    </plurals>
+    <string name="waiting_replies_dismiss">छोड़ें</string>
+
+    <!-- Handle and domain (site settings) -->
+    <string name="settings_identity">हैंडल और डोमेन</string>
+    <string name="settings_identity_summary">आपका हैंडल, उसका डोमेन, उपनाम और फ़ॉलोअर बदलना</string>
+    <string name="identity_title">हैंडल और डोमेन</string>
+    <string name="identity_handle">सोशल वेब पर आपका हैंडल</string>
+    <string name="identity_handle_explainer">ईमेल पते की तरह, आपका हैंडल ही वह तरीका है जिससे लोग आपको ढूँढते हैं और आपसे जुड़ते हैं। उपयोगकर्ता नाम प्रोफ़ाइल संपादित करें में बदलता है, और डोमेन यहाँ बदलता है।</string>
+    <string name="identity_handle_username">उपयोगकर्ता नाम</string>
+    <string name="identity_handle_domain">डोमेन</string>
+    <string name="identity_domain_section">डोमेन</string>
+    <string name="identity_domain_field">सोशल वेब डोमेन</string>
+    <string name="identity_domain_explainer">कस्टम डोमेन आपका हैंडल छोटा बनाता है, या उस नाम से मिलाता है जिसे आपके पाठक जानते हैं। बदलाव सहेजे जाने से पहले Ghost को उस पर जवाब देना होगा। अगर डोमेन इस साइट की ओर इशारा करना बंद कर दे, या सोशल वेब बंद हो जाए, तो आपका हैंडल किसी दूसरे डोमेन पर चला जाता है, और दूसरे सर्वरों के फ़ॉलोअर आपकी पोस्ट का पता खो सकते हैं।</string>
+    <string name="identity_domain_change">डोमेन बदलें</string>
+    <string name="identity_domain_activate">सक्रिय करें</string>
+    <string name="identity_domain_validate">सत्यापित करें</string>
+    <string name="identity_domain_save">सहेजें</string>
+    <string name="identity_domain_remove">हटाएँ</string>
+    <string name="identity_domain_validated">रीडायरेक्ट काम कर रहा है। यह डोमेन इस्तेमाल करने के लिए सहेजें।</string>
+    <string name="identity_domain_preview">आपका हैंडल %1$s हो जाएगा</string>
+    <string name="identity_domain_confirm_title">डोमेन बदलें?</string>
+    <string name="identity_domain_confirm_text">आपका हैंडल %1$s से %2$s हो जाएगा। आपकी पहले प्रकाशित पोस्ट पुराने हैंडल की ओर इशारा करती रहेंगी, और दूसरे सर्वरों को आपका खाता फिर से खोजना पड़ सकता है। दूसरे सर्वरों के फ़ॉलोअर साथ नहीं आ सकते।</string>
+    <string name="identity_domain_remove_title">कस्टम डोमेन हटाएँ?</string>
+    <string name="identity_domain_remove_text">आपका हैंडल %1$s से वापस साइट के अपने डोमेन पर चला जाएगा। दूसरे सर्वरों के फ़ॉलोअर साथ नहीं आ सकते, और उनके लिए इसे पूर्ववत नहीं किया जा सकता।</string>
+    <string name="identity_domain_forbidden">सोशल वेब डोमेन केवल साइट के ओनर और एडमिनिस्ट्रेटर बदल सकते हैं।</string>
+    <string name="identity_domain_invalid">यह डोमेन नहीं है। news.example.com जैसा एक दर्ज करें।</string>
+    <string name="identity_domain_no_redirect">Ghost इस डोमेन के WebFinger पते तक नहीं पहुँच सका। रीडायरेक्ट जाँचें और फिर से कोशिश करें।</string>
+    <string name="identity_domain_conflict">कोई दूसरा खाता अपने हैंडल के लिए यह डोमेन पहले से इस्तेमाल कर रहा है।</string>
+    <string name="identity_domain_unreachable">इस डोमेन तक नहीं पहुँचा जा सकता। इस्तेमाल से पहले इसका जवाब देना ज़रूरी है।</string>
+    <string name="identity_domain_wrong_actor">यह डोमेन जवाब देता है, पर इस खाते के लिए नहीं। देखें कि रीडायरेक्ट कहाँ जाता है।</string>
+    <string name="identity_redirect_title">अपना रीडायरेक्ट सेट करें</string>
+    <string name="identity_redirect_body">कोई रीडायरेक्ट या प्रॉक्सी सेवा जोड़ें जो नए डोमेन से सोशल वेब अनुरोध Ghost तक पहुँचाए।</string>
+    <string name="identity_redirect_from">यहाँ से रीडायरेक्ट</string>
+    <string name="identity_redirect_to">यहाँ रीडायरेक्ट</string>
+    <string name="identity_copy_value">मान कॉपी करें</string>
+    <string name="identity_aliases">उपनाम</string>
+    <string name="identity_aliases_explainer">किसी दूसरे सोशल वेब खाते, जैसे Mastodon, से अपने फ़ॉलोअर बदलना यहाँ उपनाम से शुरू होता है। बदलाव खुद पुराने खाते से शुरू होता है, और हर सर्वर इसे पूर्ववत नहीं कर सकता।</string>
+    <string name="identity_aliases_forbidden">उपनाम केवल साइट के ओनर और एडमिनिस्ट्रेटर देख और बदल सकते हैं।</string>
+    <string name="identity_alias_field">पुराने खाते का हैंडल</string>
+    <string name="identity_alias_hint">जिस खाते से बदल रहे हैं उसका user@domain</string>
+    <string name="identity_alias_add">उपनाम बनाएँ</string>
+    <string name="identity_alias_unlink">लिंक हटाएँ</string>
+    <string name="identity_alias_invalid">old@mastodon.social जैसा हैंडल दर्ज करें।</string>
+    <string name="identity_alias_not_found">वह प्रोफ़ाइल नहीं मिली। हैंडल जाँचें और फिर से कोशिश करें।</string>
+    <string name="identity_move_away">फ़ॉलोअर दूसरे खाते पर ले जाएँ</string>
+    <string name="identity_move_explainer">पहले इस हैंडल को अपनी नई प्रोफ़ाइल पर उपनाम के रूप में जोड़ें। फिर उस प्रोफ़ाइल का हैंडल यहाँ दर्ज करें। इसके बाद अनुकूल सर्वर आपके फ़ॉलोअर वहाँ भेजते हैं। इसे पूर्ववत नहीं किया जा सकता: जब तक यह चले, यह खाता उपलब्ध रखें, और जान लें कि कुछ फ़ॉलोअर साथ नहीं आएँगे।</string>
+    <string name="identity_move_in_progress">%1$s पर बदलाव चल रहा है। आप इसे फिर भेज सकते हैं, पर किसी दूसरे खाते पर नहीं।</string>
+    <string name="identity_move_sent">आपके फ़ॉलोअर को %1$s को फ़ॉलो करने के लिए कहा गया। हर सर्वर को अपडेट होने में समय लगता है, और कुछ नहीं होंगे। यहाँ से वापसी नहीं है: लौटने के लिए नए खाते से फिर बदलाव शुरू करना होगा।</string>
+    <string name="identity_move_field">नए खाते का हैंडल</string>
+    <string name="identity_move_hint">जिस खाते पर बदल रहे हैं उसका user@domain</string>
+    <string name="identity_move_action">फ़ॉलोअर बदलें</string>
+    <string name="identity_move_confirm_title">फ़ॉलोअर बदलें?</string>
+    <string name="identity_move_confirm_text">आपके फ़ॉलोअर को इसके बजाय %1$s को फ़ॉलो करने के लिए कहा जाएगा। कुछ सर्वर इसे पूरा नहीं करेंगे, और Ghost उन्हें वापस नहीं ला सकता: आपको नए खाते से बदलाव शुरू करना होगा।</string>
+    <string name="identity_move_forbidden">फ़ॉलोअर केवल साइट का ओनर दूसरे खाते पर ले जा सकता है। ऊपर दिया डोमेन और उपनाम ओनर और एडमिनिस्ट्रेटर के लिए हैं।</string>
+    <string name="identity_move_invalid">new@mastodon.social जैसा गंतव्य दर्ज करें।</string>
+    <string name="identity_move_self">यह तो यही खाता है। कोई दूसरा दर्ज करें।</string>
+    <string name="identity_move_not_found">गंतव्य प्रोफ़ाइल नहीं मिली। उसका हैंडल जाँचें और फिर से कोशिश करें।</string>
+    <string name="identity_move_conflict">पहले से एक बदलाव चल रहा है, या किसी दूसरे खाते पर भेजा गया था।</string>
+    <string name="identity_move_alias_required">पहले इस खाते को गंतव्य प्रोफ़ाइल पर उपनाम के रूप में जोड़ें।</string>
 </resources>

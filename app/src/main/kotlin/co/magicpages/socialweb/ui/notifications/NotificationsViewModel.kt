@@ -14,28 +14,34 @@ import androidx.paging.map
 import co.magicpages.socialweb.data.account.AccountStore
 import co.magicpages.socialweb.data.activitypub.ActivityPubClient
 import co.magicpages.socialweb.data.activitypub.Author
+import co.magicpages.socialweb.data.activitypub.Moderation
 import co.magicpages.socialweb.data.activitypub.Notification
 import co.magicpages.socialweb.data.activitypub.NotificationPost
 import co.magicpages.socialweb.data.activitypub.NotificationsPage
-import co.magicpages.socialweb.data.activitypub.Moderation
+import co.magicpages.socialweb.data.activitypub.Post
+import co.magicpages.socialweb.data.activitypub.PostInteractions
 import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.activitypub.UnreadNotifications
+import co.magicpages.socialweb.data.activitypub.WaitingReplies
+import co.magicpages.socialweb.data.activitypub.createdAtMillis
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.ui.components.parsePostHtml
 import co.magicpages.socialweb.ui.components.splitQuote
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.time.Instant
-import java.time.format.DateTimeParseException
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -46,6 +52,8 @@ class NotificationsViewModel @Inject constructor(
     private val activityPub: ActivityPubClient,
     private val unread: UnreadNotifications,
     private val moderation: Moderation,
+    private val waitingReplies: WaitingReplies,
+    private val interactions: PostInteractions,
 ) : ViewModel() {
     @Volatile private var loaded = false
 
@@ -67,6 +75,7 @@ class NotificationsViewModel @Inject constructor(
                     onRefreshed = {
                         loaded = true
                         viewModelScope.launch { unread.markRead() }
+                        viewModelScope.launch { waitingReplies.refresh() }
                     },
                 )
             }.flow
@@ -85,6 +94,27 @@ class NotificationsViewModel @Inject constructor(
      * the tab, or once the badge count is refreshed while the tab is open.
      */
     val unseen: Flow<Unit> = unread.count.filter { it > 0 && loaded }.map { }
+
+    /**
+     * Replies to the account's posts that are still waiting for it, see [WaitingReplies], as rows of one. Empty
+     * most of the time: the notifications screen shows nothing for it then.
+     */
+    val waiting: StateFlow<List<NotificationGroup>> = waitingReplies.waiting
+        .map { replies -> replies.map { reply -> reply.toItem().let { NotificationGroup(it, listOf(it.actor)) } } }
+        .flowOn(Dispatchers.Default)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+
+    /** Likes the waiting reply [item], which takes it off the list. */
+    fun like(item: NotificationItem) {
+        val postId = item.postId ?: return
+        interactions.toggleLike(Post(id = postId, author = item.actor, likeCount = item.likeCount, replyCount = item.replyCount))
+    }
+
+    /** Takes the waiting reply [item] off the list without answering it; it stays in the notifications. */
+    fun dismiss(item: NotificationItem) {
+        val postId = item.postId ?: return
+        viewModelScope.launch { waitingReplies.dismiss(postId) }
+    }
 }
 
 /** What a row shows of a post, worked out off the main thread. */
@@ -109,6 +139,9 @@ data class NotificationItem(
     val postUrl: String?,
     /** For replies: what was replied to. */
     val inReplyTo: Excerpt?,
+    /** Of [postId], for a like made from the list to start from. */
+    val likeCount: Int = 0,
+    val replyCount: Int = 0,
 )
 
 /**
@@ -165,17 +198,13 @@ internal fun Notification.toItem() = NotificationItem(
     id = id,
     type = type,
     actor = actor,
-    createdAtMillis = createdAt?.let {
-        try {
-            Instant.parse(it).toEpochMilli()
-        } catch (_: DateTimeParseException) {
-            null
-        }
-    },
+    createdAtMillis = createdAtMillis(),
     post = post?.excerpt(),
     postId = post?.id,
     postUrl = post?.url?.ifBlank { null },
     inReplyTo = inReplyTo?.excerpt(),
+    likeCount = post?.likeCount ?: 0,
+    replyCount = post?.replyCount ?: 0,
 )
 
 private const val MaxExcerptLength = 400

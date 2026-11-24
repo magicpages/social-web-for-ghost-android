@@ -52,6 +52,7 @@ import co.magicpages.socialweb.data.account.Profile
 import co.magicpages.socialweb.data.account.StoredAccount
 import co.magicpages.socialweb.data.activitypub.Author
 import co.magicpages.socialweb.data.activitypub.FollowList
+import co.magicpages.socialweb.data.activitypub.HandledReplies
 import co.magicpages.socialweb.data.activitypub.MentionDirectory
 import co.magicpages.socialweb.data.activitypub.Moderation
 import co.magicpages.socialweb.data.activitypub.SensitiveMediaPreference
@@ -102,6 +103,7 @@ import co.magicpages.socialweb.ui.settings.BlockedScreen
 import co.magicpages.socialweb.ui.settings.FediverseSettingsScreen
 import co.magicpages.socialweb.ui.settings.NotificationSettingsScreen
 import co.magicpages.socialweb.ui.settings.SettingsScreen
+import co.magicpages.socialweb.ui.settings.HandleSettingsScreen
 import co.magicpages.socialweb.ui.settings.SiteSettingsScreen
 import co.magicpages.socialweb.ui.settings.TranslationSettingsScreen
 import co.magicpages.socialweb.ui.thread.ThreadScreen
@@ -164,6 +166,10 @@ data class SiteSettingsKey(val accountId: String) : NavKey
 @Serializable
 data object NotificationSettingsKey : NavKey
 
+/** The handle, custom domain, aliases and follower move of the signed-in site [accountId]. */
+@Serializable
+data class HandleKey(val accountId: String) : NavKey
+
 /** The accounts and servers the signed-in site [accountId] has blocked, with a way to unblock each. */
 @Serializable
 data class BlockedKey(val accountId: String) : NavKey
@@ -204,6 +210,7 @@ class AppViewModel @Inject constructor(
     private val accounts: AccountStore,
     private val ghost: GhostAdminClient,
     private val settings: AppSettings,
+    private val handledReplies: HandledReplies,
     /** Shared by every post card through [LocalLinkedPosts]. */
     val linkedPosts: LinkedPosts,
     /** Shared by every post card through [LocalPostTranslations]. */
@@ -286,6 +293,7 @@ class AppViewModel @Inject constructor(
         }
         accounts.remove(account.id)
         settings.forgetAccount(account.id)
+        handledReplies.forgetAccount(account.id)
     }
 }
 
@@ -562,12 +570,17 @@ private fun SignedInNavigation(
                         accountId = key.accountId,
                         onBack = back,
                         onOpenBlocked = { push(BlockedKey(key.accountId)) },
+                        onOpenIdentity = { push(HandleKey(key.accountId)) },
                         onSignInAgain = { push(AddSiteKey(it)) },
                         onRemove = {
                             back()
                             onRemoveSite(key.accountId)
                         },
                     )
+                }
+                entry<HandleKey>(clazzContentKey = contentKey) { key ->
+                    // Every section is saved on the site itself, so it reads the same as in Ghost Admin.
+                    HandleSettingsScreen(accountId = key.accountId, onBack = back)
                 }
                 entry<NotificationSettingsKey>(clazzContentKey = contentKey) { NotificationSettingsScreen(onBack = back) }
                 entry<TranslationSettingsKey>(clazzContentKey = contentKey) {

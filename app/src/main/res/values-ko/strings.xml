@@ -707,4 +707,66 @@
     <plurals name="reach_potential">
         <item quantity="other">최대 %1$s명이 봤을 수 있습니다</item>
     </plurals>
+    <plurals name="notifications_waiting">
+        <item quantity="other">답글 %1$d개가 기다리고 있어요</item>
+    </plurals>
+    <string name="waiting_replies_dismiss">무시</string>
+
+    <!-- Handle and domain (site settings) -->
+    <string name="settings_identity">핸들 및 도메인</string>
+    <string name="settings_identity_summary">핸들, 도메인, 별칭, 팔로워 이동</string>
+    <string name="identity_title">핸들 및 도메인</string>
+    <string name="identity_handle">내 소셜 웹 핸들</string>
+    <string name="identity_handle_explainer">이메일 주소처럼, 핸들은 사람들이 나를 찾고 소통하는 방법이에요. 사용자 이름은 프로필 편집에서, 도메인은 여기에서 바꿔요.</string>
+    <string name="identity_handle_username">사용자 이름</string>
+    <string name="identity_handle_domain">도메인</string>
+    <string name="identity_domain_section">도메인</string>
+    <string name="identity_domain_field">소셜 웹 도메인</string>
+    <string name="identity_domain_explainer">사용자 지정 도메인을 쓰면 핸들이 더 짧아지거나 독자가 아는 이름과 맞아요. 변경을 저장하려면 Ghost가 그 도메인에서 응답할 수 있어야 해요. 도메인이 더 이상 이 사이트를 가리키지 않거나 소셜 웹을 끄면, 핸들은 다른 도메인으로 옮겨가고 다른 서버의 팔로워는 내 게시물을 놓칠 수 있어요.</string>
+    <string name="identity_domain_change">도메인 변경</string>
+    <string name="identity_domain_activate">활성화</string>
+    <string name="identity_domain_validate">검증</string>
+    <string name="identity_domain_save">저장</string>
+    <string name="identity_domain_remove">제거</string>
+    <string name="identity_domain_validated">리디렉션이 정상 작동해요. 저장하면 이 도메인을 사용할 수 있어요.</string>
+    <string name="identity_domain_preview">핸들이 %1$s(으)로 바뀌어요</string>
+    <string name="identity_domain_confirm_title">도메인을 바꿀까요?</string>
+    <string name="identity_domain_confirm_text">핸들이 %1$s에서 %2$s(으)로 바뀌어요. 이미 올린 게시물은 계속 이전 핸들을 가리키고, 다른 서버는 내 계정을 다시 찾아야 할 수 있어요. 다른 서버의 팔로워는 따라오지 못할 수도 있어요.</string>
+    <string name="identity_domain_remove_title">사용자 지정 도메인을 제거할까요?</string>
+    <string name="identity_domain_remove_text">핸들이 %1$s에서 사이트 자체 도메인으로 돌아가요. 다른 서버의 팔로워는 따라오지 못할 수 있고, 그들에게는 이 작업을 되돌릴 수 없어요.</string>
+    <string name="identity_domain_forbidden">소셜 웹 도메인은 사이트 소유자와 관리자만 바꿀 수 있어요.</string>
+    <string name="identity_domain_invalid">도메인이 아니에요. news.example.com처럼 입력하세요.</string>
+    <string name="identity_domain_no_redirect">Ghost가 이 도메인의 WebFinger 주소에 접근하지 못했어요. 리디렉션을 확인한 뒤 다시 시도하세요.</string>
+    <string name="identity_domain_conflict">다른 계정이 이미 이 도메인을 핸들로 사용하고 있어요.</string>
+    <string name="identity_domain_unreachable">이 도메인에 접근할 수 없어요. 응답할 수 있어야 사용할 수 있어요.</string>
+    <string name="identity_domain_wrong_actor">이 도메인은 응답하지만 이 계정을 위한 것은 아니에요. 리디렉션이 가리키는 곳을 확인하세요.</string>
+    <string name="identity_redirect_title">리디렉션 설정</string>
+    <string name="identity_redirect_body">새 도메인으로 오는 소셜 웹 요청을 Ghost로 전달하는 리디렉션이나 프록시 서비스를 추가하세요.</string>
+    <string name="identity_redirect_from">리디렉션 출발</string>
+    <string name="identity_redirect_to">리디렉션 대상</string>
+    <string name="identity_copy_value">값 복사</string>
+    <string name="identity_aliases">별칭</string>
+    <string name="identity_aliases_explainer">Mastodon 같은 다른 소셜 웹 계정에서 팔로워를 옮기려면 먼저 여기에서 별칭을 만들어요. 이동은 이전 계정에서 시작하며, 모든 서버에서 되돌릴 수 있는 것은 아니에요.</string>
+    <string name="identity_aliases_forbidden">별칭은 사이트 소유자와 관리자만 보고 바꿀 수 있어요.</string>
+    <string name="identity_alias_field">이전 계정 핸들</string>
+    <string name="identity_alias_hint">옮겨 오는 계정의 user@domain</string>
+    <string name="identity_alias_add">별칭 만들기</string>
+    <string name="identity_alias_unlink">연결 해제</string>
+    <string name="identity_alias_invalid">old@mastodon.social 같은 핸들을 입력하세요.</string>
+    <string name="identity_alias_not_found">해당 프로필을 찾지 못했어요. 핸들을 확인한 뒤 다시 시도하세요.</string>
+    <string name="identity_move_away">팔로워를 다른 계정으로 이동</string>
+    <string name="identity_move_explainer">먼저 새 프로필에서 이 핸들을 별칭으로 추가하세요. 그런 다음 그 프로필의 핸들을 여기에 입력하세요. 호환되는 서버가 팔로워를 그쪽으로 안내해요. 이 작업은 되돌릴 수 없어요. 처리되는 동안 이 계정을 사용할 수 있게 두고, 따라오지 않는 팔로워도 있다는 점을 알아 두세요.</string>
+    <string name="identity_move_in_progress">%1$s(으)로 이동 중이에요. 다시 보낼 수는 있지만 다른 계정으로는 보낼 수 없어요.</string>
+    <string name="identity_move_sent">팔로워에게 %1$s을(를) 팔로우하라고 알렸어요. 각 서버가 갱신되기까지 시간이 걸리고, 반영되지 않는 서버도 있어요. 여기서는 돌아갈 길이 없어요. 되돌리려면 새 계정에서 다시 이동을 시작해야 해요.</string>
+    <string name="identity_move_field">새 계정 핸들</string>
+    <string name="identity_move_hint">옮겨 갈 계정의 user@domain</string>
+    <string name="identity_move_action">팔로워 이동</string>
+    <string name="identity_move_confirm_title">팔로워를 이동할까요?</string>
+    <string name="identity_move_confirm_text">팔로워에게 대신 %1$s을(를) 팔로우하라고 알려요. 따르지 않는 서버도 있고, Ghost가 팔로워를 되돌릴 수는 없어요. 되돌리려면 새 계정에서 이동을 시작해야 해요.</string>
+    <string name="identity_move_forbidden">팔로워를 다른 계정으로 옮길 수 있는 사람은 사이트 소유자뿐이에요. 위의 도메인과 별칭은 소유자와 관리자를 위한 것이에요.</string>
+    <string name="identity_move_invalid">new@mastodon.social 같은 대상을 입력하세요.</string>
+    <string name="identity_move_self">이 계정이에요. 다른 계정을 입력하세요.</string>
+    <string name="identity_move_not_found">대상 프로필을 찾지 못했어요. 핸들을 확인한 뒤 다시 시도하세요.</string>
+    <string name="identity_move_conflict">이미 이동이 진행 중이거나 다른 계정으로 보내졌어요.</string>
+    <string name="identity_move_alias_required">먼저 대상 프로필에서 이 계정을 별칭으로 추가하세요.</string>
 </resources>

@@ -128,6 +128,7 @@ fun SiteSettingsScreen(
     accountId: String,
     onBack: () -> Unit,
     onOpenBlocked: () -> Unit,
+    onOpenIdentity: () -> Unit,
     onSignInAgain: (siteUrl: String) -> Unit,
     onRemove: () -> Unit,
 ) {
@@ -161,7 +162,19 @@ fun SiteSettingsScreen(
                     .padding(horizontal = Gutter, vertical = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                SectionTitle(R.string.settings_colors)
+                // The handle readers know this site by, with the domain, aliases and follower move behind it.
+                val identitySummary = stringResource(R.string.settings_identity_summary)
+                SectionTitle(R.string.identity_handle)
+                LinkRow(
+                    title = stringResource(R.string.settings_identity),
+                    status = ui.handle.ifBlank { identitySummary },
+                    onClick = onOpenIdentity,
+                    index = 0,
+                    count = 1,
+                    icon = AppIcons.Mention,
+                )
+
+                SectionTitle(R.string.settings_colors, Modifier.padding(top = 16.dp))
                 ColorChoices(ui, viewModel::setColors)
                 Explainer(stringResource(R.string.settings_colors_explainer, ui.siteTitle))
 

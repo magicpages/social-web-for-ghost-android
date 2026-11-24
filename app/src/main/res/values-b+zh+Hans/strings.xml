@@ -707,4 +707,66 @@
     <plurals name="reach_potential">
         <item quantity="other">最多 %1$s 人可能看到过</item>
     </plurals>
+    <plurals name="notifications_waiting">
+        <item quantity="other">%1$d 条回复在等你</item>
+    </plurals>
+    <string name="waiting_replies_dismiss">忽略</string>
+
+    <!-- Handle and domain (site settings) -->
+    <string name="settings_identity">账号标识和域名</string>
+    <string name="settings_identity_summary">你的账号标识、域名、别名，以及迁移关注者</string>
+    <string name="identity_title">账号标识和域名</string>
+    <string name="identity_handle">你的社交网络账号标识</string>
+    <string name="identity_handle_explainer">就像电子邮件地址一样，账号标识让别人找到你并与你互动。用户名在“编辑个人资料”中修改，域名则在这里修改。</string>
+    <string name="identity_handle_username">用户名</string>
+    <string name="identity_handle_domain">域名</string>
+    <string name="identity_domain_section">域名</string>
+    <string name="identity_domain_field">社交网络域名</string>
+    <string name="identity_domain_explainer">自定义域名可以让你的账号标识更短，或与读者熟悉的名称一致。保存更改前，Ghost 必须能通过该域名应答。如果该域名不再指向此站点，或者你关闭了社交网络，你的账号标识将移到另一个域名，其他服务器上的关注者可能会失去你的帖子踪迹。</string>
+    <string name="identity_domain_change">更改域名</string>
+    <string name="identity_domain_activate">启用</string>
+    <string name="identity_domain_validate">验证</string>
+    <string name="identity_domain_save">保存</string>
+    <string name="identity_domain_remove">移除</string>
+    <string name="identity_domain_validated">重定向工作正常。保存后即可使用此域名。</string>
+    <string name="identity_domain_preview">你的账号标识将变为 %1$s</string>
+    <string name="identity_domain_confirm_title">要更改域名吗？</string>
+    <string name="identity_domain_confirm_text">你的账号标识将从 %1$s 变为 %2$s。已发布的帖子仍指向旧标识，其他服务器可能需要重新查找你的账号。其他服务器上的关注者也可能不会跟随。</string>
+    <string name="identity_domain_remove_title">要移除自定义域名吗？</string>
+    <string name="identity_domain_remove_text">你的账号标识将从 %1$s 回到站点自身的域名。其他服务器上的关注者可能不会跟随，而且对他们来说这一步无法撤销。</string>
+    <string name="identity_domain_forbidden">只有站点所有者和管理员可以更改社交网络域名。</string>
+    <string name="identity_domain_invalid">这不是一个域名。请输入类似 news.example.com 的域名。</string>
+    <string name="identity_domain_no_redirect">Ghost 无法访问此域名的 WebFinger 地址。请检查重定向后重试。</string>
+    <string name="identity_domain_conflict">另一个账号已将此域名用于其账号标识。</string>
+    <string name="identity_domain_unreachable">无法访问此域名。它能应答后才能使用。</string>
+    <string name="identity_domain_wrong_actor">此域名可以应答，但并非为此账号应答。请检查重定向指向的位置。</string>
+    <string name="identity_redirect_title">设置重定向</string>
+    <string name="identity_redirect_body">添加重定向或代理服务，将新域名上的社交网络请求转发给 Ghost。</string>
+    <string name="identity_redirect_from">重定向来源</string>
+    <string name="identity_redirect_to">重定向目标</string>
+    <string name="identity_copy_value">复制值</string>
+    <string name="identity_aliases">别名</string>
+    <string name="identity_aliases_explainer">要从 Mastodon 等另一个社交网络账号迁移关注者，先在这里添加别名。迁移本身需在旧账号上发起，而且并非所有服务器都能撤销。</string>
+    <string name="identity_aliases_forbidden">只有站点所有者和管理员可以查看和更改别名。</string>
+    <string name="identity_alias_field">旧账号标识</string>
+    <string name="identity_alias_hint">你要迁出的账号的 user@domain</string>
+    <string name="identity_alias_add">创建别名</string>
+    <string name="identity_alias_unlink">取消关联</string>
+    <string name="identity_alias_invalid">请输入类似 old@mastodon.social 的账号标识。</string>
+    <string name="identity_alias_not_found">找不到该个人资料。请检查账号标识后重试。</string>
+    <string name="identity_move_away">将关注者迁移到另一个账号</string>
+    <string name="identity_move_explainer">请先在新个人资料上将此账号标识添加为别名，然后在此输入该个人资料的账号标识。兼容的服务器随后会把你的关注者引导过去。此操作无法撤销：处理期间请保持此账号可用，并注意部分关注者不会跟随。</string>
+    <string name="identity_move_in_progress">正在迁移到 %1$s。你可以再次发送，但不能改为迁移到其他账号。</string>
+    <string name="identity_move_sent">已通知你的关注者去关注 %1$s。每台服务器都需要一些时间更新，有些则不会。这里没有回头路：若要返回，必须从新账号再次迁移。</string>
+    <string name="identity_move_field">新账号标识</string>
+    <string name="identity_move_hint">你要迁入的账号的 user@domain</string>
+    <string name="identity_move_action">迁移关注者</string>
+    <string name="identity_move_confirm_title">要迁移关注者吗？</string>
+    <string name="identity_move_confirm_text">你的关注者将被通知改为关注 %1$s。部分服务器不会执行，Ghost 也无法将他们迁回：你必须从新账号发起迁移。</string>
+    <string name="identity_move_forbidden">只有站点所有者可以将关注者迁移到另一个账号。上方的域名和别名供所有者和管理员使用。</string>
+    <string name="identity_move_invalid">请输入类似 new@mastodon.social 的目标账号。</string>
+    <string name="identity_move_self">这就是当前账号。请输入其他账号。</string>
+    <string name="identity_move_not_found">找不到目标个人资料。请检查其账号标识后重试。</string>
+    <string name="identity_move_conflict">已有迁移正在进行，或迁移已发送到另一个账号。</string>
+    <string name="identity_move_alias_required">请先在目标个人资料上将此账号添加为别名。</string>
 </resources>

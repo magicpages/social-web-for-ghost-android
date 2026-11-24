@@ -51,6 +51,7 @@ class PostInteractions @Inject constructor(
     private val accounts: AccountStore,
     private val client: ActivityPubClient,
     private val uploads: ImageUploads,
+    private val handledReplies: HandledReplies,
     @ApplicationScope private val scope: CoroutineScope,
 ) {
     private val _overrides = MutableStateFlow<Map<String, Interactions>>(emptyMap())
@@ -102,6 +103,8 @@ class PostInteractions @Inject constructor(
         // Uploaded with the same account that replies, even if another becomes active meanwhile.
         val attached = image?.let { uploads.upload(account.site, account.credential, it) }
         client.reply(account.site, account.credential, post.id, text.trim(), attached)
+        // Answering a reply takes it off the notifications tab's waiting list.
+        handledReplies.markHandled(account.id, post.id)
         if (accounts.activeId.first() != account.id) return
         _overrides.update {
             val base = it[post.id] ?: Interactions.of(post)

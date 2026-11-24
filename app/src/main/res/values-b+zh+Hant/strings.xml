@@ -707,4 +707,66 @@
     <plurals name="reach_potential">
         <item quantity="other">最多 %1$s 人可能看過</item>
     </plurals>
+    <plurals name="notifications_waiting">
+        <item quantity="other">%1$d 則回覆在等你</item>
+    </plurals>
+    <string name="waiting_replies_dismiss">忽略</string>
+
+    <!-- Handle and domain (site settings) -->
+    <string name="settings_identity">帳號識別和網域</string>
+    <string name="settings_identity_summary">你的帳號識別、網域、別名，以及遷移追蹤者</string>
+    <string name="identity_title">帳號識別和網域</string>
+    <string name="identity_handle">你的社群網路帳號識別</string>
+    <string name="identity_handle_explainer">就像電子郵件地址一樣，帳號識別讓別人找到你並與你互動。使用者名稱在「編輯個人檔案」中修改，網域則在這裡修改。</string>
+    <string name="identity_handle_username">使用者名稱</string>
+    <string name="identity_handle_domain">網域</string>
+    <string name="identity_domain_section">網域</string>
+    <string name="identity_domain_field">社群網路網域</string>
+    <string name="identity_domain_explainer">自訂網域可以讓你的帳號識別更短，或與讀者熟悉的名稱一致。儲存變更前，Ghost 必須能透過該網域回應。如果該網域不再指向此網站，或者你關閉了社群網路，你的帳號識別將移到另一個網域，其他伺服器上的追蹤者可能會跟丟你的貼文。</string>
+    <string name="identity_domain_change">變更網域</string>
+    <string name="identity_domain_activate">啟用</string>
+    <string name="identity_domain_validate">驗證</string>
+    <string name="identity_domain_save">儲存</string>
+    <string name="identity_domain_remove">移除</string>
+    <string name="identity_domain_validated">重新導向運作正常。儲存後即可使用此網域。</string>
+    <string name="identity_domain_preview">你的帳號識別將變為 %1$s</string>
+    <string name="identity_domain_confirm_title">要變更網域嗎？</string>
+    <string name="identity_domain_confirm_text">你的帳號識別將從 %1$s 變為 %2$s。已發布的貼文仍指向舊識別，其他伺服器可能需要重新查找你的帳號。其他伺服器上的追蹤者也可能不會跟隨。</string>
+    <string name="identity_domain_remove_title">要移除自訂網域嗎？</string>
+    <string name="identity_domain_remove_text">你的帳號識別將從 %1$s 回到網站本身的網域。其他伺服器上的追蹤者可能不會跟隨，而且對他們來說這一步無法復原。</string>
+    <string name="identity_domain_forbidden">只有網站擁有者和管理員可以變更社群網路網域。</string>
+    <string name="identity_domain_invalid">這不是一個網域。請輸入類似 news.example.com 的網域。</string>
+    <string name="identity_domain_no_redirect">Ghost 無法存取此網域的 WebFinger 位址。請檢查重新導向後再試一次。</string>
+    <string name="identity_domain_conflict">另一個帳號已將此網域用於其帳號識別。</string>
+    <string name="identity_domain_unreachable">無法存取此網域。它能回應後才能使用。</string>
+    <string name="identity_domain_wrong_actor">此網域可以回應，但並非為此帳號回應。請檢查重新導向指向的位置。</string>
+    <string name="identity_redirect_title">設定重新導向</string>
+    <string name="identity_redirect_body">新增重新導向或代理服務，將新網域上的社群網路要求轉發給 Ghost。</string>
+    <string name="identity_redirect_from">重新導向來源</string>
+    <string name="identity_redirect_to">重新導向目標</string>
+    <string name="identity_copy_value">複製值</string>
+    <string name="identity_aliases">別名</string>
+    <string name="identity_aliases_explainer">要從 Mastodon 等另一個社群網路帳號遷移追蹤者，先在這裡新增別名。遷移本身需在舊帳號上發起，而且並非所有伺服器都能復原。</string>
+    <string name="identity_aliases_forbidden">只有網站擁有者和管理員可以查看和變更別名。</string>
+    <string name="identity_alias_field">舊帳號識別</string>
+    <string name="identity_alias_hint">你要遷出的帳號的 user@domain</string>
+    <string name="identity_alias_add">建立別名</string>
+    <string name="identity_alias_unlink">取消連結</string>
+    <string name="identity_alias_invalid">請輸入類似 old@mastodon.social 的帳號識別。</string>
+    <string name="identity_alias_not_found">找不到該個人檔案。請檢查帳號識別後再試一次。</string>
+    <string name="identity_move_away">將追蹤者遷移到另一個帳號</string>
+    <string name="identity_move_explainer">請先在新個人檔案上將此帳號識別新增為別名，然後在此輸入該個人檔案的帳號識別。相容的伺服器隨後會把你的追蹤者引導過去。此操作無法復原：處理期間請保持此帳號可用，並注意部分追蹤者不會跟隨。</string>
+    <string name="identity_move_in_progress">正在遷移到 %1$s。你可以再次傳送，但不能改為遷移到其他帳號。</string>
+    <string name="identity_move_sent">已通知你的追蹤者去追蹤 %1$s。每台伺服器都需要一些時間更新，有些則不會。這裡沒有回頭路：若要返回，必須從新帳號再次遷移。</string>
+    <string name="identity_move_field">新帳號識別</string>
+    <string name="identity_move_hint">你要遷入的帳號的 user@domain</string>
+    <string name="identity_move_action">遷移追蹤者</string>
+    <string name="identity_move_confirm_title">要遷移追蹤者嗎？</string>
+    <string name="identity_move_confirm_text">你的追蹤者將被通知改為追蹤 %1$s。部分伺服器不會執行，Ghost 也無法將他們遷回：你必須從新帳號發起遷移。</string>
+    <string name="identity_move_forbidden">只有網站擁有者可以將追蹤者遷移到另一個帳號。上方的網域和別名供擁有者和管理員使用。</string>
+    <string name="identity_move_invalid">請輸入類似 new@mastodon.social 的目標帳號。</string>
+    <string name="identity_move_self">這就是目前帳號。請輸入其他帳號。</string>
+    <string name="identity_move_not_found">找不到目標個人檔案。請檢查其帳號識別後再試一次。</string>
+    <string name="identity_move_conflict">已有遷移正在進行，或遷移已傳送到另一個帳號。</string>
+    <string name="identity_move_alias_required">請先在目標個人檔案上將此帳號新增為別名。</string>
 </resources>

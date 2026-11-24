@@ -3,6 +3,7 @@ package co.magicpages.socialweb.background
 import android.content.Intent
 import co.magicpages.socialweb.data.account.AccountStore
 import co.magicpages.socialweb.data.activitypub.ActivityPubClient
+import co.magicpages.socialweb.data.activitypub.HandledReplies
 import co.magicpages.socialweb.data.activitypub.Notification
 import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.ghost.GhostException
@@ -121,6 +122,7 @@ class NotificationActionHandler @Inject constructor(
     private val accounts: AccountStore,
     private val client: ActivityPubClient,
     private val announcer: NotificationAnnouncer,
+    private val handledReplies: HandledReplies,
     @ApplicationScope private val scope: CoroutineScope,
 ) {
     /** Runs [action] and calls [finished] once the notification shows the result, whatever it was. */
@@ -151,7 +153,11 @@ class NotificationActionHandler @Inject constructor(
             when (action) {
                 NotificationAction.Like -> client.like(account.site, account.credential, postId)
                 NotificationAction.Unlike -> client.unlike(account.site, account.credential, postId)
-                NotificationAction.Reply -> client.reply(account.site, account.credential, postId, replyText.orEmpty())
+                NotificationAction.Reply -> {
+                    client.reply(account.site, account.credential, postId, replyText.orEmpty())
+                    // Answered from the notification: it is no longer waiting in the app.
+                    handledReplies.markHandled(account.id, postId)
+                }
             }
             when (action) {
                 NotificationAction.Like -> ItemState(liked = true)

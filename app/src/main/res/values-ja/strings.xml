@@ -707,4 +707,66 @@
     <plurals name="reach_potential">
         <item quantity="other">最大 %1$s 人が見た可能性があります</item>
     </plurals>
+    <plurals name="notifications_waiting">
+        <item quantity="other">%1$d 件の返信が届いています</item>
+    </plurals>
+    <string name="waiting_replies_dismiss">無視</string>
+
+    <!-- Handle and domain (site settings) -->
+    <string name="settings_identity">ハンドルとドメイン</string>
+    <string name="settings_identity_summary">ハンドル、そのドメイン、エイリアス、フォロワーの移動</string>
+    <string name="identity_title">ハンドルとドメイン</string>
+    <string name="identity_handle">あなたのソーシャルウェブのハンドル</string>
+    <string name="identity_handle_explainer">メールアドレスのように、ハンドルはあなたを見つけて交流するためのものです。ユーザー名はプロフィールの編集で、ドメインはここで変更します。</string>
+    <string name="identity_handle_username">ユーザー名</string>
+    <string name="identity_handle_domain">ドメイン</string>
+    <string name="identity_domain_section">ドメイン</string>
+    <string name="identity_domain_field">ソーシャルウェブのドメイン</string>
+    <string name="identity_domain_explainer">独自ドメインにするとハンドルが短くなり、読者になじみのある名前と一致させられます。変更を保存する前に、Ghost がそのドメインで応答できる必要があります。ドメインがこのサイトを指さなくなった場合や、ソーシャルウェブをオフにした場合、ハンドルは別のドメインへ移り、ほかのサーバーのフォロワーはあなたの投稿を見失うかもしれません。</string>
+    <string name="identity_domain_change">ドメインを変更</string>
+    <string name="identity_domain_activate">有効化</string>
+    <string name="identity_domain_validate">検証</string>
+    <string name="identity_domain_save">保存</string>
+    <string name="identity_domain_remove">削除</string>
+    <string name="identity_domain_validated">リダイレクトは機能しています。保存するとこのドメインを使えます。</string>
+    <string name="identity_domain_preview">ハンドルは %1$s になります</string>
+    <string name="identity_domain_confirm_title">ドメインを変更しますか？</string>
+    <string name="identity_domain_confirm_text">ハンドルが %1$s から %2$s に変わります。公開済みの投稿は古いハンドルを指したままで、ほかのサーバーはあなたのアカウントを再び探す必要があるかもしれません。ほかのサーバーのフォロワーがついてこない可能性があります。</string>
+    <string name="identity_domain_remove_title">独自ドメインを削除しますか？</string>
+    <string name="identity_domain_remove_text">ハンドルは %1$s からサイト自身のドメインに戻ります。ほかのサーバーのフォロワーがついてこない可能性があり、相手側では元に戻せません。</string>
+    <string name="identity_domain_forbidden">ソーシャルウェブのドメインを変更できるのは、サイトのオーナーと管理者だけです。</string>
+    <string name="identity_domain_invalid">これはドメインではありません。news.example.com のように入力してください。</string>
+    <string name="identity_domain_no_redirect">Ghost がこのドメインの WebFinger アドレスに到達できませんでした。リダイレクトを確認して、もう一度お試しください。</string>
+    <string name="identity_domain_conflict">別のアカウントがすでにこのドメインをハンドルに使っています。</string>
+    <string name="identity_domain_unreachable">このドメインに到達できません。使用するには応答できる必要があります。</string>
+    <string name="identity_domain_wrong_actor">このドメインは応答しますが、このアカウント向けではありません。リダイレクト先を確認してください。</string>
+    <string name="identity_redirect_title">リダイレクトを設定</string>
+    <string name="identity_redirect_body">新しいドメインへのソーシャルウェブのリクエストを Ghost に転送するリダイレクトかプロキシサービスを追加します。</string>
+    <string name="identity_redirect_from">リダイレクト元</string>
+    <string name="identity_redirect_to">リダイレクト先</string>
+    <string name="identity_copy_value">値をコピー</string>
+    <string name="identity_aliases">エイリアス</string>
+    <string name="identity_aliases_explainer">Mastodon など別のソーシャルウェブのアカウントからフォロワーを移動するには、まずここでエイリアスを設定します。移動自体は古いアカウントで開始し、すべてのサーバーで元に戻せるわけではありません。</string>
+    <string name="identity_aliases_forbidden">エイリアスの表示と変更ができるのは、サイトのオーナーと管理者だけです。</string>
+    <string name="identity_alias_field">古いアカウントのハンドル</string>
+    <string name="identity_alias_hint">移動元アカウントの user@domain</string>
+    <string name="identity_alias_add">エイリアスを作成</string>
+    <string name="identity_alias_unlink">リンクを解除</string>
+    <string name="identity_alias_invalid">old@mastodon.social のようなハンドルを入力してください。</string>
+    <string name="identity_alias_not_found">そのプロフィールが見つかりませんでした。ハンドルを確認して、もう一度お試しください。</string>
+    <string name="identity_move_away">フォロワーを別のアカウントへ移動</string>
+    <string name="identity_move_explainer">まず新しいプロフィールでこのハンドルをエイリアスとして追加してください。次に、そのプロフィールのハンドルをここに入力します。対応しているサーバーがフォロワーをそちらへ案内します。この操作は元に戻せません。処理中はこのアカウントを利用可能なままにし、ついてこないフォロワーもいることをご了承ください。</string>
+    <string name="identity_move_in_progress">%1$s への移動を実行中です。もう一度送信できますが、別のアカウントへは送信できません。</string>
+    <string name="identity_move_sent">フォロワーに %1$s をフォローするよう通知しました。各サーバーが更新するまで時間がかかり、反映されないサーバーもあります。ここからは戻れません。戻るには、新しいアカウントから再度移動する必要があります。</string>
+    <string name="identity_move_field">新しいアカウントのハンドル</string>
+    <string name="identity_move_hint">移動先アカウントの user@domain</string>
+    <string name="identity_move_action">フォロワーを移動</string>
+    <string name="identity_move_confirm_title">フォロワーを移動しますか？</string>
+    <string name="identity_move_confirm_text">フォロワーには代わりに %1$s をフォローするよう通知されます。対応しないサーバーもあり、Ghost がフォロワーを戻すことはできません。戻すには新しいアカウントから移動を開始する必要があります。</string>
+    <string name="identity_move_forbidden">フォロワーを別のアカウントへ移動できるのは、サイトのオーナーだけです。上のドメインとエイリアスはオーナーと管理者向けです。</string>
+    <string name="identity_move_invalid">new@mastodon.social のような移動先を入力してください。</string>
+    <string name="identity_move_self">これはこのアカウントです。別のアカウントを入力してください。</string>
+    <string name="identity_move_not_found">移動先のプロフィールが見つかりませんでした。ハンドルを確認して、もう一度お試しください。</string>
+    <string name="identity_move_conflict">すでに移動が進行中か、別のアカウントへ送信済みです。</string>
+    <string name="identity_move_alias_required">まず移動先のプロフィールでこのアカウントをエイリアスとして追加してください。</string>
 </resources>

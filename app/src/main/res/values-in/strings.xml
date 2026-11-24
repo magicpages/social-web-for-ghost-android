@@ -707,4 +707,66 @@
     <plurals name="reach_potential">
         <item quantity="other">Hingga %1$s orang mungkin melihatnya</item>
     </plurals>
+    <plurals name="notifications_waiting">
+        <item quantity="other">%1$d balasan menunggu</item>
+    </plurals>
+    <string name="waiting_replies_dismiss">Abaikan</string>
+
+    <!-- Handle and domain (site settings) -->
+    <string name="settings_identity">Handle dan domain</string>
+    <string name="settings_identity_summary">Handle Anda, domainnya, alias, dan memindahkan pengikut</string>
+    <string name="identity_title">Handle dan domain</string>
+    <string name="identity_handle">Handle web sosial Anda</string>
+    <string name="identity_handle_explainer">Seperti alamat email, handle adalah cara orang menemukan dan berinteraksi dengan Anda. Nama pengguna diubah di Edit profil, sedangkan domain diubah di sini.</string>
+    <string name="identity_handle_username">Nama pengguna</string>
+    <string name="identity_handle_domain">Domain</string>
+    <string name="identity_domain_section">Domain</string>
+    <string name="identity_domain_field">Domain web sosial</string>
+    <string name="identity_domain_explainer">Domain kustom membuat handle Anda lebih pendek, atau sesuai dengan nama yang dikenal pembaca Anda. Ghost harus menjawab di domain itu sebelum perubahan bisa disimpan. Jika domain berhenti mengarah ke situs ini, atau web sosial dimatikan, handle Anda pindah ke domain lain, dan pengikut di server lain bisa kehilangan jejak postingan Anda.</string>
+    <string name="identity_domain_change">Ubah domain</string>
+    <string name="identity_domain_activate">Aktifkan</string>
+    <string name="identity_domain_validate">Validasi</string>
+    <string name="identity_domain_save">Simpan</string>
+    <string name="identity_domain_remove">Hapus</string>
+    <string name="identity_domain_validated">Pengalihan berfungsi. Simpan untuk memakai domain ini.</string>
+    <string name="identity_domain_preview">Handle Anda menjadi %1$s</string>
+    <string name="identity_domain_confirm_title">Ubah domain?</string>
+    <string name="identity_domain_confirm_text">Handle Anda berubah dari %1$s menjadi %2$s. Postingan yang sudah Anda terbitkan tetap mengarah ke handle lama, dan server lain mungkin harus mencari akun Anda lagi. Pengikut di server lain mungkin tidak ikut.</string>
+    <string name="identity_domain_remove_title">Hapus domain kustom?</string>
+    <string name="identity_domain_remove_text">Handle Anda kembali dari %1$s ke domain situs sendiri. Pengikut di server lain mungkin tidak ikut, dan ini tidak bisa dibatalkan bagi mereka.</string>
+    <string name="identity_domain_forbidden">Hanya Pemilik dan Administrator situs yang dapat mengubah domain web sosial.</string>
+    <string name="identity_domain_invalid">Itu bukan domain. Masukkan yang seperti news.example.com.</string>
+    <string name="identity_domain_no_redirect">Ghost tidak dapat menjangkau alamat WebFinger domain ini. Periksa pengalihan dan coba lagi.</string>
+    <string name="identity_domain_conflict">Akun lain sudah memakai domain ini untuk handle-nya.</string>
+    <string name="identity_domain_unreachable">Domain ini tidak bisa dijangkau. Domain harus menjawab sebelum bisa dipakai.</string>
+    <string name="identity_domain_wrong_actor">Domain ini menjawab, tapi bukan untuk akun ini. Periksa ke mana pengalihan mengarah.</string>
+    <string name="identity_redirect_title">Siapkan pengalihan Anda</string>
+    <string name="identity_redirect_body">Tambahkan pengalihan atau layanan proksi yang meneruskan permintaan web sosial dari domain baru ke Ghost.</string>
+    <string name="identity_redirect_from">Alihkan dari</string>
+    <string name="identity_redirect_to">Alihkan ke</string>
+    <string name="identity_copy_value">Salin nilai</string>
+    <string name="identity_aliases">Alias</string>
+    <string name="identity_aliases_explainer">Memindahkan pengikut dari akun web sosial lain, seperti Mastodon, dimulai dengan alias di sini. Pemindahannya sendiri dimulai dari akun lama, dan tidak semua server bisa membatalkannya.</string>
+    <string name="identity_aliases_forbidden">Hanya Pemilik dan Administrator situs yang dapat melihat dan mengubah alias.</string>
+    <string name="identity_alias_field">Handle akun lama</string>
+    <string name="identity_alias_hint">user@domain akun asal Anda</string>
+    <string name="identity_alias_add">Buat alias</string>
+    <string name="identity_alias_unlink">Putuskan tautan</string>
+    <string name="identity_alias_invalid">Masukkan handle seperti old@mastodon.social.</string>
+    <string name="identity_alias_not_found">Profil itu tidak ditemukan. Periksa handle dan coba lagi.</string>
+    <string name="identity_move_away">Pindahkan pengikut ke akun lain</string>
+    <string name="identity_move_explainer">Tambahkan handle ini sebagai alias di profil baru Anda dulu. Lalu masukkan handle profil itu di sini. Server yang kompatibel kemudian mengarahkan pengikut Anda ke sana. Ini tidak bisa dibatalkan: biarkan akun ini tetap tersedia selama prosesnya, dan ketahui bahwa sebagian pengikut tidak akan ikut.</string>
+    <string name="identity_move_in_progress">Pemindahan ke %1$s sedang berlangsung. Anda bisa mengirimnya lagi, tapi tidak ke akun lain.</string>
+    <string name="identity_move_sent">Pengikut Anda diminta mengikuti %1$s. Setiap server butuh waktu untuk memperbarui, dan sebagian tidak akan. Tidak ada jalan kembali di sini: untuk kembali, Anda harus memindahkan lagi dari akun baru.</string>
+    <string name="identity_move_field">Handle akun baru</string>
+    <string name="identity_move_hint">user@domain akun tujuan Anda</string>
+    <string name="identity_move_action">Pindahkan pengikut</string>
+    <string name="identity_move_confirm_title">Pindahkan pengikut?</string>
+    <string name="identity_move_confirm_text">Pengikut Anda akan diminta mengikuti %1$s sebagai gantinya. Sebagian server tidak akan melakukannya, dan Ghost tidak bisa memindahkan mereka kembali: Anda harus memulai pemindahan dari akun baru.</string>
+    <string name="identity_move_forbidden">Hanya Pemilik situs yang dapat memindahkan pengikut ke akun lain. Domain dan alias di atas untuk Pemilik dan Administrator.</string>
+    <string name="identity_move_invalid">Masukkan tujuan seperti new@mastodon.social.</string>
+    <string name="identity_move_self">Itu akun ini. Masukkan akun lain.</string>
+    <string name="identity_move_not_found">Profil tujuan tidak ditemukan. Periksa handle-nya dan coba lagi.</string>
+    <string name="identity_move_conflict">Pemindahan sudah berlangsung, atau sudah dikirim ke akun lain.</string>
+    <string name="identity_move_alias_required">Tambahkan akun ini sebagai alias di profil tujuan dulu.</string>
 </resources>
