@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Compose UI's own name for closing a bottom sheet (its scrim, for TalkBack) is translated as a
+     spreadsheet or table here; this says what Material 3's own sheet strings say instead. -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="close_sheet" tools:override="true">Ansicht am unteren Rand schließen</string>
+</resources>

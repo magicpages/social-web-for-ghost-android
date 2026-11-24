@@ -169,7 +169,12 @@ private fun CompactCard(item: FeedItem, callbacks: PostCallbacks, modifier: Modi
     val hasCover = !post.featureImageUrl.isNullOrBlank()
     val iconAsImage = !hasCover && !post.author.avatarUrl.isNullOrBlank()
     ReaderCardFrame(item, callbacks, MaterialTheme.shapes.medium, modifier.fillMaxWidth()) {
-        Row(Modifier.padding(CompactInset), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        // Centered, so a short title doesn't leave a gap under it while a long one runs into the next card.
+        Row(
+            Modifier.padding(CompactInset),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Publication(item, 18.dp, onImage = false, showsAvatar = !iconAsImage)
                 Text(

@@ -34,6 +34,7 @@ import co.magicpages.socialweb.ui.components.ComposerBottomBar
 import co.magicpages.socialweb.ui.components.ComposerDialog
 import co.magicpages.socialweb.ui.components.ComposerFailure
 import co.magicpages.socialweb.ui.components.ComposerField
+import co.magicpages.socialweb.ui.components.HandleText
 import co.magicpages.socialweb.ui.components.LocalOwnProfile
 import co.magicpages.socialweb.ui.components.PickedImagePreview
 import co.magicpages.socialweb.ui.components.TakePhotoButton
@@ -126,12 +127,10 @@ fun ReplyEditor(
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
-                    Text(
+                    HandleText(
                         target.author.handle,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.MiddleEllipsis,
                     )
                     // A note the reader had translated is quoted as they read it, with the way back to the original.
                     val translations = LocalPostTranslations.current

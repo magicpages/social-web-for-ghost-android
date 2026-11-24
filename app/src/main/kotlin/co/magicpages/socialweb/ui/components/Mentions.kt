@@ -270,12 +270,7 @@ private fun MentionChip(author: Author, onClick: () -> Unit, modifier: Modifier 
                 )
                 if (author.name.isNotBlank()) {
                     Spacer(Modifier.width(6.dp))
-                    Text(
-                        author.handle,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.MiddleEllipsis,
-                    )
+                    HandleText(author.handle, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         },

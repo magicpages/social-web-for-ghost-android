@@ -48,6 +48,7 @@ import co.magicpages.socialweb.ui.components.CenteredLoading
 import co.magicpages.socialweb.ui.components.EmojiText
 import co.magicpages.socialweb.ui.components.emojiSourceId
 import co.magicpages.socialweb.ui.components.FullScreenError
+import co.magicpages.socialweb.ui.components.HandleText
 import co.magicpages.socialweb.ui.components.ScrollableMessage
 import co.magicpages.socialweb.ui.components.errorMessage
 import co.magicpages.socialweb.ui.posts.MaxContentWidth
@@ -151,12 +152,10 @@ private fun AccountRow(author: Author, onClick: () -> Unit) {
             EmojiText(name, author.emojiSourceId, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
         },
         supportingContent = {
-            Text(
+            HandleText(
                 author.handle,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.MiddleEllipsis,
             )
         },
         leadingContent = { Avatar(author.avatarUrl, name, 40.dp) },

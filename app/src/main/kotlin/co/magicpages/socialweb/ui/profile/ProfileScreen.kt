@@ -933,16 +933,8 @@ private fun RecommendationRow(item: SiteRecommendation, onOpen: () -> Unit) {
             }
         },
         leadingContent = {
-            Box(
-                Modifier.size(48.dp).clip(MaterialTheme.shapes.medium).background(MaterialTheme.colorScheme.surfaceContainer),
-                contentAlignment = Alignment.Center,
-            ) {
-                if (details?.iconUrl != null) {
-                    AsyncImage(model = details.iconUrl, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-                } else {
-                    Icon(AppIcons.Public, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            }
+            // Same letter-under-image avatar as people, so a missing or broken icon still shows the site's initial.
+            Avatar(details?.iconUrl, details?.displayName ?: address, 48.dp, shape = MaterialTheme.shapes.medium)
         },
         modifier = Modifier
             .widthIn(max = MaxContentWidth)

@@ -90,6 +90,7 @@ import co.magicpages.socialweb.ui.components.AppIcons
 import co.magicpages.socialweb.ui.components.browserUriHandler
 import co.magicpages.socialweb.ui.components.Avatar
 import co.magicpages.socialweb.ui.components.EmojiText
+import co.magicpages.socialweb.ui.components.HandleText
 import co.magicpages.socialweb.ui.components.emojiSourceId
 import co.magicpages.socialweb.ui.components.HtmlText
 import co.magicpages.socialweb.ui.components.ActionSheet
@@ -353,48 +354,67 @@ private fun AuthorLines(author: Author, publishedAtMillis: Long?, callbacks: Pos
                 )
             }
         }
-        Text(
-            author.handle,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            maxLines = 1,
-            // The server tells two handles apart, so a long one gives up its middle, not its end.
-            overflow = TextOverflow.MiddleEllipsis,
-        )
+        HandleText(author.handle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
-/** A compact name line for embedded posts: name, handle and time on one line. */
+/**
+ * A compact name line for embedded posts: name, handle and time on one line. When they don't all fit
+ * (narrow screens, large fonts) the time is kept first, then the name; the handle gets what's left
+ * and goes away whole when that's too little to read, rather than shrinking to a stub.
+ */
 @Composable
 private fun NameLine(author: Author, publishedAtMillis: Long?, modifier: Modifier = Modifier) {
-    Row(modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-        EmojiText(
-            author.displayName,
-            emojiSourceId = author.emojiSourceId,
-            style = MaterialTheme.typography.titleSmall,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            // When both don't fit (narrow screens, large fonts) the name keeps twice the handle's room.
-            modifier = Modifier.weight(2f, fill = false),
-        )
-        Text(
-            author.handle,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            maxLines = 1,
-            overflow = TextOverflow.MiddleEllipsis,
-            modifier = Modifier.weight(1f, fill = false),
-        )
-        publishedAtMillis?.let {
-            Text(
-                "· " + relativeTime(it),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+    val nameStyle = MaterialTheme.typography.titleSmall
+    val handleStyle = MaterialTheme.typography.bodySmall
+    val timeStyle = MaterialTheme.typography.labelMedium
+    val color = MaterialTheme.colorScheme.onSurfaceVariant
+    // Subcomposed only when it fits, so a dropped handle isn't left in the accessibility tree.
+    SubcomposeLayout(modifier) { constraints ->
+        val gap = 6.dp.roundToPx()
+        val minHandle = 48.dp.roundToPx()
+        val maxWidth = constraints.maxWidth
+        val time = publishedAtMillis?.let {
+            subcompose(NameLineSlot.Time) {
+                Text("· " + relativeTime(it), style = timeStyle, color = color, maxLines = 1)
+            }.single().measure(Constraints(maxWidth = maxWidth))
+        }
+        val timeRoom = time?.let { gap + it.width } ?: 0
+        val name = subcompose(NameLineSlot.Name) {
+            EmojiText(
+                author.displayName,
+                emojiSourceId = author.emojiSourceId,
+                style = nameStyle,
                 maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
+        }.single().measure(Constraints(maxWidth = (maxWidth - timeRoom).coerceAtLeast(0)))
+        val handleRoom = maxWidth - timeRoom - name.width - gap
+        val handle = if (handleRoom >= minHandle) {
+            subcompose(NameLineSlot.Handle) {
+                HandleText(author.handle, style = handleStyle, color = color)
+            }.single().measure(Constraints(maxWidth = handleRoom))
+        } else {
+            null
+        }
+        val width = (name.width + (handle?.let { gap + it.width } ?: 0) + timeRoom).coerceIn(constraints.minWidth, constraints.maxWidth)
+        val height = maxOf(name.height, handle?.height ?: 0, time?.height ?: 0).coerceIn(constraints.minHeight, constraints.maxHeight)
+        layout(width, height) {
+            var x = 0
+            name.placeRelative(x, (height - name.height) / 2)
+            x += name.width
+            handle?.let {
+                x += gap
+                it.placeRelative(x, (height - it.height) / 2)
+                x += it.width
+            }
+            time?.let { it.placeRelative(x + gap, (height - it.height) / 2) }
         }
     }
 }
+
+/** The parts of a [NameLine], each in a slot of its own so the handle can be left out. */
+private enum class NameLineSlot { Name, Handle, Time }
 
 /**
  * Hides content-warned posts (and sensitive articles) behind a tap, as Ghost Admin does. A post that

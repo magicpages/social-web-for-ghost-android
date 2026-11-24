@@ -46,6 +46,7 @@ import co.magicpages.socialweb.R
 import co.magicpages.socialweb.ui.components.ActionSheet
 import co.magicpages.socialweb.ui.components.AppIcons
 import co.magicpages.socialweb.ui.components.Avatar
+import co.magicpages.socialweb.ui.components.HandleText
 import co.magicpages.socialweb.ui.posts.rememberCopyToClipboard
 import co.magicpages.socialweb.ui.quote.QuoteCardPalette
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -131,13 +132,10 @@ fun ProfileShareSheet(name: String, handle: String, avatarUrl: String?, url: Str
             }
             if (qr != null) QrCodeImage(qr, stringResource(R.string.share_profile_qr, handle), Modifier.size(232.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
+                HandleText(
                     handle,
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    // The server tells two handles apart, so a long one gives up its middle, not its end.
-                    overflow = TextOverflow.MiddleEllipsis,
                     modifier = Modifier.weight(1f, fill = false),
                 )
                 IconButton(onClick = { copyHandle(handle) }) {

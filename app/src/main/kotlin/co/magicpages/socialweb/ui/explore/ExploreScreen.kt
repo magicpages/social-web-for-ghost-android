@@ -98,6 +98,7 @@ import co.magicpages.socialweb.ui.components.FullScreenError
 import co.magicpages.socialweb.ui.components.OnReselect
 import co.magicpages.socialweb.ui.components.ScrollableMessage
 import co.magicpages.socialweb.ui.components.emojiSourceId
+import co.magicpages.socialweb.ui.components.HandleText
 import co.magicpages.socialweb.ui.components.errorMessage
 import co.magicpages.socialweb.ui.components.bioHtml
 import co.magicpages.socialweb.ui.components.parsePostHtml
@@ -943,12 +944,10 @@ private fun PostRow(post: Post, onClick: () -> Unit) {
         },
         supportingContent = {
             Column {
-                Text(
+                HandleText(
                     author.handle,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.MiddleEllipsis,
                 )
                 if (text.isNotEmpty()) {
                     EmojiText(
@@ -988,12 +987,10 @@ private fun AccountRow(
         },
         supportingContent = {
             Column {
-                Text(
+                HandleText(
                     author.handle,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.MiddleEllipsis,
                 )
                 if (bioText.isNotEmpty()) {
                     EmojiText(

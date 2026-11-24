@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Compose UI names the scrim that closes a bottom sheet "Close sheet" for TalkBack. Several of its
+     translations read as a spreadsheet or table; the locales that do carry their own fix. The rest
+     keep Compose's own translation, which is why this isn't translated everywhere. -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="close_sheet" tools:override="true" tools:ignore="MissingTranslation">Close sheet</string>
+</resources>

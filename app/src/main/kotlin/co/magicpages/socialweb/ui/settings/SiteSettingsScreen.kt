@@ -74,6 +74,7 @@ import co.magicpages.socialweb.data.settings.AppSettings
 import co.magicpages.socialweb.data.settings.ColorSource
 import co.magicpages.socialweb.data.settings.parseHexColor
 import co.magicpages.socialweb.ui.components.AppIcons
+import co.magicpages.socialweb.ui.components.HandleText
 import co.magicpages.socialweb.ui.posts.MaxContentWidth
 import co.magicpages.socialweb.ui.theme.Gutter
 import dagger.assisted.Assisted
@@ -140,7 +141,7 @@ fun SiteSettingsScreen(
         topBar = {
             LargeFlexibleTopAppBar(
                 title = { Text(site?.siteTitle.orEmpty(), maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                subtitle = { site?.let { Text(it.handle, maxLines = 1, overflow = TextOverflow.MiddleEllipsis) } },
+                subtitle = { site?.let { HandleText(it.handle) } },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(AppIcons.ArrowBack, contentDescription = stringResource(R.string.back))

@@ -71,12 +71,10 @@ fun AccountMenu(
                 onClick = { closeThen { if (!isActive) onSwitch(account.id) } },
                 leadingContent = { Avatar(account.profile.avatarUrl, account.displayName, 40.dp) },
                 supportingContent = {
-                    Text(
+                    HandleText(
                         account.profile.handle,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.MiddleEllipsis,
                     )
                 },
                 trailingContent = if (isActive) {
