@@ -175,6 +175,7 @@
     <string name="action_repost">Sdílet znovu</string>
     <string name="action_undo_repost">Zrušit opětovné sdílení</string>
     <string name="action_quote">Citovat</string>
+    <string name="action_open_profile">Otevřít profil</string>
     <string name="quote_card_drawing">Vykresluje se karta s citátem</string>
     <string name="quote_card_failed">Kartu s citátem se nepodařilo vykreslit.</string>
     <string name="quote_card_warning">Upozornění na obsah: %1$s</string>

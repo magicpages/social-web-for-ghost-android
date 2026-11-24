@@ -163,6 +163,7 @@
     <string name="action_repost">Reposten</string>
     <string name="action_undo_repost">Repost ongedaan maken</string>
     <string name="action_quote">Citeren</string>
+    <string name="action_open_profile">Profiel openen</string>
     <string name="quote_card_drawing">Citaatkaart wordt getekend</string>
     <string name="quote_card_failed">De citaatkaart kan niet worden getekend.</string>
     <string name="quote_card_warning">Inhoudswaarschuwing: %1$s</string>

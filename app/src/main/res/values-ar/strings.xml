@@ -187,6 +187,7 @@
     <string name="action_repost">إعادة نشر</string>
     <string name="action_undo_repost">التراجع عن إعادة النشر</string>
     <string name="action_quote">اقتباس</string>
+    <string name="action_open_profile">فتح الملف الشخصي</string>
     <string name="quote_card_drawing">جارٍ إنشاء بطاقة الاقتباس</string>
     <string name="quote_card_failed">تعذّر إنشاء بطاقة الاقتباس.</string>
     <string name="quote_card_warning">تحذير بشأن المحتوى: %1$s</string>

@@ -6,6 +6,7 @@ import androidx.compose.material3.IconToggleButton
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -113,6 +114,7 @@ import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.ui.posts.PostCallbacks
 import co.magicpages.socialweb.ui.posts.ReplyEditorHost
 import co.magicpages.socialweb.ui.posts.feedItems
+import co.magicpages.socialweb.ui.posts.rememberReaderPage
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.width
@@ -404,13 +406,17 @@ fun ExploreScreen(
                     refresh is LoadState.NotLoading && itemCount == 0 -> ScrollableMessage(
                         stringResource(if (showPosts) R.string.explore_topic_posts_empty else R.string.explore_empty),
                     )
-                    listsPosts -> LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        state = listState,
-                        contentPadding = PaddingValues(vertical = 8.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        feedItems(posts, callbacks)
+                    // A topic's posts are the stream the Reader shows for a pinned topic, so they look the same here.
+                    listsPosts -> BoxWithConstraints(Modifier.fillMaxSize()) {
+                        val reader = rememberReaderPage(posts, maxWidth, maxHeight)
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize(),
+                            state = listState,
+                            contentPadding = PaddingValues(vertical = 8.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            feedItems(posts, callbacks, reader = reader)
+                        }
                     }
                     else -> LazyColumn(
                         modifier = Modifier.fillMaxSize(),

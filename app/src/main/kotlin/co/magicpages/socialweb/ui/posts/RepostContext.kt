@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -32,10 +33,10 @@ import co.magicpages.socialweb.ui.components.SheetAction
 /**
  * The line above a post naming who reposted it: "Ana reposted", "Ana and Ben reposted", "Ana and
  * 3 others reposted", with the signed-in account first as "You". One reposter's name opens their
- * profile; several open a sheet to pick one.
+ * profile; several open a sheet to pick one. [color] is for the line over a Reader card's cover.
  */
 @Composable
-fun RepostContext(reposters: List<Author>, openProfile: (Author) -> Unit) {
+fun RepostContext(reposters: List<Author>, openProfile: (Author) -> Unit, color: Color = MaterialTheme.colorScheme.secondary) {
     val summary = summarizeReposters(reposters, LocalOwnProfile.current?.handle) ?: return
     val first = summary.first
     val text = when (summary) {
@@ -64,13 +65,13 @@ fun RepostContext(reposters: List<Author>, openProfile: (Author) -> Unit) {
             AppIcons.Repost,
             contentDescription = null,
             modifier = Modifier.size(16.dp),
-            tint = MaterialTheme.colorScheme.secondary,
+            tint = color,
         )
         EmojiText(
             text,
             emojiSourceId = first.emojiSourceId,
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.secondary,
+            color = color,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )

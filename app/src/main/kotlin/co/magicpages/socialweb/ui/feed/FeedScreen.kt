@@ -4,6 +4,7 @@ import android.os.SystemClock
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -57,6 +58,7 @@ import co.magicpages.socialweb.ui.posts.CollectMessages
 import co.magicpages.socialweb.ui.posts.PostCallbacks
 import co.magicpages.socialweb.ui.posts.ReplyEditorHost
 import co.magicpages.socialweb.ui.posts.feedItems
+import co.magicpages.socialweb.ui.posts.rememberReaderPage
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
@@ -253,13 +255,16 @@ internal fun FeedPage(
                 refresh is LoadState.NotLoading && posts.itemCount == 0 -> ScrollableMessage(
                     stringResource(if (filtering) R.string.feed_filtered_empty else emptyMessage),
                 )
-                else -> LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    state = listState,
-                    contentPadding = PaddingValues(vertical = 8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    feedItems(posts, callbacks, articleCards = feed == Feed.Reader, caughtUpAbove = newPosts.caughtUpAbove)
+                else -> BoxWithConstraints(Modifier.fillMaxSize()) {
+                    val reader = if (feed == Feed.Reader) rememberReaderPage(posts, maxWidth, maxHeight) else null
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        state = listState,
+                        contentPadding = PaddingValues(vertical = 8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        feedItems(posts, callbacks, reader = reader, caughtUpAbove = newPosts.caughtUpAbove)
+                    }
                 }
             }
             NewPostsPill(

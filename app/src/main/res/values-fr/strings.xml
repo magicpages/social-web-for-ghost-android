@@ -169,6 +169,7 @@
     <string name="action_repost">Republier</string>
     <string name="action_undo_repost">Annuler la republication</string>
     <string name="action_quote">Citer</string>
+    <string name="action_open_profile">Ouvrir le profil</string>
     <string name="quote_card_drawing">Création de la carte de citation</string>
     <string name="quote_card_failed">Impossible de créer la carte de citation.</string>
     <string name="quote_card_warning">Avertissement de contenu\u00A0: %1$s</string>

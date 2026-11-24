@@ -175,6 +175,7 @@
     <string name="action_repost">Репост</string>
     <string name="action_undo_repost">Скасувати репост</string>
     <string name="action_quote">Цитувати</string>
+    <string name="action_open_profile">Відкрити профіль</string>
     <string name="quote_card_drawing">Створення картки цитати</string>
     <string name="quote_card_failed">Не вдалося створити картку цитати.</string>
     <string name="quote_card_warning">Попередження про вміст: %1$s</string>

@@ -157,6 +157,7 @@
     <string name="action_repost">リポスト</string>
     <string name="action_undo_repost">リポストを取り消す</string>
     <string name="action_quote">引用</string>
+    <string name="action_open_profile">プロフィールを開く</string>
     <string name="quote_card_drawing">引用カードを作成中</string>
     <string name="quote_card_failed">引用カードを作成できませんでした。</string>
     <string name="quote_card_warning">コンテンツ警告: %1$s</string>

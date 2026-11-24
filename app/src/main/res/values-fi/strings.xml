@@ -163,6 +163,7 @@
     <string name="action_repost">Jaa uudelleen</string>
     <string name="action_undo_repost">Peruuta uudelleenjako</string>
     <string name="action_quote">Lainaa</string>
+    <string name="action_open_profile">Avaa profiili</string>
     <string name="quote_card_drawing">Piirretään lainauskorttia</string>
     <string name="quote_card_failed">Lainauskorttia ei voitu piirtää.</string>
     <string name="quote_card_warning">Sisältövaroitus: %1$s</string>

@@ -43,31 +43,43 @@ fun CollectMessages(messages: Flow<Int>, snackbar: SnackbarHostState) {
 
 /**
  * A paged post list, followed by its loading/retry footer. Posts are flat rows split by dividers;
- * with [articleCards] (the Reader), articles are cards instead. A "caught up" line goes above the
- * post [caughtUpAbove], unless that post is the first.
+ * with [reader] (the Reader), articles are laid out as a magazine instead. A "caught up" line goes
+ * above the post [caughtUpAbove], unless that post is the first.
  */
 fun LazyListScope.feedItems(
     posts: LazyPagingItems<FeedItem>,
     callbacks: PostCallbacks,
-    articleCards: Boolean = false,
+    reader: ReaderPage? = null,
     caughtUpAbove: String? = null,
 ) {
+    val magazine = reader?.magazine
     items(
         count = posts.itemCount,
         key = posts.itemKey { it.post.id },
-        contentType = posts.itemContentType { if (articleCards && it.post.isArticle) "card" else "row" },
+        contentType = posts.itemContentType { item ->
+            when {
+                magazine == null || !ReaderLayout.isMagazineArticle(item) -> "row"
+                item.post.id in magazine.absorbed -> "absorbed"
+                else -> magazine.blocks[item.post.id]?.contentType ?: ReaderStyle.Compact
+            }
+        },
     ) { index ->
         val item = posts[index] ?: return@items
-        val width = Modifier.widthIn(max = MaxContentWidth).fillMaxWidth()
+        val block = if (reader != null && ReaderLayout.isMagazineArticle(item)) {
+            // Drawn with the post its pair starts at; an empty item keeps this post's place in the list.
+            if (item.post.id in reader.magazine.absorbed) return@items
+            // Not laid out yet (the list changed a moment before its layout did): a compact card meanwhile.
+            reader.magazine.blocks[item.post.id] ?: ReaderBlock.Single(item, ReaderStyle.Compact)
+        } else {
+            null
+        }
         // Part of the post's own item, so list indices stay those of the posts.
         val caughtUp = index > 0 && item.post.id == caughtUpAbove
-        if (articleCards && item.post.isArticle) {
-            Column(width) {
+        Column(Modifier.widthIn(max = MaxContentWidth).fillMaxWidth()) {
+            if (reader != null && block != null) {
                 if (caughtUp) CaughtUpLine()
-                ArticleCard(item, callbacks, Modifier.fillMaxWidth().padding(horizontal = Gutter, vertical = 6.dp))
-            }
-        } else {
-            Column(width) {
+                ReaderBlockView(block, callbacks, reader)
+            } else {
                 when {
                     caughtUp -> CaughtUpLine()
                     index > 0 -> HorizontalDivider()
@@ -78,6 +90,13 @@ fun LazyListScope.feedItems(
     }
     item(key = "append", contentType = "append") { AppendState(posts.loadState.append, onRetry = posts::retry) }
 }
+
+/** What kind of list item a block is, so the list reuses the same kind for it. */
+private val ReaderBlock.contentType: Any
+    get() = when (this) {
+        is ReaderBlock.Single -> style
+        is ReaderBlock.TallPair -> "pair"
+    }
 
 /** "You're all caught up" between two lines: the posts below it were already there last time. */
 @Composable

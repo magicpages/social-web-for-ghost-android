@@ -36,7 +36,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.ToggleButton
@@ -76,7 +75,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Constraints
@@ -201,47 +199,6 @@ fun PostRow(
     }
 }
 
-/**
- * An article in the Reader: one card with who shared it, the feature image across the card's
- * width, then the title, excerpt and actions.
- */
-@Composable
-fun ArticleCard(item: FeedItem, callbacks: PostCallbacks, modifier: Modifier = Modifier) {
-    val post = item.post
-    Surface(
-        onClick = { callbacks.open(post) },
-        enabled = !post.isDeleted,
-        shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.surfaceContainer,
-        modifier = modifier,
-    ) {
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            Column(
-                Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                when {
-                    item.reposters.isNotEmpty() -> RepostContext(item.reposters, callbacks.openProfile)
-                    item.replyingTo != null -> PostContext(AppIcons.Reply, R.string.post_replying_to, item.replyingTo, callbacks)
-                }
-                AuthorHeader(post.author, item.publishedAtMillis, callbacks, avatarSize = RowAvatarSize)
-            }
-            when {
-                post.isDeleted -> Box(Modifier.padding(horizontal = 16.dp)) { DeletedNotice() }
-                // A warning has text and a button, which need the card's padding; the article's image doesn't.
-                post.isWarned -> Box(Modifier.padding(horizontal = 16.dp)) {
-                    SensitiveGate(post) { ArticleBody(post, contained = false) { callbacks.open(post) } }
-                }
-                else -> ArticleBody(post, contained = false) { callbacks.open(post) }
-            }
-            // The buttons' own padding lines their icons up with the text above.
-            Box(Modifier.padding(start = 16.dp, bottom = 4.dp)) {
-                ActionBar(item, callbacks, large = false)
-            }
-        }
-    }
-}
-
 /** The post a thread is about: reading-size text, the full date and roomier actions. */
 @Composable
 fun FocusedPost(item: FeedItem, callbacks: PostCallbacks, connectAbove: Boolean, modifier: Modifier = Modifier) {
@@ -269,7 +226,7 @@ fun FocusedPost(item: FeedItem, callbacks: PostCallbacks, connectAbove: Boolean,
             if (post.isArticle) {
                 // Shown here only when the reader can't lay the article out, so open it at its origin.
                 val uriHandler = browserUriHandler()
-                ArticleBody(post, contained = true) { if (post.url.isNotBlank()) uriHandler.openUri(post.url) }
+                ArticleBody(post) { if (post.url.isNotBlank()) uriHandler.openUri(post.url) }
             } else {
                 if (item.content.isNotEmpty()) TranslatableText(item, style = MaterialTheme.typography.reading)
                 PostMedia(post)
@@ -302,7 +259,7 @@ private fun PostContent(item: FeedItem, callbacks: PostCallbacks) {
     }
     SensitiveGate(post) {
         if (post.isArticle) {
-            ArticleBody(post, contained = true) { callbacks.open(post) }
+            ArticleBody(post) { callbacks.open(post) }
         } else {
             if (item.content.isNotEmpty()) TranslatableText(item)
             PostMedia(post)
@@ -437,9 +394,6 @@ private fun NameLine(author: Author, publishedAtMillis: Long?, modifier: Modifie
         }
     }
 }
-
-/** Content-warned or sensitive: an article hides behind a tap; so does anything under a content warning. */
-private val Post.isWarned: Boolean get() = sensitive || !contentWarning.isNullOrBlank()
 
 /**
  * Hides content-warned posts (and sensitive articles) behind a tap, as Ghost Admin does. A post that
@@ -579,24 +533,14 @@ fun ExternalPostLink(label: String, url: String, modifier: Modifier = Modifier, 
     }
 }
 
-/**
- * An article's feature image, title, excerpt and reading time. [contained] wraps it in an outlined
- * card that opens it, as an embed in a post row; otherwise it fills a card that already opens it.
- */
+/** An article embedded in a post row or a thread: an outlined card with its feature image, title, excerpt and reading time, which opens it. */
 @Composable
-private fun ArticleBody(post: Post, contained: Boolean, onClick: () -> Unit) {
-    if (contained) {
-        OutlinedCard(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
-            ArticleBodyContent(post, MaterialTheme.typography.titleMedium, bottomPadding = 12.dp)
-        }
-    } else {
-        // The card's own spacing follows, so no padding below.
-        Column(Modifier.fillMaxWidth()) { ArticleBodyContent(post, MaterialTheme.typography.titleLarge, bottomPadding = 0.dp) }
-    }
+private fun ArticleBody(post: Post, onClick: () -> Unit) {
+    OutlinedCard(onClick = onClick, modifier = Modifier.fillMaxWidth()) { ArticleBodyContent(post) }
 }
 
 @Composable
-private fun ArticleBodyContent(post: Post, titleStyle: TextStyle, bottomPadding: Dp) {
+private fun ArticleBodyContent(post: Post) {
     post.featureImageUrl?.takeIf { it.isNotBlank() }?.let { url ->
         // The image opens full screen; the rest of the card opens the article.
         val viewer = LocalImageViewer.current
@@ -613,10 +557,10 @@ private fun ArticleBodyContent(post: Post, titleStyle: TextStyle, bottomPadding:
         )
     }
     Column(
-        Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = bottomPadding),
+        Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 12.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        Text(post.title, style = titleStyle, maxLines = 3, overflow = TextOverflow.Ellipsis)
+        Text(post.title, style = MaterialTheme.typography.titleMedium, maxLines = 3, overflow = TextOverflow.Ellipsis)
         val excerpt = post.summary?.takeIf { it.isNotBlank() } ?: post.excerpt
         if (excerpt.isNotBlank()) {
             Text(

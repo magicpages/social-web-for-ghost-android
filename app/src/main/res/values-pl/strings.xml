@@ -175,6 +175,7 @@
     <string name="action_repost">Udostępnij ponownie</string>
     <string name="action_undo_repost">Cofnij udostępnienie</string>
     <string name="action_quote">Cytuj</string>
+    <string name="action_open_profile">Otwórz profil</string>
     <string name="quote_card_drawing">Rysowanie karty cytatu</string>
     <string name="quote_card_failed">Nie udało się narysować karty cytatu.</string>
     <string name="quote_card_warning">Ostrzeżenie o treści: %1$s</string>

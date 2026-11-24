@@ -157,6 +157,7 @@
     <string name="action_repost">리포스트</string>
     <string name="action_undo_repost">리포스트 취소</string>
     <string name="action_quote">인용</string>
+    <string name="action_open_profile">프로필 열기</string>
     <string name="quote_card_drawing">인용 카드 만드는 중</string>
     <string name="quote_card_failed">인용 카드를 만들지 못했어요.</string>
     <string name="quote_card_warning">콘텐츠 경고: %1$s</string>

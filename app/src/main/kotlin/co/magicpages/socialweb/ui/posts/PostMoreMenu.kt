@@ -26,6 +26,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.toClipEntry
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import co.magicpages.socialweb.R
 import co.magicpages.socialweb.data.activitypub.Hidden
 import co.magicpages.socialweb.data.activitypub.Moderation.Outcome
@@ -42,6 +44,7 @@ import co.magicpages.socialweb.ui.moderation.LocalModeration
 import co.magicpages.socialweb.ui.moderation.LocalOpenReport
 import co.magicpages.socialweb.ui.moderation.ReportKey
 import co.magicpages.socialweb.ui.translation.TranslateAction
+import co.magicpages.socialweb.ui.quote.LocalQuotePost
 import kotlinx.coroutines.launch
 
 /** Which confirmation the more menu shows once its sheet has closed. */
@@ -95,13 +98,51 @@ fun ArticleMoreMenu(item: FeedItem, translate: @Composable ActionSheetScope.() -
     PostMenu(item, sheetOpen, onClose = { sheetOpen = false }, translate = translate)
 }
 
-/** The more menu's sheet while [sheetOpen], and the confirmation one of its actions asks for after it closes. */
+/**
+ * A Reader card's menu, on a long press: what the timeline's action buttons do (like, repost,
+ * quote, reply, share) and the author's profile, then what a post's more menu has. Choosing
+ * Repost here is the confirmation the repost button's sheet asks for.
+ */
+@Composable
+internal fun ReaderCardMenu(item: FeedItem, callbacks: PostCallbacks, open: Boolean, onClose: () -> Unit) {
+    if (item.post.isDeleted) return
+    val post = item.post
+    val quotePost = LocalQuotePost.current
+    val share = rememberSharePost()
+    val haptics = LocalHapticFeedback.current
+    PostMenu(item, open, onClose, leading = {
+        SheetAction(
+            stringResource(if (post.likedByMe) R.string.action_unlike else R.string.action_like),
+            if (post.likedByMe) AppIcons.FavoriteFilled else AppIcons.Favorite,
+        ) {
+            haptics.performHapticFeedback(if (post.likedByMe) HapticFeedbackType.ToggleOff else HapticFeedbackType.ToggleOn)
+            callbacks.toggleLike(post)
+        }
+        SheetAction(stringResource(if (post.repostedByMe) R.string.action_undo_repost else R.string.action_repost), AppIcons.Repost) {
+            haptics.performHapticFeedback(if (post.repostedByMe) HapticFeedbackType.ToggleOff else HapticFeedbackType.ToggleOn)
+            callbacks.toggleRepost(post)
+        }
+        if (quotePost != null) SheetAction(stringResource(R.string.action_quote), AppIcons.FormatQuote) { quotePost(post) }
+        SheetAction(stringResource(R.string.action_reply), AppIcons.Reply) { callbacks.reply(item) }
+        SheetAction(stringResource(R.string.share), AppIcons.Share) { share(item) }
+        SheetAction(stringResource(R.string.action_open_profile), AppIcons.Person) { callbacks.openProfile(post.author) }
+    }) {
+        ReaderViewAction(post)
+        TranslateAction(item)
+    }
+}
+
+/**
+ * The more menu's sheet while [sheetOpen], and the confirmation one of its actions asks for after it closes. [leading]
+ * comes first, then [translate].
+ */
 @Composable
 private fun PostMenu(
     item: FeedItem,
     sheetOpen: Boolean,
     onClose: () -> Unit,
     shareInMenu: Boolean = false,
+    leading: @Composable ActionSheetScope.() -> Unit = {},
     translate: @Composable ActionSheetScope.() -> Unit,
 ) {
     val post = item.post
@@ -113,6 +154,7 @@ private fun PostMenu(
     val share = rememberSharePost()
     if (sheetOpen) {
         ActionSheet(onDismiss = onClose) {
+            leading()
             translate()
             val shareUrl = post.shareUrl
             if (shareUrl != null) {

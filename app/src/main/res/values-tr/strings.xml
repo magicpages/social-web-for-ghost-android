@@ -163,6 +163,7 @@
     <string name="action_repost">Yeniden paylaş</string>
     <string name="action_undo_repost">Yeniden paylaşımı geri al</string>
     <string name="action_quote">Alıntıla</string>
+    <string name="action_open_profile">Profili aç</string>
     <string name="quote_card_drawing">Alıntı kartı hazırlanıyor</string>
     <string name="quote_card_failed">Alıntı kartı hazırlanamadı.</string>
     <string name="quote_card_warning">İçerik uyarısı: %1$s</string>

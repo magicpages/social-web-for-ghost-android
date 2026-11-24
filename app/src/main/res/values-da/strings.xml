@@ -163,6 +163,7 @@
     <string name="action_repost">Del videre</string>
     <string name="action_undo_repost">Fortryd deling</string>
     <string name="action_quote">Citér</string>
+    <string name="action_open_profile">Åbn profil</string>
     <string name="quote_card_drawing">Tegner citatkortet</string>
     <string name="quote_card_failed">Kunne ikke tegne citatkortet.</string>
     <string name="quote_card_warning">Indholdsadvarsel: %1$s</string>

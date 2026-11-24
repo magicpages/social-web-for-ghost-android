@@ -163,6 +163,7 @@
     <string name="action_repost">रीपोस्ट करें</string>
     <string name="action_undo_repost">रीपोस्ट हटाएँ</string>
     <string name="action_quote">कोट करें</string>
+    <string name="action_open_profile">प्रोफ़ाइल खोलें</string>
     <string name="quote_card_drawing">कोट कार्ड बनाया जा रहा है</string>
     <string name="quote_card_failed">कोट कार्ड नहीं बन सका।</string>
     <string name="quote_card_warning">कंटेंट चेतावनी: %1$s</string>

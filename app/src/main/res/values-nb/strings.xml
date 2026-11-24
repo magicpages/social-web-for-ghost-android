@@ -163,6 +163,7 @@
     <string name="action_repost">Del videre</string>
     <string name="action_undo_repost">Angre deling</string>
     <string name="action_quote">Siter</string>
+    <string name="action_open_profile">Åpne profil</string>
     <string name="quote_card_drawing">Tegner sitatkortet</string>
     <string name="quote_card_failed">Kunne ikke tegne sitatkortet.</string>
     <string name="quote_card_warning">Innholdsvarsel: %1$s</string>

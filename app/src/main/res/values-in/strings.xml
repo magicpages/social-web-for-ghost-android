@@ -157,6 +157,7 @@
     <string name="action_repost">Posting ulang</string>
     <string name="action_undo_repost">Batalkan posting ulang</string>
     <string name="action_quote">Kutip</string>
+    <string name="action_open_profile">Buka profil</string>
     <string name="quote_card_drawing">Membuat kartu kutipan</string>
     <string name="quote_card_failed">Gagal membuat kartu kutipan.</string>
     <string name="quote_card_warning">Peringatan konten: %1$s</string>
