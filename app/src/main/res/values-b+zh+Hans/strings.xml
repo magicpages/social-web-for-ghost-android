@@ -794,6 +794,8 @@
     <string name="curator_menu_topics">更改话题</string>
     <string name="curator_menu_skip_all">全部跳过</string>
     <string name="curator_menu_hide_site">不再显示来自 %1$s 的内容</string>
+    <string name="curator_more">更多帖子</string>
+    <string name="curator_nothing_left">今天没有新内容了。明天见。</string>
     <string name="curator_settings_title">你的话题</string>
     <string name="curator_settings_none">未设置</string>
     <string name="curator_settings_footer">你写的话题。阅读器每天会从这些话题中推荐几篇帖子。保存在这部手机上，仅用于此站点。</string>

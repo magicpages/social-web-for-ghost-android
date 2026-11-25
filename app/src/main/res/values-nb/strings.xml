@@ -817,6 +817,8 @@
     <string name="curator_menu_topics">Endre emner</string>
     <string name="curator_menu_skip_all">Hopp over alle</string>
     <string name="curator_menu_hide_site">Ikke mer fra %1$s</string>
+    <string name="curator_more">Flere innlegg</string>
+    <string name="curator_nothing_left">Det er ikke mer nytt i dag. Vi ses i morgen.</string>
     <string name="curator_settings_title">Emnene dine</string>
     <string name="curator_settings_none">Ikke valgt</string>
     <string name="curator_settings_footer">Hva du skriver om. Leseren foreslår noen innlegg fra disse emnene hver dag. Lagres på denne telefonen, for dette nettstedet.</string>

@@ -826,6 +826,8 @@
     <string name="curator_menu_topics">Change topics</string>
     <string name="curator_menu_skip_all">Skip all</string>
     <string name="curator_menu_hide_site">Nothing more from %1$s</string>
+    <string name="curator_more">More posts</string>
+    <string name="curator_nothing_left">Nothing new left today. See you tomorrow.</string>
     <string name="curator_settings_title">Your topics</string>
     <string name="curator_settings_none">Not set</string>
     <string name="curator_settings_footer">What you write about. The Reader suggests a few posts from these topics each day. Saved on this phone, for this site.</string>

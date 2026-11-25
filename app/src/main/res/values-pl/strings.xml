@@ -865,6 +865,8 @@
     <string name="curator_menu_topics">Zmień tematy</string>
     <string name="curator_menu_skip_all">Pomiń wszystkie</string>
     <string name="curator_menu_hide_site">Nic więcej z %1$s</string>
+    <string name="curator_more">Więcej wpisów</string>
+    <string name="curator_nothing_left">Na dziś nie ma już nic nowego. Do jutra.</string>
     <string name="curator_settings_title">Twoje tematy</string>
     <string name="curator_settings_none">Nie ustawiono</string>
     <string name="curator_settings_footer">O czym piszesz. Czytnik codziennie proponuje kilka wpisów z tych tematów. Zapisane na tym telefonie, dla tej witryny.</string>

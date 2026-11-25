@@ -115,7 +115,7 @@ fun CuratorDeskCard(
             CuratorUi.Hidden -> Unit
             is CuratorUi.Choose -> DeskFrame { ChooseTopics(state, viewModel) }
             is CuratorUi.Review -> DeskFrame { Review(state, viewModel, onOpenPost, onOpenProfile) }
-            CuratorUi.Finished -> DeskFrame { Finished(viewModel::hide) }
+            CuratorUi.Finished -> DeskFrame { Finished(viewModel) }
         }
     }
 }
@@ -332,11 +332,24 @@ private fun DeskButton(label: String, icon: androidx.compose.ui.graphics.vector.
     }
 }
 
+/** The day's end. Another round is there for the writer who wants it, never offered more loudly than going away. */
 @Composable
-private fun Finished(onHide: () -> Unit) {
+private fun Finished(viewModel: CuratorDeskViewModel) {
+    val more by viewModel.more.collectAsStateWithLifecycle()
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
         Icon(AppIcons.Check, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-        Text(stringResource(R.string.curator_done), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-        TextButton(onClick = onHide) { Text(stringResource(R.string.curator_hide)) }
+        Text(
+            stringResource(if (more == CuratorMore.NothingLeft) R.string.curator_nothing_left else R.string.curator_done),
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.weight(1f),
+        )
+    }
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+        if (more != CuratorMore.NothingLeft) {
+            TextButton(onClick = viewModel::again, enabled = more == CuratorMore.Offered) {
+                Text(stringResource(R.string.curator_more))
+            }
+        }
+        TextButton(onClick = viewModel::hide) { Text(stringResource(R.string.curator_hide)) }
     }
 }

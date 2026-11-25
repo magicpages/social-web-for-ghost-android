@@ -43,7 +43,7 @@ const val CuratorRepostsBeforeThought = 3
  * The version of how the desk picks posts. Raised when picking changes for the better, so a day picked the old way
  * is picked again instead of keeping posts the writer was already let down by.
  */
-const val CuratorPickRules = 1
+const val CuratorPickRules = 2
 
 /** How long a shown post stays out of the picks; older ones have moved on from the topics' feeds anyway. */
 private const val SeenKeepMillis = 14L * 24 * 60 * 60 * 1000
@@ -119,16 +119,37 @@ class CuratorDesk @Inject constructor(
             val existing = state.day?.takeIf { it.date == date }
             if (state.topics.isEmpty() || (existing?.picks != null && existing.rules == CuratorPickRules)) return
             val now = System.currentTimeMillis()
-            val picked = pick(account, state, now)
-            store.update(account.id) { current ->
-                // The topics may have been changed while the posts were loading; these would be the old topics' posts.
-                if (current.topics.map { it.slug } != state.topics.map { it.slug }) return@update current
-                val day = current.day?.takeIf { it.date == date } ?: CuratorDay(date)
-                current.copy(
-                    day = day.copy(picks = picked.posts, handled = 0, fellBack = picked.fellBack, rules = CuratorPickRules),
-                    seen = current.seen.kept(now) + listOfNotNull(picked.posts.firstOrNull()?.let { it.id to now }),
-                )
-            }
+            keep(account, state, date, pick(account, state, now), now)
+        }
+    }
+
+    /**
+     * Another round for [today] once its posts are through, from posts not shown yet, for a writer who asked for
+     * more; today's reposts still count. Returns false, leaving the day as it was, when there is nothing more to
+     * pick. Throws what the service's requests throw.
+     */
+    suspend fun again(account: StoredAccount, today: LocalDate = LocalDate.now()): Boolean = picking.withLock {
+        val date = today.toString()
+        val state = store.states.value[account.id] ?: return false
+        if (state.day?.takeIf { it.date == date }?.finished != true) return false
+        val now = System.currentTimeMillis()
+        val picked = pick(account, state, now)
+        if (picked.posts.isEmpty()) return false
+        keep(account, state, date, picked, now)
+        true
+    }
+
+    /** Keeps [picked] as [date]'s posts, from the first, unless [state]'s topics were changed while they loaded. */
+    private fun keep(account: StoredAccount, state: CuratorState, date: String, picked: Picked, now: Long) {
+        store.update(account.id) { current ->
+            // These would be the old topics' posts.
+            if (current.topics.map { it.slug } != state.topics.map { it.slug }) return@update current
+            val day = current.day?.takeIf { it.date == date } ?: CuratorDay(date)
+            current.copy(
+                day = day.copy(picks = picked.posts, handled = 0, fellBack = picked.fellBack, rules = CuratorPickRules),
+                seen = current.seen.kept(now) + listOfNotNull(picked.posts.firstOrNull()?.let { it.id to now }),
+                hiddenOn = null,
+            )
         }
     }
 

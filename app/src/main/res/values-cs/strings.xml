@@ -865,6 +865,8 @@
     <string name="curator_menu_topics">Změnit témata</string>
     <string name="curator_menu_skip_all">Přeskočit vše</string>
     <string name="curator_menu_hide_site">Už nic od %1$s</string>
+    <string name="curator_more">Další příspěvky</string>
+    <string name="curator_nothing_left">Na dnešek už nic nového není. Zítra zase.</string>
     <string name="curator_settings_title">Vaše témata</string>
     <string name="curator_settings_none">Nenastaveno</string>
     <string name="curator_settings_footer">O čem píšete. Čtečka vám každý den navrhne pár příspěvků z těchto témat. Uloženo v tomto telefonu pro tento web.</string>

@@ -794,6 +794,8 @@
     <string name="curator_menu_topics">トピックを変更</string>
     <string name="curator_menu_skip_all">すべてスキップ</string>
     <string name="curator_menu_hide_site">%1$s の投稿を今後表示しない</string>
+    <string name="curator_more">さらに表示</string>
+    <string name="curator_nothing_left">今日はもう新しい投稿はありません。また明日。</string>
     <string name="curator_settings_title">あなたのトピック</string>
     <string name="curator_settings_none">未設定</string>
     <string name="curator_settings_footer">書いているトピックです。リーダーが毎日、これらのトピックの投稿をいくつか提案します。このサイトの設定として、この端末に保存されます。</string>

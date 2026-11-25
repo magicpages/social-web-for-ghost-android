@@ -865,6 +865,8 @@
     <string name="curator_menu_topics">Изменить темы</string>
     <string name="curator_menu_skip_all">Пропустить всё</string>
     <string name="curator_menu_hide_site">Больше ничего от %1$s</string>
+    <string name="curator_more">Ещё публикации</string>
+    <string name="curator_nothing_left">На сегодня ничего нового не осталось. До завтра.</string>
     <string name="curator_settings_title">Ваши темы</string>
     <string name="curator_settings_none">Не заданы</string>
     <string name="curator_settings_footer">О чём вы пишете. Каждый день «Чтение» предлагает несколько записей из этих тем. Сохраняется на этом телефоне, для этого сайта.</string>

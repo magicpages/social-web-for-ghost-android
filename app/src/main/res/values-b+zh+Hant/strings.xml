@@ -794,6 +794,8 @@
     <string name="curator_menu_topics">變更主題</string>
     <string name="curator_menu_skip_all">全部略過</string>
     <string name="curator_menu_hide_site">不再顯示來自 %1$s 的內容</string>
+    <string name="curator_more">更多貼文</string>
+    <string name="curator_nothing_left">今天沒有新內容了。明天見。</string>
     <string name="curator_settings_title">你的主題</string>
     <string name="curator_settings_none">未設定</string>
     <string name="curator_settings_footer">你寫的主題。閱讀器每天會從這些主題中推薦幾篇貼文。儲存在這支手機上，僅用於此網站。</string>

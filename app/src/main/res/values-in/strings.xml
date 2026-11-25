@@ -794,6 +794,8 @@
     <string name="curator_menu_topics">Ubah topik</string>
     <string name="curator_menu_skip_all">Lewati semua</string>
     <string name="curator_menu_hide_site">Jangan tampilkan lagi dari %1$s</string>
+    <string name="curator_more">Postingan lainnya</string>
+    <string name="curator_nothing_left">Tidak ada yang baru lagi hari ini. Sampai besok.</string>
     <string name="curator_settings_title">Topik Anda</string>
     <string name="curator_settings_none">Belum diatur</string>
     <string name="curator_settings_footer">Topik yang Anda tulis. Pembaca menyarankan beberapa kiriman dari topik ini setiap hari. Disimpan di ponsel ini, untuk situs ini.</string>

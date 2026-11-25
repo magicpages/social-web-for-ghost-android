@@ -842,6 +842,8 @@
     <string name="curator_menu_topics">Alterar temas</string>
     <string name="curator_menu_skip_all">Ignorar tudo</string>
     <string name="curator_menu_hide_site">Nada mais de %1$s</string>
+    <string name="curator_more">Mais publicações</string>
+    <string name="curator_nothing_left">Hoje já não há nada de novo. Até amanhã.</string>
     <string name="curator_settings_title">Os seus temas</string>
     <string name="curator_settings_none">Não definido</string>
     <string name="curator_settings_footer">Sobre o que você escreve. O leitor sugere alguns posts destes temas todos os dias. Guardado neste telemóvel, para este site.</string>

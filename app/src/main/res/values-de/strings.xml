@@ -818,6 +818,8 @@
     <string name="curator_menu_topics">Themen ändern</string>
     <string name="curator_menu_skip_all">Alle überspringen</string>
     <string name="curator_menu_hide_site">Nichts mehr von %1$s</string>
+    <string name="curator_more">Mehr Beiträge</string>
+    <string name="curator_nothing_left">Für heute gibt es nichts Neues mehr. Bis morgen.</string>
     <string name="curator_settings_title">Deine Themen</string>
     <string name="curator_settings_none">Nicht festgelegt</string>
     <string name="curator_settings_footer">Worüber du schreibst. Der Reader schlägt dir jeden Tag ein paar Beiträge aus diesen Themen vor. Wird auf diesem Handy gespeichert, für diese Seite.</string>

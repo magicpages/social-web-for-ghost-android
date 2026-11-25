@@ -23,6 +23,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filterNotNull
@@ -59,8 +60,20 @@ sealed interface CuratorUi {
         val thoughtFirst: Boolean,
     ) : CuratorUi
 
-    /** The day is through. */
+    /** The day is through; [CuratorDeskViewModel.more] says whether another round can be asked for. */
     data object Finished : CuratorUi
+}
+
+/** Where asking for another round of posts stands, once the day is through. */
+enum class CuratorMore {
+    /** It can be asked for. */
+    Offered,
+
+    /** It was asked for and the posts are being picked. */
+    Picking,
+
+    /** It was asked for and nothing new was left today. */
+    NothingLeft,
 }
 
 /**
@@ -136,8 +149,28 @@ class CuratorDeskViewModel @Inject constructor(
 
     /** Called when the Reader comes to the front: a new day gets its posts, and what failed before is tried again. */
     fun refresh() {
-        today.value = LocalDate.now()
+        val now = LocalDate.now()
+        if (now != today.value) _more.value = CuratorMore.Offered
+        today.value = now
         load(force = false)
+    }
+
+    private val _more = MutableStateFlow(CuratorMore.Offered)
+
+    /** Whether the finished day can have another round. */
+    val more: StateFlow<CuratorMore> = _more.asStateFlow()
+
+    /** Picks another round of posts for today, at the writer's asking, once the day is through. */
+    fun again() {
+        if (_more.value != CuratorMore.Offered) return
+        _more.value = CuratorMore.Picking
+        viewModelScope.launch {
+            val account = accounts.account.first()
+            var picked = false
+            val answered = account != null && guarded(account) { picked = desk.again(account, today.value) }
+            // A failed request can be tried again; only an answer with nothing in it ends the day.
+            _more.value = if (answered && !picked) CuratorMore.NothingLeft else CuratorMore.Offered
+        }
     }
 
     private fun load(force: Boolean) {
