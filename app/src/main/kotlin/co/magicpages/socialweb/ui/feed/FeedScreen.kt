@@ -46,6 +46,7 @@ import co.magicpages.socialweb.R
 import co.magicpages.socialweb.data.account.StoredAccount
 import co.magicpages.socialweb.data.activitypub.Author
 import co.magicpages.socialweb.data.activitypub.Post
+import co.magicpages.socialweb.data.curator.CuratorDeskEnabled
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.ui.components.AppIcons
 import co.magicpages.socialweb.ui.components.CenteredLoading
@@ -89,8 +90,8 @@ fun FeedScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val listState = rememberLazyListState()
     val snackbar = remember { SnackbarHostState() }
-    // The Reader's own: a few posts a day from the topics the writer picked, above its timeline.
-    val curator = if (feed == Feed.Reader) hiltViewModel<CuratorDeskViewModel>() else null
+    // The Reader's own: a few posts a day from the topics the writer picked, above its timeline (while it is on).
+    val curator = if (feed == Feed.Reader && CuratorDeskEnabled) hiltViewModel<CuratorDeskViewModel>() else null
     if (curator != null) CuratorDeskEffects(curator)
     val deskHeader: (@Composable () -> Unit)? = if (curator == null) null else {
         { CuratorDeskCard(curator, onOpenPost, onOpenProfile) }

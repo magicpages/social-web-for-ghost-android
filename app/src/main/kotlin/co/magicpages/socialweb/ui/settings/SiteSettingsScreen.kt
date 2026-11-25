@@ -72,6 +72,7 @@ import co.magicpages.socialweb.data.account.AccountStore
 import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.activitypub.Topic
 import co.magicpages.socialweb.data.curator.CuratorDesk
+import co.magicpages.socialweb.data.curator.CuratorDeskEnabled
 import co.magicpages.socialweb.data.ghost.GhostException
 import co.magicpages.socialweb.data.settings.AccountColors
 import co.magicpages.socialweb.data.settings.AppSettings
@@ -137,6 +138,8 @@ class SiteSettingsViewModel @AssistedInject constructor(
 
     init {
         viewModelScope.launch {
+            // Without the desk there is nothing to choose topics for, and the setting stays out.
+            if (!CuratorDeskEnabled) return@launch
             val account = accounts.signedIn(accountId) ?: return@launch
             try {
                 _topicChoices.value = desk.availableTopics(account)

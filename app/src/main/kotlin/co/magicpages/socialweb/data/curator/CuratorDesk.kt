@@ -30,6 +30,12 @@ import kotlinx.coroutines.withContext
 /** The slug of Ghost's default topic: it lists who is popular, not a subject, so nobody writes about it. */
 const val TopTopicSlug = "top"
 
+/**
+ * Whether the desk shows at all. Off for now: the service files posts under topics by the site that wrote them, not
+ * by what each post is about, so a topic's posts are too often off topic. Back on once posts carry hashtags to pick by.
+ */
+const val CuratorDeskEnabled = false
+
 /** How many posts the desk puts in front of the writer in a day. */
 const val CuratorDayLimit = 5
 
