@@ -1,0 +1,7 @@
+• O Leitor agora é uma revista, com configurações de leitura para cor da página, fonte serifada e tamanho do texto.
+• Vizinhos em Explorar: autores dos seus temas que você ainda não segue.
+• Selecione palavras do seu próprio artigo para publicá-las como cartão de citação, com um lembrete para compartilhar de novo.
+• Fixe temas no Leitor.
+• A tradução acontece no aparelho com o mecanismo do Firefox.
+• Adicione e troque de site nas Configurações.
+• Design revisado e correções.

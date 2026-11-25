@@ -1,0 +1,7 @@
+• Der Reader ist jetzt ein Magazin, mit Leseeinstellungen für Seitenfarbe, Serifenschrift und Textgröße.
+• Nachbarn in Entdecken: Schreibende in deinen Themen, denen du noch nicht folgst.
+• Markiere Wörter in deinem eigenen Artikel und teile sie als Zitatkarte, mit Erinnerung zum erneuten Teilen.
+• Themen im Reader anheften.
+• Übersetzung läuft auf deinem Gerät mit der Engine von Firefox.
+• Seiten in den Einstellungen hinzufügen und wechseln.
+• Überarbeitetes Design und Fehlerbehebungen.

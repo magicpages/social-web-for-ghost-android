@@ -1,0 +1,7 @@
+• Fliken Läsare är nu ett magasin, med läsinställningar för sidfärg, serifftypsnitt och textstorlek.
+• Grannar i Utforska: skribenter i dina ämnen som du inte följer än.
+• Markera ord i din egen artikel och dela dem som citatkort, med en påminnelse om att dela den igen.
+• Fäst ämnen i Läsare.
+• Översättning sker på enheten med Firefox motor.
+• Lägg till och byt webbplats i Inställningar.
+• Ny design och rättningar.

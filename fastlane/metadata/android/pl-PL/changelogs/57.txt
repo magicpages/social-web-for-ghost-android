@@ -1,0 +1,7 @@
+• Czytnik to teraz magazyn z ustawieniami czytania: kolor strony, czcionka szeryfowa i rozmiar tekstu.
+• Sąsiedzi w Odkrywaj: autorzy z Twoich tematów, których jeszcze nie obserwujesz.
+• Zaznacz słowa we własnym artykule i opublikuj je jako kartę z cytatem, z przypomnieniem o ponownym udostępnieniu.
+• Przypinaj tematy do Czytnika.
+• Tłumaczenie działa na urządzeniu z silnikiem Firefoksa.
+• Dodawaj i przełączaj witryny w Ustawieniach.
+• Odświeżony wygląd i poprawki.

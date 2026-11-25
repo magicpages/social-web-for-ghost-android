@@ -1,0 +1,7 @@
+• Le Lecteur devient un magazine, avec des réglages de lecture : couleur de page, police à empattements, taille du texte.
+• Voisins dans Explorer : des auteurs de vos thèmes que vous ne suivez pas encore.
+• Publiez des mots de votre propre article en carte citation, avec un rappel pour le repartager.
+• Épinglez des thèmes au Lecteur.
+• La traduction se fait sur votre appareil avec le moteur de Firefox.
+• Ajoutez et changez de site depuis les Paramètres.
+• Design revu et corrections.

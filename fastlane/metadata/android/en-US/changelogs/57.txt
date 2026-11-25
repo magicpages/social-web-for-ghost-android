@@ -1,0 +1,7 @@
+• The Reader is a magazine now, with reading settings for page color, serif type and text size.
+• Neighbors in Explore: writers in your topics you don't follow yet.
+• Select words in your own article to post them as a quote card, and get reminded to share it again.
+• Pin topics to the Reader.
+• Translation runs on your device with Firefox's engine.
+• Add and switch sites from Settings.
+• A design pass across the app, and fixes.

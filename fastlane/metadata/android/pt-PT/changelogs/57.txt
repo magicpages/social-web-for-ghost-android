@@ -1,0 +1,7 @@
+• O Leitor é agora uma revista, com definições de leitura para a cor da página, letra serifada e tamanho do texto.
+• Vizinhos em Explorar: autores dos seus temas que ainda não segue.
+• Selecione palavras do seu próprio artigo para as publicar como cartão de citação, com um lembrete para o partilhar de novo.
+• Fixe temas no Leitor.
+• A tradução é feita no dispositivo com o motor do Firefox.
+• Adicione e mude de site nas Configurações.
+• Design revisto e correções.

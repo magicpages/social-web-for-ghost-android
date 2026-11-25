@@ -1,0 +1,7 @@
+• Il Lettore ora è una rivista, con impostazioni di lettura per colore della pagina, carattere con grazie e dimensione del testo.
+• Vicini in Esplora: autori dei tuoi argomenti che non segui ancora.
+• Seleziona parole del tuo articolo per pubblicarle come scheda citazione, con un promemoria per condividerlo di nuovo.
+• Fissa argomenti nel Lettore.
+• La traduzione avviene sul dispositivo con il motore di Firefox.
+• Aggiungi e cambia sito dalle Impostazioni.
+• Design rivisto e correzioni.

@@ -1,0 +1,7 @@
+• Trình đọc giờ là một tạp chí, với cài đặt đọc cho màu trang, phông có chân và cỡ chữ.
+• Hàng xóm trong Khám phá: những người viết trong chủ đề của bạn mà bạn chưa theo dõi.
+• Chọn chữ trong bài viết của bạn để đăng thành thẻ trích dẫn, kèm lời nhắc chia sẻ lại.
+• Ghim chủ đề vào Trình đọc.
+• Dịch ngay trên thiết bị bằng bộ máy của Firefox.
+• Thêm và chuyển trang web trong Cài đặt.
+• Thiết kế mới và sửa lỗi.

@@ -1,0 +1,7 @@
+• El Lector es ahora una revista, con ajustes de lectura para el color de página, la tipografía con serifa y el tamaño del texto.
+• Vecinos en Explorar: autores de tus temas a los que aún no sigues.
+• Selecciona palabras de tu propio artículo para publicarlas como tarjeta de cita, con un recordatorio para volver a compartirlo.
+• Fija temas en el Lector.
+• La traducción se hace en tu dispositivo con el motor de Firefox.
+• Añade y cambia de sitio desde Ajustes.
+• Diseño renovado y correcciones.

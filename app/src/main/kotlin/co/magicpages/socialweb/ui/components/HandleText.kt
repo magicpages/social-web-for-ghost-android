@@ -11,6 +11,7 @@ import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 
 /**
@@ -40,10 +41,13 @@ fun HandleText(
         modifier = modifier.clearAndSetSemantics { text = AnnotatedString(handle) },
     ) { (userPart, serverPart), constraints ->
         val loose = constraints.copy(minWidth = 0)
+        // Unbounded (as when a popup asks for its widest size), each part takes its full width: subtracting from
+        // Infinity gives a width Constraints can't hold.
+        fun room(taken: Int) = if (constraints.hasBoundedWidth) (constraints.maxWidth - taken).coerceAtLeast(0) else Constraints.Infinity
         // The user part keeps room for a letter and its ellipsis, so the handle never reads as just a server.
         val userMin = minOf(MinUserPart.roundToPx(), userPart.maxIntrinsicWidth(constraints.maxHeight))
-        val serverPlaced = serverPart.measure(loose.copy(maxWidth = (constraints.maxWidth - userMin).coerceAtLeast(0)))
-        val userPlaced = userPart.measure(loose.copy(maxWidth = (constraints.maxWidth - serverPlaced.width).coerceAtLeast(0)))
+        val serverPlaced = serverPart.measure(loose.copy(maxWidth = room(userMin)))
+        val userPlaced = userPart.measure(loose.copy(maxWidth = room(serverPlaced.width)))
         val width = (userPlaced.width + serverPlaced.width).coerceIn(constraints.minWidth, constraints.maxWidth)
         val height = maxOf(userPlaced.height, serverPlaced.height).coerceIn(constraints.minHeight, constraints.maxHeight)
         layout(width, height) {
