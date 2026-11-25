@@ -1,17 +1,12 @@
 package co.magicpages.socialweb.data.translation
 
 import android.content.Context
-import android.icu.util.ULocale
-import android.view.textclassifier.TextClassificationManager
-import android.view.textclassifier.TextLanguage
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.IOException
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.cancellation.CancellationException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 /** Texts translated into the chosen language, and the code of the language they were in. */
 class Translated(val texts: List<String>, val sourceLanguage: String)
@@ -36,6 +31,7 @@ class TextTranslator @Inject constructor(
     private val files: TranslationFiles,
     private val engine: TranslationEngine,
     private val settings: TranslationSettings,
+    private val languages: LanguageIdentifier,
 ) {
     private val appLocale: Locale get() = context.resources.configuration.locales[0]
 
@@ -106,7 +102,7 @@ class TextTranslator @Inject constructor(
             ?: throw TranslationException(TranslationProblem.UnsupportedLanguage, translationLanguage(targetTag))
         val sample = texts.filter { it.isNotBlank() }.joinToString("\n").take(IdentifiedLength)
         if (sample.isEmpty()) throw TranslationException(TranslationProblem.Empty)
-        val detected = identify(sample)
+        val detected = languages.identify(sample)
         val source = sourceLanguage(detected, target, SupportedLanguages)
         val route = route(modelLanguage(source, Locale.forLanguageTag(detected)), modelLanguage(target, Locale.forLanguageTag(targetTag)))
         return source to installedModels(route, source, download, offline)
@@ -201,20 +197,9 @@ class TextTranslator @Inject constructor(
         return route.map { (from, to) -> checkNotNull(files.installed(from, to)) { "$from-$to didn't install" } }
     }
 
-    /** The BCP 47 tag of the language [text] is in, or "und" when the classifier isn't sure. */
-    private suspend fun identify(text: String): String = withContext(Dispatchers.Default) {
-        val classifier = context.getSystemService(TextClassificationManager::class.java).textClassifier
-        val result = classifier.detectLanguage(TextLanguage.Request.Builder(text).build())
-        val best: ULocale? = if (result.localeHypothesisCount > 0) result.getLocale(0) else null
-        if (best != null && result.getConfidenceScore(best) >= MinConfidence) best.toLanguageTag() else "und"
-    }
-
     private companion object {
         /** Plenty to tell a language by; the identifier gains nothing from a whole article. */
         const val IdentifiedLength = 2000
-
-        /** Below this the classifier is guessing; a wrong source language gives a garbled translation. */
-        const val MinConfidence = 0.5f
     }
 }
 

@@ -816,6 +816,7 @@
     <string name="curator_done">Det var alt for i dag. Vi ses i morgen.</string>
     <string name="curator_menu_topics">Skift emner</string>
     <string name="curator_menu_skip_all">Spring alle over</string>
+    <string name="curator_menu_hide_site">Ikke mere fra %1$s</string>
     <string name="curator_settings_title">Dine emner</string>
     <string name="curator_settings_none">Ikke angivet</string>
     <string name="curator_settings_footer">Hvad du skriver om. Læseren foreslår hver dag nogle indlæg fra disse emner. Gemt på denne telefon, for dette websted.</string>

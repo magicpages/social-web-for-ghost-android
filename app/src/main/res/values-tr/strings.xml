@@ -816,6 +816,7 @@
     <string name="curator_done">Bugünlük bu kadar. Yarın görüşürüz.</string>
     <string name="curator_menu_topics">Konuları değiştir</string>
     <string name="curator_menu_skip_all">Hepsini atla</string>
+    <string name="curator_menu_hide_site">%1$s sitesinden artık gösterme</string>
     <string name="curator_settings_title">Konularınız</string>
     <string name="curator_settings_none">Ayarlanmadı</string>
     <string name="curator_settings_footer">Ne hakkında yazdığınız. Okuyucu her gün bu konulardan birkaç gönderi önerir. Bu telefonda, bu site için saklanır.</string>

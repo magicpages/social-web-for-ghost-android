@@ -792,6 +792,7 @@
     <string name="curator_done">Hôm nay đến đây thôi. Hẹn gặp lại ngày mai.</string>
     <string name="curator_menu_topics">Đổi chủ đề</string>
     <string name="curator_menu_skip_all">Bỏ qua tất cả</string>
+    <string name="curator_menu_hide_site">Không hiện thêm từ %1$s</string>
     <string name="curator_settings_title">Chủ đề của bạn</string>
     <string name="curator_settings_none">Chưa đặt</string>
     <string name="curator_settings_footer">Chủ đề bạn viết về. Trình đọc gợi ý vài bài từ các chủ đề này mỗi ngày. Lưu trên điện thoại này, cho trang này.</string>

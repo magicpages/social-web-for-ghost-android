@@ -816,6 +816,7 @@
     <string name="curator_done">Dat was het voor vandaag. Tot morgen.</string>
     <string name="curator_menu_topics">Onderwerpen wijzigen</string>
     <string name="curator_menu_skip_all">Alles overslaan</string>
+    <string name="curator_menu_hide_site">Niets meer van %1$s</string>
     <string name="curator_settings_title">Jouw onderwerpen</string>
     <string name="curator_settings_none">Niet ingesteld</string>
     <string name="curator_settings_footer">Waar je over schrijft. De lezer stelt elke dag een paar berichten uit deze onderwerpen voor. Opgeslagen op deze telefoon, voor deze site.</string>

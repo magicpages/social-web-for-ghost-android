@@ -8,9 +8,12 @@ import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.activitypub.Topic
 import co.magicpages.socialweb.data.activitypub.handleKey
 import co.magicpages.socialweb.data.settings.AppSettings
+import co.magicpages.socialweb.data.translation.LanguageIdentifier
+import co.magicpages.socialweb.data.translation.translationLanguage
 import java.time.Instant
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
@@ -36,11 +39,30 @@ const val CuratorMaxTopics = 3
 /** Reposts in one day after which the desk offers a thought as the better answer. */
 const val CuratorRepostsBeforeThought = 3
 
+/**
+ * The version of how the desk picks posts. Raised when picking changes for the better, so a day picked the old way
+ * is picked again instead of keeping posts the writer was already let down by.
+ */
+const val CuratorPickRules = 1
+
 /** How long a shown post stays out of the picks; older ones have moved on from the topics' feeds anyway. */
 private const val SeenKeepMillis = 14L * 24 * 60 * 60 * 1000
 
 /** Pages read per topic while looking for a day's posts; a feed full of what is filtered out must not be read to its end. */
 private const val MaxPagesPerTopic = 3
+
+/**
+ * Usable posts gathered per topic before choosing. The service files every article of a site under the site's topics,
+ * so a topic's newest posts are anything those sites wrote; a wider pool leaves room to keep only the ones others
+ * took to and that are in the writer's language.
+ */
+private const val PoolPerTopic = 30
+
+/** The writer's own articles their language is told from. */
+private const val OwnArticlesSampled = 5
+
+/** Enough text to tell a language by. */
+private const val LanguageSampleLength = 2000
 
 /**
  * The curator desk: a few posts a day from the topics a site's writer picked, to repost or answer, one at a time.
@@ -55,6 +77,7 @@ class CuratorDesk @Inject constructor(
     private val client: ActivityPubClient,
     private val moderation: Moderation,
     private val settings: AppSettings,
+    private val languages: LanguageIdentifier,
 ) {
     // Two screens asking at once would pick two different days and keep the later one.
     private val picking = Mutex()
@@ -93,7 +116,8 @@ class CuratorDesk @Inject constructor(
         picking.withLock {
             val date = today.toString()
             val state = store.states.value[account.id] ?: return
-            if (state.topics.isEmpty() || state.day?.takeIf { it.date == date }?.picks != null) return
+            val existing = state.day?.takeIf { it.date == date }
+            if (state.topics.isEmpty() || (existing?.picks != null && existing.rules == CuratorPickRules)) return
             val now = System.currentTimeMillis()
             val picked = pick(account, state, now)
             store.update(account.id) { current ->
@@ -101,7 +125,7 @@ class CuratorDesk @Inject constructor(
                 if (current.topics.map { it.slug } != state.topics.map { it.slug }) return@update current
                 val day = current.day?.takeIf { it.date == date } ?: CuratorDay(date)
                 current.copy(
-                    day = day.copy(picks = picked.posts, handled = 0, fellBack = picked.fellBack),
+                    day = day.copy(picks = picked.posts, handled = 0, fellBack = picked.fellBack, rules = CuratorPickRules),
                     seen = current.seen.kept(now) + listOfNotNull(picked.posts.firstOrNull()?.let { it.id to now }),
                 )
             }
@@ -147,6 +171,26 @@ class CuratorDesk @Inject constructor(
         }
     }
 
+    /**
+     * The post on show, the [from]th, is from a site the writer never wants on the desk: it is moved past, the site's
+     * other posts today go too, and none of its posts are picked again.
+     */
+    fun hideSite(accountId: String, from: Int) {
+        val now = System.currentTimeMillis()
+        store.update(accountId) { state ->
+            val day = state.day ?: return@update state
+            val picks = day.picks ?: return@update state
+            if (day.handled != from || from >= picks.size) return@update state
+            val site = deskSite(picks[from])
+            val kept = picks.take(from + 1) + picks.drop(from + 1).filter { deskSite(it) != site }
+            state.copy(
+                day = day.copy(picks = kept, handled = from + 1),
+                seen = state.seen.kept(now) + listOfNotNull(kept.getOrNull(from + 1)?.let { it.id to now }),
+                hiddenSites = state.hiddenSites + site,
+            )
+        }
+    }
+
     private class Picked(val posts: List<Post>, val fellBack: Boolean)
 
     private suspend fun pick(account: StoredAccount, state: CuratorState, now: Long): Picked {
@@ -155,18 +199,36 @@ class CuratorDesk @Inject constructor(
         val filter = settings.feedFilter.value
         val usable: (Post) -> Boolean = { post ->
             post.isArticle && !post.isDeleted && !post.authoredByMe && handleKey(post.author.handle) != own &&
-                !post.repostedByMe && post.id !in state.seen && !hidden.hides(post) && !filter.hides(post)
+                !post.repostedByMe && post.id !in state.seen && deskSite(post) !in state.hiddenSites &&
+                othersTookTo(post) > 0 && !hidden.hides(post) && !filter.hides(post)
         }
+        val language = ownLanguage(account, own)
         val chosen = coroutineScope {
             state.topics.map { async { fromTopic(account, it.slug, usable) } }.awaitAll()
         }.flatten()
-        val posts = chosen.newestFirst()
+        val posts = chosen.best(language)
         if (posts.isNotEmpty()) return Picked(posts, fellBack = false)
-        val top = fromTopic(account, TopTopicSlug, usable).newestFirst()
+        val top = fromTopic(account, TopTopicSlug, usable).best(language)
         return Picked(top, fellBack = top.isNotEmpty())
     }
 
-    /** The usable posts of [slug]'s feed, read until there are enough for a day. A topic the service doesn't have has none. */
+    /**
+     * The language the writer's own articles are in, as [translationLanguage] names it: their readers read that, so it's
+     * what a repost should be in. Without articles to tell it by, the app's language.
+     */
+    private suspend fun ownLanguage(account: StoredAccount, own: String): String {
+        val articles = try {
+            client.postsBy(account.site, account.credential, account.profile.handle).posts
+        } catch (e: SocialWebException) {
+            if (e.status == 403) throw e
+            emptyList()
+        }.filter { it.isArticle && !it.isDeleted && handleKey(it.author.handle) == own }.take(OwnArticlesSampled)
+        val sample = articles.joinToString("\n") { "${it.title}\n${it.excerpt}" }.take(LanguageSampleLength)
+        val tag = if (sample.isBlank()) "und" else languages.identify(sample)
+        return translationLanguage(if (tag != "und") tag else Locale.getDefault().toLanguageTag())
+    }
+
+    /** The usable posts of [slug]'s feed, read until there is a pool to choose from. A topic the service doesn't have has none. */
     private suspend fun fromTopic(account: StoredAccount, slug: String, usable: (Post) -> Boolean): List<Post> {
         val found = mutableListOf<Post>()
         var next: String? = null
@@ -180,20 +242,40 @@ class CuratorDesk @Inject constructor(
             // Muted words parse each post's HTML.
             found += withContext(Dispatchers.Default) { page.posts.filter(usable) }
             next = page.next ?: return found
-            if (found.size >= CuratorDayLimit) return found
+            if (found.size >= PoolPerTopic) return found
         }
         return found
     }
 
-    /** The newest [CuratorDayLimit] posts, each once, and without their bodies: the desk shows titles, and a post opens by its id. */
-    private fun List<Post>.newestFirst(): List<Post> =
-        distinctBy { it.id }
-            .sortedByDescending { publishedMillis(it) }
-            .take(CuratorDayLimit)
-            .map { it.copy(content = "", metadata = null) }
+    /**
+     * Up to [CuratorDayLimit] posts, each once: those others took to most first, the newest of equals first, and only
+     * ones in [language]. A post whose language can't be told is left out too: one the writer's readers can't read is
+     * what this keeps off the desk. Without their bodies: the desk shows titles, and a post opens by its id.
+     */
+    private suspend fun List<Post>.best(language: String): List<Post> {
+        val ranked = distinctBy { it.id }
+            .sortedWith(compareByDescending<Post> { othersTookTo(it) }.thenByDescending { publishedMillis(it) })
+        val picked = mutableListOf<Post>()
+        for (post in ranked) {
+            if (picked.size == CuratorDayLimit) break
+            if (languageOf(post) == language) picked += post.copy(content = "", metadata = null)
+        }
+        return picked
+    }
+
+    private suspend fun languageOf(post: Post): String? =
+        languages.identify("${post.title}\n${post.excerpt}".take(LanguageSampleLength))
+            .takeIf { it != "und" }
+            ?.let(::translationLanguage)
 
     private fun Map<String, Long>.kept(now: Long): Map<String, Long> = filterValues { now - it < SeenKeepMillis }
 }
+
+/** The site a post is from, as the desk hides it: its author's handle domain ("@index@example.com" is "example.com"). */
+internal fun deskSite(post: Post): String = handleKey(post.author.handle).substringAfterLast('@')
+
+/** Likes and reposts [post] had from anyone but the viewer: someone else found it worth passing on. */
+internal fun othersTookTo(post: Post): Int = post.likeCount - (if (post.likedByMe) 1 else 0) + post.repostCount
 
 /** When [post] came out, in epoch milliseconds; posts without a readable date count as the oldest. */
 fun publishedMillis(post: Post): Long =

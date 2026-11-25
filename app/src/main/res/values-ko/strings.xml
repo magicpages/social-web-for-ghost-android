@@ -793,6 +793,7 @@
     <string name="curator_done">오늘은 여기까지예요. 내일 만나요.</string>
     <string name="curator_menu_topics">주제 변경</string>
     <string name="curator_menu_skip_all">모두 건너뛰기</string>
+    <string name="curator_menu_hide_site">%1$s의 글 더 이상 보지 않기</string>
     <string name="curator_settings_title">내 주제</string>
     <string name="curator_settings_none">설정 안 됨</string>
     <string name="curator_settings_footer">글을 쓰는 주제예요. 리더가 매일 이 주제의 게시물을 몇 개 추천해요. 이 사이트에 대해 이 휴대전화에 저장돼요.</string>

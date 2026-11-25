@@ -840,6 +840,7 @@
     <string name="curator_done">C\'est tout pour aujourd\'hui. À demain.</string>
     <string name="curator_menu_topics">Changer de sujets</string>
     <string name="curator_menu_skip_all">Tout passer</string>
+    <string name="curator_menu_hide_site">Plus rien de %1$s</string>
     <string name="curator_settings_title">Vos sujets</string>
     <string name="curator_settings_none">Non défini</string>
     <string name="curator_settings_footer">Ce sur quoi vous écrivez. Le lecteur vous propose chaque jour quelques publications sur ces sujets. Enregistré sur ce téléphone, pour ce site.</string>

@@ -816,6 +816,7 @@
     <string name="curator_done">Tämä oli tämän päivän osuus. Nähdään huomenna.</string>
     <string name="curator_menu_topics">Vaihda aiheita</string>
     <string name="curator_menu_skip_all">Ohita kaikki</string>
+    <string name="curator_menu_hide_site">Ei enää sivustolta %1$s</string>
     <string name="curator_settings_title">Aiheesi</string>
     <string name="curator_settings_none">Ei asetettu</string>
     <string name="curator_settings_footer">Mistä kirjoitat. Lukija ehdottaa joka päivä muutaman julkaisun näistä aiheista. Tallennetaan tähän puhelimeen, tälle sivustolle.</string>

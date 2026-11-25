@@ -841,6 +841,7 @@
     <string name="curator_done">Per oggi è tutto. A domani.</string>
     <string name="curator_menu_topics">Cambia argomenti</string>
     <string name="curator_menu_skip_all">Salta tutto</string>
+    <string name="curator_menu_hide_site">Niente più da %1$s</string>
     <string name="curator_settings_title">I tuoi argomenti</string>
     <string name="curator_settings_none">Non impostati</string>
     <string name="curator_settings_footer">Di cosa scrivi. Il lettore ti suggerisce ogni giorno alcuni post su questi argomenti. Salvato su questo telefono, per questo sito.</string>

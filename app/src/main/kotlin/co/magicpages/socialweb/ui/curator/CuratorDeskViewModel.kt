@@ -212,6 +212,9 @@ class CuratorDeskViewModel @Inject constructor(
 
     fun skipAll() = act { desk.skipAll(it) }
 
+    /** Moves past the post at [index] and keeps its site off the desk from now on. */
+    fun hideSite(index: Int) = act { desk.hideSite(it, index) }
+
     /** Sends the finished desk away until tomorrow. */
     fun hide() = act { desk.hide(it, today.value) }
 

@@ -913,6 +913,7 @@
     <string name="curator_done">هذا كل شيء لليوم. إلى اللقاء غدًا.</string>
     <string name="curator_menu_topics">تغيير المواضيع</string>
     <string name="curator_menu_skip_all">تخطي الكل</string>
+    <string name="curator_menu_hide_site">لا مزيد من %1$s</string>
     <string name="curator_settings_title">مواضيعك</string>
     <string name="curator_settings_none">غير محدد</string>
     <string name="curator_settings_footer">ما تكتب عنه. يقترح القارئ كل يوم بضعة منشورات من هذه المواضيع. يُحفظ على هذا الهاتف لهذا الموقع.</string>

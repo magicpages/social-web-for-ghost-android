@@ -52,6 +52,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.magicpages.socialweb.R
 import co.magicpages.socialweb.data.activitypub.Author
 import co.magicpages.socialweb.data.activitypub.Post
+import co.magicpages.socialweb.data.curator.deskSite
 import co.magicpages.socialweb.data.curator.publishedMillis
 import co.magicpages.socialweb.ui.components.ActionSheet
 import co.magicpages.socialweb.ui.components.AppIcons
@@ -260,6 +261,9 @@ private fun Review(
     if (menuOpen) {
         ActionSheet(onDismiss = { menuOpen = false }) {
             SheetAction(stringResource(R.string.curator_menu_topics), AppIcons.Edit) { viewModel.editTopics() }
+            SheetAction(stringResource(R.string.curator_menu_hide_site, deskSite(post)), AppIcons.VisibilityOff) {
+                viewModel.hideSite(state.index)
+            }
             SheetAction(stringResource(R.string.curator_menu_skip_all), AppIcons.Close) { viewModel.skipAll() }
         }
     }

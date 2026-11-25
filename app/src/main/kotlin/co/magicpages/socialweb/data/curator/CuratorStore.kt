@@ -29,6 +29,8 @@ data class CuratorDay(
     val reposts: Int = 0,
     /** The picks come from the default topic because the chosen ones had nothing new. */
     val fellBack: Boolean = false,
+    /** The [CuratorPickRules] the picks were chosen by; a day picked by older rules is picked again. */
+    val rules: Int = 0,
 ) {
     /** Every pick has been handled; there has to be one, or there was no day to finish. */
     val finished: Boolean get() = !picks.isNullOrEmpty() && handled >= picks.size
@@ -44,6 +46,8 @@ data class CuratorState(
     val seen: Map<String, Long> = emptyMap(),
     /** The local date (ISO) up to which the writer sent the desk away; it is back the next day. */
     val hiddenOn: String? = null,
+    /** The sites (handle domains) the writer never wants on the desk again. */
+    val hiddenSites: Set<String> = emptySet(),
 )
 
 /**

@@ -817,6 +817,7 @@
     <string name="curator_done">आज के लिए बस इतना ही। कल मिलते हैं।</string>
     <string name="curator_menu_topics">विषय बदलें</string>
     <string name="curator_menu_skip_all">सभी छोड़ें</string>
+    <string name="curator_menu_hide_site">%1$s से और कुछ नहीं</string>
     <string name="curator_settings_title">आपके विषय</string>
     <string name="curator_settings_none">सेट नहीं है</string>
     <string name="curator_settings_footer">आप किस बारे में लिखते हैं। रीडर हर दिन इन विषयों से कुछ पोस्ट सुझाता है। इस फ़ोन पर, इस साइट के लिए सहेजा गया।</string>
