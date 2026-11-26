@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,6 +29,8 @@ import co.magicpages.socialweb.ui.login.LoginScreen
 fun SignedOutFlow(pendingLink: String? = null, onOpenLinkInBrowser: (String) -> Unit = {}) {
     var adding by rememberSaveable { mutableStateOf(false) }
     var noticed by rememberSaveable { mutableStateOf<String?>(null) }
+    // Said once per request: one taken to the browser is done, so the same link asked for again is said again.
+    LaunchedEffect(pendingLink) { if (pendingLink == null) noticed = null }
     val motion = MaterialTheme.motionScheme
     AnimatedContent(
         targetState = adding,

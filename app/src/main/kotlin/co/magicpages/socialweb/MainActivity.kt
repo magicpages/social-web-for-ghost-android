@@ -67,6 +67,8 @@ class MainActivity : ComponentActivity() {
             handleNewNote(intent)
             handleShareAgain(intent)
             handleAppLink(intent)
+        } else {
+            restorePendingLink(savedInstanceState)
         }
         setContent {
             val uriHandler = remember { CustomTabsUriHandler(this) }
@@ -86,6 +88,19 @@ class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         videoPlayback.setAppVisible(true)
+    }
+
+    // A link still waiting for a sign-in (the user may be off reading the emailed code) is kept, as the process
+    // may not be: [OpenLinkRequests] lives in memory only. One opened already isn't, so it never opens twice.
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        openLinks.pending.value?.let { outState.putString(StatePendingLink, it) }
+    }
+
+    /** After the process was recreated, the link that was waiting waits again. Within one process it's still there. */
+    private fun restorePendingLink(savedInstanceState: Bundle) {
+        val url = savedInstanceState.getString(StatePendingLink) ?: return
+        if (openLinks.pending.value == null) openLinks.submit(url)
     }
 
     // Not onPause: the picture-in-picture window keeps the activity paused but visible, and the video playing.
@@ -234,6 +249,9 @@ class MainActivity : ComponentActivity() {
 
         /** The host whose profile and note pages are this app's App Links. */
         private const val FediPubHost = "fedi.pub"
+
+        /** Saved-state key of a link waiting to open ([OpenLinkRequests]). */
+        private const val StatePendingLink = "co.magicpages.socialweb.PENDING_LINK"
     }
 }
 
@@ -257,11 +275,29 @@ private class CustomTabsUriHandler(private val context: Context) : UriHandler {
     private fun opensHere(uri: Uri): Boolean =
         resolve(Intent(Intent.ACTION_VIEW, uri).addCategory(Intent.CATEGORY_BROWSABLE)) == context.packageName
 
-    /** A browser with Custom Tabs, the default one first; else the default browser. Never this app, nor the chooser. */
-    private fun browserPackage(): String? =
-        CustomTabsClient.getPackageName(context, null)
-            ?: resolve(Intent(Intent.ACTION_VIEW, "https://example.com/".toUri()).addCategory(Intent.CATEGORY_BROWSABLE))
-                ?.takeIf { it != context.packageName && it != "android" }
+    /**
+     * A browser to name: one with Custom Tabs, the default first; else the default browser; else any
+     * installed one. Never this app, nor the system's chooser, which is what resolves while several
+     * browsers are installed and none is the default.
+     */
+    private fun browserPackage(): String? {
+        val web = Intent(Intent.ACTION_VIEW, "https://example.com/".toUri()).addCategory(Intent.CATEGORY_BROWSABLE)
+        val browsers = installed(web).filter { it != context.packageName && it != SystemResolver }
+        return CustomTabsClient.getPackageName(context, browsers)?.takeIf { it in browsers }
+            ?: resolve(web)?.takeIf { it in browsers }
+            ?: browsers.firstOrNull()
+    }
+
+    private fun installed(intent: Intent): List<String> {
+        val packages = context.packageManager
+        val infos = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packages.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_ALL.toLong()))
+        } else {
+            @Suppress("DEPRECATION")
+            packages.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+        }
+        return infos.map { it.activityInfo.packageName }.distinct()
+    }
 
     private fun resolve(intent: Intent): String? {
         val packages = context.packageManager
@@ -276,5 +312,8 @@ private class CustomTabsUriHandler(private val context: Context) : UriHandler {
 
     private companion object {
         val WebSchemes = setOf("http", "https")
+
+        /** The package of Android's "Open with" chooser. */
+        const val SystemResolver = "android"
     }
 }
