@@ -58,8 +58,10 @@ import co.magicpages.socialweb.data.activitypub.Moderation
 import co.magicpages.socialweb.data.activitypub.SensitiveMediaPreference
 import co.magicpages.socialweb.data.activitypub.Post
 import co.magicpages.socialweb.data.curator.CuratorStore
+import co.magicpages.socialweb.data.ghost.FediPubLink
 import co.magicpages.socialweb.data.ghost.GhostAdminClient
 import co.magicpages.socialweb.data.ghost.GhostException
+import co.magicpages.socialweb.data.ghost.parseFediPubLink
 import co.magicpages.socialweb.data.gif.Gifs
 import co.magicpages.socialweb.data.linkpreview.LinkPreviews
 import co.magicpages.socialweb.data.settings.AppSettings
@@ -142,6 +144,16 @@ data class PostKey(val postId: String, val url: String? = null, val resolve: Boo
 /** A profile by `@user@domain` handle, or `me`; [url] is the browser fallback if it won't load. */
 @Serializable
 data class ProfileKey(val handle: String, val url: String? = null) : NavKey
+
+/**
+ * The screen a fedi.pub link opens, with the link as its browser fallback: the profile, or the note's thread
+ * (whose screen works out the note's ActivityPub ID from the link). Null for any other address.
+ */
+private fun fediPubKey(url: String): NavKey? = when (val link = parseFediPubLink(url)) {
+    is FediPubLink.Profile -> ProfileKey(link.handle, url)
+    is FediPubLink.Note -> PostKey(url, url, resolve = true)
+    null -> null
+}
 
 /** Followers | Following of a profile, opened on [list]; [name] titles the screen. */
 @Serializable
@@ -321,7 +333,15 @@ fun AppRoot(viewModel: AppViewModel = hiltViewModel()) {
     val showSensitiveMedia by viewModel.sensitiveMedia.preference.collectAsStateWithLifecycle()
     when (val current = state) {
         AppState.Loading -> Surface(Modifier.fillMaxSize()) {}
-        AppState.SignedOut -> SignedOutFlow()
+        AppState.SignedOut -> {
+            val pendingLink by viewModel.openLinks.pending.collectAsStateWithLifecycle()
+            // Chosen over the sign-in: the browser has it, and it mustn't open again once signed in.
+            val browser = LocalUriHandler.current
+            SignedOutFlow(pendingLink) { url ->
+                viewModel.openLinks.consume(url)
+                browser.openUri(url)
+            }
+        }
         is AppState.SignedIn -> CompositionLocalProvider(
             LocalLinkedPosts provides viewModel.linkedPosts,
             LocalPostTranslations provides viewModel.postTranslations,
@@ -399,22 +419,26 @@ private fun SignedInNavigation(
         }
     }
 
-    // A link from another app: a profile opens as one, anything else is tried as a post. Like a tapped notification, it starts from the tabs.
+    // A link from another app (shared to the app, or a fedi.pub App Link): a profile opens as one, anything else is
+    // tried as a post. Like a tapped notification, it starts from the tabs.
     LaunchedEffect(openLinks, backStack) {
         openLinks.pending.filterNotNull().collect { url ->
             val handle = ProfileLinks.handleOf(url)
-            openFromList(if (handle != null) ProfileKey(handle, url) else PostKey(url, url, resolve = true))
+            openFromList(fediPubKey(url) ?: if (handle != null) ProfileKey(handle, url) else PostKey(url, url, resolve = true))
             openLinks.consume(url)
         }
     }
 
-    // Mention links in post text open the profile in the app, and links to a post open its thread; every other link goes to the browser.
+    // Mention links in post text open the profile in the app, and links to a post (or a fedi.pub page of one) open its
+    // thread; every other link goes to the browser.
     val uriHandler = remember(browser, backStack) {
         object : UriHandler {
             override fun openUri(uri: String) {
                 val profile = ProfileLinks.parse(uri)
+                val fediPub = fediPubKey(uri)
                 when {
                     profile != null -> push(ProfileKey(profile.first, profile.second))
+                    fediPub != null -> push(fediPub)
                     PostLinks.matches(uri) -> push(PostKey(uri, uri, resolve = true))
                     else -> browser.openUri(uri)
                 }

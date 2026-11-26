@@ -44,6 +44,8 @@
     <string name="explore_search_empty">No one found</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">Open in Social Web</string>
+    <string name="open_link_signed_out_title">Sign in to open this link</string>
+    <string name="open_link_signed_out_text">It opens here once you\'ve added your Ghost site. Or open it in the browser now.</string>
     <string name="explore_search_open_post">open post</string>
     <string name="explore_for_you">For you</string>
     <string name="explore_empty">No accounts to suggest right now. Pull down to try again.</string>

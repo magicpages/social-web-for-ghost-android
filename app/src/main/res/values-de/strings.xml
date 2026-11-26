@@ -356,6 +356,8 @@
     <string name="explore_search_empty">Niemand gefunden</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">In Social Web öffnen</string>
+    <string name="open_link_signed_out_title">Zum Öffnen anmelden</string>
+    <string name="open_link_signed_out_text">Der Link öffnet sich hier, sobald du deine Ghost-Website hinzugefügt hast. Oder öffne ihn jetzt im Browser.</string>
     <string name="explore_search_open_post">Beitrag öffnen</string>
     <string name="explore_for_you">Für dich</string>
     <string name="explore_empty">Gerade gibt es keine Konten zum Vorschlagen. Zum Wiederholen nach unten ziehen.</string>

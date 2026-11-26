@@ -349,6 +349,8 @@
     <string name="explore_search_empty">没有找到任何人</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">在 Social Web 中打开</string>
+    <string name="open_link_signed_out_title">登录以打开此链接</string>
+    <string name="open_link_signed_out_text">添加你的 Ghost 站点后，它会在这里打开。也可以现在在浏览器中打开。</string>
     <string name="explore_search_open_post">打开帖子</string>
     <string name="explore_for_you">为你推荐</string>
     <string name="explore_empty">暂时没有可推荐的账号。下拉可重试。</string>

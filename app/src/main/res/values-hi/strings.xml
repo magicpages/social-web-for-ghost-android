@@ -356,6 +356,8 @@
     <string name="explore_search_empty">कोई नहीं मिला</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">Social Web में खोलें</string>
+    <string name="open_link_signed_out_title">यह लिंक खोलने के लिए साइन इन करें</string>
+    <string name="open_link_signed_out_text">अपनी Ghost साइट जोड़ने के बाद यह यहीं खुलेगा। या इसे अभी ब्राउज़र में खोलें।</string>
     <string name="explore_search_open_post">पोस्ट खोलें</string>
     <string name="explore_for_you">आपके लिए</string>
     <string name="explore_empty">अभी सुझाने के लिए कोई खाता नहीं है। दोबारा कोशिश करने के लिए नीचे खींचें।</string>

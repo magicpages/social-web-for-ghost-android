@@ -61,6 +61,8 @@ Checks:
 
 A release bundle needs an upload key. [RELEASING.md](RELEASING.md) covers signing, versioning, the store listing and the baseline profile.
 
+fedi.pub profile and note links open in the app as Android App Links. [docs/app-links.md](docs/app-links.md) covers the `assetlinks.json` fedi.pub serves, the key fingerprints it needs and how to test the links.
+
 ### Demo mode
 
 The debug build has a demo mode that signs in to a made-up site, "Seaside Notes", and answers every request from built-in content. It needs no Ghost site and no network, never touches real accounts, and is how the screenshots are made.

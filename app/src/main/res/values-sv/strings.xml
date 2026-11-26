@@ -356,6 +356,8 @@
     <string name="explore_search_empty">Ingen hittades</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">Öppna i Social Web</string>
+    <string name="open_link_signed_out_title">Logga in för att öppna länken</string>
+    <string name="open_link_signed_out_text">Den öppnas här när du har lagt till din Ghost-webbplats. Eller öppna den i webbläsaren nu.</string>
     <string name="explore_search_open_post">öppna inlägg</string>
     <string name="explore_for_you">För dig</string>
     <string name="explore_empty">Inga konton att föreslå just nu. Dra nedåt för att försöka igen.</string>

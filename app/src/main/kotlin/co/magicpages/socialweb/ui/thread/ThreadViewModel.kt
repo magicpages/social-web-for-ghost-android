@@ -17,8 +17,12 @@ import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.article.ArticleWriters
 import co.magicpages.socialweb.data.fediverse.ExploredPosts
 import co.magicpages.socialweb.data.fediverse.OriginThreads
+import co.magicpages.socialweb.data.ghost.FediPubLink
 import co.magicpages.socialweb.data.ghost.GhostException
+import co.magicpages.socialweb.data.ghost.GhostSiteClient
+import co.magicpages.socialweb.data.ghost.ghostNoteId
 import co.magicpages.socialweb.data.ghost.ghostSiteUrl
+import co.magicpages.socialweb.data.ghost.parseFediPubLink
 import co.magicpages.socialweb.data.member.FullArticle
 import co.magicpages.socialweb.data.member.MemberArticles
 import co.magicpages.socialweb.data.member.MemberSessions
@@ -34,6 +38,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.IOException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -188,6 +193,7 @@ class ThreadViewModel @AssistedInject constructor(
     private val moderation: Moderation,
     private val explored: ExploredPosts,
     private val originThreads: OriginThreads,
+    private val sites: GhostSiteClient,
 ) : ViewModel() {
     @AssistedFactory
     interface Factory {
@@ -304,20 +310,36 @@ class ThreadViewModel @AssistedInject constructor(
      * Looks a web address up before anything else: replies are only served under a post's own ActivityPub id,
      * which the lookup returns. False when there is nothing to load. That is [unresolved] when the service
      * has no post for the address, and the error screen for what a browser wouldn't help with (offline, signed out).
+     * A fedi.pub note link always ends on the error screen, which offers the link in the browser: its page there
+     * is the note, so the screen says why the app couldn't show it rather than leaving for the browser unasked.
      */
     private suspend fun resolveAddress(): Boolean {
         if (!resolving) return true
+        val fediPubNote = parseFediPubLink(postId) as? FediPubLink.Note
         try {
             val account = accounts.account.first() ?: throw GhostException.Unauthorized(null)
-            postId = activityPub.post(account.site, account.credential, postId).id
+            val address = if (fediPubNote != null) fediPubNoteId(fediPubNote) else postId
+            postId = activityPub.post(account.site, account.credential, address).id
             resolving = false
             return true
         } catch (e: SocialWebException) {
-            if (e.status == 401 || e.status == 403) loaded.value = ThreadUiState.Failed(e) else _unresolved.value = true
+            if (fediPubNote != null || e.status == 401 || e.status == 403) loaded.value = ThreadUiState.Failed(e) else _unresolved.value = true
         } catch (e: GhostException) {
             loaded.value = ThreadUiState.Failed(e)
+        } catch (e: IOException) {
+            loaded.value = ThreadUiState.Failed(GhostException.Network(e))
         }
         return false
+    }
+
+    /**
+     * The ActivityPub ID of the note a fedi.pub link names: the author's handle is looked up with WebFinger,
+     * as the handle's domain needn't be where the site's ActivityPub lives, and the note's ID is built on the
+     * actor's site. A handle nobody answers for is a note that can't be found.
+     */
+    private suspend fun fediPubNoteId(note: FediPubLink.Note): String {
+        val actor = sites.actorId(note.handle) ?: throw SocialWebException(404, "No account for ${note.handle}")
+        return ghostNoteId(actor, note.noteId) ?: throw SocialWebException(404, "No note ID for $actor")
     }
 
     /** Applies a parent found earlier this session, so a refresh doesn't drop and re-add it. */

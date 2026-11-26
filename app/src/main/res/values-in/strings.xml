@@ -349,6 +349,8 @@
     <string name="explore_search_empty">Tidak ada yang ditemukan</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">Buka di Social Web</string>
+    <string name="open_link_signed_out_title">Masuk untuk membuka tautan ini</string>
+    <string name="open_link_signed_out_text">Tautan ini terbuka di sini setelah Anda menambahkan situs Ghost Anda. Atau buka di browser sekarang.</string>
     <string name="explore_search_open_post">buka postingan</string>
     <string name="explore_for_you">Untuk Anda</string>
     <string name="explore_empty">Belum ada akun yang dapat disarankan saat ini. Tarik ke bawah untuk mencoba lagi.</string>
