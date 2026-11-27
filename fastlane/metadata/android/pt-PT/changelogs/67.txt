@@ -1,0 +1,2 @@
+• As ligações fedi.pub para um perfil ou uma nota abrem-se agora na app.
+• Sem sessão iniciada, a app propõe iniciar sessão ou abrir a ligação no navegador.

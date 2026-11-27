@@ -1,0 +1,2 @@
+• Links do fedi.pub para um perfil ou uma nota agora abrem no app.
+• Sem login, o app oferece entrar ou abrir o link no navegador.

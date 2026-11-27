@@ -1,0 +1,2 @@
+• fedi.pub-Links zu einem Profil oder einer Notiz öffnen sich jetzt in der App.
+• Bist du abgemeldet, bietet die App an, dich anzumelden oder den Link im Browser zu öffnen.

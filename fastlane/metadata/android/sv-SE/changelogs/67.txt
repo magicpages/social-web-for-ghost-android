@@ -1,0 +1,2 @@
+• fedi.pub-länkar till en profil eller en anteckning öppnas nu i appen.
+• Är du utloggad erbjuder appen att logga in eller öppna länken i webbläsaren.

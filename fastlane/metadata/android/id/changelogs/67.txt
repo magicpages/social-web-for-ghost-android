@@ -1,0 +1,2 @@
+• Tautan fedi.pub ke profil atau catatan kini terbuka di aplikasi.
+• Jika Anda belum masuk, aplikasi menawarkan untuk masuk atau membuka tautan di browser.

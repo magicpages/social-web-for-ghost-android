@@ -1,0 +1,2 @@
+• fedi.pub-lenker til en profil eller et notat åpnes nå i appen.
+• Er du logget ut, tilbyr appen å logge inn eller åpne lenken i nettleseren.

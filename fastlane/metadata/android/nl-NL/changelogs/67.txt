@@ -1,0 +1,2 @@
+• fedi.pub-links naar een profiel of notitie openen nu in de app.
+• Ben je uitgelogd, dan biedt de app aan om in te loggen of de link in de browser te openen.

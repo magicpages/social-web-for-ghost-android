@@ -1,0 +1,2 @@
+• Odkazy fedi.pub na profil nebo poznámku se teď otevírají v aplikaci.
+• Bez přihlášení vám aplikace nabídne přihlášení nebo otevření odkazu v prohlížeči.

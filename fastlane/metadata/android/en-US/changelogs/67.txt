@@ -1,0 +1,2 @@
+• fedi.pub links to a profile or a note now open in the app.
+• Signed out, the app offers to sign in or to open the link in the browser.

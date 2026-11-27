@@ -1,0 +1,2 @@
+• I link fedi.pub a un profilo o a una nota ora si aprono nell'app.
+• Se non hai effettuato l'accesso, l'app ti propone di accedere o di aprire il link nel browser.

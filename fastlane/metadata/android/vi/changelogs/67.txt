@@ -1,0 +1,2 @@
+• Liên kết fedi.pub tới hồ sơ hoặc ghi chú giờ mở ngay trong ứng dụng.
+• Khi chưa đăng nhập, ứng dụng cho bạn chọn đăng nhập hoặc mở liên kết trong trình duyệt.

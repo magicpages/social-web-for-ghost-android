@@ -1,0 +1,2 @@
+• Bir profile veya nota giden fedi.pub bağlantıları artık uygulamada açılıyor.
+• Giriş yapmadıysanız uygulama giriş yapmayı veya bağlantıyı tarayıcıda açmayı önerir.

@@ -1,0 +1,2 @@
+• Les liens fedi.pub vers un profil ou une note s'ouvrent maintenant dans l'app.
+• Si vous n'êtes pas connecté, l'app propose de vous connecter ou d'ouvrir le lien dans le navigateur.

@@ -1,0 +1,2 @@
+• fedi.pub-linkit profiiliin tai muistiinpanoon avautuvat nyt sovelluksessa.
+• Jos et ole kirjautunut, sovellus tarjoaa kirjautumista tai linkin avaamista selaimessa.

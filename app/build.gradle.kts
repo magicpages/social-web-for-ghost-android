@@ -33,7 +33,7 @@ android {
         // the count is taken from git here, so a build of a release tag (F-Droid's) gets the same code.
         versionCode = providers.environmentVariable("SOCIALWEB_VERSION_CODE").orNull?.toInt()
             ?: providers.exec { commandLine("git", "rev-list", "--count", "HEAD") }.standardOutput.asText.get().trim().toInt()
-        versionName = "1.1.0"
+        versionName = "1.2.0"
         manifestPlaceholders["appLabel"] = "Social Web"
     }
 
