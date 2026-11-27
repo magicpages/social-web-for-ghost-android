@@ -1,0 +1,132 @@
+# Each release tag (v<versionName>+<versionCode>, made by scripts/tag-release.sh) becomes a
+# GitHub release with an APK for people who install without an app store. The APK is signed
+# with its own key, not the Play upload key, so a leak of one can't affect the other. Setup
+# and how people check the APK: RELEASING.md, "GitHub releases".
+name: GitHub release
+
+on:
+  push:
+    tags: ['v*']
+  # For a tag whose commit predates this workflow: a tag push runs the workflow file at the
+  # tagged commit, so those tags need a manual run from main.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag, for example v1.1.0+57
+        required: true
+
+concurrency:
+  group: github-release-${{ inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write # create the release
+      id-token: write # sign the build attestation
+      attestations: write
+      artifact-metadata: write
+    env:
+      TAG: ${{ inputs.tag || github.ref_name }}
+      # The certificate this workflow must sign with. It's published in the README, so a wrong
+      # key in the secrets fails the build instead of shipping an APK nobody can verify.
+      CERT_SHA256: e03cb924160d96432731ae44798e5d5ea5d9e9fb4636ed8c69f04f6f7788e2a0
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: refs/tags/${{ env.TAG }}
+          fetch-depth: 0 # the versionCode is the commit count
+
+      - name: Check the tag
+        id: version
+        run: |
+          [[ "$TAG" =~ ^v([0-9.]+)\+([0-9]+)$ ]] || { echo "::error::$TAG isn't a release tag (v<versionName>+<versionCode>)"; exit 1; }
+          name="${BASH_REMATCH[1]}" code="${BASH_REMATCH[2]}"
+          count=$(git rev-list --count HEAD)
+          [ "$count" = "$code" ] || { echo "::error::$TAG says versionCode $code, the commit count is $count"; exit 1; }
+          grep -q "versionName = \"$name\"" app/build.gradle.kts || { echo "::error::app/build.gradle.kts doesn't have versionName $name"; exit 1; }
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Release key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.SOCIALWEB_GITHUB_KEYSTORE_BASE64 }}
+        run: |
+          [ -n "$KEYSTORE_BASE64" ] || { echo "::error::Missing repository secret SOCIALWEB_GITHUB_KEYSTORE_BASE64 (see RELEASING.md)"; exit 1; }
+          echo "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/github-release.jks"
+
+      - name: Build the APK
+        env:
+          SOCIALWEB_VERSION_CODE: ${{ steps.version.outputs.code }}
+          SOCIALWEB_KEYSTORE_FILE: ${{ runner.temp }}/github-release.jks
+          SOCIALWEB_KEYSTORE_PASSWORD: ${{ secrets.SOCIALWEB_GITHUB_KEYSTORE_PASSWORD }}
+          SOCIALWEB_KEY_ALIAS: github-release
+        run: ./gradlew --no-daemon :app:assembleRelease
+
+      - name: Check the APK
+        id: apk
+        env:
+          NAME: ${{ steps.version.outputs.name }}
+        run: |
+          apksigner="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)/apksigner"
+          apk="social-web-for-ghost-$NAME.apk"
+          mv app/build/outputs/apk/release/app-release.apk "$apk"
+          "$apksigner" verify --print-certs "$apk" | tee certs.txt
+          grep -qx "Signer #1 certificate SHA-256 digest: $CERT_SHA256" certs.txt \
+            || { echo "::error::The APK isn't signed with the published certificate"; exit 1; }
+          if grep -q 'socialweb\.demo' app/build/outputs/mapping/release/mapping.txt; then
+            echo "::error::Demo mode ended up in the release build"
+            exit 1
+          fi
+          sha256sum "$apk" > "$apk.sha256"
+          echo "file=$apk" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/attest@v4
+        with:
+          subject-path: ${{ steps.apk.outputs.file }}
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NAME: ${{ steps.version.outputs.name }}
+          CODE: ${{ steps.version.outputs.code }}
+          APK: ${{ steps.apk.outputs.file }}
+        run: |
+          changelog="fastlane/metadata/android/en-US/changelogs/$CODE.txt"
+          fingerprint=$(echo "$CERT_SHA256" | tr a-f A-F | sed 's/../&:/g; s/:$//')
+          {
+            [ -f "$changelog" ] && { cat "$changelog"; echo; echo; }
+            echo "## Install without an app store"
+            echo
+            echo "Download \`$APK\` on your phone and open it. Android asks once to allow installs from your browser or file manager. It runs on Android 10 or later."
+            echo
+            echo "This APK is signed with our own key, so it can't update the app from Google Play or F-Droid, or the other way around. To switch, uninstall the other one first."
+            echo
+            echo "## Check it's ours"
+            echo
+            echo "Our signing certificate's SHA-256 fingerprint:"
+            echo
+            echo "\`$fingerprint\`"
+            echo
+            echo "Compare it with AppVerifier on the phone, or run \`apksigner verify --print-certs $APK\`. Once it's installed, Android only accepts updates signed with the same key."
+            echo
+            echo "To check that this file was built from this tag by GitHub Actions and not changed since, run \`gh attestation verify $APK -R ${{ github.repository }}\`."
+          } > notes.md
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" "$APK" "$APK.sha256" --clobber
+            gh release edit "$TAG" --notes-file notes.md
+          else
+            gh release create "$TAG" "$APK" "$APK.sha256" --title "Social Web for Ghost $NAME" --notes-file notes.md --verify-tag
+          fi

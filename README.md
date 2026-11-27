@@ -34,7 +34,15 @@ You sign in to your own site with your email and password (plus the code Ghost e
 
 ## Install
 
-The app is in testing on Google Play. To join, email [help@magicpages.co](mailto:help@magicpages.co) from the Google account on your phone and you'll get the opt-in link.
+Get it on [Google Play](https://play.google.com/store/apps/details?id=co.magicpages.socialweb).
+
+Or download the APK from the [latest GitHub release](https://github.com/magicpages/social-web-for-ghost-android/releases/latest) and open it on your phone. Android asks once to allow installs from your browser or file manager. The APK is signed with our own key, and its certificate's SHA-256 fingerprint is:
+
+```
+E0:3C:B9:24:16:0D:96:43:27:31:AE:44:79:8E:5D:5E:A5:D9:E9:FB:46:36:ED:8C:69:F0:4F:6F:77:88:E2:A0
+```
+
+Check it with [AppVerifier](https://github.com/soupslurpr/AppVerifier) or `apksigner verify --print-certs` before installing. After that, Android only accepts updates signed with the same key. Each release also carries a build attestation: `gh attestation verify social-web-for-ghost-<version>.apk -R magicpages/social-web-for-ghost-android` checks that GitHub Actions built the file from this repository and that nobody changed it since. Apps from Google Play and from GitHub are signed with different keys and can't update each other; to switch, uninstall the other one first.
 
 Or build it yourself, see below.
 
