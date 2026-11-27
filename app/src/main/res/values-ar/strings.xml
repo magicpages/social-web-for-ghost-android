@@ -384,6 +384,8 @@
     <string name="explore_search_empty">لم يُعثر على أحد</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">فتح في Social Web</string>
+    <string name="open_link_signed_out_title">سجّل الدخول لفتح هذا الرابط</string>
+    <string name="open_link_signed_out_text">سيُفتح هنا بعد أن تضيف موقع Ghost الخاص بك. أو افتحه في المتصفح الآن.</string>
     <string name="explore_search_open_post">فتح المنشور</string>
     <string name="explore_for_you">لك</string>
     <string name="explore_empty">لا توجد حسابات لاقتراحها الآن. اسحب لأسفل لإعادة المحاولة.</string>

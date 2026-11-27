@@ -356,6 +356,8 @@
     <string name="explore_search_empty">Niemand gevonden</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">Openen in Social Web</string>
+    <string name="open_link_signed_out_title">Log in om deze link te openen</string>
+    <string name="open_link_signed_out_text">Hij opent hier zodra je je Ghost-site hebt toegevoegd. Of open hem nu in de browser.</string>
     <string name="explore_search_open_post">bericht openen</string>
     <string name="explore_for_you">Voor jou</string>
     <string name="explore_empty">Er zijn op dit moment geen accounts om voor te stellen. Trek omlaag om het opnieuw te proberen.</string>

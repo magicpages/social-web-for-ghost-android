@@ -349,6 +349,8 @@
     <string name="explore_search_empty">Không tìm thấy ai</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">Mở trong Social Web</string>
+    <string name="open_link_signed_out_title">Đăng nhập để mở liên kết này</string>
+    <string name="open_link_signed_out_text">Liên kết sẽ mở tại đây sau khi bạn thêm trang Ghost của mình. Hoặc mở ngay trong trình duyệt.</string>
     <string name="explore_search_open_post">mở bài đăng</string>
     <string name="explore_for_you">Dành cho bạn</string>
     <string name="explore_empty">Hiện chưa có tài khoản nào để gợi ý. Kéo xuống để thử lại.</string>

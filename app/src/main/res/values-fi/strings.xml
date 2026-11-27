@@ -356,6 +356,8 @@
     <string name="explore_search_empty">Ketään ei löytynyt</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">Avaa sovelluksessa Social Web</string>
+    <string name="open_link_signed_out_title">Kirjaudu avataksesi linkin</string>
+    <string name="open_link_signed_out_text">Se avautuu tässä, kun olet lisännyt Ghost-sivustosi. Tai avaa se nyt selaimessa.</string>
     <string name="explore_search_open_post">avaa julkaisu</string>
     <string name="explore_for_you">Sinulle</string>
     <string name="explore_empty">Ehdotettavia tilejä ei ole juuri nyt. Yritä uudelleen vetämällä alas.</string>

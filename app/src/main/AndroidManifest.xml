@@ -11,6 +11,15 @@
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
+        <!-- Finds a browser for fedi.pub pages: as App Links of this app, they'd otherwise come straight back to it. -->
+        <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
     </queries>
 
     <!-- Backup and device transfer are off: stored credentials are encrypted with a Keystore key that can't move. -->
@@ -56,6 +65,20 @@
                 <data android:mimeType="image/heic" />
                 <data android:mimeType="image/heif" />
                 <data android:mimeType="image/gif" />
+            </intent-filter>
+            <!--
+                App Links: fedi.pub profile and note pages (https://fedi.pub/@user@domain, …/<note id>/) open in the app,
+                verified against fedi.pub's /.well-known/assetlinks.json. Every Android version reads this /@ rule; on
+                Android 15+ the file's Dynamic App Links rules narrow it to the profile and note paths. fedi.pub pages
+                the app doesn't show go back to the browser. See docs/app-links.md.
+            -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="fedi.pub" />
+                <data android:pathPrefix="/@" />
             </intent-filter>
         </activity>
 

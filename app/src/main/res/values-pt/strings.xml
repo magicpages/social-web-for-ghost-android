@@ -363,6 +363,8 @@
     <string name="explore_search_empty">Ninguém encontrado</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">Abrir no Social Web</string>
+    <string name="open_link_signed_out_title">Entre para abrir este link</string>
+    <string name="open_link_signed_out_text">Abre-se aqui depois de adicionar o seu site Ghost. Ou abra-o agora no navegador.</string>
     <string name="explore_search_open_post">abrir post</string>
     <string name="explore_for_you">Para você</string>
     <string name="explore_empty">Nenhuma conta para sugerir no momento. Puxe para baixo para tentar de novo.</string>

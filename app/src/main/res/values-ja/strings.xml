@@ -349,6 +349,8 @@
     <string name="explore_search_empty">見つかりませんでした</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">Social Webで開く</string>
+    <string name="open_link_signed_out_title">ログインしてこのリンクを開く</string>
+    <string name="open_link_signed_out_text">Ghost サイトを追加すると、ここで開きます。今すぐブラウザで開くこともできます。</string>
     <string name="explore_search_open_post">投稿を開く</string>
     <string name="explore_for_you">おすすめ</string>
     <string name="explore_empty">現在おすすめできるアカウントはありません。下にスワイプしてもう一度お試しください。</string>

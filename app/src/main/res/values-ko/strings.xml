@@ -349,6 +349,8 @@
     <string name="explore_search_empty">검색 결과가 없어요</string>
     <!-- Opening links in the app -->
     <string name="share_open_in_app">Social Web에서 열기</string>
+    <string name="open_link_signed_out_title">이 링크를 열려면 로그인하세요</string>
+    <string name="open_link_signed_out_text">Ghost 사이트를 추가하면 여기에서 열립니다. 지금 브라우저에서 열 수도 있습니다.</string>
     <string name="explore_search_open_post">게시물 열기</string>
     <string name="explore_for_you">추천</string>
     <string name="explore_empty">지금 추천할 계정이 없어요. 아래로 당겨 다시 시도하세요.</string>

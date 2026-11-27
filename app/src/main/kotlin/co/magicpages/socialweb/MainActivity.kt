@@ -3,6 +3,7 @@ package co.magicpages.socialweb
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.activity.enableEdgeToEdge
+import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -26,6 +28,7 @@ import androidx.lifecycle.lifecycleScope
 import co.magicpages.socialweb.background.ShareAgainReminder
 import co.magicpages.socialweb.data.account.AccountStore
 import co.magicpages.socialweb.data.activitypub.ActivityPubClient
+import co.magicpages.socialweb.data.ghost.parseFediPubLink
 import co.magicpages.socialweb.data.media.LocalImages
 import co.magicpages.socialweb.data.settings.ThemeColors
 import co.magicpages.socialweb.ui.AppRoot
@@ -63,6 +66,9 @@ class MainActivity : ComponentActivity() {
             handleShare(intent)
             handleNewNote(intent)
             handleShareAgain(intent)
+            handleAppLink(intent)
+        } else {
+            restorePendingLink(savedInstanceState)
         }
         setContent {
             val uriHandler = remember { CustomTabsUriHandler(this) }
@@ -82,6 +88,19 @@ class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         videoPlayback.setAppVisible(true)
+    }
+
+    // A link still waiting for a sign-in (the user may be off reading the emailed code) is kept, as the process
+    // may not be: [OpenLinkRequests] lives in memory only. One opened already isn't, so it never opens twice.
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        openLinks.pending.value?.let { outState.putString(StatePendingLink, it) }
+    }
+
+    /** After the process was recreated, the link that was waiting waits again. Within one process it's still there. */
+    private fun restorePendingLink(savedInstanceState: Bundle) {
+        val url = savedInstanceState.getString(StatePendingLink) ?: return
+        if (openLinks.pending.value == null) openLinks.submit(url)
     }
 
     // Not onPause: the picture-in-picture window keeps the activity paused but visible, and the video playing.
@@ -107,7 +126,7 @@ class MainActivity : ComponentActivity() {
         return super.onKeyUp(keyCode, event)
     }
 
-    // singleTop: a tapped system notification reaches the running activity here.
+    // singleTop: a tapped system notification or App Link reaches the running activity here.
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
@@ -115,6 +134,7 @@ class MainActivity : ComponentActivity() {
         handleShare(intent)
         handleNewNote(intent)
         handleShareAgain(intent)
+        handleAppLink(intent)
     }
 
     private fun handleTabRequest(intent: Intent?) {
@@ -202,6 +222,18 @@ class MainActivity : ComponentActivity() {
         if (url.startsWith("https://", ignoreCase = true)) openLinks.submit(url)
     }
 
+    /**
+     * An App Link (see the manifest): a fedi.pub profile or note opens in the app, the way a shared link
+     * does. Other fedi.pub pages under `/@`, which Android before 15 sends here too, go back to the browser.
+     */
+    private fun handleAppLink(intent: Intent?) {
+        if (intent?.action != Intent.ACTION_VIEW) return
+        val url = intent.dataString ?: return
+        val uri = url.toUri()
+        if (uri.scheme != "https" || !uri.host.equals(FediPubHost, ignoreCase = true)) return
+        if (parseFediPubLink(url) != null) openLinks.submit(url) else CustomTabsUriHandler(this).openUri(url)
+    }
+
     companion object {
         /** Intent extra naming the [HomeTab] to show, set by system notifications. */
         const val ExtraOpenTab = "co.magicpages.socialweb.OPEN_TAB"
@@ -214,6 +246,12 @@ class MainActivity : ComponentActivity() {
 
         /** Class name of the manifest's `activity-alias` that lists the app in the share sheet as "Open in Social Web". */
         const val OpenLinkAlias = "co.magicpages.socialweb.OpenLinkAlias"
+
+        /** The host whose profile and note pages are this app's App Links. */
+        private const val FediPubHost = "fedi.pub"
+
+        /** Saved-state key of a link waiting to open ([OpenLinkRequests]). */
+        private const val StatePendingLink = "co.magicpages.socialweb.PENDING_LINK"
     }
 }
 
@@ -223,14 +261,59 @@ private class CustomTabsUriHandler(private val context: Context) : UriHandler {
         // Link targets come from remote servers; only web pages go to the browser.
         val parsed = uri.toUri()
         if (parsed.scheme?.lowercase() !in WebSchemes) return
+        val tab = CustomTabsIntent.Builder().setShowTitle(true).build()
+        // A page this app is the App Link for (a fedi.pub profile or note it couldn't show, or another
+        // fedi.pub page) would come straight back here: it goes to a browser by name. Without one, it can't open.
+        if (opensHere(parsed)) tab.intent.setPackage(browserPackage() ?: return)
         try {
-            CustomTabsIntent.Builder().setShowTitle(true).build().launchUrl(context, parsed)
+            tab.launchUrl(context, parsed)
         } catch (_: ActivityNotFoundException) {
             // No browser installed; nothing sensible to open the link with.
         }
     }
 
+    private fun opensHere(uri: Uri): Boolean =
+        resolve(Intent(Intent.ACTION_VIEW, uri).addCategory(Intent.CATEGORY_BROWSABLE)) == context.packageName
+
+    /**
+     * A browser to name: one with Custom Tabs, the default first; else the default browser; else any
+     * installed one. Never this app, nor the system's chooser, which is what resolves while several
+     * browsers are installed and none is the default.
+     */
+    private fun browserPackage(): String? {
+        val web = Intent(Intent.ACTION_VIEW, "https://example.com/".toUri()).addCategory(Intent.CATEGORY_BROWSABLE)
+        val browsers = installed(web).filter { it != context.packageName && it != SystemResolver }
+        return CustomTabsClient.getPackageName(context, browsers)?.takeIf { it in browsers }
+            ?: resolve(web)?.takeIf { it in browsers }
+            ?: browsers.firstOrNull()
+    }
+
+    private fun installed(intent: Intent): List<String> {
+        val packages = context.packageManager
+        val infos = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packages.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_ALL.toLong()))
+        } else {
+            @Suppress("DEPRECATION")
+            packages.queryIntentActivities(intent, PackageManager.MATCH_ALL)
+        }
+        return infos.map { it.activityInfo.packageName }.distinct()
+    }
+
+    private fun resolve(intent: Intent): String? {
+        val packages = context.packageManager
+        val info = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packages.resolveActivity(intent, PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_DEFAULT_ONLY.toLong()))
+        } else {
+            @Suppress("DEPRECATION")
+            packages.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        }
+        return info?.activityInfo?.packageName
+    }
+
     private companion object {
         val WebSchemes = setOf("http", "https")
+
+        /** The package of Android's "Open with" chooser. */
+        const val SystemResolver = "android"
     }
 }
