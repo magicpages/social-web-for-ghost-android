@@ -328,8 +328,10 @@ data class Account(
     /** Whether the site's account is bridged to Bluesky; the handle may not be known yet, see [blueskyHandleConfirmed]. */
     val blueskyEnabled: Boolean = false,
     val blueskyHandleConfirmed: Boolean = false,
-    /** The bridged account's Bluesky handle, with its leading `@`; null until confirmed. */
+    /** The bridged account's Bluesky handle, with or without a leading `@`; null until confirmed. */
     val blueskyHandle: String? = null,
+    /** Null when the site's domain hasn't been tried as the handle, or the service predates domain handles. */
+    val blueskyDomainHandle: DomainHandle? = null,
 )
 
 /** The site's own account settings, `v1/preferences`. */
@@ -342,7 +344,32 @@ data class BlueskyStatus(
     val enabled: Boolean = false,
     val handleConfirmed: Boolean = false,
     val handle: String? = null,
+    val domainHandle: DomainHandle? = null,
 )
+
+/**
+ * Whether the site's domain is, or is becoming, its Bluesky handle in place of Bridgy Fed's
+ * `index.example.com.ap.brid.gy` (ActivityPub 1.3.0 and later; its `docs/bluesky-sharing.md`).
+ */
+@Serializable
+data class DomainHandle(
+    val domain: String,
+    val status: DomainHandleStatus = DomainHandleStatus.Unknown,
+    /** Set up by enabling sharing, rather than asked for later. */
+    val automatic: Boolean = false,
+)
+
+@Serializable
+enum class DomainHandleStatus {
+    /** The service serves the account's DID for the domain and waits for Bridgy Fed to switch. */
+    @SerialName("claiming") Claiming,
+    @SerialName("active") Active,
+    @SerialName("unavailable") Unavailable,
+    /** The site moved to another domain. */
+    @SerialName("released") Released,
+    /** A status newer than the app, which then shows the handle as it is. */
+    Unknown,
+}
 
 /** Full profile from `account/:handle` (the service's AccountDTO). */
 @Serializable

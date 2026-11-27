@@ -53,6 +53,7 @@ import androidx.lifecycle.viewModelScope
 import co.magicpages.socialweb.R
 import co.magicpages.socialweb.data.activitypub.BlueskySharing
 import co.magicpages.socialweb.data.activitypub.BlueskyStatus
+import co.magicpages.socialweb.data.activitypub.DomainHandleStatus
 import co.magicpages.socialweb.data.activitypub.SensitiveMediaPreference
 import co.magicpages.socialweb.data.activitypub.SocialWebException
 import co.magicpages.socialweb.data.ghost.GhostException
@@ -82,7 +83,7 @@ sealed interface BlueskyPhase {
 
     data object Off : BlueskyPhase
 
-    /** Enabled; Bridgy Fed is still making the Bluesky account, so its handle isn't known. */
+    /** Enabled; Bridgy Fed is still making the Bluesky account, or giving it the site's domain as its handle. */
     data object Connecting : BlueskyPhase
 
     data class On(val handle: String) : BlueskyPhase
@@ -202,10 +203,9 @@ class NetworkSettingsViewModel @AssistedInject constructor(
 
     /** Shows [status]; one still waiting for its handle is polled until Bridgy Fed has made the account. */
     private suspend fun show(status: BlueskyStatus) {
-        val handle = status.handle?.takeIf { it.isNotBlank() }
         when {
             !status.enabled -> _ui.update { it.copy(bluesky = BlueskyPhase.Off) }
-            status.handleConfirmed && handle != null -> _ui.update { it.copy(bluesky = BlueskyPhase.On(handle)) }
+            status.confirmedHandle != null -> connected(status)
             else -> {
                 _ui.update { it.copy(bluesky = BlueskyPhase.Connecting) }
                 awaitHandle()
@@ -213,23 +213,36 @@ class NetworkSettingsViewModel @AssistedInject constructor(
         }
     }
 
+    /** Shows a [status] with a confirmed handle, then follows a switch to the site's domain while one is going on. */
+    private suspend fun connected(status: BlueskyStatus) {
+        showConfirmed(status, takingLong = false)
+        followDomainHandle(status, ::confirm, ::showConfirmed)
+    }
+
+    private fun showConfirmed(status: BlueskyStatus, takingLong: Boolean) {
+        val phase = confirmedPhase(status, takingLong) ?: return
+        _ui.update { it.copy(bluesky = phase) }
+    }
+
+    /** A failed ask counts as no answer. */
+    private suspend fun confirm(): BlueskyStatus? = try {
+        bluesky.confirmHandle(accountId)
+    } catch (_: GhostException) {
+        null
+    } catch (_: SocialWebException) {
+        null
+    }
+
     /**
-     * Asks every [ConfirmInterval] whether the handle is there yet, as Ghost's own client does. A
-     * failed ask counts as a no. When it never comes, sharing is switched off again.
+     * Asks every [ConfirmInterval] whether the handle is there yet, as Ghost's own client does. When
+     * it never comes, sharing is switched off again.
      */
     private suspend fun awaitHandle() {
         repeat(MaxConfirmations) {
             delay(ConfirmInterval)
-            val status = try {
-                bluesky.confirmHandle(accountId)
-            } catch (_: GhostException) {
-                null
-            } catch (_: SocialWebException) {
-                null
-            }
-            val handle = status?.handle?.takeIf { it.isNotBlank() }
-            if (status != null && status.handleConfirmed && handle != null) {
-                _ui.update { it.copy(bluesky = BlueskyPhase.On(handle)) }
+            val status = confirm()
+            if (status != null && status.confirmedHandle != null) {
+                connected(status)
                 return
             }
         }
@@ -263,6 +276,8 @@ class NetworkSettingsViewModel @AssistedInject constructor(
             } catch (e: SocialWebException) {
                 e
             }
+            // A switch to the domain handle may still be followed; its answers would turn sharing back on.
+            if (failure == null) blueskyJob?.cancel()
             _ui.update {
                 if (failure == null) {
                     it.copy(bluesky = BlueskyPhase.Off, confirmDisable = false, disabling = false)
@@ -272,10 +287,51 @@ class NetworkSettingsViewModel @AssistedInject constructor(
             }
         }
     }
+}
 
-    private companion object {
-        const val ConfirmInterval = 5_000L
-        const val MaxConfirmations = 12
+private const val ConfirmInterval = 5_000L
+private const val MaxConfirmations = 12
+
+// Ghost Admin's pace for a switch to the domain handle: Bridgy Fed usually switches within a
+// minute, so every ConfirmInterval for two minutes, then slower until the service has given up
+// on the switch (after ten).
+private const val FastDomainChecks = 24
+private const val SlowConfirmInterval = 30_000L
+private const val SlowDomainChecks = 20
+
+/** The handle as Bluesky shows it, `@example.com`, once [BlueskyStatus.handleConfirmed]. */
+internal val BlueskyStatus.confirmedHandle: String?
+    get() = handle?.removePrefix("@")?.takeIf { handleConfirmed && it.isNotBlank() }?.let { "@$it" }
+
+/**
+ * What a [status] with a confirmed handle shows; null without one. Enabling sharing sets up the
+ * domain handle too, which counts as connecting until it's [takingLong], so the handle shown
+ * doesn't change a minute after connecting.
+ */
+internal fun confirmedPhase(status: BlueskyStatus, takingLong: Boolean): BlueskyPhase? {
+    val handle = status.confirmedHandle ?: return null
+    val domain = status.domainHandle
+    val settingUp = domain != null && domain.automatic && domain.status == DomainHandleStatus.Claiming
+    return if (settingUp && !takingLong) BlueskyPhase.Connecting else BlueskyPhase.On(handle)
+}
+
+/**
+ * While Bridgy Fed switches the handle to the site's domain, asks [confirm] again until the switch
+ * is over or the service has given up on it. Every answer goes to [show], with whether the switch
+ * is taking long; a failed ask (null, or no confirmed handle) counts as no change.
+ */
+internal suspend fun followDomainHandle(
+    first: BlueskyStatus,
+    confirm: suspend () -> BlueskyStatus?,
+    show: (status: BlueskyStatus, takingLong: Boolean) -> Unit,
+) {
+    var status = first
+    var checks = 0
+    while (status.domainHandle?.status == DomainHandleStatus.Claiming && checks < FastDomainChecks + SlowDomainChecks) {
+        delay(if (checks < FastDomainChecks) ConfirmInterval else SlowConfirmInterval)
+        checks++
+        status = confirm()?.takeIf { it.confirmedHandle != null } ?: status
+        show(status, checks >= FastDomainChecks)
     }
 }
 

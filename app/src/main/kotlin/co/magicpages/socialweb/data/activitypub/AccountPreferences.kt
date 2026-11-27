@@ -126,6 +126,7 @@ class BlueskySharing @Inject constructor(
                 enabled = account.blueskyEnabled,
                 handleConfirmed = account.blueskyHandleConfirmed,
                 handle = account.blueskyHandle,
+                domainHandle = account.blueskyDomainHandle,
             ),
             account.name.ifBlank { account.handle },
             account.handle,
