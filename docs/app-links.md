@@ -20,8 +20,8 @@ Everything else on fedi.pub, such as the home page and the link generator, stays
   - A profile opens `ProfileKey`.
   - A note opens `PostKey` with `resolve = true`.
 - **Finding a note.** A note link only carries the author's handle and the last part of the note's ActivityPub ID (`https://<site>/.ghost/activitypub/note/<id>`). The handle's domain needn't be where the site's ActivityPub lives: `@jannis@jannis.io` is `https://www.jannis.io/.ghost/activitypub/users/index`. So the thread screen:
-  1. looks the handle up with WebFinger,
-  2. builds the note ID on the actor's site (`ghostNoteId`),
+  1. looks the handle up through the signed-in site's social web API (`ActivityPubClient.profile`), whose answer carries the actor's ID,
+  2. builds the note ID on the actor's Ghost site (`ghostNoteId`),
   3. loads it the way it loads any post by its ActivityPub ID.
 - **Signed out.** The link waits for the sign-in, as a shared link does. A dialog offers to sign in or to open the link in the browser.
 - **Failures.** If the lookup fails (offline, unknown handle, no such note), the thread or profile screen shows its usual error with **Open in browser**.

@@ -85,14 +85,10 @@ fun parseFediPubLink(url: String): FediPubLink? {
  * A Ghost note's ActivityPub ID from its author's [actorId] and the last part of its own ID. Ghost
  * serves both under the same site, which may be on another host than the handle's domain
  * (`@jannis@jannis.io` is `https://www.jannis.io/.ghost/activitypub/users/index`) and may sit in a
- * subdirectory. Null when [actorId] isn't an https address.
+ * subdirectory. Null when [actorId] isn't a Ghost actor: fedi.pub only serves Ghost accounts.
  */
-fun ghostNoteId(actorId: String, noteId: String): String? {
-    val site = ghostSiteUrl(actorId) ?: parseWebUri(actorId)?.takeIf { it.scheme.lowercase() == "https" }?.let { uri ->
-        "https://${uri.host.lowercase()}${if (uri.port > 0) ":${uri.port}" else ""}/"
-    } ?: return null
-    return "${site}.ghost/activitypub/note/$noteId"
-}
+fun ghostNoteId(actorId: String, noteId: String): String? =
+    ghostSiteUrl(actorId)?.let { "${it}.ghost/activitypub/note/$noteId" }
 
 /** The address without scheme and `www.`, trailing slash dropped: `example.com`, `example.com/blog`. */
 fun displayAddress(url: String): String {

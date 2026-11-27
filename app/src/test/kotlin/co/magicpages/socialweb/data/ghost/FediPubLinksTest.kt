@@ -1,12 +1,10 @@
 package co.magicpages.socialweb.data.ghost
 
-import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
 
 class FediPubLinksTest {
-    private val json = Json { ignoreUnknownKeys = true; explicitNulls = false }
     private val uuid = "d1a83c75-dd07-4edb-8de6-d7789e170df3"
 
     @Test
@@ -91,31 +89,8 @@ class FediPubLinksTest {
             "https://example.com/blog/.ghost/activitypub/note/$uuid",
             ghostNoteId("https://example.com/blog/.ghost/activitypub/users/index", uuid),
         )
-        // Not shaped like Ghost's: its origin.
-        assertEquals("https://ap.example.com/.ghost/activitypub/note/$uuid", ghostNoteId("https://AP.example.com/users/index", uuid))
+        assertNull(ghostNoteId("https://mastodon.social/users/someone", uuid))
         assertNull(ghostNoteId("http://example.com/.ghost/activitypub/users/index", uuid))
         assertNull(ghostNoteId("not an id", uuid))
-    }
-
-    @Test
-    fun `webfinger gives the actor its self link points to`() {
-        val body = """
-            {"subject":"acct:jannis@jannis.io","links":[
-              {"rel":"http://webfinger.net/rel/profile-page","type":"text/html","href":"https://www.jannis.io/"},
-              {"rel":"self","type":"application/activity+json","href":"https://www.jannis.io/.ghost/activitypub/users/index"}
-            ]}
-        """.trimIndent()
-
-        assertEquals("https://www.jannis.io/.ghost/activitypub/users/index", parseWebFingerActor(body, json))
-    }
-
-    @Test
-    fun `webfinger without an https actor link gives no actor`() {
-        val profilePageOnly = """{"links":[{"rel":"http://webfinger.net/rel/profile-page","type":"text/html","href":"https://jannis.io/"}]}"""
-        val cleartext = """{"links":[{"rel":"self","type":"application/activity+json","href":"http://jannis.io/users/index"}]}"""
-
-        assertNull(parseWebFingerActor(profilePageOnly, json))
-        assertNull(parseWebFingerActor(cleartext, json))
-        assertNull(parseWebFingerActor("not json", json))
     }
 }

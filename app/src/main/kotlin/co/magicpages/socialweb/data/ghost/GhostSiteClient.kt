@@ -7,7 +7,6 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpHeaders
 import java.io.IOException
 import java.net.URI
-import java.net.URLEncoder
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
@@ -153,19 +152,6 @@ class GhostSiteClient @Inject constructor(
         return if (page.status in 200..299) parseWebFingerHandle(page.body, json) else null
     }
 
-    /**
-     * The ActivityPub actor ID of a full `@user@domain` [handle], found with WebFinger on the handle's
-     * domain. Null when that server has no such account; throws [IOException] when it can't be reached.
-     */
-    suspend fun actorId(handle: String): String? {
-        val (user, domain) = handle.trim().removePrefix("@").split('@').takeIf { it.size == 2 && it.none(String::isEmpty) } ?: return null
-        if (!domain.all { it.isLetterOrDigit() || it == '.' || it == '-' }) return null
-        val resource = URLEncoder.encode("acct:$user@$domain", "UTF-8")
-        val page = fetch("https://$domain/.well-known/webfinger?resource=$resource", "application/jrd+json, application/json")
-            ?: throw IOException("Couldn't reach $domain")
-        return if (page.status in 200..299) parseWebFingerActor(page.body, json) else null
-    }
-
     private class Page(val status: Int, val body: String, val finalUrl: String)
 
     /** Null when the site can't be reached in time. */
@@ -223,26 +209,6 @@ internal fun parseGhostSite(body: String, base: String, json: Json): GhostSiteIn
     val siteUrl = text("url")
     val icon = (text("icon") ?: text("logo"))?.let { resolveUrl(it, siteUrl ?: base) }
     return GhostSiteInfo(url = siteUrl, title = text("title"), description = text("description"), iconUrl = icon, allowsSubscribing = allows)
-}
-
-/** The ActivityPub actor a WebFinger answer points to: its `self` link of an ActivityPub type, when that is https. */
-internal fun parseWebFingerActor(body: String, json: Json): String? {
-    val answer = try {
-        json.parseToJsonElement(body) as? JsonObject
-    } catch (_: SerializationException) {
-        null
-    } catch (_: IllegalArgumentException) {
-        null
-    } ?: return null
-    return (answer["links"] as? JsonArray).orEmpty().firstNotNullOfOrNull { link ->
-        val fields = link as? JsonObject ?: return@firstNotNullOfOrNull null
-        val type = (fields["type"] as? JsonPrimitive)?.contentOrNull.orEmpty()
-        val href = (fields["href"] as? JsonPrimitive)?.contentOrNull
-        href?.takeIf {
-            (fields["rel"] as? JsonPrimitive)?.contentOrNull == "self" && ("activity+json" in type || "ld+json" in type) &&
-                parseWebUri(it)?.scheme?.lowercase() == "https"
-        }
-    }
 }
 
 /** `acct:user@domain` becomes `@user@domain`, when the answer points to an ActivityPub actor. */
