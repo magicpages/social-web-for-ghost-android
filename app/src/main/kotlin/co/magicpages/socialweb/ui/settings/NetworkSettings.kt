@@ -73,6 +73,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.TimeSource
 
 /** How the site's Bluesky sharing stands. */
 sealed interface BlueskyPhase {
@@ -213,10 +215,13 @@ class NetworkSettingsViewModel @AssistedInject constructor(
         }
     }
 
-    /** Shows a [status] with a confirmed handle, then follows a switch to the site's domain while one is going on. */
-    private suspend fun connected(status: BlueskyStatus) {
+    /**
+     * Shows a [status], then follows a switch to the site's domain while one is going on. Returns the
+     * last answer, which has no confirmed handle when the switch was all that would bring one.
+     */
+    private suspend fun connected(status: BlueskyStatus): BlueskyStatus {
         showConfirmed(status, takingLong = false)
-        followDomainHandle(status, ::confirm, ::showConfirmed)
+        return followDomainHandle(status, ::confirm, ::showConfirmed)
     }
 
     private fun showConfirmed(status: BlueskyStatus, takingLong: Boolean) {
@@ -238,12 +243,15 @@ class NetworkSettingsViewModel @AssistedInject constructor(
      * it never comes, sharing is switched off again.
      */
     private suspend fun awaitHandle() {
-        repeat(MaxConfirmations) {
+        for (attempt in 1..MaxConfirmations) {
             delay(ConfirmInterval)
-            val status = confirm()
-            if (status != null && status.confirmedHandle != null) {
-                connected(status)
-                return
+            val status = confirm() ?: continue
+            // Bluesky may refuse the handle kept from an earlier connection. The service then claims
+            // the domain first and confirms the handle once Bluesky accepts it, which can take ten
+            // minutes. Switching sharing off before that would stop the claim.
+            if (status.confirmedHandle != null || status.domainHandle?.status == DomainHandleStatus.Claiming) {
+                if (connected(status).confirmedHandle != null) return
+                break
             }
         }
         try {
@@ -299,6 +307,9 @@ private const val FastDomainChecks = 24
 private const val SlowConfirmInterval = 30_000L
 private const val SlowDomainChecks = 20
 
+// Ghost Admin's two minutes until a switch set up by enabling counts as taking long.
+private val TakingLongAfter = (FastDomainChecks * ConfirmInterval).milliseconds
+
 /** The handle as Bluesky shows it, `@example.com`, once [BlueskyStatus.handleConfirmed]. */
 internal val BlueskyStatus.confirmedHandle: String?
     get() = handle?.removePrefix("@")?.takeIf { handleConfirmed && it.isNotBlank() }?.let { "@$it" }
@@ -317,22 +328,26 @@ internal fun confirmedPhase(status: BlueskyStatus, takingLong: Boolean): Bluesky
 
 /**
  * While Bridgy Fed switches the handle to the site's domain, asks [confirm] again until the switch
- * is over or the service has given up on it. Every answer goes to [show], with whether the switch
- * is taking long; a failed ask (null, or no confirmed handle) counts as no change.
+ * is over or the service has given up on it, and returns the last answer. Every answer goes to
+ * [show], with whether the switch is taking long; a failed ask (null) counts as no change.
  */
 internal suspend fun followDomainHandle(
     first: BlueskyStatus,
     confirm: suspend () -> BlueskyStatus?,
     show: (status: BlueskyStatus, takingLong: Boolean) -> Unit,
-) {
+    clock: TimeSource = TimeSource.Monotonic,
+): BlueskyStatus {
+    // Measured, as each ask's own time adds to the pauses between them.
+    val started = clock.markNow()
     var status = first
     var checks = 0
     while (status.domainHandle?.status == DomainHandleStatus.Claiming && checks < FastDomainChecks + SlowDomainChecks) {
         delay(if (checks < FastDomainChecks) ConfirmInterval else SlowConfirmInterval)
         checks++
-        status = confirm()?.takeIf { it.confirmedHandle != null } ?: status
-        show(status, checks >= FastDomainChecks)
+        status = confirm() ?: status
+        show(status, started.elapsedNow() >= TakingLongAfter)
     }
+    return status
 }
 
 /**
