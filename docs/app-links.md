@@ -35,7 +35,7 @@ fedi.pub serves `https://fedi.pub/.well-known/assetlinks.json`:
 - as `application/json`,
 - with no redirects.
 
-The file has one statement per package:
+The file has one statement, for the release package `co.magicpages.socialweb`, listing every key a release is signed with:
 
 ```json
 [
@@ -45,26 +45,11 @@ The file has one statement per package:
       "namespace": "android_app",
       "package_name": "co.magicpages.socialweb",
       "sha256_cert_fingerprints": [
-        "<SHA-256 of the Play app signing key>",
-        "<SHA-256 of the upload key>"
-      ]
-    },
-    "relation_extensions": {
-      "delegate_permission/common.handle_all_urls": {
-        "dynamic_app_link_components": [
-          {"/": "/@?*/?*/?*", "exclude": true},
-          {"/": "/@?*@?*"}
-        ]
-      }
-    }
-  },
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "co.magicpages.socialweb.debug",
-      "sha256_cert_fingerprints": [
-        "<SHA-256 of each maintainer's debug key>"
+        "C1:E9:A7:26:48:A9:4C:88:3C:0C:DF:DA:C5:F9:DE:AD:D2:95:36:DE:3B:83:9C:1D:8F:A2:B0:1F:84:9C:04:9E",
+        "C7:AC:81:A3:2F:0A:7D:10:1C:C6:BB:C4:BF:26:3C:98:85:F6:87:8F:04:2D:22:C9:CF:34:CE:32:B7:40:7D:3F",
+        "B6:0C:6F:4E:E0:24:49:73:8C:0F:17:FE:7B:70:1B:C3:8F:AE:8B:D9:03:22:26:51:97:F6:FD:B6:76:10:38:77",
+        "8A:15:95:5F:34:44:2C:AC:5F:5B:16:32:98:A3:E7:6E:98:ED:3D:70:76:80:F9:B9:51:FF:D6:EB:BC:E0:20:E9",
+        "E0:3C:B9:24:16:0D:96:43:27:31:AE:44:79:8E:5D:5E:A5:D9:E9:FB:46:36:ED:8C:69:F0:4F:6F:77:88:E2:A0"
       ]
     },
     "relation_extensions": {
@@ -81,13 +66,20 @@ The file has one statement per package:
 
 ### Fingerprints
 
-| Key | Where to find its SHA-256 | Which builds verify against it |
+| Key | SHA-256 | Which builds verify against it |
 |---|---|---|
-| Play app signing key | Play Console → App integrity → Play app signing (Google's docs call it Release → Setup → App signing). The page also offers a ready Digital Asset Links snippet. | Every build installed from Google Play, internal testing included |
-| Upload key | The same Play Console page, or `keytool -list -v -keystore upload.jks -alias upload` | A release build signed locally and installed outside Play (see [RELEASING.md](../RELEASING.md)) |
-| Debug key | `keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android`, or `./gradlew :app:signingReport` | Debug and dev builds (`co.magicpages.socialweb.debug`) |
+| Play app signing key, original | `C1:E9:A7:26:48:A9:4C:88:3C:0C:DF:DA:C5:F9:DE:AD:D2:95:36:DE:3B:83:9C:1D:8F:A2:B0:1F:84:9C:04:9E` | Builds installed from Google Play, internal testing included |
+| Play app signing key, upgraded (classical) | `C7:AC:81:A3:2F:0A:7D:10:1C:C6:BB:C4:BF:26:3C:98:85:F6:87:8F:04:2D:22:C9:CF:34:CE:32:B7:40:7D:3F` | Builds from Google Play once Play signs with the upgraded key |
+| Play app signing key, upgraded (post-quantum) | `B6:0C:6F:4E:E0:24:49:73:8C:0F:17:FE:7B:70:1B:C3:8F:AE:8B:D9:03:22:26:51:97:F6:FD:B6:76:10:38:77` | The same |
+| Upload key | `8A:15:95:5F:34:44:2C:AC:5F:5B:16:32:98:A3:E7:6E:98:ED:3D:70:76:80:F9:B9:51:FF:D6:EB:BC:E0:20:E9` | A release build signed locally and installed outside Play (see [RELEASING.md](../RELEASING.md)) |
+| GitHub release key | `E0:3C:B9:24:16:0D:96:43:27:31:AE:44:79:8E:5D:5E:A5:D9:E9:FB:46:36:ED:8C:69:F0:4F:6F:77:88:E2:A0` | The APK on the [GitHub releases](https://github.com/magicpages/social-web-for-ghost-android/releases) |
+| F-Droid's key | Not known until F-Droid publishes the app. Then read it from F-Droid's APK with `apksigner verify --print-certs` and add it. | Builds installed from F-Droid |
 
-Each machine has its own debug key, so the `.debug` statement lists the maintainers' debug keys. Anyone else can approve the domain by hand (see below).
+Play Console lists the Play app signing keys and the upload key under Protected with Play → App signing. The Digital Asset Links snippet on that page lists only the original key, so copy the fingerprints from the table instead.
+
+When a signing key is added or changed, update this file and ask fedi.pub to serve the new one.
+
+Debug and dev builds (`co.magicpages.socialweb.debug`) have no statement. Every machine has its own debug key, and the debug keystore's password is public, so anyone holding a copy of a listed one could build a `.debug` app that opens fedi.pub links. Approve the domain by hand instead (see below).
 
 ### Dynamic App Links
 
@@ -108,18 +100,18 @@ A two-segment path that isn't a note, such as `/@user@domain/feed.xml`, still ma
 
 ## Testing before a store release
 
-**Which key verifies.** A sideloaded debug or dev build (`co.magicpages.socialweb.debug`) verifies against the debug key's fingerprint. Builds from Play internal testing (`co.magicpages.socialweb`) verify against the Play app signing key.
+**Which key verifies.** A release build (`co.magicpages.socialweb`) verifies against the keys above. A debug or dev build (`co.magicpages.socialweb.debug`) never verifies on its own: approve the domain by hand.
 
-Install the build, wait about 20 seconds for verification, then check:
+Install a release build, wait about 20 seconds for verification, then check:
 
 ```sh
-adb shell pm verify-app-links --re-verify co.magicpages.socialweb.debug
-adb shell pm get-app-links co.magicpages.socialweb.debug
+adb shell pm verify-app-links --re-verify co.magicpages.socialweb
+adb shell pm get-app-links co.magicpages.socialweb
 ```
 
 The domain shows as `verified` once fedi.pub serves a matching fingerprint. A number of 1024 or more means verification failed.
 
-**Before fedi.pub serves the file** (or for a debug key that isn't listed), approve the domain by hand. The syntax is in `adb shell pm help`:
+**For a debug or dev build, or before fedi.pub serves the file**, approve the domain by hand. The syntax is in `adb shell pm help`:
 
 ```sh
 adb shell pm set-app-links-user-selection --user 0 --package co.magicpages.socialweb.debug true fedi.pub
