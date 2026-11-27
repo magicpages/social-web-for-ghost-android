@@ -390,6 +390,26 @@ class ActivityPubClientTest {
     }
 
     @Test
+    fun `a status newer than the app leaves the Bluesky handle readable`() = runTest {
+        val ap = client { request ->
+            if (request.isIdentities) {
+                respond("""{"identities":[{"token":"jwt"}]}""", HttpStatusCode.OK)
+            } else {
+                respond(
+                    """{"enabled":true,"handleConfirmed":true,"handle":"index.example.com.ap.brid.gy",
+                    "domainHandle":{"domain":"example.com","status":"paused","reason":"later","automatic":true}}""",
+                    HttpStatusCode.OK,
+                )
+            }
+        }
+
+        val status = ap.confirmBlueskyHandle(site, credential)
+
+        assertEquals("index.example.com.ap.brid.gy", status.handle)
+        assertEquals(DomainHandle("example.com", DomainHandleStatus.Unknown, automatic = true), status.domainHandle)
+    }
+
+    @Test
     fun `posts from a remote outbox accept raw ActivityStreams attachments and links`() = runTest {
         // The service passes these straight from the remote outbox; seen on Murat's Ghost site.
         val body = """
