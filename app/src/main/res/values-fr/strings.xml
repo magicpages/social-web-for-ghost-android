@@ -562,6 +562,17 @@
     <string name="settings_bluesky_copy_handle">Copier l’identifiant</string>
     <string name="settings_bluesky_handle_copied">Copié</string>
     <string name="settings_bluesky_open_profile">Ouvrir le profil</string>
+    <string name="settings_bluesky_domain_offer_title">Utiliser %1$s comme identifiant Bluesky</string>
+    <string name="settings_bluesky_domain_offer_text">Vos abonnés et vos publications restent exactement comme ils sont.</string>
+    <string name="settings_bluesky_domain_use">Utiliser %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Passage à %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">Cela peut prendre quelques minutes. Vous pouvez quitter cet écran et revenir plus tard.</string>
+    <string name="settings_bluesky_domain_switched_title">Votre identifiant Bluesky est maintenant %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Vos abonnés et vos publications sont restés exactement comme avant.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s est déjà pris</string>
+    <string name="settings_bluesky_domain_taken_text">Un autre compte Bluesky utilise %1$s comme identifiant.</string>
+    <string name="settings_bluesky_domain_failed_title">Impossible de passer à %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">Une erreur s’est produite. Réessayez dans quelques minutes.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Partager le profil</string>
     <string name="profile_edit">Modifier le profil</string>

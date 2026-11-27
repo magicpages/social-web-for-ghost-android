@@ -332,6 +332,12 @@ data class Account(
     val blueskyHandle: String? = null,
     /** Null when the site's domain hasn't been tried as the handle, or the service predates domain handles. */
     val blueskyDomainHandle: DomainHandle? = null,
+    /**
+     * Whether the service has domain handles at all. Only the presence of `blueskyDomainHandle` tells:
+     * newer services send null until they try the domain, older ones leave it out. Set by
+     * [ActivityPubClient.currentAccount].
+     */
+    @Transient val blueskyDomainHandles: Boolean = false,
 )
 
 /** The site's own account settings, `v1/preferences`. */
@@ -355,6 +361,8 @@ data class BlueskyStatus(
 data class DomainHandle(
     val domain: String,
     val status: DomainHandleStatus = DomainHandleStatus.Unknown,
+    /** Why the domain is [DomainHandleStatus.Unavailable]; null for a reason newer than the app. */
+    val reason: DomainHandleReason? = null,
     /** Set up by enabling sharing, rather than asked for later. */
     val automatic: Boolean = false,
 )
@@ -370,6 +378,21 @@ enum class DomainHandleStatus {
     /** A status newer than the app, which then shows the handle as it is. */
     Unknown,
 }
+
+@Serializable
+enum class DomainHandleReason {
+    /** The domain already points at another Bluesky account, e.g. the publisher's own. */
+    @SerialName("taken") Taken,
+    /** The site's proxy doesn't route `/.well-known/atproto-did` to the service. */
+    @SerialName("not_reachable") NotReachable,
+    @SerialName("dns_error") DnsError,
+    /** Bridgy Fed didn't switch to the domain within ten minutes. */
+    @SerialName("rejected") Rejected,
+}
+
+/** Which domain asking for it would make the Bluesky handle now, and whether it would work; `domain-handle/check`. */
+@Serializable
+data class DomainHandleCheck(val domain: String, val available: Boolean = false)
 
 /** Full profile from `account/:handle` (the service's AccountDTO). */
 @Serializable

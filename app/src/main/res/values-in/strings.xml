@@ -538,6 +538,17 @@
     <string name="settings_bluesky_copy_handle">Salin handle</string>
     <string name="settings_bluesky_handle_copied">Tersalin</string>
     <string name="settings_bluesky_open_profile">Buka profil</string>
+    <string name="settings_bluesky_domain_offer_title">Gunakan %1$s sebagai handle Bluesky Anda</string>
+    <string name="settings_bluesky_domain_offer_text">Pengikut dan postingan Anda tetap persis seperti semula.</string>
+    <string name="settings_bluesky_domain_use">Gunakan %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Beralih ke %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">Ini bisa memakan waktu beberapa menit. Anda bisa meninggalkan layar ini dan kembali lagi nanti.</string>
+    <string name="settings_bluesky_domain_switched_title">Handle Bluesky Anda sekarang %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Pengikut dan postingan Anda tetap persis seperti semula.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s sudah dipakai</string>
+    <string name="settings_bluesky_domain_taken_text">Akun Bluesky lain memakai %1$s sebagai handle-nya.</string>
+    <string name="settings_bluesky_domain_failed_title">Tidak bisa beralih ke %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">Terjadi kesalahan. Coba lagi dalam beberapa menit.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Bagikan profil</string>
     <string name="profile_edit">Edit profil</string>

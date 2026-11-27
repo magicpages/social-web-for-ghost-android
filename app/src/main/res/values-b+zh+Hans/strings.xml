@@ -538,6 +538,17 @@
     <string name="settings_bluesky_copy_handle">复制账号</string>
     <string name="settings_bluesky_handle_copied">已复制</string>
     <string name="settings_bluesky_open_profile">打开个人资料</string>
+    <string name="settings_bluesky_domain_offer_title">使用 %1$s 作为你的 Bluesky 账号</string>
+    <string name="settings_bluesky_domain_offer_text">你的关注者和帖子完全保持不变。</string>
+    <string name="settings_bluesky_domain_use">使用 %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">正在切换到 %1$s……</string>
+    <string name="settings_bluesky_domain_switching_text">这可能需要几分钟。你可以离开此屏幕，稍后再回来。</string>
+    <string name="settings_bluesky_domain_switched_title">你的 Bluesky 账号现在是 %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">你的关注者和帖子完全保持原样。</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s 已被占用</string>
+    <string name="settings_bluesky_domain_taken_text">另一个 Bluesky 账号正在使用 %1$s 作为账号。</string>
+    <string name="settings_bluesky_domain_failed_title">无法切换到 %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">出了点问题。请几分钟后再试。</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">分享个人资料</string>
     <string name="profile_edit">编辑个人资料</string>

@@ -550,6 +550,17 @@
     <string name="settings_bluesky_copy_handle">Handle kopiëren</string>
     <string name="settings_bluesky_handle_copied">Gekopieerd</string>
     <string name="settings_bluesky_open_profile">Profiel openen</string>
+    <string name="settings_bluesky_domain_offer_title">Gebruik %1$s als je Bluesky-handle</string>
+    <string name="settings_bluesky_domain_offer_text">Je volgers en berichten blijven precies zoals ze zijn.</string>
+    <string name="settings_bluesky_domain_use">%1$s gebruiken</string>
+    <string name="settings_bluesky_domain_switching_title">Overschakelen naar %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">Dit kan een paar minuten duren. Je kunt dit scherm verlaten en later terugkomen.</string>
+    <string name="settings_bluesky_domain_switched_title">Je Bluesky-handle is nu %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Je volgers en berichten zijn precies gebleven zoals ze waren.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s is al in gebruik</string>
+    <string name="settings_bluesky_domain_taken_text">Een ander Bluesky-account gebruikt %1$s als handle.</string>
+    <string name="settings_bluesky_domain_failed_title">Overschakelen naar %1$s is mislukt</string>
+    <string name="settings_bluesky_domain_failed_text">Er is iets misgegaan. Probeer het over een paar minuten opnieuw.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Profiel delen</string>
     <string name="profile_edit">Profiel bewerken</string>

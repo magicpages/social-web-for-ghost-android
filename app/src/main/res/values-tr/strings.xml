@@ -550,6 +550,17 @@
     <string name="settings_bluesky_copy_handle">Kullanıcı adını kopyala</string>
     <string name="settings_bluesky_handle_copied">Kopyalandı</string>
     <string name="settings_bluesky_open_profile">Profili aç</string>
+    <string name="settings_bluesky_domain_offer_title">%1$s adresini Bluesky kullanıcı adın olarak kullan</string>
+    <string name="settings_bluesky_domain_offer_text">Takipçilerin ve gönderilerin olduğu gibi kalır.</string>
+    <string name="settings_bluesky_domain_use">%1$s kullan</string>
+    <string name="settings_bluesky_domain_switching_title">%1$s adresine geçiliyor…</string>
+    <string name="settings_bluesky_domain_switching_text">Bu birkaç dakika sürebilir. Bu ekrandan çıkıp daha sonra tekrar gelebilirsin.</string>
+    <string name="settings_bluesky_domain_switched_title">Bluesky kullanıcı adın artık %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Takipçilerin ve gönderilerin olduğu gibi kaldı.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s zaten alınmış</string>
+    <string name="settings_bluesky_domain_taken_text">Başka bir Bluesky hesabı %1$s adresini kullanıcı adı olarak kullanıyor.</string>
+    <string name="settings_bluesky_domain_failed_title">%1$s adresine geçilemedi</string>
+    <string name="settings_bluesky_domain_failed_text">Bir şeyler ters gitti. Birkaç dakika sonra tekrar dene.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Profili paylaş</string>
     <string name="profile_edit">Profili düzenle</string>

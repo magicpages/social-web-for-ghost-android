@@ -538,6 +538,17 @@
     <string name="settings_bluesky_copy_handle">複製帳號</string>
     <string name="settings_bluesky_handle_copied">已複製</string>
     <string name="settings_bluesky_open_profile">開啟個人檔案</string>
+    <string name="settings_bluesky_domain_offer_title">使用 %1$s 作為你的 Bluesky 帳號</string>
+    <string name="settings_bluesky_domain_offer_text">你的追蹤者和貼文完全保持不變。</string>
+    <string name="settings_bluesky_domain_use">使用 %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">正在切換到 %1$s……</string>
+    <string name="settings_bluesky_domain_switching_text">這可能需要幾分鐘。你可以離開此畫面，稍後再回來。</string>
+    <string name="settings_bluesky_domain_switched_title">你的 Bluesky 帳號現在是 %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">你的追蹤者和貼文完全保持原樣。</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s 已被使用</string>
+    <string name="settings_bluesky_domain_taken_text">另一個 Bluesky 帳號正在使用 %1$s 作為帳號。</string>
+    <string name="settings_bluesky_domain_failed_title">無法切換到 %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">發生錯誤。請幾分鐘後再試。</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">分享個人檔案</string>
     <string name="profile_edit">編輯個人檔案</string>

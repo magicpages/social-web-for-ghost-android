@@ -557,6 +557,17 @@
     <string name="settings_bluesky_copy_handle">Copy handle</string>
     <string name="settings_bluesky_handle_copied">Copied</string>
     <string name="settings_bluesky_open_profile">Open profile</string>
+    <string name="settings_bluesky_domain_offer_title">Use %1$s as your Bluesky handle</string>
+    <string name="settings_bluesky_domain_offer_text">Your followers and posts stay exactly as they are.</string>
+    <string name="settings_bluesky_domain_use">Use %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Switching to %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">This can take a few minutes. You can leave this screen and come back.</string>
+    <string name="settings_bluesky_domain_switched_title">Your Bluesky handle is now %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Your followers and posts stayed exactly as they were.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s is already taken</string>
+    <string name="settings_bluesky_domain_taken_text">Another Bluesky account uses %1$s as its handle.</string>
+    <string name="settings_bluesky_domain_failed_title">Couldn\'t switch to %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">Something went wrong. Try again in a few minutes.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Share profile</string>
     <string name="profile_edit">Edit profile</string>

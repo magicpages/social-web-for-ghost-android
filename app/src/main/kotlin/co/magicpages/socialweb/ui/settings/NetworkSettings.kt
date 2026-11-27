@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,6 +19,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SegmentedListItem
@@ -39,12 +41,15 @@ import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.toClipEntry
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.toggleableState
 import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
@@ -53,6 +58,9 @@ import androidx.lifecycle.viewModelScope
 import co.magicpages.socialweb.R
 import co.magicpages.socialweb.data.activitypub.BlueskySharing
 import co.magicpages.socialweb.data.activitypub.BlueskyStatus
+import co.magicpages.socialweb.data.activitypub.DomainHandle
+import co.magicpages.socialweb.data.activitypub.DomainHandleCheck
+import co.magicpages.socialweb.data.activitypub.DomainHandleReason
 import co.magicpages.socialweb.data.activitypub.DomainHandleStatus
 import co.magicpages.socialweb.data.activitypub.SensitiveMediaPreference
 import co.magicpages.socialweb.data.activitypub.SocialWebException
@@ -111,7 +119,27 @@ data class NetworkUi(
     val sensitiveLoading: Boolean = true,
     /** Why the last change of "Show sensitive media" was undone. */
     val sensitiveError: Throwable? = null,
+    /** Whether the service can make the site's domain the Bluesky handle. */
+    val domainHandles: Boolean = false,
+    val domain: DomainSwitch = DomainSwitch(),
 )
+
+/** What decides the banner about the site's domain as the Bluesky handle; see [domainBanner]. */
+data class DomainSwitch(
+    /** The switch to the domain as the service last reported it. */
+    val handle: DomainHandle? = null,
+    /** Whether asking for the domain would work now; null until checked. */
+    val check: DomainHandleCheck? = null,
+    /** The publisher asked for the domain: on this screen, or earlier while that switch still goes on. */
+    val requested: Boolean = false,
+    val requesting: Boolean = false,
+    val requestFailed: Boolean = false,
+)
+
+/** What the Bluesky section says about the site's domain as the handle, naming [domain]. */
+data class DomainBanner(val kind: Kind, val domain: String) {
+    enum class Kind { Offer, Switching, Switched, Taken, Failed }
+}
 
 /** Bluesky sharing and the sensitive-media choice of the signed-in account [accountId], active or not. */
 @HiltViewModel(assistedFactory = NetworkSettingsViewModel.Factory::class)
@@ -162,7 +190,7 @@ class NetworkSettingsViewModel @AssistedInject constructor(
 
     fun loadBluesky() {
         blueskyJob?.cancel()
-        _ui.update { it.copy(bluesky = BlueskyPhase.Loading, problem = null) }
+        _ui.update { it.copy(bluesky = BlueskyPhase.Loading, problem = null, domain = DomainSwitch()) }
         blueskyJob = viewModelScope.launch {
             val state = try {
                 bluesky.state(accountId)
@@ -173,7 +201,9 @@ class NetworkSettingsViewModel @AssistedInject constructor(
                 _ui.update { it.copy(bluesky = BlueskyPhase.Failed(e)) }
                 return@launch
             }
-            _ui.update { it.copy(name = state.name, handle = state.handle, avatarUrl = state.avatarUrl) }
+            _ui.update {
+                it.copy(name = state.name, handle = state.handle, avatarUrl = state.avatarUrl, domainHandles = state.domainHandles)
+            }
             show(state.status)
         }
     }
@@ -215,17 +245,63 @@ class NetworkSettingsViewModel @AssistedInject constructor(
     }
 
     /**
-     * Shows a [status], then follows a switch to the site's domain while one is going on. Returns the
-     * last answer, which has no confirmed handle when the switch was all that would bring one.
+     * Shows a [status], then follows a switch to the site's domain while one is going on, and
+     * offers the domain when it isn't the handle yet. Returns the last answer, which has no
+     * confirmed handle when the switch was all that would bring one.
      */
     private suspend fun connected(status: BlueskyStatus): BlueskyStatus {
         showConfirmed(status, takingLong = false)
-        return followDomainHandle(status, ::confirm, ::showConfirmed)
+        val last = followDomainHandle(status, ::confirm, ::showConfirmed)
+        offerDomain()
+        return last
     }
 
     private fun showConfirmed(status: BlueskyStatus, takingLong: Boolean) {
         val phase = confirmedPhase(status, takingLong) ?: return
-        _ui.update { it.copy(bluesky = phase) }
+        val handle = status.domainHandle
+        val askedEarlier = handle != null && !handle.automatic && handle.status == DomainHandleStatus.Claiming
+        _ui.update {
+            it.copy(bluesky = phase, domain = it.domain.copy(handle = handle, requested = it.domain.requested || askedEarlier))
+        }
+    }
+
+    /**
+     * Checks whether the site's domain would work as the handle, when that's worth offering. An
+     * earlier attempt that failed doesn't stop the offer: the proxy may route the path by now.
+     */
+    private suspend fun offerDomain() {
+        val ui = _ui.value
+        val phase = ui.bluesky as? BlueskyPhase.On ?: return
+        val status = ui.domain.handle?.status
+        val settled = status == DomainHandleStatus.Claiming || status == DomainHandleStatus.Active
+        if (!ui.domainHandles || ui.domain.requested || settled || phase.handle == "@${ui.siteDomain}") return
+        val check = try {
+            bluesky.checkDomainHandle(accountId)
+        } catch (_: GhostException) {
+            return
+        } catch (_: SocialWebException) {
+            return
+        }
+        _ui.update { it.copy(domain = it.domain.copy(check = check)) }
+    }
+
+    /** Asks for the site's domain as the Bluesky handle, then follows the switch. */
+    fun useDomain() {
+        val current = _ui.value
+        if (current.bluesky !is BlueskyPhase.On || current.domain.requesting) return
+        blueskyJob?.cancel()
+        _ui.update { it.copy(domain = it.domain.copy(requested = true, requesting = true, requestFailed = false)) }
+        blueskyJob = viewModelScope.launch {
+            val status = try {
+                bluesky.useDomainHandle(accountId)
+            } catch (_: GhostException) {
+                null
+            } catch (_: SocialWebException) {
+                null
+            }
+            _ui.update { it.copy(domain = it.domain.copy(requesting = false, requestFailed = status == null)) }
+            if (status != null) connected(status)
+        }
     }
 
     /** A failed ask counts as no answer. */
@@ -273,7 +349,7 @@ class NetworkSettingsViewModel @AssistedInject constructor(
             if (failure == null) blueskyJob?.cancel()
             _ui.update {
                 if (failure == null) {
-                    it.copy(bluesky = BlueskyPhase.Off, confirmDisable = false, disabling = false)
+                    it.copy(bluesky = BlueskyPhase.Off, confirmDisable = false, disabling = false, domain = DomainSwitch())
                 } else {
                     it.copy(confirmDisable = false, disabling = false, problem = BlueskyProblem.Failed(failure))
                 }
@@ -366,6 +442,36 @@ internal suspend fun awaitHandle(
     return false
 }
 
+/** The site's domain, from its fediverse handle: `example.com` for `@index@example.com`. */
+internal val NetworkUi.siteDomain: String get() = handle.substringAfterLast('@')
+
+/**
+ * The banner about the site's domain as the Bluesky handle, as Ghost Admin decides it. How a switch
+ * ended only shows when the publisher asked for it; otherwise the domain is offered while it isn't
+ * the handle and the check says it would work now.
+ */
+internal fun domainBanner(ui: NetworkUi): DomainBanner? {
+    val phase = ui.bluesky as? BlueskyPhase.On ?: return null
+    if (!ui.domainHandles) return null
+    val switch = ui.domain
+    val handle = switch.handle
+    val kind = when {
+        switch.requesting -> DomainBanner.Kind.Switching
+        switch.requestFailed -> DomainBanner.Kind.Failed
+        // Setting the domain up while enabling sharing isn't a switch the publisher asked for.
+        handle?.status == DomainHandleStatus.Claiming -> if (handle.automatic) null else DomainBanner.Kind.Switching
+        switch.requested && handle?.status == DomainHandleStatus.Active -> DomainBanner.Kind.Switched
+        switch.requested && handle?.status == DomainHandleStatus.Unavailable ->
+            if (handle.reason == DomainHandleReason.Taken) DomainBanner.Kind.Taken else DomainBanner.Kind.Failed
+        phase.handle == "@${ui.siteDomain}" || handle?.status == DomainHandleStatus.Active -> null
+        switch.check?.available == true -> DomainBanner.Kind.Offer
+        else -> null
+    } ?: return null
+    // The offer names the domain that would work; the rest name the domain that was tried.
+    val domain = (if (kind == DomainBanner.Kind.Offer) null else handle?.domain) ?: switch.check?.domain ?: handle?.domain ?: ui.siteDomain
+    return DomainBanner(kind, domain)
+}
+
 /**
  * The settings sections that live on the site's service: showing sensitive media, and sharing the
  * site's posts on Bluesky, for the signed-in account [accountId]. [siteTitle] names the site they
@@ -421,7 +527,8 @@ private fun BlueskySection(ui: NetworkUi, siteTitle: String, viewModel: NetworkS
                     stringResource(R.string.settings_bluesky_needs_avatar)
                 },
             )
-            if (hasAvatar) Explainer(stringResource(R.string.settings_bluesky_handle_warning, ui.handle))
+            // A new connection gets the site's domain as its handle when the service can do that.
+            if (hasAvatar && !ui.domainHandles) Explainer(stringResource(R.string.settings_bluesky_handle_warning, ui.handle))
             ToggleRow(
                 label = R.string.settings_bluesky_share,
                 summary = null,
@@ -452,6 +559,7 @@ private fun BlueskySection(ui: NetworkUi, siteTitle: String, viewModel: NetworkS
                 enabled = !ui.disabling,
                 onClick = viewModel::askToDisable,
             )
+            domainBanner(ui)?.let { DomainHandleBanner(it, onUseDomain = viewModel::useDomain) }
             if (phase.handle.isNotBlank()) ConnectedCard(ui.name, ui.avatarUrl, phase.handle)
         }
     }
@@ -485,6 +593,59 @@ private fun BlueskySection(ui: NetworkUi, siteTitle: String, viewModel: NetworkS
                 }
             },
         )
+    }
+}
+
+/** The site's domain as the Bluesky handle: offered, being switched to, or how the switch ended. */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun DomainHandleBanner(banner: DomainBanner, onUseDomain: () -> Unit) {
+    val domain = banner.domain
+    val (title, text) = when (banner.kind) {
+        DomainBanner.Kind.Offer -> stringResource(R.string.settings_bluesky_domain_offer_title, domain) to
+            stringResource(R.string.settings_bluesky_domain_offer_text)
+        DomainBanner.Kind.Switching -> stringResource(R.string.settings_bluesky_domain_switching_title, domain) to
+            stringResource(R.string.settings_bluesky_domain_switching_text)
+        DomainBanner.Kind.Switched -> stringResource(R.string.settings_bluesky_domain_switched_title, domain) to
+            stringResource(R.string.settings_bluesky_domain_switched_text)
+        DomainBanner.Kind.Taken -> stringResource(R.string.settings_bluesky_domain_taken_title, domain) to
+            stringResource(R.string.settings_bluesky_domain_taken_text, domain)
+        DomainBanner.Kind.Failed -> stringResource(R.string.settings_bluesky_domain_failed_title, domain) to
+            stringResource(R.string.settings_bluesky_domain_failed_text)
+    }
+    val problem = banner.kind == DomainBanner.Kind.Taken || banner.kind == DomainBanner.Kind.Failed
+    Card(
+        // The switch ends while the reader may be looking elsewhere; screen readers hear how.
+        modifier = Modifier.fillMaxWidth().semantics { liveRegion = LiveRegionMode.Polite },
+        colors = CardDefaults.cardColors(
+            containerColor = if (problem) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.surfaceContainer,
+        ),
+    ) {
+        Row(Modifier.fillMaxWidth().padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            if (banner.kind == DomainBanner.Kind.Switching) {
+                LoadingIndicator(Modifier.size(24.dp))
+            } else {
+                Icon(
+                    if (banner.kind == DomainBanner.Kind.Switched) AppIcons.Check else AppIcons.Info,
+                    contentDescription = null,
+                    tint = if (problem) LocalContentColor.current else MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(24.dp),
+                )
+            }
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(title, style = MaterialTheme.typography.titleSmall)
+                Text(text, style = MaterialTheme.typography.bodyMedium)
+                when (banner.kind) {
+                    DomainBanner.Kind.Offer -> Button(onClick = onUseDomain, modifier = Modifier.padding(top = 8.dp)) {
+                        Text(stringResource(R.string.settings_bluesky_domain_use, domain), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    }
+                    DomainBanner.Kind.Failed -> OutlinedButton(onClick = onUseDomain, modifier = Modifier.padding(top = 8.dp)) {
+                        Text(stringResource(R.string.retry))
+                    }
+                    else -> Unit
+                }
+            }
+        }
     }
 }
 

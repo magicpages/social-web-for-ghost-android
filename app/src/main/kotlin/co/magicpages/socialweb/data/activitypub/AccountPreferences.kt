@@ -116,8 +116,11 @@ class BlueskySharing @Inject constructor(
     private val accounts: AccountStore,
     private val client: ActivityPubClient,
 ) {
-    /** What the site's account says about Bluesky now, with what enabling needs to know of it. */
-    data class State(val status: BlueskyStatus, val name: String, val handle: String, val avatarUrl: String?)
+    /**
+     * What the site's account says about Bluesky now, with what enabling needs to know of it.
+     * [domainHandles]: whether the service can make the site's domain the Bluesky handle.
+     */
+    data class State(val status: BlueskyStatus, val name: String, val handle: String, val avatarUrl: String?, val domainHandles: Boolean)
 
     suspend fun state(accountId: String): State = with(account(accountId)) {
         val account = client.currentAccount(site, credential)
@@ -131,6 +134,7 @@ class BlueskySharing @Inject constructor(
             account.name.ifBlank { account.handle },
             account.handle,
             account.avatarUrl,
+            account.blueskyDomainHandles,
         )
     }
 
@@ -138,6 +142,10 @@ class BlueskySharing @Inject constructor(
 
     /** Whether Bridgy Fed has made the Bluesky account yet; the handle comes with the first yes. */
     suspend fun confirmHandle(accountId: String): BlueskyStatus = with(account(accountId)) { client.confirmBlueskyHandle(site, credential) }
+
+    suspend fun checkDomainHandle(accountId: String): DomainHandleCheck = with(account(accountId)) { client.checkBlueskyDomainHandle(site, credential) }
+
+    suspend fun useDomainHandle(accountId: String): BlueskyStatus = with(account(accountId)) { client.useBlueskyDomainHandle(site, credential) }
 
     suspend fun disable(accountId: String) = with(account(accountId)) { client.disableBluesky(site, credential) }
 

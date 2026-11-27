@@ -562,6 +562,17 @@
     <string name="settings_bluesky_copy_handle">Copiar identificador</string>
     <string name="settings_bluesky_handle_copied">Copiado</string>
     <string name="settings_bluesky_open_profile">Abrir perfil</string>
+    <string name="settings_bluesky_domain_offer_title">Usar %1$s como tu identificador de Bluesky</string>
+    <string name="settings_bluesky_domain_offer_text">Tus seguidores y publicaciones se quedan exactamente como están.</string>
+    <string name="settings_bluesky_domain_use">Usar %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Cambiando a %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">Esto puede tardar unos minutos. Puedes salir de esta pantalla y volver más tarde.</string>
+    <string name="settings_bluesky_domain_switched_title">Tu identificador de Bluesky ahora es %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Tus seguidores y publicaciones se quedaron exactamente como estaban.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s ya está en uso</string>
+    <string name="settings_bluesky_domain_taken_text">Otra cuenta de Bluesky usa %1$s como identificador.</string>
+    <string name="settings_bluesky_domain_failed_title">No se pudo cambiar a %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">Algo salió mal. Inténtalo de nuevo en unos minutos.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Compartir perfil</string>
     <string name="profile_edit">Editar perfil</string>
