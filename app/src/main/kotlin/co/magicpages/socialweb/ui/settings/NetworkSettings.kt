@@ -65,6 +65,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -73,8 +74,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.TimeSource
 
 /** How the site's Bluesky sharing stands. */
 sealed interface BlueskyPhase {
@@ -210,7 +209,7 @@ class NetworkSettingsViewModel @AssistedInject constructor(
             status.confirmedHandle != null -> connected(status)
             else -> {
                 _ui.update { it.copy(bluesky = BlueskyPhase.Connecting) }
-                awaitHandle()
+                if (!awaitHandle(status, ::confirm, ::connected)) timedOut()
             }
         }
     }
@@ -238,22 +237,8 @@ class NetworkSettingsViewModel @AssistedInject constructor(
         null
     }
 
-    /**
-     * Asks every [ConfirmInterval] whether the handle is there yet, as Ghost's own client does. When
-     * it never comes, sharing is switched off again.
-     */
-    private suspend fun awaitHandle() {
-        for (attempt in 1..MaxConfirmations) {
-            delay(ConfirmInterval)
-            val status = confirm() ?: continue
-            // Bluesky may refuse the handle kept from an earlier connection. The service then claims
-            // the domain first and confirms the handle once Bluesky accepts it, which can take ten
-            // minutes. Switching sharing off before that would stop the claim.
-            if (status.confirmedHandle != null || status.domainHandle?.status == DomainHandleStatus.Claiming) {
-                if (connected(status).confirmedHandle != null) return
-                break
-            }
-        }
+    /** No handle came after enabling, so sharing is switched off again. */
+    private suspend fun timedOut() {
         try {
             bluesky.disable(accountId)
             _ui.update { it.copy(bluesky = BlueskyPhase.Off, problem = BlueskyProblem.TimedOut) }
@@ -308,7 +293,7 @@ private const val SlowConfirmInterval = 30_000L
 private const val SlowDomainChecks = 20
 
 // Ghost Admin's two minutes until a switch set up by enabling counts as taking long.
-private val TakingLongAfter = (FastDomainChecks * ConfirmInterval).milliseconds
+private const val TakingLongAfter = FastDomainChecks * ConfirmInterval
 
 /** The handle as Bluesky shows it, `@example.com`, once [BlueskyStatus.handleConfirmed]. */
 internal val BlueskyStatus.confirmedHandle: String?
@@ -329,25 +314,56 @@ internal fun confirmedPhase(status: BlueskyStatus, takingLong: Boolean): Bluesky
 /**
  * While Bridgy Fed switches the handle to the site's domain, asks [confirm] again until the switch
  * is over or the service has given up on it, and returns the last answer. Every answer goes to
- * [show], with whether the switch is taking long; a failed ask (null) counts as no change.
+ * [show], with whether the switch is taking long; a failed ask (null) counts as no change. Taking
+ * long starts two minutes in, on time even while an ask is still waiting for its answer.
  */
 internal suspend fun followDomainHandle(
     first: BlueskyStatus,
     confirm: suspend () -> BlueskyStatus?,
     show: (status: BlueskyStatus, takingLong: Boolean) -> Unit,
-    clock: TimeSource = TimeSource.Monotonic,
-): BlueskyStatus {
-    // Measured, as each ask's own time adds to the pauses between them.
-    val started = clock.markNow()
+): BlueskyStatus = coroutineScope {
     var status = first
+    var takingLong = false
+    val deadline = launch {
+        delay(TakingLongAfter)
+        takingLong = true
+        show(status, true)
+    }
     var checks = 0
     while (status.domainHandle?.status == DomainHandleStatus.Claiming && checks < FastDomainChecks + SlowDomainChecks) {
         delay(if (checks < FastDomainChecks) ConfirmInterval else SlowConfirmInterval)
         checks++
         status = confirm() ?: status
-        show(status, started.elapsedNow() >= TakingLongAfter)
+        show(status, takingLong)
     }
-    return status
+    deadline.cancel()
+    status
+}
+
+/**
+ * Waits for the handle after enabling, from the service's [first] answer without one: asks
+ * [confirm] every [ConfirmInterval], and hands the first answer with a handle to [connected].
+ * Bluesky may refuse the handle kept from an earlier connection; the service then claims the
+ * domain first and confirms the handle once Bluesky accepts it, which can take ten minutes, so an
+ * answer with that claim goes to [connected] too. Returns whether a handle came.
+ */
+internal suspend fun awaitHandle(
+    first: BlueskyStatus,
+    confirm: suspend () -> BlueskyStatus?,
+    connected: suspend (BlueskyStatus) -> BlueskyStatus,
+): Boolean {
+    var status: BlueskyStatus? = first
+    for (attempt in 0..MaxConfirmations) {
+        if (attempt > 0) {
+            delay(ConfirmInterval)
+            status = confirm()
+        }
+        val answer = status ?: continue
+        if (answer.confirmedHandle != null || answer.domainHandle?.status == DomainHandleStatus.Claiming) {
+            return connected(answer).confirmedHandle != null
+        }
+    }
+    return false
 }
 
 /**

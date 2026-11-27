@@ -7,7 +7,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class DomainHandleFollowTest {
@@ -31,7 +33,6 @@ class DomainHandleFollowTest {
             first,
             confirm = { if (++asked < 30) first else status("example.com", DomainHandleStatus.Active) },
             show = { status, takingLong -> shown += confirmedPhase(status, takingLong) },
-            clock = testScheduler.timeSource,
         )
 
         // Two minutes of asks every 5 seconds count as connecting.
@@ -43,20 +44,19 @@ class DomainHandleFollowTest {
     }
 
     @Test
-    fun `slow asks don't stretch the two minutes of connecting`() = runTest {
+    fun `connecting ends two minutes in, even while an ask is still waiting for its answer`() = runTest {
         val first = status(bridged, DomainHandleStatus.Claiming)
-        val shown = mutableListOf<BlueskyPhase?>()
+        val shown = mutableListOf<Pair<Long, BlueskyPhase?>>()
 
         followDomainHandle(
             first,
-            confirm = { delay(5_000); first },
-            show = { status, takingLong -> shown += confirmedPhase(status, takingLong) },
-            clock = testScheduler.timeSource,
+            // Each check takes 25 seconds; the fifth runs from 105 to 125 seconds.
+            confirm = { delay(20_000); first },
+            show = { status, takingLong -> shown += currentTime to confirmedPhase(status, takingLong) },
         )
 
-        // Each check takes 10 seconds, so the twelfth is two minutes in.
-        assertEquals(List(11) { BlueskyPhase.Connecting }, shown.take(11))
-        assertEquals(BlueskyPhase.On("@$bridged"), shown[11])
+        assertEquals(List(4) { BlueskyPhase.Connecting }, shown.take(4).map { it.second })
+        assertEquals(120_000L to BlueskyPhase.On("@$bridged"), shown[4])
     }
 
     @Test
@@ -70,7 +70,6 @@ class DomainHandleFollowTest {
             claiming,
             confirm = { if (++asked < 3) claiming else status("example.com", DomainHandleStatus.Active) },
             show = { status, takingLong -> shown += confirmedPhase(status, takingLong) },
-            clock = testScheduler.timeSource,
         )
 
         assertEquals(listOf(null, null, BlueskyPhase.On("@example.com")), shown)
@@ -86,6 +85,40 @@ class DomainHandleFollowTest {
         )
 
         assertNull(last.confirmedHandle)
+    }
+
+    @Test
+    fun `enabling into a claim that comes before the handle follows it from the first answer`() = runTest {
+        // Re-enabling after Bluesky refused the kept handle: the service claims the domain first.
+        val claiming = status(handle = null, DomainHandleStatus.Claiming)
+        var followedAt = -1L
+
+        val connected = awaitHandle(
+            claiming,
+            confirm = { null },
+            connected = {
+                followedAt = currentTime
+                status("example.com", DomainHandleStatus.Active)
+            },
+        )
+
+        assertTrue(connected)
+        assertEquals(0L, followedAt)
+    }
+
+    @Test
+    fun `enabling gives up after a minute without a handle or a claim`() = runTest {
+        var asked = 0
+
+        val connected = awaitHandle(
+            status(handle = null, domain = null),
+            confirm = { asked++; status(handle = null, domain = null) },
+            connected = { error("Nothing to follow") },
+        )
+
+        assertFalse(connected)
+        assertEquals(12, asked)
+        assertEquals(60_000L, currentTime)
     }
 
     @Test
