@@ -410,6 +410,51 @@ class ActivityPubClientTest {
     }
 
     @Test
+    fun `only a service that sends the domain handle key, even as null, has domain handles`() = runTest {
+        var body = """{"id":"1","handle":"@index@example.com","blueskyEnabled":true}"""
+        val ap = client { request ->
+            if (request.isIdentities) respond("""{"identities":[{"token":"jwt"}]}""", HttpStatusCode.OK)
+            else respond(body, HttpStatusCode.OK)
+        }
+
+        val older = ap.currentAccount(site, credential)
+        body = """{"id":"1","handle":"@index@example.com","blueskyEnabled":true,"blueskyDomainHandle":null}"""
+        val newer = ap.currentAccount(site, credential)
+
+        assertFalse(older.blueskyDomainHandles)
+        assertTrue(newer.blueskyDomainHandles)
+        assertNull(newer.blueskyDomainHandle)
+    }
+
+    @Test
+    fun `checking and asking for the domain handle post to the v2 actions`() = runTest {
+        val ap = client { request ->
+            when {
+                request.isIdentities -> respond("""{"identities":[{"token":"jwt"}]}""", HttpStatusCode.OK)
+                request.url.encodedPath.endsWith("/check") ->
+                    respond("""{"domain":"example.com","available":true,"reason":null}""", HttpStatusCode.OK)
+                else -> respond(
+                    """{"enabled":true,"handleConfirmed":true,"handle":"index.example.com.ap.brid.gy",
+                    "domainHandle":{"domain":"example.com","status":"unavailable","reason":"taken","automatic":false}}""",
+                    HttpStatusCode.OK,
+                )
+            }
+        }
+
+        val check = ap.checkBlueskyDomainHandle(site, credential)
+        val status = ap.useBlueskyDomainHandle(site, credential)
+
+        val calls = requests.filterNot { it.isIdentities }
+        assertEquals(
+            listOf("/.ghost/activitypub/v2/actions/bluesky/domain-handle/check", "/.ghost/activitypub/v2/actions/bluesky/domain-handle"),
+            calls.map { it.url.encodedPath },
+        )
+        assertEquals(listOf(HttpMethod.Post, HttpMethod.Post), calls.map { it.method })
+        assertEquals(DomainHandleCheck("example.com", available = true), check)
+        assertEquals(DomainHandle("example.com", DomainHandleStatus.Unavailable, DomainHandleReason.Taken), status.domainHandle)
+    }
+
+    @Test
     fun `posts from a remote outbox accept raw ActivityStreams attachments and links`() = runTest {
         // The service passes these straight from the remote outbox; seen on Murat's Ghost site.
         val body = """

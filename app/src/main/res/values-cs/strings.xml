@@ -574,6 +574,17 @@
     <string name="settings_bluesky_copy_handle">Kopírovat handle</string>
     <string name="settings_bluesky_handle_copied">Zkopírováno</string>
     <string name="settings_bluesky_open_profile">Otevřít profil</string>
+    <string name="settings_bluesky_domain_offer_title">Používat %1$s jako handle na Bluesky</string>
+    <string name="settings_bluesky_domain_offer_text">Vaši sledující a příspěvky zůstanou přesně tak, jak jsou.</string>
+    <string name="settings_bluesky_domain_use">Použít %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Přepínání na %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">Může to trvat několik minut. Tuto obrazovku můžete opustit a vrátit se později.</string>
+    <string name="settings_bluesky_domain_switched_title">Váš handle na Bluesky je nyní %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Vaši sledující a příspěvky zůstali přesně tak, jak byli.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s je už obsazeno</string>
+    <string name="settings_bluesky_domain_taken_text">Jiný účet na Bluesky používá %1$s jako svůj handle.</string>
+    <string name="settings_bluesky_domain_failed_title">Přepnutí na %1$s se nepodařilo</string>
+    <string name="settings_bluesky_domain_failed_text">Něco se pokazilo. Zkuste to znovu za několik minut.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Sdílet profil</string>
     <string name="profile_edit">Upravit profil</string>

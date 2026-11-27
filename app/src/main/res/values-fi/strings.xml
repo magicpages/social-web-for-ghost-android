@@ -550,6 +550,17 @@
     <string name="settings_bluesky_copy_handle">Kopioi tunnus</string>
     <string name="settings_bluesky_handle_copied">Kopioitu</string>
     <string name="settings_bluesky_open_profile">Avaa profiili</string>
+    <string name="settings_bluesky_domain_offer_title">Käytä %1$s Bluesky-tunnuksenasi</string>
+    <string name="settings_bluesky_domain_offer_text">Seuraajasi ja julkaisusi säilyvät täsmälleen ennallaan.</string>
+    <string name="settings_bluesky_domain_use">Käytä %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Vaihdetaan tunnukseen %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">Tämä voi kestää muutaman minuutin. Voit poistua tästä näkymästä ja palata myöhemmin.</string>
+    <string name="settings_bluesky_domain_switched_title">Bluesky-tunnuksesi on nyt %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Seuraajasi ja julkaisusi säilyivät täsmälleen ennallaan.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s on jo varattu</string>
+    <string name="settings_bluesky_domain_taken_text">Toinen Bluesky-tili käyttää tunnusta %1$s.</string>
+    <string name="settings_bluesky_domain_failed_title">Tunnukseen %1$s vaihtaminen ei onnistunut</string>
+    <string name="settings_bluesky_domain_failed_text">Jokin meni pieleen. Yritä uudelleen muutaman minuutin kuluttua.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Jaa profiili</string>
     <string name="profile_edit">Muokkaa profiilia</string>

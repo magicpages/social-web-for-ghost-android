@@ -550,6 +550,17 @@
     <string name="settings_bluesky_copy_handle">Kopiér handle</string>
     <string name="settings_bluesky_handle_copied">Kopieret</string>
     <string name="settings_bluesky_open_profile">Åbn profil</string>
+    <string name="settings_bluesky_domain_offer_title">Brug %1$s som dit Bluesky-handle</string>
+    <string name="settings_bluesky_domain_offer_text">Dine følgere og opslag forbliver præcis, som de er.</string>
+    <string name="settings_bluesky_domain_use">Brug %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Skifter til %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">Det kan tage et par minutter. Du kan forlade denne skærm og vende tilbage senere.</string>
+    <string name="settings_bluesky_domain_switched_title">Dit Bluesky-handle er nu %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Dine følgere og opslag forblev præcis, som de var.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s er allerede taget</string>
+    <string name="settings_bluesky_domain_taken_text">En anden Bluesky-konto bruger %1$s som handle.</string>
+    <string name="settings_bluesky_domain_failed_title">Kunne ikke skifte til %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">Noget gik galt. Prøv igen om et par minutter.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Del profil</string>
     <string name="profile_edit">Rediger profil</string>

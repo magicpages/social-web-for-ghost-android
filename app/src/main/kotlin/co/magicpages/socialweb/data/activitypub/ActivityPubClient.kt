@@ -34,6 +34,7 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 
@@ -98,8 +99,17 @@ class ActivityPubClient @Inject constructor(
         ).post
 
     /** The site's own fediverse account. Fails when the social web is off for the site. */
-    suspend fun currentAccount(site: GhostSite, credential: Credential): Account =
-        decode<Account>(send(site, credential, HttpMethod.Get, "account/me")).also { avatars.record(it) }
+    suspend fun currentAccount(site: GhostSite, credential: Credential): Account {
+        val response = send(site, credential, HttpMethod.Get, "account/me")
+        // Decoded as a tree first, as only the key's presence tells whether the service has domain handles.
+        val fields = decode<JsonObject>(response)
+        val account = try {
+            json.decodeFromJsonElement(Account.serializer(), fields)
+        } catch (e: SerializationException) {
+            throw SocialWebException(response.status.value, e.message)
+        }
+        return account.copy(blueskyDomainHandles = "blueskyDomainHandle" in fields).also { avatars.record(it) }
+    }
 
     /**
      * Replaces the site's own profile (`PUT account`, Owner and Administrator only). The service takes
@@ -273,6 +283,17 @@ class ActivityPubClient @Inject constructor(
     /** Asks whether Bridgy Fed has created the Bluesky account yet; 400 when sharing isn't enabled. */
     suspend fun confirmBlueskyHandle(site: GhostSite, credential: Credential): BlueskyStatus =
         decode(send(site, credential, HttpMethod.Post, "actions/bluesky/confirm-handle", version = "v2"))
+
+    /**
+     * Which domain [useBlueskyDomainHandle] would make the Bluesky handle now, and whether it would
+     * work; reserves nothing. 400 when sharing is off or the handle isn't confirmed yet.
+     */
+    suspend fun checkBlueskyDomainHandle(site: GhostSite, credential: Credential): DomainHandleCheck =
+        decode(send(site, credential, HttpMethod.Post, "actions/bluesky/domain-handle/check", version = "v2"))
+
+    /** Asks for the site's domain as the Bluesky handle; [confirmBlueskyHandle] follows the switch. */
+    suspend fun useBlueskyDomainHandle(site: GhostSite, credential: Credential): BlueskyStatus =
+        decode(send(site, credential, HttpMethod.Post, "actions/bluesky/domain-handle", version = "v2"))
 
     suspend fun disableBluesky(site: GhostSite, credential: Credential) {
         send(site, credential, HttpMethod.Post, "actions/bluesky/disable", version = "v2")

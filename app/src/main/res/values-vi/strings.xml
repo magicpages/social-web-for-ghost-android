@@ -538,6 +538,17 @@
     <string name="settings_bluesky_copy_handle">Sao chép handle</string>
     <string name="settings_bluesky_handle_copied">Đã sao chép</string>
     <string name="settings_bluesky_open_profile">Mở hồ sơ</string>
+    <string name="settings_bluesky_domain_offer_title">Dùng %1$s làm handle Bluesky của bạn</string>
+    <string name="settings_bluesky_domain_offer_text">Người theo dõi và bài đăng của bạn vẫn giữ nguyên.</string>
+    <string name="settings_bluesky_domain_use">Dùng %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Đang chuyển sang %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">Việc này có thể mất vài phút. Bạn có thể rời màn hình này và quay lại sau.</string>
+    <string name="settings_bluesky_domain_switched_title">Handle Bluesky của bạn giờ là %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Người theo dõi và bài đăng của bạn vẫn được giữ nguyên.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s đã được dùng</string>
+    <string name="settings_bluesky_domain_taken_text">Một tài khoản Bluesky khác đang dùng %1$s làm handle.</string>
+    <string name="settings_bluesky_domain_failed_title">Không thể chuyển sang %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">Đã xảy ra lỗi. Hãy thử lại sau vài phút.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Chia sẻ hồ sơ</string>
     <string name="profile_edit">Chỉnh sửa hồ sơ</string>

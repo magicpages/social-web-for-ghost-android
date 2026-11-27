@@ -415,6 +415,8 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
     private var blueskyEnabled = false
     private var blueskyConfirmed = false
     private var blueskyChecks = 0
+    private var domainHandleStatus: String? = null
+    private var domainChecks = 0
 
     /** `v1/preferences`: like the service, a PUT takes exactly `showSensitiveMedia` and refuses anything else. */
     private fun preferences(request: Request): Answer {
@@ -457,12 +459,24 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
         return text.trim().split(Regex("\n{2,}")).joinToString("") { "<p>${escape(it).replace("\n", "<br>")}</p>" }
     }
 
-    private fun blueskyHandle(domain: String) = "@$domain.ap.brid.gy"
+    /** Bridgy Fed's handle until the site's domain has taken over; without the `@`, as ActivityPub 1.3.0 sends it. */
+    private fun blueskyHandle(domain: String) = if (domainHandleStatus == "active") domain else "$domain.ap.brid.gy"
+
+    /** The switch to the site's domain as the service reports it; null until the publisher asks for it. */
+    private fun domainHandle(domain: String): JsonElement = domainHandleStatus?.let { status ->
+        buildJsonObject {
+            put("domain", domain)
+            put("status", status)
+            put("reason", JsonNull)
+            put("automatic", false)
+        }
+    } ?: JsonNull
 
     private fun blueskyFields(domain: String): Map<String, JsonElement> = mapOf(
         "blueskyEnabled" to JsonPrimitive(blueskyEnabled),
         "blueskyHandleConfirmed" to JsonPrimitive(blueskyConfirmed),
         "blueskyHandle" to if (blueskyConfirmed) JsonPrimitive(blueskyHandle(domain)) else JsonNull,
+        "blueskyDomainHandle" to domainHandle(domain),
     )
 
     private fun blueskyStatus(domain: String) = answerJson(
@@ -470,12 +484,17 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
             put("enabled", blueskyEnabled)
             put("handleConfirmed", blueskyConfirmed)
             put("handle", if (blueskyConfirmed) JsonPrimitive(blueskyHandle(domain)) else JsonNull)
+            put("domainHandle", domainHandle(domain))
         },
     )
+
+    private fun blueskyRefused(error: String) = Answer(400, buildJsonObject { put("error", error) }.toString().encodeToByteArray())
 
     /**
      * `v2/actions/bluesky/...`. Enabling starts the bridge without a handle; the first
      * `confirm-handle` after it still finds nothing, the second finds the account, as Bridgy Fed's delay does.
+     * Unlike the service, enabling doesn't set up the site's domain as the handle, so the demo offers
+     * it; asking for it takes two more `confirm-handle` calls.
      */
     private fun bluesky(request: Request, host: String, rest: String): Answer {
         val action = rest.trim('/').removePrefix("actions/bluesky/")
@@ -485,18 +504,39 @@ class DemoApi @Inject constructor(@ApplicationContext private val context: Conte
                 blueskyEnabled = true
                 blueskyConfirmed = false
                 blueskyChecks = 0
+                domainHandleStatus = null
                 blueskyStatus(host)
             }
             "confirm-handle" -> if (!blueskyEnabled) {
-                Answer(400, buildJsonObject { put("error", "Bluesky integration not enabled") }.toString().encodeToByteArray())
+                blueskyRefused("Bluesky integration not enabled")
             } else {
                 if (++blueskyChecks >= 2) blueskyConfirmed = true
+                if (domainHandleStatus == "claiming" && ++domainChecks >= 2) domainHandleStatus = "active"
+                blueskyStatus(host)
+            }
+            "domain-handle/check" -> if (!blueskyConfirmed) {
+                blueskyRefused("Bluesky handle not confirmed")
+            } else {
+                answerJson(
+                    buildJsonObject {
+                        put("domain", host)
+                        put("available", domainHandleStatus != "active")
+                        put("reason", JsonNull)
+                    },
+                )
+            }
+            "domain-handle" -> if (!blueskyConfirmed) {
+                blueskyRefused("Bluesky handle not confirmed")
+            } else {
+                domainHandleStatus = "claiming"
+                domainChecks = 0
                 blueskyStatus(host)
             }
             "disable" -> {
                 blueskyEnabled = false
                 blueskyConfirmed = false
                 blueskyChecks = 0
+                domainHandleStatus = null
                 Answer(204, ByteArray(0))
             }
             else -> notFound()

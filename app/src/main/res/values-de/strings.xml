@@ -550,6 +550,17 @@
     <string name="settings_bluesky_copy_handle">Handle kopieren</string>
     <string name="settings_bluesky_handle_copied">Kopiert</string>
     <string name="settings_bluesky_open_profile">Profil öffnen</string>
+    <string name="settings_bluesky_domain_offer_title">%1$s als Bluesky-Handle verwenden</string>
+    <string name="settings_bluesky_domain_offer_text">Deine Follower und Beiträge bleiben genau so, wie sie sind.</string>
+    <string name="settings_bluesky_domain_use">%1$s verwenden</string>
+    <string name="settings_bluesky_domain_switching_title">Wechsel zu %1$s …</string>
+    <string name="settings_bluesky_domain_switching_text">Das kann einige Minuten dauern. Du kannst diesen Bildschirm verlassen und später zurückkommen.</string>
+    <string name="settings_bluesky_domain_switched_title">Dein Bluesky-Handle ist jetzt %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Deine Follower und Beiträge sind genau so geblieben, wie sie waren.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s ist bereits vergeben</string>
+    <string name="settings_bluesky_domain_taken_text">Ein anderes Bluesky-Konto verwendet %1$s als Handle.</string>
+    <string name="settings_bluesky_domain_failed_title">Wechsel zu %1$s nicht möglich</string>
+    <string name="settings_bluesky_domain_failed_text">Etwas ist schiefgelaufen. Versuche es in ein paar Minuten erneut.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Profil teilen</string>
     <string name="profile_edit">Profil bearbeiten</string>

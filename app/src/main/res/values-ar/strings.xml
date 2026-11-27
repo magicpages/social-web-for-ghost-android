@@ -598,6 +598,17 @@
     <string name="settings_bluesky_copy_handle">نسخ المعرّف</string>
     <string name="settings_bluesky_handle_copied">تم النسخ</string>
     <string name="settings_bluesky_open_profile">فتح الملف الشخصي</string>
+    <string name="settings_bluesky_domain_offer_title">استخدم %1$s كمعرّف Bluesky الخاص بك</string>
+    <string name="settings_bluesky_domain_offer_text">يبقى متابعوك ومنشوراتك كما هم تمامًا.</string>
+    <string name="settings_bluesky_domain_use">استخدام %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">جارٍ التبديل إلى %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">قد يستغرق هذا بضع دقائق. يمكنك مغادرة هذه الشاشة والعودة لاحقًا.</string>
+    <string name="settings_bluesky_domain_switched_title">أصبح معرّف Bluesky الخاص بك الآن %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">بقي متابعوك ومنشوراتك كما كانوا تمامًا.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s مستخدم بالفعل</string>
+    <string name="settings_bluesky_domain_taken_text">حساب Bluesky آخر يستخدم %1$s كمعرّف له.</string>
+    <string name="settings_bluesky_domain_failed_title">تعذّر التبديل إلى %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">حدث خطأ ما. حاول مجددًا بعد بضع دقائق.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">مشاركة الملف الشخصي</string>
     <string name="profile_edit">تعديل الملف الشخصي</string>

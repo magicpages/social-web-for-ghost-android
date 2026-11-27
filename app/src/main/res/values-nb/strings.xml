@@ -550,6 +550,17 @@
     <string name="settings_bluesky_copy_handle">Kopier håndtak</string>
     <string name="settings_bluesky_handle_copied">Kopiert</string>
     <string name="settings_bluesky_open_profile">Åpne profil</string>
+    <string name="settings_bluesky_domain_offer_title">Bruk %1$s som Bluesky-håndtak</string>
+    <string name="settings_bluesky_domain_offer_text">Følgerne og innleggene dine blir akkurat som de er.</string>
+    <string name="settings_bluesky_domain_use">Bruk %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Bytter til %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">Dette kan ta noen minutter. Du kan forlate denne skjermen og komme tilbake senere.</string>
+    <string name="settings_bluesky_domain_switched_title">Bluesky-håndtaket ditt er nå %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Følgerne og innleggene dine ble akkurat som de var.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s er allerede tatt</string>
+    <string name="settings_bluesky_domain_taken_text">En annen Bluesky-konto bruker %1$s som håndtak.</string>
+    <string name="settings_bluesky_domain_failed_title">Kunne ikke bytte til %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">Noe gikk galt. Prøv igjen om noen minutter.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Del profil</string>
     <string name="profile_edit">Rediger profil</string>

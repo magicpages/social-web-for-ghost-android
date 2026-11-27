@@ -550,6 +550,17 @@
     <string name="settings_bluesky_copy_handle">हैंडल कॉपी करें</string>
     <string name="settings_bluesky_handle_copied">कॉपी हो गया</string>
     <string name="settings_bluesky_open_profile">प्रोफ़ाइल खोलें</string>
+    <string name="settings_bluesky_domain_offer_title">%1$s को अपने Bluesky हैंडल के रूप में इस्तेमाल करें</string>
+    <string name="settings_bluesky_domain_offer_text">आपके फ़ॉलोअर्स और पोस्ट बिल्कुल वैसे ही रहेंगे।</string>
+    <string name="settings_bluesky_domain_use">%1$s इस्तेमाल करें</string>
+    <string name="settings_bluesky_domain_switching_title">%1$s पर स्विच किया जा रहा है…</string>
+    <string name="settings_bluesky_domain_switching_text">इसमें कुछ मिनट लग सकते हैं। आप इस स्क्रीन से बाहर जाकर बाद में लौट सकते हैं।</string>
+    <string name="settings_bluesky_domain_switched_title">आपका Bluesky हैंडल अब %1$s है</string>
+    <string name="settings_bluesky_domain_switched_text">आपके फ़ॉलोअर्स और पोस्ट बिल्कुल वैसे ही रहे।</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s पहले से लिया जा चुका है</string>
+    <string name="settings_bluesky_domain_taken_text">कोई दूसरा Bluesky अकाउंट %1$s को अपने हैंडल के रूप में इस्तेमाल करता है।</string>
+    <string name="settings_bluesky_domain_failed_title">%1$s पर स्विच नहीं हो सका</string>
+    <string name="settings_bluesky_domain_failed_text">कुछ गड़बड़ हो गई। कुछ मिनट बाद फिर कोशिश करें।</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">प्रोफ़ाइल साझा करें</string>
     <string name="profile_edit">प्रोफ़ाइल संपादित करें</string>

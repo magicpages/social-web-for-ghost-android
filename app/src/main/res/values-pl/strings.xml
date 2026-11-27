@@ -574,6 +574,17 @@
     <string name="settings_bluesky_copy_handle">Kopiuj uchwyt</string>
     <string name="settings_bluesky_handle_copied">Skopiowano</string>
     <string name="settings_bluesky_open_profile">Otwórz profil</string>
+    <string name="settings_bluesky_domain_offer_title">Używaj %1$s jako uchwytu na Bluesky</string>
+    <string name="settings_bluesky_domain_offer_text">Twoi obserwujący i posty pozostaną dokładnie takie, jakie są.</string>
+    <string name="settings_bluesky_domain_use">Użyj %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Przełączanie na %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">To może potrwać kilka minut. Możesz opuścić ten ekran i wrócić później.</string>
+    <string name="settings_bluesky_domain_switched_title">Twój uchwyt na Bluesky to teraz %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Twoi obserwujący i posty pozostali dokładnie tacy, jacy byli.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s jest już zajęty</string>
+    <string name="settings_bluesky_domain_taken_text">Inne konto na Bluesky używa %1$s jako uchwytu.</string>
+    <string name="settings_bluesky_domain_failed_title">Nie udało się przełączyć na %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">Coś poszło nie tak. Spróbuj ponownie za kilka minut.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Udostępnij profil</string>
     <string name="profile_edit">Edytuj profil</string>

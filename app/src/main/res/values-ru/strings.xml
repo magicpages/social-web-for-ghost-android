@@ -574,6 +574,17 @@
     <string name="settings_bluesky_copy_handle">Копировать адрес</string>
     <string name="settings_bluesky_handle_copied">Скопировано</string>
     <string name="settings_bluesky_open_profile">Открыть профиль</string>
+    <string name="settings_bluesky_domain_offer_title">Использовать %1$s как адрес в Bluesky</string>
+    <string name="settings_bluesky_domain_offer_text">Ваши подписчики и посты останутся ровно такими, какие они есть.</string>
+    <string name="settings_bluesky_domain_use">Использовать %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Переключаем на %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">Это может занять несколько минут. Можно закрыть этот экран и вернуться позже.</string>
+    <string name="settings_bluesky_domain_switched_title">Ваш адрес в Bluesky теперь %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Ваши подписчики и посты остались ровно такими, какими были.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s уже занят</string>
+    <string name="settings_bluesky_domain_taken_text">Другой аккаунт Bluesky использует %1$s как адрес.</string>
+    <string name="settings_bluesky_domain_failed_title">Не удалось переключиться на %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">Что-то пошло не так. Попробуйте ещё раз через несколько минут.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Поделиться профилем</string>
     <string name="profile_edit">Изменить профиль</string>

@@ -562,6 +562,17 @@
     <string name="settings_bluesky_copy_handle">Copia handle</string>
     <string name="settings_bluesky_handle_copied">Copiato</string>
     <string name="settings_bluesky_open_profile">Apri profilo</string>
+    <string name="settings_bluesky_domain_offer_title">Usa %1$s come handle Bluesky</string>
+    <string name="settings_bluesky_domain_offer_text">I tuoi follower e i tuoi post restano esattamente come sono.</string>
+    <string name="settings_bluesky_domain_use">Usa %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Passaggio a %1$s in corso…</string>
+    <string name="settings_bluesky_domain_switching_text">Può richiedere qualche minuto. Puoi uscire da questa schermata e tornare più tardi.</string>
+    <string name="settings_bluesky_domain_switched_title">Il tuo handle Bluesky ora è %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">I tuoi follower e i tuoi post sono rimasti esattamente come erano.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s è già in uso</string>
+    <string name="settings_bluesky_domain_taken_text">Un altro account Bluesky usa %1$s come handle.</string>
+    <string name="settings_bluesky_domain_failed_title">Impossibile passare a %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">Qualcosa è andato storto. Riprova tra qualche minuto.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Condividi profilo</string>
     <string name="profile_edit">Modifica profilo</string>

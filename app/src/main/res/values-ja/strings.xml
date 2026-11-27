@@ -538,6 +538,17 @@
     <string name="settings_bluesky_copy_handle">ハンドルをコピー</string>
     <string name="settings_bluesky_handle_copied">コピーしました</string>
     <string name="settings_bluesky_open_profile">プロフィールを開く</string>
+    <string name="settings_bluesky_domain_offer_title">%1$s を Bluesky ハンドルとして使う</string>
+    <string name="settings_bluesky_domain_offer_text">フォロワーと投稿はそのまま変わりません。</string>
+    <string name="settings_bluesky_domain_use">%1$s を使う</string>
+    <string name="settings_bluesky_domain_switching_title">%1$s に切り替えています…</string>
+    <string name="settings_bluesky_domain_switching_text">数分かかることがあります。この画面を離れても、あとで戻れます。</string>
+    <string name="settings_bluesky_domain_switched_title">Bluesky ハンドルが %1$s になりました</string>
+    <string name="settings_bluesky_domain_switched_text">フォロワーと投稿はそのまま変わっていません。</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s はすでに使われています</string>
+    <string name="settings_bluesky_domain_taken_text">別の Bluesky アカウントが %1$s をハンドルとして使っています。</string>
+    <string name="settings_bluesky_domain_failed_title">%1$s に切り替えられませんでした</string>
+    <string name="settings_bluesky_domain_failed_text">問題が発生しました。数分後にもう一度お試しください。</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">プロフィールを共有</string>
     <string name="profile_edit">プロフィールを編集</string>

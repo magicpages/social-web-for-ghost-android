@@ -550,6 +550,17 @@
     <string name="settings_bluesky_copy_handle">Kopiera handtag</string>
     <string name="settings_bluesky_handle_copied">Kopierat</string>
     <string name="settings_bluesky_open_profile">Öppna profil</string>
+    <string name="settings_bluesky_domain_offer_title">Använd %1$s som ditt Bluesky-handtag</string>
+    <string name="settings_bluesky_domain_offer_text">Dina följare och inlägg förblir precis som de är.</string>
+    <string name="settings_bluesky_domain_use">Använd %1$s</string>
+    <string name="settings_bluesky_domain_switching_title">Byter till %1$s…</string>
+    <string name="settings_bluesky_domain_switching_text">Det kan ta några minuter. Du kan lämna den här skärmen och komma tillbaka senare.</string>
+    <string name="settings_bluesky_domain_switched_title">Ditt Bluesky-handtag är nu %1$s</string>
+    <string name="settings_bluesky_domain_switched_text">Dina följare och inlägg förblev precis som de var.</string>
+    <string name="settings_bluesky_domain_taken_title">%1$s är redan upptaget</string>
+    <string name="settings_bluesky_domain_taken_text">Ett annat Bluesky-konto använder %1$s som handtag.</string>
+    <string name="settings_bluesky_domain_failed_title">Det gick inte att byta till %1$s</string>
+    <string name="settings_bluesky_domain_failed_text">Något gick fel. Försök igen om några minuter.</string>
     <!-- Edit profile and share profile -->
     <string name="action_share_profile">Dela profil</string>
     <string name="profile_edit">Redigera profil</string>
