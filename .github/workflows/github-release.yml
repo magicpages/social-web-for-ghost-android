@@ -84,8 +84,11 @@ jobs:
           apk="social-web-for-ghost-$NAME.apk"
           mv app/build/outputs/apk/release/app-release.apk "$apk"
           "$apksigner" verify --print-certs "$apk" | tee certs.txt
-          grep -qx "Signer #1 certificate SHA-256 digest: $CERT_SHA256" certs.txt \
-            || { echo "::error::The APK isn't signed with the published certificate"; exit 1; }
+          # apksigner versions label the line differently ("Signer #1", "V2 Signer"), so compare
+          # every certificate digest it prints: there must be exactly one, the published one.
+          digests=$(sed -n 's/.*certificate SHA-256 digest: //p' certs.txt | sort -u)
+          [ "$digests" = "$CERT_SHA256" ] \
+            || { echo "::error::The APK isn't signed with the published certificate only"; exit 1; }
           if grep -q 'socialweb\.demo' app/build/outputs/mapping/release/mapping.txt; then
             echo "::error::Demo mode ended up in the release build"
             exit 1
