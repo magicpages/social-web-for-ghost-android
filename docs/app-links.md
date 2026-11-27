@@ -111,14 +111,15 @@ adb shell pm get-app-links co.magicpages.socialweb
 
 The domain shows as `verified` once fedi.pub serves a matching fingerprint. A number of 1024 or more means verification failed.
 
-**For a debug or dev build, or before fedi.pub serves the file**, approve the domain by hand. The syntax is in `adb shell pm help`:
+**For a debug or dev build, or before fedi.pub serves the file**, approve the domain by hand for the package you installed: `co.magicpages.socialweb.debug` for a debug or dev build, `co.magicpages.socialweb` for a release build. The syntax is in `adb shell pm help`:
 
 ```sh
-adb shell pm set-app-links-user-selection --user 0 --package co.magicpages.socialweb.debug true fedi.pub
-adb shell pm get-app-links --user 0 co.magicpages.socialweb.debug
+PKG=co.magicpages.socialweb.debug   # or co.magicpages.socialweb for a release build
+adb shell pm set-app-links-user-selection --user 0 --package $PKG true fedi.pub
+adb shell pm get-app-links --user 0 $PKG
 ```
 
-To start over, reset the state with `adb shell pm set-app-links --package co.magicpages.socialweb.debug 0 all`.
+To start over, reset the state with `adb shell pm set-app-links --package $PKG 0 all`.
 
 **Open links the way a browser would:**
 
